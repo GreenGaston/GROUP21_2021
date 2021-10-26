@@ -1,52 +1,50 @@
 import java.util.Scanner;
 
 public class PentominoSolver {
-    
-    // if you guys would like to further optimise this code you can do a couple of things:
-        // implement the find empty square function within the PieceFit function ==> Yuxuan
-        // implement a way of inputting given strings of PieceIds and grid sizes ==> Jeroen
-        // get rid of the second ui, cause i dont know what causes the first one to popup ==> Jeroen
-        // implement the function which organises the PieceIds in an optimal code (code from tom bakker) ==> Tom Bakker
-    //
-
-
-    // this is mostly the same code i just got rid of all the arraylist and turned them into int[][][][]
-    // i also did a whole lot of debugging so some functions might have changed a little bit
-
-
     public static int[][] answerGrid;
     public static UI ui;
 
 
 
     public static void main(String[] args){
+        int UIsize = 25;
 
 
         
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("What characters do you want to fill the grid?");
+        System.out.println("What characters do you want to fill the grid with?");
+        System.out.println("You can choose from the following letters:\nF, I, L, N, P, T, U, V, W, X, Y, Z.");
         System.out.println("Type in all your characters in CAPITAL LETTERS and as a word.");
         System.out.print("Your choice of characters is: ");
         String stringOfChars = scanner.nextLine();
         char[] input = stringOfChars.toCharArray();
-        // input = Optimise(input);
+
+        // Input optimization
+        input = Optimise(input);
+
         int[] tempListIDs = ChartoPieceID(input);
-        for (int i = 0; i < tempListIDs.length; i++){
-            System.out.print(tempListIDs[i]+",");
-        }
+        System.out.println("You have chosen for "+tempListIDs.length+" pieces.");
+        // // Print out pieceIDs of the player's choice. For testing purposes.
+        // for (int i = 0; i < tempListIDs.length; i++){
+        //     if (i == tempListIDs.length-1){
+        //         System.out.println(tempListIDs[i]+".");
+        //     }else{
+        //         System.out.print(tempListIDs[i]+",");
+        //     }
+        // }
 
         
         
         System.out.println();
         System.out.println("What sizes do you want the grid to be?");
-        System.out.print("Type your choice for the length of the x-axes: ");
+        System.out.print("Type in your choice for the length of the x-axes: ");
         int Width = scanner.nextInt();
         System.out.print("Type in your choice for the length of the y-axes: ");
         int Height = scanner.nextInt();
-        System.out.println();
         System.out.println("You have chosen for a grid of "+Width+" by "+Height+".");
+        System.out.println();
         int tempHeightWidth;
         if (Height > Width){
             tempHeightWidth = Height;
@@ -54,12 +52,11 @@ public class PentominoSolver {
             Width = tempHeightWidth;
         }
 
-
-        ui = new UI(Width, Height, 25);
-
+        ui = new UI(Width, Height, UIsize);
 
 
-        ////make an empty grid
+
+        //make an empty grid
         int[][] grid= new int[Width][Height];
         for(int i=0; i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
@@ -69,24 +66,31 @@ public class PentominoSolver {
         
         int[] pieceIDs=tempListIDs;
 
-        long Beginning = System.currentTimeMillis();
 
-        if(SolvePentomino(grid, pieceIDs, pieceIDs.length)){
-            ui.setState(answerGrid); 
-    	    System.out.println("Solution found");
+        if (pieceIDs.length*5 >= Width*Height){
+            long Beginning = System.currentTimeMillis();
+            if(SolvePentomino(grid, pieceIDs, pieceIDs.length)){
+                ui.setState(answerGrid); 
+                System.out.println("Solution found");
+                
+                long Ending = System.currentTimeMillis();
+                System.out.println("It took " + (Ending-Beginning) + " milliseconds to find a solution for this puzzle." );    
+            }else{
+                System.out.println("No solution possible with given pieces. Try other input!");
+            }
         }else{
-            System.out.println("No solution possible; try other input");
+            System.out.println("There were too few pieces given to fill the grid. Try again!");
         }
+
+
         scanner.close();
 
-        long Ending = System.currentTimeMillis();
     
-        System.out.println("It took " + (Ending-Beginning) + " milliseconds to find a solution for this puzzle." );
 
     }
 
 
-//this is the main function of the program it takes any give pieceIDs and tries to fit them on the grid by cerrusifly (its3:30am)
+//this is the main function of the program it takes any give pieceIDs and tries to fit them on the grid recursively
 //trying to place a piece in a permutation
 //if it is able to do so it will call itself again with the same pieces but removing the that was just placed
 //it also gives the grid with the placed piece
@@ -97,15 +101,14 @@ public class PentominoSolver {
         int[] emptyCords =findNextEmpty(grid);
         int[][] gridClone= clone2Dint(grid);
         int[][] secondaryClone=clone2Dint(grid);
-        //clones of the grid, dont touch these work and it took hours to get it right
         
 
 
 
 
 
-        //this is the exit condition, once it has reached a depth of 1, meaning it only has one piece left, it will try and but it on the board.
-        //if it can then it will return true which will in turn make the one above it return true etc.
+        //this is the exit condition, once it has reached a depth of 1, meaning it only has one piece left, it will try and put it on the board.
+        //if it can then it will return true which will in turn make the one above return true etc.
         if(depth==1){
             for(int i=0; i<PentominoDatabase.data[pieceIDs[0]].length;i++){
                 if(PieceFit(gridClone, pieceIDs[0], i,adjustX(emptyCords[1], pieceIDs[0], i), emptyCords[0])){
@@ -358,7 +361,7 @@ public class PentominoSolver {
 
 
     //this function evaluated if a piece can be placed on a give grid at a certain x and y location
-    public static Boolean PieceFit(int[][]grid,int PieceID,int Piecemutation,int x,int y){
+    public static boolean PieceFit(int[][]grid,int PieceID,int Piecemutation,int x,int y){
         //if the x is negative then the starting point is of the grid and therefor invalid
         if(x<0){
             

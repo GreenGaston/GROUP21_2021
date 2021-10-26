@@ -10,3 +10,5 @@
         - Choose from: X, I, L, N, P, V, U, T, W, P, F, Z
         - Type this with capital letters and without anything in between.
     - You will also be asked to put in a grid size, the x and y respectively.
+
+# Samanta's test (:

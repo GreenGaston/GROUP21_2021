@@ -11,7 +11,11 @@
         - Type this with capital letters and without anything in between.
     - You will also be asked to put in a grid size, the x and y respectively.
 
+<<<<<<< HEAD
+# Samanta's test (:
+=======
 # This is a test.
 # TestLianne
 
 
+>>>>>>> 1ae07b7e111cae2c1ca5410e397fbcba286dd320

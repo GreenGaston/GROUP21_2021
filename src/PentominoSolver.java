@@ -66,7 +66,7 @@ public class PentominoSolver {
         
         int[] pieceIDs=tempListIDs;
 
-
+        // Check if enough pieces are given to fill the grid
         if (pieceIDs.length*5 >= Width*Height){
             long Beginning = System.currentTimeMillis();
             if(SolvePentomino(grid, pieceIDs, pieceIDs.length)){

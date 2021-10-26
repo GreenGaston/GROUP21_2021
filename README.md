@@ -11,4 +11,4 @@
         - Type this with capital letters and without anything in between.
     - You will also be asked to put in a grid size, the x and y respectively.
 
-# This is a test.
+# This is a test!

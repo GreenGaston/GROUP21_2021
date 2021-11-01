@@ -27,24 +27,28 @@ public class Pentris {
     public int[][] grid;
 
 
-    //contains location of a piece
-    public Point pieceLocation;
-    //contains current position
-    public int[][] currentPiece;
+    
     //contains current pieceID
     public int pieceID;
-    //contains the held piece
-    public int[][] heldPiece;
     //contains the held pieceID
-    public int heldPieceID;
+    public int heldPieceID=-1;
     //contains rotation
     public int rotation;
     //contains the pieceIDs of the next pieces
     public ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
     public int[][][][] pentominoDatabase=PentominoDatabase.data;
-    
 
+    //the current location of a piece
+    public volatile int PieceX=0;
+    public volatile int PieceY=2;
+
+    //the startposition for every position
+    public int StartY=0;
+    public int StartX=2;
+    
+    //variable to end the game
+    public boolean Lost=false;
 
 
 
@@ -60,8 +64,11 @@ public class Pentris {
 
     }
 
-    //Acceleration method
-    public void acceleratePiece(){
+    //Acceleration method, should return an increasingly small int for the amount of second between piece drops
+    public int acceleratePiece(){
+        int time;
+
+        return time;
 
     }
 
@@ -79,16 +86,59 @@ public class Pentris {
     //every piece should get its turn in 12 pieces
     public void nextPiece(){}
 
+
+
     //this method should update its location and rotation based on keypad inputs
     public void Keypad(){}
 
 
 
     //this method should hold the current piece 
-    public void holdPiece(){}
+    public void holdPiece(){
+        if(heldPieceID==-1){
+            heldPieceID=pieceID;
+            PieceX=StartX;
+            PieceY=StartY;
+            nextPiece();
+
+        }
+        else{
+            int temp=pieceID;
+            pieceID=heldPieceID;
+            heldPieceID=temp;
+            PieceX=StartX;
+            PieceY=StartY;
+        }
+    }
+
+
+
+// here should write the methods which are used when you start a game
+    public Pentris(){
 
 
 
 
+        try{ 
+            while(!Lost){
+                nextPiece();
+                Thread.sleep(acceleratePiece());
+                lineCheck();
+                fallingPiece();
+            }
+        }
+        catch(InterruptedException e){}
+
+    }
+
+
+
+//this method only makes an instance of the game
+    public static void main(){
+        Pentris game = new Pentris();
+
+
+
+    }
     
 }

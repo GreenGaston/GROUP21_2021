@@ -24,7 +24,7 @@ public class Pentris {
     //contains the held pieceID
     public int heldPieceID=-1;
     //contains rotation
-    public int rotation;
+    public int rotation=0;
     //contains the pieceIDs of the next pieces
     public ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
@@ -97,11 +97,6 @@ public class Pentris {
 
 
 
-
-
-
-
-
     private int left = KeyEvent.VK_LEFT;
     private int down = KeyEvent.VK_DOWN;
     private int right = KeyEvent.VK_RIGHT;
@@ -109,25 +104,23 @@ public class Pentris {
     //this method should update its location and rotation based on keypad inputs
     public void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
-        if (keyCode == left) {
+        if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
             
-            if (PieceX != 0 && pieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
-            }
             //System.out.println("pieceX = "+pieceX); 
-        }else if (keyCode == right && pieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
-            if (PieceX != width-1){
+        }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
+            
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
-            }
+            
             //System.out.println("pieceX = "+pieceX);
         }else if (keyCode == down) {
-            if (pieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
+            if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
-                dropPiece();
+                fallingPiece();
             }
             System.out.println("pieceY = "+PieceY);
         }else if (keyCode == space) {
-            rotationMethod(); // If the spacebar is pressed the piece should be rotated once.
+            rotatePiece(true); // If the spacebar is pressed the piece should be rotated once.
         }
     }
 

@@ -16,7 +16,7 @@ public class Pentris {
     //contains the held pieceID
     public int heldPieceID=-1;
     //contains rotation
-    public int rotation;
+    public int rotation=0;
     //contains the pieceIDs of the next pieces
     public ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
@@ -97,24 +97,32 @@ public class Pentris {
     //this method should update its location and rotation based on keypad inputs
     public void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
+<<<<<<< HEAD
+        if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
+            
+=======
         if (keyCode == left) {  
             if (PieceX != 0 && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
+>>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
-            }
             //System.out.println("pieceX = "+pieceX); 
         }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
+<<<<<<< HEAD
+            
+=======
             if (PieceX != width-1){
+>>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
-            }
+            
             //System.out.println("pieceX = "+pieceX);
         }else if (keyCode == down) {
             if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
-                dropPiece();
+                fallingPiece();
             }
             System.out.println("pieceY = "+PieceY);
         }else if (keyCode == space) {
-            rotationMethod(); // If the spacebar is pressed the piece should be rotated once.
+            rotatePiece(true); // If the spacebar is pressed the piece should be rotated once.
         }
     }
 

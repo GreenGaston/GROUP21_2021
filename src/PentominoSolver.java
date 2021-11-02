@@ -9,9 +9,6 @@ public class PentominoSolver {
     public static void main(String[] args){
         int UIsize = 25;
 
-
-        
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("What characters do you want to fill the grid with?");
@@ -374,12 +371,7 @@ public class PentominoSolver {
 
         //if the piece doesnt extend past the borders
         if(grid.length>y+database[PieceID][Piecemutation].length-1){
-            
-            
             if(grid[0].length>x+database[PieceID][Piecemutation][0].length-1){
-                
-
-
                 //then it wil check for every square whether the matrix has a 1 there(meaning its a square to be placed)
                 //and if the grid already has a value there
                 for(int i=0;i<database[PieceID][Piecemutation].length;i++){
@@ -394,8 +386,8 @@ public class PentominoSolver {
                 Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
 
                 if (checkMinus(gridclone)){
-                    return false;}
-                else{
+                    return false;
+                }else{
                     return true;
                 }
             }else{

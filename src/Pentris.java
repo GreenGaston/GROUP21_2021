@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -10,15 +9,8 @@ import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
-
-
 public class Pentris {
-
     public int[][] grid;
-
-
-    
     //contains current pieceID
     public int pieceID;
     //contains the held pieceID
@@ -42,11 +34,10 @@ public class Pentris {
     public boolean Lost=false;
 
 
-
     //this method should make the piece fall by 1 if it can fall
     public void fallingPiece(){
-    }
 
+    }
 
 
     //this method should rotate a piece if posible has to rotate left and right
@@ -69,7 +60,6 @@ public class Pentris {
     //Acceleration method, should return an increasingly small int for the amount of second between piece drops
     public double fallingAcceleration(double time){
         double timeIndicate = 1;
-
         countingloop:
         for (double i = accelerationTimeFrame; i < time; i+=accelerationTimeFrame){
             timeIndicate -= acceleration;
@@ -77,9 +67,7 @@ public class Pentris {
                 timeIndicate = minimumWait;
                 break countingloop;
             }    
-        }
-
-        return timeIndicate;}
+        }return timeIndicate;}
 
     //this method removes a line from the grid
     public void removeLine(int line){
@@ -104,12 +92,21 @@ public class Pentris {
     //this method should update its location and rotation based on keypad inputs
     public void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
+<<<<<<< HEAD
         if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
             
+=======
+        if (keyCode == left) {  
+            if (PieceX != 0 && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
+>>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
             //System.out.println("pieceX = "+pieceX); 
         }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
+<<<<<<< HEAD
             
+=======
+            if (PieceX != width-1){
+>>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
             
             //System.out.println("pieceX = "+pieceX);
@@ -125,7 +122,6 @@ public class Pentris {
     }
 
 
-
     //this method should hold the current piece 
     public void holdPiece(){
         if(heldPieceID==-1){
@@ -133,9 +129,7 @@ public class Pentris {
             PieceX=StartX;
             PieceY=StartY;
             nextPiece();
-
-        }
-        else{
+        }else{
             int temp=pieceID;
             pieceID=heldPieceID;
             heldPieceID=temp;
@@ -147,23 +141,14 @@ public class Pentris {
     //this function evaluated if a piece can be placed on a give grid at a certain x and y location
     public static Boolean PieceFit(int[][]grid,int PieceID,int Piecemutation,int x,int y){
         //if the x is negative then the starting point is of the grid and therefor invalid
-        if(x<0){
-                    
+        if(x<0){         
                 return false;
             }
-    
             //shorthand for readability
             int[][][][]database=PentominoDatabase.data;
-    
-    
             //if the piece doesnt extend past the borders
             if(grid.length>y+database[PieceID][Piecemutation].length-1){
-                
-                
                 if(grid[0].length>x+database[PieceID][Piecemutation][0].length-1){
-                    
-    
-    
                     //then it wil check for every square whether the matrix has a 1 there(meaning its a square to be placed)
                     //and if the grid already has a value there
                     for(int i=0;i<database[PieceID][Piecemutation].length;i++){
@@ -185,12 +170,11 @@ public class Pentris {
             }
         }
 
+
 // here should write the methods which are used when you start a game
     public Pentris(){
-
         long startingtime=System.currentTimeMillis();
         long endingtime;
-
         try{ 
             while(!Lost){
                 endingtime=System.currentTimeMillis();
@@ -200,17 +184,12 @@ public class Pentris {
             }
         }
         catch(InterruptedException e){}
-
     }
-
 
 
 //this method only makes an instance of the game
     public static void main(){
         Pentris game = new Pentris();
 
-
-
-    }
-    
+    } 
 }

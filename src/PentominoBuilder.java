@@ -115,7 +115,8 @@ public class PentominoBuilder {
             //make a piece with maximal number of mutations an space
             int[][][] tempDatabase = new int[8][5][5];
 
-            //take a piece of basic database, make it bigger so it fits in the 5*5, rotate it j times, move it to the left upper corner so duplicates will be the same
+            //take a piece of basic database, make it bigger so it fits in the 5*5, 
+            // rotate it j times, move it to the left upper corner so duplicates will be the same
             for (int j = 0; j < 4; j++) {
                 tempDatabase[j] = moveToAbove(rotate(makeBigger(basicDatabase[i], 5), j));
             }

@@ -111,17 +111,17 @@ public class Pentris {
         int keyCode = event.getKeyCode();
         if (keyCode == left) {
             
-            if (PieceX != 0 && pieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
+            if (PieceX != 0 && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
             }
             //System.out.println("pieceX = "+pieceX); 
-        }else if (keyCode == right && pieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
+        }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
             if (PieceX != width-1){
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
             }
             //System.out.println("pieceX = "+pieceX);
         }else if (keyCode == down) {
-            if (pieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
+            if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
                 dropPiece();
             }

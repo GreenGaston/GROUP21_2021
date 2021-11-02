@@ -2,7 +2,8 @@
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
  */
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -11,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  * This class takes care of all the graphics to display a certain state.
  * Initially, you do not need to modify (or event understand) this class in Phase 1. You will learn more about GUIs in Period 2, in the Introduction to Computer Science 2 course.
  */
-public class UI extends JPanel
+public class UI extends JPanel implements KeyListener
 {
     private JFrame window;
     private int[][] state;
@@ -27,13 +28,14 @@ public class UI extends JPanel
     {
         size = _size;
         setPreferredSize(new Dimension(x * size, y * size));
-
+    
         window = new JFrame("Pentomino");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.add(this);
         window.pack();
         window.setVisible(true);
+        window.addKeyListener(this);
 
         state = new int[x][y];
         for (int i = 0; i < state.length; i++)
@@ -115,5 +117,23 @@ public class UI extends JPanel
 
         //Tells the system a frame update is required
         repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        Pentris.keypadMethod(e);
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
     }
 }

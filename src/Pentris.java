@@ -76,19 +76,24 @@ public class Pentris {
 
 
     //this method should check if a line is full
-    public void lineCheck(){}
+    public void lineCheck(){
+
+    }
 
 
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
-    public void nextPiece(){}
+    public void nextPiece(){
 
+    }
 
 
     private int left = KeyEvent.VK_LEFT;
     private int down = KeyEvent.VK_DOWN;
     private int right = KeyEvent.VK_RIGHT;
     private int space = KeyEvent.VK_SPACE;
+
+    
     //this method should update its location and rotation based on keypad inputs
     public void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();

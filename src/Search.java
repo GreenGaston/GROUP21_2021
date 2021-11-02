@@ -15,7 +15,7 @@ public class Search
     
     public static final char[] input = { 'W', 'Y', 'I', 'T', 'Z', 'L'};
     
-    //Static UI class to display the board
+    //Static class to display the board
     public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50);
 
 	/**

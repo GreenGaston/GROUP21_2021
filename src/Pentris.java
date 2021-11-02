@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -60,17 +51,35 @@ public class Pentris {
 
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
-    public void rotatePiece(){
+    public void rotatePiece(Boolean right){
 
     }
 
+
+    final public static double minimumWait = 0.25; 
+    // This is the minimum amount of seconds the piece waits until it drops 1 down again.
+    final public static double accelerationTimeFrame = 10; 
+    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
+    final public static double acceleration = 0.05; 
+    // Every time frame the pieces will fall 0.05 seconds faster.
+    final public static long millisecondsToSeconds = 1000; 
+    // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
+    
+    
     //Acceleration method, should return an increasingly small int for the amount of second between piece drops
-    public int acceleratePiece(){
-        int time;
+    public double fallingAcceleration(double time){
+        double timeIndicate = 1;
 
-        return time;
+        countingloop:
+        for (double i = accelerationTimeFrame; i < time; i+=accelerationTimeFrame){
+            timeIndicate -= acceleration;
+            if(timeIndicate <= minimumWait){
+                timeIndicate = minimumWait;
+                break countingloop;
+            }    
+        }
 
-    }
+        return timeIndicate;}
 
     //this method removes a line from the grid
     public void removeLine(int line){
@@ -88,8 +97,39 @@ public class Pentris {
 
 
 
+
+
+
+
+
+    private int left = KeyEvent.VK_LEFT;
+    private int down = KeyEvent.VK_DOWN;
+    private int right = KeyEvent.VK_RIGHT;
+    private int space = KeyEvent.VK_SPACE;
     //this method should update its location and rotation based on keypad inputs
-    public void Keypad(){}
+    public void keypadMethod(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        if (keyCode == left) {
+            
+            if (PieceX != 0 && pieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
+                PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
+            }
+            //System.out.println("pieceX = "+pieceX); 
+        }else if (keyCode == right && pieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
+            if (PieceX != width-1){
+                PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
+            }
+            //System.out.println("pieceX = "+pieceX);
+        }else if (keyCode == down) {
+            if (pieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
+                PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
+                dropPiece();
+            }
+            System.out.println("pieceY = "+PieceY);
+        }else if (keyCode == space) {
+            rotationMethod(); // If the spacebar is pressed the piece should be rotated once.
+        }
+    }
 
 
 
@@ -116,13 +156,13 @@ public class Pentris {
 // here should write the methods which are used when you start a game
     public Pentris(){
 
-
-
+        long startingtime=System.currentTimeMillis();
+        long endingtime;
 
         try{ 
             while(!Lost){
-                nextPiece();
-                Thread.sleep(acceleratePiece());
+                endingtime=System.currentTimeMillis();
+                Thread.sleep((long)fallingAcceleration(endingtime-startingtime));
                 lineCheck();
                 fallingPiece();
             }

@@ -393,11 +393,11 @@ public class PentominoSolver {
                 int[][]gridclone=clone2Dint(grid);
                 Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
 
-                if (checkMinus(gridclone)){
-                    return false;}
-                else{
-                    return true;
-                }
+                 if (checkMinus(gridclone)){
+                     return false;}
+                 else{
+                     return true;
+                 }
             }else{
                 return false;
             }

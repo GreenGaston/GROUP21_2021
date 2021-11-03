@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.Future;
 
+import java.util.Random; // for nextPiece method 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Pentris {
-    public static int[][] grid;
+        public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
+    
+    public int[][] grid;
     //contains current pieceID
     public static int pieceID;
     //contains the held pieceID
@@ -43,7 +46,7 @@ public class Pentris {
     }
 
 
-    //this method should rotate a piece if posible has to rotate left and right
+    //this method should rotate a piece if posible, has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
        
@@ -68,19 +71,6 @@ public class Pentris {
           rotation = FutureRotation;
        }
       
-
-       
-
-        //als ie naar links gaat
-                
-        /* if I enter public void rotatePiece(TRUE). 
-        it should return: rotate right. Het kan na piece check.
-        if it enter public void rotatePiece(FALSE).
-        it should return: rotate left. het kan na piece check.
-
-        daarna: als ik rotation 3 heb, moet ie bij true naar 0.
-        als ik rotation 0 heb, moet ie bij false naar 3
-        */
     }
 
 
@@ -120,10 +110,49 @@ public class Pentris {
 
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
-    public void nextPiece(){
+    public static void nextPiece() { //Lianne
+        // choose randomly from 12 pieces, 
+    pieceIDs.clear();
+    pentPieces.add(0);
+    pentPieces.add(1);
+    pentPieces.add(2);
+    pentPieces.add(3);
+    pentPieces.add(4);
+    pentPieces.add(5);
+    pentPieces.add(6);
+    pentPieces.add(7);
+    pentPieces.add(8);
+    pentPieces.add(9);
+    pentPieces.add(10);
+    pentPieces.add(11);
 
+    if (pentPieces.size() < 1) {
+        pentPieces.clear();
+        pentPieces.add(0);
+        pentPieces.add(1);
+        pentPieces.add(2);
+        pentPieces.add(3);
+        pentPieces.add(4);
+        pentPieces.add(5);
+        pentPieces.add(6);
+        pentPieces.add(7);
+        pentPieces.add(8);
+        pentPieces.add(9);
+        pentPieces.add(10);
+        pentPieces.add(11);
+    }else { 
+        Collections.shuffle(pentPieces);
+        for (int i=0 ; i<pentPieces.size() ; i++) { // go through shuffles arraylist
+            pieceIDs.add(pentPieces.get(i));
+            pentPieces.remove(i);
+        }
+
+        int StartY=0;
+        int StartX=2;
+        // rotations needs to become zero
+        }
     }
-
+    
 
     private int left = KeyEvent.VK_LEFT;
     private int down = KeyEvent.VK_DOWN;
@@ -221,7 +250,7 @@ public class Pentris {
 
 
 //this method only makes an instance of the game
-    public static void main(){
+    public static void main() {
         Pentris game = new Pentris();
 
     } 

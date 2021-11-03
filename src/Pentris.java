@@ -7,7 +7,7 @@ public class Pentris {
     final public static int height=15;
     final public static int width=5;
 
-    //the startposition for every position
+    //the startposition for both the X and the Y
     final public static int StartY=0;
     final public static int StartX=2;
 
@@ -78,21 +78,6 @@ public class Pentris {
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
     public static void nextPiece() { //Lianne
-        // choose randomly from 12 pieces, 
-        pieceIDs.clear(); // remove all IDs from the pieceIDs array
-        pentPieces.add(0);
-        pentPieces.add(1);
-        pentPieces.add(2);
-        pentPieces.add(3);
-        pentPieces.add(4);
-        pentPieces.add(5);
-        pentPieces.add(6);
-        pentPieces.add(7);
-        pentPieces.add(8);
-        pentPieces.add(9);
-        pentPieces.add(10);
-        pentPieces.add(11); // make an arraylist with the pentomino IDs
-
         if (pentPieces.size() < 1) { 
             //If there is only one element in the arraylist, clear the arraylist
             // and add all the IDs to the arraylist again
@@ -117,7 +102,7 @@ public class Pentris {
             }
         PieceX = StartX; // reset starting points
         PieceY = StartY;
-        rotation=0; // reset rotation to 0
+        rotation = 0; // reset rotation to 0
     }
 
     //this method should rotate a piece if posible has to rotate left and right

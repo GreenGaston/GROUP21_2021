@@ -6,7 +6,7 @@ public class Pentris {
     final public static int height=15;
     final public static int width=5;
 
-    //the startposition for every position
+    //the startposition for both the X and the Y
     final public static int StartY=0;
     final public static int StartX=2;
 
@@ -93,7 +93,7 @@ public class Pentris {
             }
         PieceX = StartX; // reset starting points
         PieceY = StartY;
-        rotation=0; // reset rotation to 0
+        rotation = 0; // reset rotation to 0
     }
 
 

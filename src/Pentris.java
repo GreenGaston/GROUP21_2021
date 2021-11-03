@@ -200,9 +200,9 @@ public class Pentris {
             if(count >= grid[line].length){//if the count is equal to the grid[line] lenght then the line is full and needs to be removed.
                 count = 0;
 
-                removeLine(line); //NOTE: after this you need to line--, because you updated the grid!!!!!! DO THIS
+                removeLine(line);
                 
-                line--;
+                line++;
             }
             else{
                 count = 0;

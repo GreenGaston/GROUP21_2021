@@ -53,7 +53,7 @@ public class Pentris {
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
     public void nextPiece(){
-
+        // TODO Lianne van den Broek
     }
 
 
@@ -71,6 +71,7 @@ public class Pentris {
 
     // this method should store a piece and should be able to use the piece at a later time.
     public static void storePiece(){
+        // TODO someone
         System.out.println("Piece is stored!");
     }
 
@@ -94,12 +95,13 @@ public class Pentris {
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
+        // TODO Samanta Dil Mohamed
         System.out.println("Piece is rotated!");
     }
 
     //this method should make the piece fall by 1 if it can fall
     public static void fallingPiece(){
-
+        // TODO someone
     }
 
     
@@ -243,6 +245,7 @@ public class Pentris {
 
         try{ 
             while(!Lost){
+                ui.setState(grid);
                 currentTime=System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
                 Thread.sleep((long)fallingAcceleration(playingTime));

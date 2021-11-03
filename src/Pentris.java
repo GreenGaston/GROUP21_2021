@@ -2,7 +2,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 public class Pentris {
     final public static int height=15;
     final public static int width=5;
@@ -20,8 +19,6 @@ public class Pentris {
     // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
     final public static long millisecondsToSeconds = 1000; 
 
-    
-
     public static int[][] grid = new int[height][width];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     //contains current pieceID
@@ -35,15 +32,12 @@ public class Pentris {
     //contains all pentominoPieces
     public static int[][][][] pentominoDatabase=PentominoDatabase.data;
 
-
     //the current location of a piece
     public static volatile int PieceX=StartX;
     public static volatile int PieceY=StartY;
 
-    
     //variable to end the game
     public static boolean Lost=false;
-
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -53,9 +47,6 @@ public class Pentris {
     private static int space = KeyEvent.VK_SPACE;
     private static int c = KeyEvent.VK_C;
     private static int z = KeyEvent.VK_Z;
-
-
-    
 
 
     //this method should hold the current piece 
@@ -105,6 +96,7 @@ public class Pentris {
         rotation = 0; // reset rotation to 0
     }
 
+
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
@@ -119,7 +111,6 @@ public class Pentris {
     }
 
 
-    
     //Acceleration method, should return an increasingly small int for the amount of second between piece drops
     public static double fallingAcceleration(double time){
         double timeIndicate = 1;
@@ -192,14 +183,10 @@ public class Pentris {
     }
 
 
-
-    
     //this function evaluated if a piece can be placed on a give grid at a certain x and y location
     public static Boolean PieceFit(int[][]grid,int PieceID,int Piecemutation,int x,int y){
         //shorthand for readability
         int[][][][]database=PentominoDatabase.data;
-
-
         //if the x is negative then the starting point is of the grid and therefor invalid
         if(x<0){         
             return false;
@@ -263,7 +250,6 @@ public class Pentris {
     public static void main(String[] args){
         long startingTime=System.currentTimeMillis();
         long currentTime;
-
         UI ui = new UI(width,height,50);
 
         try{ 
@@ -277,8 +263,5 @@ public class Pentris {
             }
         }
         catch(InterruptedException e){}
-
-
-
     } 
 }

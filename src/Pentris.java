@@ -12,28 +12,28 @@ import javax.swing.JPanel;
 public class Pentris {
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     
-    public int[][] grid;
+    public static int[][] grid;
     //contains current pieceID
-    public int pieceID;
+    public static int pieceID;
     //contains the held pieceID
-    public int heldPieceID=-1;
+    public static int heldPieceID=-1;
     //contains rotation
-    public int rotation=0;
+    public static int rotation=0;
     //contains the pieceIDs of the next pieces
-    public ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
+    public static ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
-    public int[][][][] pentominoDatabase=PentominoDatabase.data;
+    public static int[][][][] pentominoDatabase=PentominoDatabase.data;
 
     //the current location of a piece
-    public volatile int PieceX=0;
-    public volatile int PieceY=2;
+    public static volatile int PieceX=0;
+    public static volatile int PieceY=2;
 
     //the startposition for every position
-    public int StartY=0;
-    public int StartX=2;
+    public static int StartY=0;
+    public static int StartX=2;
     
     //variable to end the game
-    public boolean Lost=false;
+    public static boolean Lost=false;
 
 
     //this method should make the piece fall by 1 if it can fall

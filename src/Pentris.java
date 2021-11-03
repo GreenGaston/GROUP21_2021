@@ -7,6 +7,21 @@ public class Pentris {
     final public static int height=15;
     final public static int width=5;
 
+    //the startposition for every position
+    final public static int StartY=0;
+    final public static int StartX=2;
+
+    // This is the minimum amount of seconds the piece waits until it drops 1 down again.
+    final public static double minimumWait = 0.25; 
+    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
+    final public static double accelerationTimeFrame = 10; 
+    // Every time frame the pieces will fall 0.05 seconds faster.
+    final public static double acceleration = 0.05; 
+    // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
+    final public static long millisecondsToSeconds = 1000; 
+
+    
+
     public static int[][] grid = new int[height][width];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     //contains current pieceID
@@ -20,9 +35,6 @@ public class Pentris {
     //contains all pentominoPieces
     public static int[][][][] pentominoDatabase=PentominoDatabase.data;
 
-    //the startposition for every position
-    public static int StartY=0;
-    public static int StartX=2;
 
     //the current location of a piece
     public static volatile int PieceX=StartX;
@@ -33,17 +45,6 @@ public class Pentris {
     public static boolean Lost=false;
 
 
-
-
-    final public static double minimumWait = 0.25; 
-    // This is the minimum amount of seconds the piece waits until it drops 1 down again.
-    final public static double accelerationTimeFrame = 10; 
-    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
-    final public static double acceleration = 0.05; 
-    // Every time frame the pieces will fall 0.05 seconds faster.
-    final public static long millisecondsToSeconds = 1000; 
-    // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
-
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
     private static int right = KeyEvent.VK_RIGHT;
@@ -53,6 +54,8 @@ public class Pentris {
     private static int c = KeyEvent.VK_C;
     private static int z = KeyEvent.VK_Z;
 
+
+    
 
     
     //this method should hold the current piece 

@@ -9,30 +9,31 @@ public class Pentris {
 
     public static int[][] grid = new int[height][width];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
-
     //contains current pieceID
     public static int pieceID;
     //contains the held pieceID
-    public int heldPieceID=-1;
+    public static int heldPieceID=-1;
     //contains rotation
     public static int rotation=0;
     //contains the pieceIDs of the next pieces
     public static ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
-    public int[][][][] pentominoDatabase=PentominoDatabase.data;
-
-    //the current location of a piece
-    public volatile static int PieceX=0;
-    public volatile static int PieceY=2;
+    public static int[][][][] pentominoDatabase=PentominoDatabase.data;
 
     //the startposition for every position
-    final public static int StartY=0;
-    final public static int StartX=2;
+    public static int StartY=0;
+    public static int StartX=2;
+
+    //the current location of a piece
+    public static volatile int PieceX=StartX;
+    public static volatile int PieceY=StartY;
 
     
     //variable to end the game
     public static boolean Lost=false;
-    
+
+
+
 
     final public static double minimumWait = 0.25; 
     // This is the minimum amount of seconds the piece waits until it drops 1 down again.
@@ -42,7 +43,6 @@ public class Pentris {
     // Every time frame the pieces will fall 0.05 seconds faster.
     final public static long millisecondsToSeconds = 1000; 
     // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
-
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -54,73 +54,9 @@ public class Pentris {
     private static int z = KeyEvent.VK_Z;
 
 
-    //this method should update the nextpiece and pieceid variables
-    //every piece should get its turn in 12 pieces
-    public static void nextPiece() { //Lianne
-    // choose randomly from 12 pieces, 
-    pieceIDs.clear();
-    pentPieces.add(0);
-    pentPieces.add(1);
-    pentPieces.add(2);
-    pentPieces.add(3);
-    pentPieces.add(4);
-    pentPieces.add(5);
-    pentPieces.add(6);
-    pentPieces.add(7);
-    pentPieces.add(8);
-    pentPieces.add(9);
-    pentPieces.add(10);
-    pentPieces.add(11);
-
-    if (pentPieces.size() < 1) {
-        pentPieces.clear();
-        pentPieces.add(0);
-        pentPieces.add(1);
-        pentPieces.add(2);
-        pentPieces.add(3);
-        pentPieces.add(4);
-        pentPieces.add(5);
-        pentPieces.add(6);
-        pentPieces.add(7);
-        pentPieces.add(8);
-        pentPieces.add(9);
-        pentPieces.add(10);
-        pentPieces.add(11);
-    }else { 
-        Collections.shuffle(pentPieces);
-        for (int i=0 ; i<pentPieces.size() ; i++) { // go through shuffles arraylist
-            pieceIDs.add(pentPieces.get(i));
-            pentPieces.remove(i);
-        }
-
-        PieceY=StartY;
-        PieceX=StartX;
-        // rotations needs to become zero
-        }
-    }
-
-
-    // this method should drop the piece the bottom most possible place.
-    public static void dropPiece(){
-        pieceDropLoop:
-        for (int i = 1; i < height-PieceY; i++){
-            if (!PieceFit(grid, pieceID, rotation, PieceX, PieceY+i)){
-                PieceY+=i-1;
-                break pieceDropLoop;
-            }
-        }
-        System.out.println("Piece is dropped!");
-    }
-
-    // this method should store a piece and should be able to use the piece at a later time.
-    public static void storePiece(){
-        // TODO someone
-        System.out.println("Piece is stored!");
-    }
-
     
     //this method should hold the current piece 
-    public void holdPiece(){
+    public static void holdPiece(){
         if(heldPieceID==-1){
             heldPieceID=pieceID;
             PieceX=StartX;
@@ -135,6 +71,52 @@ public class Pentris {
         }
     }
 
+
+    //this method should update the nextpiece and pieceid variables
+    //every piece should get its turn in 12 pieces
+    public static void nextPiece() { //Lianne
+        // choose randomly from 12 pieces, 
+        pieceIDs.clear();
+        pentPieces.add(0);
+        pentPieces.add(1);
+        pentPieces.add(2);
+        pentPieces.add(3);
+        pentPieces.add(4);
+        pentPieces.add(5);
+        pentPieces.add(6);
+        pentPieces.add(7);
+        pentPieces.add(8);
+        pentPieces.add(9);
+        pentPieces.add(10);
+        pentPieces.add(11);
+
+        if (pentPieces.size() < 1) {
+            pentPieces.clear();
+            pentPieces.add(0);
+            pentPieces.add(1);
+            pentPieces.add(2);
+            pentPieces.add(3);
+            pentPieces.add(4);
+            pentPieces.add(5);
+            pentPieces.add(6);
+            pentPieces.add(7);
+            pentPieces.add(8);
+            pentPieces.add(9);
+            pentPieces.add(10);
+            pentPieces.add(11);
+        } 
+        
+        Collections.shuffle(pentPieces);
+        for (int i=0 ; i<pentPieces.size() ; i++) { // go through shuffles arraylist
+            pieceIDs.add(pentPieces.get(i));
+            pentPieces.remove(i);
+        }
+
+        PieceX = StartX;
+        PieceY = StartY;
+        // rotations needs to become zero
+    }
+
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
@@ -142,10 +124,14 @@ public class Pentris {
         System.out.println("Piece is rotated!");
     }
 
+
     //this method should make the piece fall by 1 if it can fall
     public static void fallingPiece(){
-        // TODO someone
+        if (PieceFit(grid, pieceID, rotation, PieceX, PieceY+1)){
+            PieceY += 1;
+        }
     }
+
 
     
     //Acceleration method, should return an increasingly small int for the amount of second between piece drops
@@ -158,7 +144,17 @@ public class Pentris {
                 timeIndicate = minimumWait;
                 break countingloop;
             }    
-        }return timeIndicate;}
+        }return timeIndicate;
+    }
+
+
+    public static void dropPiece(){
+        for (int i = 1; i < (grid.length-pentominoDatabase[pieceID][rotation].length); i++){
+            if (!PieceFit(grid, pieceID, rotation, PieceX, PieceY+i)){
+                PieceY += i-1; // Piece has to be added on this Y position
+            }
+        }
+    }
 
     
     //this method removes a line from the grid
@@ -273,8 +269,7 @@ public class Pentris {
             rotatePiece(false); // If the keypad z is pressed the piece should be rotated right once.
 
         }else if (keyCode == c){
-            storePiece(); // If the keypad c is pessed the piece should be stored and used at a later point in the game.
-
+            holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later point in the game.
         }
     }
 

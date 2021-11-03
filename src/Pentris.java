@@ -1,18 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-<<<<<<< HEAD
-import java.util.concurrent.Future;
 
-import java.util.Random; // for nextPiece method 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-public class Pentris {
-        public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
-    
-    public int[][] grid;
-=======
 
 public class Pentris {
     final public static int height=15;
@@ -33,31 +22,22 @@ public class Pentris {
 
     public static int[][] grid = new int[height][width];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     //contains current pieceID
     public static int pieceID;
     //contains the held pieceID
     public static int heldPieceID=-1;
     //contains rotation
     public static int rotation=0;
-<<<<<<< HEAD
 
     public static int FutureRotation;
-=======
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     //contains the pieceIDs of the next pieces
     public static ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     //contains all pentominoPieces
     public static int[][][][] pentominoDatabase=PentominoDatabase.data;
 
     //the current location of a piece
-<<<<<<< HEAD
-    public volatile static int PieceX=0;
-    public volatile static int PieceY=2;
-=======
     public static volatile int PieceX=StartX;
     public static volatile int PieceY=StartY;
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
 
     //variable to end the game
     public static boolean Lost=false;
@@ -123,39 +103,27 @@ public class Pentris {
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
-<<<<<<< HEAD
+        if(right == true){
+            FutureRotation = rotation+1;
+        }else{
+            FutureRotation= rotation-1;
+        }
        
-       if( right == true){
-           FutureRotation = rotation+1;
-       }
+        if(rotation == 3 && right == true){
+            FutureRotation = 0;
+        }else if (rotation == 0 && right == false){
+            FutureRotation = 3;
+        }
 
-       else{
-           FutureRotation= rotation-1;
-       }
-       
-       if(rotation == 3 && right == true){
-        FutureRotation = 0;
-        
-       }
-
-       else if (rotation == 0 && right == false){
-           FutureRotation = 3;
-       }
-
-       if (PieceFit(grid, pieceID, FutureRotation, PieceX, PieceY)){
-          rotation = FutureRotation;
-       }
-      
-=======
-        // TODO Samanta Dil Mohamed
-        System.out.println("Piece is rotated!");
+        if (PieceFit(grid, pieceID, FutureRotation, PieceX, PieceY)){
+            rotation = FutureRotation;
+        }      
     }
 
 
     //this method should make the piece fall by 1 if it can fall
     public static void fallingPiece(){
         // TODO Yuxuan Kong
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     }
 
 
@@ -206,35 +174,10 @@ public class Pentris {
     }
 
 
-<<<<<<< HEAD
     
-    //this method should update its location and rotation based on keypad inputs
-    public void keypadMethod(KeyEvent event) {
-        int keyCode = event.getKeyCode();
-        if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
-            
-                PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
-            //System.out.println("pieceX = "+pieceX); 
-        }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
-            
-                PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
-            
-            //System.out.println("pieceX = "+pieceX);
-        }else if (keyCode == down) {
-            if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
-                PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
-                fallingPiece();
-            }
-            System.out.println("pieceY = "+PieceY);
-        }else if (keyCode == space) {
-            rotatePiece(true); // If the spacebar is pressed the piece should be rotated once.
-        }
-    }
-=======
     //this method should check if a line is full
     public static void lineCheck(){
         int count = 0; 
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
 
         for(int line = grid.length - 1; line >= 0; line--){//checks for every line if it is full
             for(int i = 0; i < grid[line].length; i++){//assuming grid is a public variable

@@ -114,10 +114,10 @@ public class Pentris {
             for (int i=0 ; i<pentPieces.size() ; i++) { // loop through shuffled arraylist
                 pieceIDs.add(pentPieces.get(i)); // take the first ID and add it to the pieceIDs arraylist
                 pentPieces.remove(i); // remove that piece from the pentPieces arraylist
-                PieceX = StartX; // reset starting points
-                PieceY = StartY;
-                rotation=0; // reset rotation to 0
             }
+        PieceX = StartX; // reset starting points
+        PieceY = StartY;
+        rotation=0; // reset rotation to 0
     }
 
     //this method should rotate a piece if posible has to rotate left and right

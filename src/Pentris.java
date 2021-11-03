@@ -57,7 +57,7 @@ public class Pentris {
 
     
 
-    
+
     //this method should hold the current piece 
     public static void holdPiece(){
         if(heldPieceID==-1){
@@ -130,9 +130,7 @@ public class Pentris {
 
     //this method should make the piece fall by 1 if it can fall
     public static void fallingPiece(){
-        if (PieceFit(grid, pieceID, rotation, PieceX, PieceY+1)){
-            PieceY += 1;
-        }
+        // TODO Yuxuan Kong
     }
 
 

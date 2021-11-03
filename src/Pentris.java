@@ -73,12 +73,49 @@ public class Pentris {
 
     //this method removes a line from the grid
     public void removeLine(int line){
-
+        int[][] updatedGrid = new int[grid.length][grid[0].length];
+        int[] clearLine = new int[updatedGrid[0].length]; // creates a 1D array that stores a empty line
+        for(int i = 0; i< updatedGrid[0].length; i++){//fills the array with empty blocks
+            clearLine[i] = -1;
+        }
+       
+        int placeInUpdatedGrid = updatedGrid.length - 1;
+        for(int j = updatedGrid.length; j >= 0; j--){ //maps through the grid and stores everything int the updated grid that is not in the filled line
+            if(j == line){
+                j--;
+            }
+            try{
+                updatedGrid[placeInUpdatedGrid] = grid[j];
+                placeInUpdatedGrid--;
+            }catch(Exception e){}
+            
+        }
+        updatedGrid[0] = clearLine; // fills the top of the grid with empty lines
+        grid = updatedGrid; //updates the grid
+        
     }
 
 
     //this method should check if a line is full
     public void lineCheck(){
+            int count = 0; 
+
+            for(int line = grid.length - 1; line >= 0; line--){//checks for every line if it is full
+                for(int i = 0; i < grid[line].length; i++){//assuming grid is a public variable
+                    if(grid[line][i] > -1){//checks if every element in a line is > than -1 and thus filled
+                        count++;
+                    }
+                }
+                if(count >= grid[line].length){//if the count is equal to the grid[line] lenght then the line is full and needs to be removed.
+                    count = 0;
+                    removeLine(line); 
+                    line++; 
+                    
+                }
+                else{
+                    count = 0;
+                }
+            }
 
     }
 

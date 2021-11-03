@@ -94,7 +94,6 @@ public class Pentris {
         pentPieces.add(11); // make an arraylist with the pentomino IDs
 
         if (pentPieces.size() < 1) { 
-            pieceIDs.addAll(pentPieces); // add element to the pieceIDs arraylist
             //If there is only one element in the arraylist, clear the arraylist
             // and add all the IDs to the arraylist again
             pentPieces.clear();
@@ -110,10 +109,7 @@ public class Pentris {
             pentPieces.add(9);
             pentPieces.add(10);
             pentPieces.add(11); 
-            PieceX = StartX; // reset starting points
-            PieceY = StartY;
-            rotation=0; // reset rotation to 0
-        }else { // If there's more than one element in the arraylist, you can get a pentomino out of the list
+        } // If there's more than one element in the arraylist, you can get a pentomino out of the list
         Collections.shuffle(pentPieces); // randomize the order of the arraylist
             for (int i=0 ; i<pentPieces.size() ; i++) { // loop through shuffled arraylist
                 pieceIDs.add(pentPieces.get(i)); // take the first ID and add it to the pieceIDs arraylist
@@ -122,7 +118,6 @@ public class Pentris {
                 PieceY = StartY;
                 rotation=0; // reset rotation to 0
             }
-        }
     }
 
     //this method should rotate a piece if posible has to rotate left and right

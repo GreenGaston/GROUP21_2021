@@ -10,6 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Pentris {
+
+    public Pentris game;
+
+
+
+
     public int[][] grid;
     //contains current pieceID
     public int pieceID;
@@ -33,7 +39,7 @@ public class Pentris {
     //variable to end the game
     public boolean Lost=false;
 
-
+    public UI ui;
     //this method should make the piece fall by 1 if it can fall
     public void fallingPiece(){
 
@@ -92,30 +98,22 @@ public class Pentris {
     //this method should update its location and rotation based on keypad inputs
     public void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
-<<<<<<< HEAD
         if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
             
-=======
-        if (keyCode == left) {  
-            if (PieceX != 0 && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)){
->>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
-            //System.out.println("pieceX = "+pieceX); 
+            System.out.println("pieceX = "+PieceX); 
         }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
-<<<<<<< HEAD
             
-=======
-            if (PieceX != width-1){
->>>>>>> 1f78f9e4e5de1f578c959f3c935092bfa38f6a49
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
             
-            //System.out.println("pieceX = "+pieceX);
+            System.out.println("pieceX = "+PieceX);
         }else if (keyCode == down) {
+            System.out.println("pieceY = "+PieceY);
             if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
                 fallingPiece();
             }
-            System.out.println("pieceY = "+PieceY);
+            
         }else if (keyCode == space) {
             rotatePiece(true); // If the spacebar is pressed the piece should be rotated once.
         }
@@ -175,6 +173,11 @@ public class Pentris {
     public Pentris(){
         long startingtime=System.currentTimeMillis();
         long endingtime;
+        ui=new UI(5,15,50);
+
+
+
+
         try{ 
             while(!Lost){
                 endingtime=System.currentTimeMillis();
@@ -187,8 +190,10 @@ public class Pentris {
     }
 
 
+
+    
 //this method only makes an instance of the game
-    public static void main(){
+    public static void main(String[] args){
         Pentris game = new Pentris();
 
     } 

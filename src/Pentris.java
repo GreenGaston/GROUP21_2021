@@ -118,13 +118,12 @@ public class Pentris {
     }else { 
         Collections.shuffle(pentPieces);
         for (int i=0 ; i<pentPieces.size() ; i++) { // go through shuffles arraylist
-            pieceIDs.add(pentPieces.get(i));
+            ArrayList<Integer> pieceIDs.add(pentPieces.get(i));
             pentPieces.remove(i);
         }
-
         int StartY=0;
         int StartX=2;
-        // rotations needs to become zero
+        int rotation=0;
         }
     }
     

@@ -79,7 +79,7 @@ public class Pentris {
     //every piece should get its turn in 12 pieces
     public static void nextPiece() { //Lianne
         // choose randomly from 12 pieces, 
-        pieceIDs.clear();
+        pieceIDs.clear(); // remove all IDs from the pieceIDs array
         pentPieces.add(0);
         pentPieces.add(1);
         pentPieces.add(2);
@@ -91,9 +91,12 @@ public class Pentris {
         pentPieces.add(8);
         pentPieces.add(9);
         pentPieces.add(10);
-        pentPieces.add(11);
+        pentPieces.add(11); // make an arraylist with the pentomino IDs
 
-        if (pentPieces.size() < 1) {
+        if (pentPieces.size() < 1) { 
+            pieceIDs.addAll(pentPieces); // add element to the pieceIDs arraylist
+            //If there is only one element in the arraylist, clear the arraylist
+            // and add all the IDs to the arraylist again
             pentPieces.clear();
             pentPieces.add(0);
             pentPieces.add(1);
@@ -106,18 +109,20 @@ public class Pentris {
             pentPieces.add(8);
             pentPieces.add(9);
             pentPieces.add(10);
-            pentPieces.add(11);
-        } 
-        
-        Collections.shuffle(pentPieces);
-        for (int i=0 ; i<pentPieces.size() ; i++) { // go through shuffles arraylist
-            pieceIDs.add(pentPieces.get(i));
-            pentPieces.remove(i);
+            pentPieces.add(11); 
+            PieceX = StartX; // reset starting points
+            PieceY = StartY;
+            rotation=0; // reset rotation to 0
+        }else { // If there's more than one element in the arraylist, you can get a pentomino out of the list
+        Collections.shuffle(pentPieces); // randomize the order of the arraylist
+            for (int i=0 ; i<pentPieces.size() ; i++) { // loop through shuffled arraylist
+                pieceIDs.add(pentPieces.get(i)); // take the first ID and add it to the pieceIDs arraylist
+                pentPieces.remove(i); // remove that piece from the pentPieces arraylist
+                PieceX = StartX; // reset starting points
+                PieceY = StartY;
+                rotation=0; // reset rotation to 0
+            }
         }
-
-        PieceX = StartX;
-        PieceY = StartY;
-        // rotations needs to become zero
     }
 
     //this method should rotate a piece if posible has to rotate left and right

@@ -119,21 +119,13 @@ public class UI extends JPanel implements KeyListener
         repaint();
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
-        Pentris.keypadMethod(e);
-        
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
+        Pentris.keypadMethod(e);
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
+    public void keyReleased(KeyEvent e) {        
     }
 }

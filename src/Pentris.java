@@ -2,17 +2,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Pentris {
-<<<<<<< HEAD
-
-    public Pentris game;
-
-
-
-
-    public int[][] grid;
-=======
     public static int[][] grid;
->>>>>>> 46805065896648830ac1cb1435c925c8739074a4
     //contains current pieceID
     public static int pieceID;
     //contains the held pieceID
@@ -39,11 +29,6 @@ public class Pentris {
     public static boolean Lost=false;
     
 
-<<<<<<< HEAD
-    public UI ui;
-    //this method should make the piece fall by 1 if it can fall
-    public void fallingPiece(){
-=======
     final public static double minimumWait = 0.25; 
     // This is the minimum amount of seconds the piece waits until it drops 1 down again.
     final public static double accelerationTimeFrame = 10; 
@@ -67,7 +52,6 @@ public class Pentris {
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
     public void nextPiece(){
->>>>>>> 46805065896648830ac1cb1435c925c8739074a4
 
     }
 
@@ -141,24 +125,6 @@ public class Pentris {
     //this method should update its location and rotation based on keypad inputs
     public static void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
-<<<<<<< HEAD
-        if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
-            
-                PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
-            System.out.println("pieceX = "+PieceX); 
-        }else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceX+1,PieceY)) {
-            
-                PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right. That's why the x coordinate of the piece is added by 1.
-            
-            System.out.println("pieceX = "+PieceX);
-        }else if (keyCode == down) {
-            System.out.println("pieceY = "+PieceY);
-            if (PieceFit(grid,pieceID,rotation,PieceX, PieceY+1)){
-                PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it is going to be placed. (To show it smoothly in the UI, drop it down using a much smaller wait then when playing the normal way.)
-                fallingPiece();
-            }
-            
-=======
 
         if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {  
             PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left. That's why the x coordinate of the piece is subtracted by 1.
@@ -176,7 +142,6 @@ public class Pentris {
         }else if (keyCode == up){
             rotatePiece(true); // If the keypad up is pressed the piece should be rotated right once.
         
->>>>>>> 46805065896648830ac1cb1435c925c8739074a4
         }else if (keyCode == space) {
             dropPiece(); // Drop the piece if spacebar is pressed.
 
@@ -230,16 +195,6 @@ public class Pentris {
     }
 
 
-<<<<<<< HEAD
-// here should write the methods which are used when you start a game
-    public Pentris(){
-        long startingtime=System.currentTimeMillis();
-        long endingtime;
-        ui=new UI(5,15,50);
-
-
-
-=======
 
 //this method only makes an instance of the game
     public static void main(String[] args){
@@ -247,28 +202,21 @@ public class Pentris {
         long currentTime;
 
         UI ui = new UI(width,height,50);
->>>>>>> 46805065896648830ac1cb1435c925c8739074a4
 
         try{ 
             while(!Lost){
                 currentTime=System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
                 Thread.sleep((long)fallingAcceleration(playingTime));
-                lineCheck();
                 fallingPiece();
+                lineCheck();
+                
+                
             }
         }
         catch(InterruptedException e){}
 
 
-<<<<<<< HEAD
-
-    
-//this method only makes an instance of the game
-    public static void main(String[] args){
-        Pentris game = new Pentris();
-=======
->>>>>>> 46805065896648830ac1cb1435c925c8739074a4
 
     } 
 }

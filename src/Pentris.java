@@ -298,10 +298,10 @@ public class Pentris {
 
 
     public static void placePiece(){
-        Search.addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+        addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         nextPiece();
         if(!PieceFit(grid, pieceID, rotation, StartY, StartX)){
-            Lost=false;
+            Lost=true;
             
         }
         
@@ -318,6 +318,23 @@ public class Pentris {
         return clone;
     }
 
+
+    public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
+		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
+		{
+			for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
+			{
+				if (piece[i][j] == 1) {
+					// Add the ID of the pentomino to the board if the pentomino occupies this
+					// square
+					field[x + i][y + j] = pieceID;
+				}
+			}
+		}
+	}
+
+
+
     public static void main(String[] args) {
         for (int i=0;i<grid.length;i++){
             for(int j=0;j<grid[i].length;j++){
@@ -327,7 +344,7 @@ public class Pentris {
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
-        UI ui = new UI(width, height, 50);
+        UI ui = new UI(width, height, 30);
         int[][]gridclone=clone2Dint(grid);
         try {
             while (!Lost) {
@@ -340,7 +357,7 @@ public class Pentris {
                 fallingPiece();
                 lineCheck();
                 gridclone=clone2Dint(grid);
-                Search.addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+                addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
                 
                 
             }

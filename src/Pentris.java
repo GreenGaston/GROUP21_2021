@@ -21,6 +21,8 @@ public class Pentris {
     // Thread.sleep(long milliseconds) to convert the milliseconds to seconds
     final public static long millisecondsToSeconds = 1000;
 
+    static UI ui = new UI(width, height, 50);
+
     public static int[][] grid = new int[width][height];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     // contains current pieceID
@@ -273,10 +275,8 @@ public class Pentris {
             //System.out.println("pieceX = " + PieceX);
 
         } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY+1, PieceX)) {
-            PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it
-                         // is going to be placed. (To show it smoothly in the UI, drop it down using a
-                         // much smaller wait then when playing the normal way.)
-            fallingPiece();
+            PieceY += 1; // If the keypad down is pressed the piece should go down one extra place on
+                         // on top of the standard falling of the piece.
             //System.out.println("pieceY = " + PieceY);
 
         } else if (keyCode == up) {
@@ -284,7 +284,8 @@ public class Pentris {
 
         } else if (keyCode == space) {
             //System.out.println("check");
-            dropPiece(); // Drop the piece if spacebar is pressed.
+            dropPiece(); // Drop the piece if spacebar is pressed. Drop it to the place where it is
+                         // going to be placed as far down as possible
 
         } else if (keyCode == z) {
             rotatePiece(false); // If the keypad z is pressed the piece should be rotated right once.
@@ -292,6 +293,15 @@ public class Pentris {
         } else if (keyCode == c) {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
+        }
+
+        int[][] gridclone = clone2Dint(grid);
+
+        // Show the updated grid in the UI everytime a key is pressed.
+        if (PieceFit(gridclone, pieceID, rotation, PieceX, PieceY)){
+            grid = clone2Dint(gridclone);
+            Search.addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+            ui.setState(grid);      
         }
 
     }
@@ -304,8 +314,6 @@ public class Pentris {
             Lost=false;
             
         }
-        
-
     }
 
     public static int[][] clone2Dint(int[][] list) {
@@ -327,11 +335,10 @@ public class Pentris {
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
-        UI ui = new UI(width, height, 50);
         int[][]gridclone=clone2Dint(grid);
         try {
             while (!Lost) {
-                System.out.println("frame");
+                // System.out.println("frame");
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;

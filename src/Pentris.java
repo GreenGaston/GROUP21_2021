@@ -7,8 +7,8 @@ public class Pentris {
     final public static int width = 5;
 
     // the startposition for both the X and the Y
+    final public static int StartX = 2;
     final public static int StartY = 0;
-    final public static int StartX = 0;
 
     // This is the minimum amount of seconds the piece waits until it drops 1 down
     // again.

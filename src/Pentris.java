@@ -21,7 +21,7 @@ public class Pentris {
     // Thread.sleep(long milliseconds) to convert the milliseconds to seconds
     final public static long millisecondsToSeconds = 1000;
 
-    static UI ui = new UI(width, height, 50);
+    static UI ui;
 
     public static int[][] grid = new int[width][height];
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
@@ -338,12 +338,16 @@ public class Pentris {
         }
     }
 
-    public static void main(String[] args) {
+    public static void fillGridEmpty(int[][] grid){
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = -1;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        fillGridEmpty(grid);
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
@@ -351,17 +355,21 @@ public class Pentris {
         int[][] gridclone = clone2Dint(grid);
         try {
             while (!Lost) {
-                // System.out.println("frame");
                 ui.setState(gridclone);
+
+                // Wait a little moment before dropping the piece 1 block. This is on basis of the time the player is playing.
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
                 Thread.sleep((long) fallingAcceleration(playingTime));
 
+                // Drop the piece 1 block if it can be dropped
                 fallingPiece();
+                // Check if there is a full line on the grid.
+                    // If so, remove it and update the grid so every line above the removed line is dropped 1 line.
                 lineCheck();
+
                 gridclone = clone2Dint(grid);
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-
             }
         } catch (InterruptedException e) {
         }

@@ -54,11 +54,11 @@ public class UI extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         Graphics2D localGraphics2D = (Graphics2D) g;
 
-        localGraphics2D.setColor(Color.LIGHT_GRAY);
+        localGraphics2D.setColor(Color.WHITE);
         localGraphics2D.fill(getVisibleRect());
 
         // draw lines
-        localGraphics2D.setColor(Color.GRAY);
+        localGraphics2D.setColor(Color.WHITE);
         for (int i = 0; i <= state.length; i++) {
             localGraphics2D.drawLine(i * size, 0, i * size, state[0].length * size);
         }
@@ -108,7 +108,7 @@ public class UI extends JPanel implements KeyListener {
         } else if (i == 11) {
             return new Color(0, 100, 0);
         } else {
-            return Color.LIGHT_GRAY;
+            return Color.BLACK;
         }
     }
 

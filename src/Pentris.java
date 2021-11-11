@@ -1,7 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-<<<<<<< HEAD
 import java.util.concurrent.Future;
 
 import java.util.Random; // for nextPiece method 
@@ -12,52 +11,22 @@ public class Pentris {
         public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     
     public int[][] grid;
-=======
-
-public class Pentris {
-    final public static int height=15;
-    final public static int width=5;
-
-    //the startposition for both the X and the Y
-    final public static int StartY=0;
-    final public static int StartX=2;
-
-    // This is the minimum amount of seconds the piece waits until it drops 1 down again.
-    final public static double minimumWait = 0.25; 
-    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
-    final public static double accelerationTimeFrame = 10; 
-    // Every time frame the pieces will fall 0.05 seconds faster.
-    final public static double acceleration = 0.05; 
-    // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
-    final public static long millisecondsToSeconds = 1000; 
-
-    public static int[][] grid = new int[height][width];
-    public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     //contains current pieceID
     public static int pieceID;
     //contains the held pieceID
     public static int heldPieceID=-1;
     //contains rotation
     public static int rotation=0;
-<<<<<<< HEAD
 
     public static int FutureRotation;
-=======
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     //contains the pieceIDs of the next pieces
     public static ArrayList<Integer> pieceIDs = new ArrayList<Integer>();
     // contains all pentominoPieces
     public static int[][][][] pentominoDatabase = PentominoDatabase.data;
 
     //the current location of a piece
-<<<<<<< HEAD
     public volatile static int PieceX=0;
     public volatile static int PieceY=2;
-=======
-    public static volatile int PieceX=StartX;
-    public static volatile int PieceY=StartY;
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
 
     // variable to end the game
     public static boolean Lost = false;
@@ -134,7 +103,6 @@ public class Pentris {
     //this method should rotate a piece if posible has to rotate left and right
     //this should be done in the rotation variable
     public static void rotatePiece(Boolean right){
-<<<<<<< HEAD
        
        if( right == true){
            FutureRotation = rotation+1;
@@ -157,16 +125,6 @@ public class Pentris {
           rotation = FutureRotation;
        }
       
-=======
-        // TODO Samanta Dil Mohamed
-        System.out.println("Piece is rotated!");
-    }
-
-
-    //this method should make the piece fall by 1 if it can fall
-    public static void fallingPiece(){
-        // TODO Yuxuan Kong
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
     }
 
     // this method should make the piece fall by 1 if it can fall
@@ -212,10 +170,9 @@ public class Pentris {
         int placeInGrid;
 
 
-<<<<<<< HEAD
     
     //this method should update its location and rotation based on keypad inputs
-    public void keypadMethod(KeyEvent event) {
+    public static void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
         if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
             
@@ -234,11 +191,6 @@ public class Pentris {
         }
         grid = updatedGrid;
     }
-=======
-    //this method should check if a line is full
-    public static void lineCheck(){
-        int count = 0; 
->>>>>>> 91b4a668fe91af6ebc1ef37b7343b566c8fcdc4b
 
             for(int line = grid[0].length - 1; line >= 0; line--){//loops through every line
                 for(int i = 0; i < grid.length; i++){//loops through the width

@@ -172,7 +172,7 @@ public class Pentris {
 
     
     //this method should update its location and rotation based on keypad inputs
-    public void keypadMethod(KeyEvent event) {
+    public static void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
         if (keyCode == left && PieceFit(grid,pieceID,rotation,PieceX-1,PieceY)) {
             

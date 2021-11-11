@@ -84,13 +84,13 @@ public class UI extends JPanel implements KeyListener {
      */
     private Color GetColorOfID(int i) {
         if (i == 0) {
-            return Color.BLUE;
+            return Color.BLUE.brighter();
         } else if (i == 1) {
-            return Color.ORANGE;
+            return Color.GREEN.brighter();
         } else if (i == 2) {
             return Color.CYAN;
         } else if (i == 3) {
-            return Color.GREEN;
+            return Color.GREEN.darker();
         } else if (i == 4) {
             return Color.MAGENTA;
         } else if (i == 5) {
@@ -98,7 +98,7 @@ public class UI extends JPanel implements KeyListener {
         } else if (i == 6) {
             return Color.RED;
         } else if (i == 7) {
-            return Color.YELLOW;
+            return Color.RED.brighter();
         } else if (i == 8) {
             return new Color(0, 0, 0);
         } else if (i == 9) {

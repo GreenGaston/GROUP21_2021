@@ -95,7 +95,6 @@ public class Pentris {
         if (pentPieces.isEmpty()) {
             // If there is only one element in the arraylist, clear the arraylist
             // and add all the IDs to the arraylist again
-            pieceIDs.clear(); // remove all IDs from the pieceIDs array
             pentPieces.add(0);
             pentPieces.add(1);
             pentPieces.add(2);
@@ -111,8 +110,7 @@ public class Pentris {
             Collections.shuffle(pentPieces); // randomize the order of the arraylist
         } // If there's more than one element in the arraylist, you can get a
           // pentomino out of the list
-        pieceIDs.add(pentPieces.get(0)); // take the first ID and add it to the
-        pieceID = pieceIDs.get(0);
+        pieceID = pentPieces.get(0); // take the first ID and add it to the
         // pieceIDs arraylist
         pentPieces.remove(0); // remove that piece from the pentPieces arraylist
 

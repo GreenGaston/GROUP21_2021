@@ -92,7 +92,7 @@ public class Pentris {
         PieceX = StartX; // reset starting points
         PieceY = StartY;
         rotation = 0; // reset rotation to 0
-        if (pentPieces.size() < 1) {
+        if (pentPieces.isEmpty()) {
             // If there is only one element in the arraylist, clear the arraylist
             // and add all the IDs to the arraylist again
             pieceIDs.clear(); // remove all IDs from the pieceIDs array
@@ -112,6 +112,7 @@ public class Pentris {
         } // If there's more than one element in the arraylist, you can get a
           // pentomino out of the list
         pieceIDs.add(pentPieces.get(0)); // take the first ID and add it to the
+        pieceID = pieceIDs.get(0);
         // pieceIDs arraylist
         pentPieces.remove(0); // remove that piece from the pentPieces arraylist
 

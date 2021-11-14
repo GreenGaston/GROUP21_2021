@@ -1,6 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import java.util.concurrent.Future;
 
 import java.util.Random; // for nextPiece method 
@@ -8,6 +9,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Pentris {
+    final public static int height=15;
+    final public static int width=5;
+
+    //the startposition for both the X and the Y
+    final public static int StartY=0;
+    final public static int StartX=2;
+
+    // This is the minimum amount of seconds the piece waits until it drops 1 down again.
+    final public static double minimumWait = 0.25; 
+    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
+    final public static double accelerationTimeFrame = 10; 
+    // Every time frame the pieces will fall 0.05 seconds faster.
+    final public static double acceleration = 0.05; 
+    // Milliseconds times 1000 creates seconds. //// This will be used for the Thread.sleep(long milliseconds) to convert the milliseconds to seconds
+    final public static long millisecondsToSeconds = 1000; 
+
+    public static int[][] grid = new int[height][width];
+    public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
         public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     
     public int[][] grid;
@@ -27,6 +46,9 @@ public class Pentris {
     //the current location of a piece
     public volatile static int PieceX=0;
     public volatile static int PieceY=2;
+
+    public static volatile int PieceX=StartX;
+    public static volatile int PieceY=StartY;
 
     // variable to end the game
     public static boolean Lost = false;
@@ -54,6 +76,7 @@ public class Pentris {
             PieceX = StartX;
             PieceY = StartY;
         }
+        
     }
 
     // private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
@@ -78,9 +101,10 @@ public class Pentris {
         PieceX = StartX; // reset starting points
         PieceY = StartY;
         rotation = 0; // reset rotation to 0
-        if (pentPieces.isEmpty()) {
+        if (pentPieces.size() < 1) {
             // If there is only one element in the arraylist, clear the arraylist
             // and add all the IDs to the arraylist again
+            pieceIDs.clear(); // remove all IDs from the pieceIDs array
             pentPieces.add(0);
             pentPieces.add(1);
             pentPieces.add(2);
@@ -96,7 +120,7 @@ public class Pentris {
             Collections.shuffle(pentPieces); // randomize the order of the arraylist
         } // If there's more than one element in the arraylist, you can get a
           // pentomino out of the list
-        pieceID = pentPieces.get(0); // take the first ID and add it to the
+        pieceIDs.add(pentPieces.get(0)); // take the first ID and add it to the
         // pieceIDs arraylist
         pentPieces.remove(0); // remove that piece from the pentPieces arraylist
     }
@@ -170,7 +194,7 @@ public class Pentris {
         int placeInGrid;
 
 
-    
+    }
     //this method should update its location and rotation based on keypad inputs
     public static void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
@@ -190,7 +214,7 @@ public class Pentris {
             }
         }
         grid = updatedGrid;
-    }
+    
 
             for(int line = grid[0].length - 1; line >= 0; line--){//loops through every line
                 for(int i = 0; i < grid.length; i++){//loops through the width
@@ -283,7 +307,7 @@ public class Pentris {
         int[][] gridclone = clone2Dint(grid);
 
         // Show the updated grid in the UI everytime a key is pressed.
-        if (PieceFit(gridclone, pieceID, rotation, PieceX, PieceY)) {
+    if (PieceFit(gridclone, pieceID, rotation, PieceX, PieceY)) {
             grid = clone2Dint(gridclone);
             Search.addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
             ui.setState(grid);
@@ -362,4 +386,5 @@ public class Pentris {
     }
 }
 public static void keypadMethod(KeyEvent e) {
+}
 }

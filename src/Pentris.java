@@ -232,7 +232,13 @@ public class Pentris {
         if (x < 0) {
             return false;
             // if the piece doesnt extend past the borders
-        } else if (grid.length > y + database[PieceID][Piecemutation].length - 1) {
+        } 
+        else if(y<0){
+            return false;
+        }
+            
+        
+        else if (grid.length > y + database[PieceID][Piecemutation].length - 1) {
             if (grid[0].length > x + database[PieceID][Piecemutation][0].length - 1) {
                 // then it wil check for every square whether the matrix has a 1 there(meaning
                 // its a square to be placed)

@@ -43,6 +43,9 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
+    public static UI ui = new UI(width, height, 30);
+    public static int[][]gridclone=clone2Dint(grid);
+
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
     private static int right = KeyEvent.VK_RIGHT;
@@ -165,11 +168,15 @@ public class Pentris {
             //System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY+i, PieceX)) {
                 //System.out.println("her");
+                
 
                 PieceY += i - 1; // Piece has to be added on this Y position
+                placePiece();
+                nextPiece();
                 break;
             }
         }
+        
     }
 
     //this method removes a line from the grid
@@ -298,6 +305,9 @@ public class Pentris {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
         }
+        gridclone=clone2Dint(grid);
+        addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+        ui.setState(gridclone);
 
     }
 
@@ -349,10 +359,12 @@ public class Pentris {
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
-        UI ui = new UI(width, height, 30);
-        int[][]gridclone=clone2Dint(grid);
+        gridclone=clone2Dint(grid);
         try {
             while (!Lost) {
+                gridclone=clone2Dint(grid);
+                addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+                
                 System.out.println("frame");
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
@@ -361,8 +373,6 @@ public class Pentris {
     
                 fallingPiece();
                 lineCheck();
-                gridclone=clone2Dint(grid);
-                addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
                 
                 
             }

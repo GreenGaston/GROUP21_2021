@@ -16,9 +16,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-
-
-
 public class Pentris {
     final public static int height = 18;
     final public static int width = 8;
@@ -61,8 +58,8 @@ public class Pentris {
     public static boolean Lost = false;
 
     public static UI ui = new UI(width, height, 30);
-    public static int[][]gridclone=clone2Dint(grid);
-    public static boolean BEEP=false;
+    public static int[][] gridclone = clone2Dint(grid);
+    public static boolean BEEP = false;
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -85,68 +82,39 @@ public class Pentris {
             heldPieceID = pieceID;
             PieceX = StartX;
             PieceY = StartY;
-            holdCharge=false;
+            holdCharge = false;
             nextPiece();
         } else {
-            if(holdCharge){
+            if (holdCharge) {
                 int temp = pieceID;
                 pieceID = heldPieceID;
                 heldPieceID = temp;
                 PieceX = StartX;
                 PieceY = StartY;
-                holdCharge=false;
+                holdCharge = false;
             }
         }
     }
 
-    public static int[] idlist=new int[12];
+    public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
+
     public static void nextPiece() {
-        PieceX=StartX;
-        PieceY=StartY;
+        PieceX = StartX;
+        PieceY = StartY;
         rotation = 0;
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6,7,8,9,10,11);
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             Collections.shuffle(nextPieces);
         }
 
-        //this is a suprise code for later!
-        idlist[nextPieces.get(0)]+=1;
-        //System.out.println(nextPieces.get(0));
+        // this is a suprise code for later!
+        idlist[nextPieces.get(0)] += 1;
+        // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
-    
+
     }
-    // this method should update the nextpiece and pieceid variables
-    // every piece should get its turn in 12 pieces
-        // public static void nextPiece() { // Lianne
-        //     if (pentPieces.size() < 1) {
-        //         // If there is only one element in the arraylist, clear the arraylist
-        //         // and add all the IDs to the arraylist again
-        //         pieceIDs.clear(); // remove all IDs from the pieceIDs array
-        //         pentPieces.add(0);
-        //         pentPieces.add(1);
-        //         pentPieces.add(2);
-        //         pentPieces.add(3);
-        //         pentPieces.add(4);
-        //         pentPieces.add(5);
-        //         pentPieces.add(6);
-        //         pentPieces.add(7);
-        //         pentPieces.add(8);
-        //         pentPieces.add(9);
-        //         pentPieces.add(10);
-        //         pentPieces.add(11); // make an arraylist with the pentomino IDs
-        //     } // If there's more than one element in the arraylist, you can get a pentomino
-        //     // out of the list
-        //     Collections.shuffle(pentPieces); // randomize the order of the arraylist
-        //     for (int i = 0; i < pentPieces.size(); i++) { // loop through shuffled arraylist
-        //         pieceIDs.add(pentPieces.get(i)); // take the first ID and add it to the pieceIDs arraylist
-        //         pentPieces.remove(i); // remove that piece from the pentPieces arraylist
-        //     }
-        //     PieceX = StartX; // reset starting points
-        //     PieceY = StartY;
-        //     rotation = 0; // reset rotation to 0
-        // }
 
     // this method should rotate a piece if posible has to rotate left and right
     // this should be done in the rotation variable
@@ -171,27 +139,26 @@ public class Pentris {
     public static void playMidi() {
         try {
             // Obtains the default Sequencer connected to a default device.
-        Sequencer sequencer = MidiSystem.getSequencer();
- 
-        // Opens the device, indicating that it should now acquire any
-        // system resources it requires and become operational.
-        sequencer.open();
- 
-        // create a stream from a file
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("pentris.mid")));
- 
-        // Sets the current sequence on which the sequencer operates.
-        // The stream must point to MIDI file data.
-        sequencer.setSequence(is);
- 
-        // Starts playback of the MIDI data in the currently loaded sequence.
-        sequencer.start();
+            Sequencer sequencer = MidiSystem.getSequencer();
+
+            // Opens the device, indicating that it should now acquire any
+            // system resources it requires and become operational.
+            sequencer.open();
+
+            // create a stream from a file
+            InputStream is = new BufferedInputStream(new FileInputStream(new File("pentris.mid")));
+
+            // Sets the current sequence on which the sequencer operates.
+            // The stream must point to MIDI file data.
+            sequencer.setSequence(is);
+
+            // Starts playback of the MIDI data in the currently loaded sequence.
+            sequencer.start();
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
 
     }
-
 
     public static void playSound(String path) {
         try {
@@ -199,24 +166,21 @@ public class Pentris {
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
     }
 
-
-
     // this method should make the piece fall by 1 if it can fall
     public static void fallingPiece() {
-        if(PieceFit(grid, pieceID,rotation,PieceY+1,PieceX)){
-            PieceY+=1;
-            //System.out.println("fell");
-        }
-        else{
+        if (PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
+            PieceY += 1;
+            // System.out.println("fell");
+        } else {
             placePiece();
             playSound("beep.wav");
-            holdCharge=true;
+            holdCharge = true;
         }
     }
 
@@ -235,77 +199,72 @@ public class Pentris {
     }
 
     public static void dropPiece() {
-        
+
         for (int i = 1; i < 50; i++) {
-            //System.out.println("pieceY = " + PieceY);
-            if (!PieceFit(grid, pieceID, rotation, PieceY+i, PieceX)) {
-                //System.out.println("her");
-                
+            // System.out.println("pieceY = " + PieceY);
+            if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
+                // System.out.println("her");
 
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
                 nextPiece();
                 playSound("beep.wav");
-                holdCharge=true;
+                holdCharge = true;
                 break;
             }
         }
-        
+
     }
 
-    //this method removes a line from the grid
-    public static void removeLine(int line){
+    // this method removes a line from the grid
+    public static void removeLine(int line) {
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
-
-        for(int i = 0; i < updatedGrid.length; i++){
+        for (int i = 0; i < updatedGrid.length; i++) {
             placeInGrid = grid[0].length - 1;
-            for(int gridLine = updatedGrid[0].length - 1; gridLine >=0; gridLine--){
-                if(placeInGrid < 0){
+            for (int gridLine = updatedGrid[0].length - 1; gridLine >= 0; gridLine--) {
+                if (placeInGrid < 0) {
                     updatedGrid[i][gridLine] = -1;
-                }
-                else if(gridLine == line){
+                } else if (gridLine == line) {
                     placeInGrid--;
                     updatedGrid[i][gridLine] = grid[i][placeInGrid];
                     placeInGrid--;
-                }
-                else{
+                } else {
                     updatedGrid[i][gridLine] = grid[i][placeInGrid];
                     placeInGrid--;
                 }
-               
+
             }
         }
         grid = updatedGrid;
     }
-      
 
     //this method should check if a line is full
     public static void lineCheck(){
             int count = 0; 
             int lines = 0;
 
-            for(int line = grid[0].length - 1; line >= 0; line--){//loops through every line
-                for(int i = 0; i < grid.length; i++){//loops through the width
-                    if(grid[i][line] > -1){//checks if every element in a line is > than -1 and thus filled
-                        count++;
-                    }
-                }
-                if(count >= grid.length){//if the count is equal to the grid[line] lenght then the line is full and needs to be removed.
-                    count = 0;
-
-                    removeLine(line); 
-                    line++;//Everything moved down 1 line, so the check has to move down 1 as well
-                    playSound("line.wav");
-                    lines++;
-                }
-                else{
-                    count = 0;
+        for (int line = grid[0].length - 1; line >= 0; line--) {// loops through every line
+            for (int i = 0; i < grid.length; i++) {// loops through the width
+                if (grid[i][line] > -1) {// checks if every element in a line is > than -1 and thus filled
+                    count++;
                 }
             }
-            
-            score=score+scaling[lines]*level;
+            if (count >= grid.length) {// if the count is equal to the grid[line] lenght then the line is full and
+                                       // needs to be removed.
+                count = 0;
+
+                removeLine(line);
+                lines++;// Everything moved down 1 line, so the check has to move down 1 as well
+                playSound("line.wav");
+            } else {
+                count = 0;
+            }
+        }   
+
+            score=score+(scaling[lines]*level);
+            System.out.println(score);
                           
     }
 
@@ -319,12 +278,10 @@ public class Pentris {
         if (x < 0) {
             return false;
             // if the piece doesnt extend past the borders
-        } 
-        else if(y<0){
+        } else if (y < 0) {
             return false;
         }
-            
-        
+
         else if (grid.length > y + database[PieceID][Piecemutation].length - 1) {
             if (grid[0].length > x + database[PieceID][Piecemutation][0].length - 1) {
                 // then it wil check for every square whether the matrix has a 1 there(meaning
@@ -354,33 +311,32 @@ public class Pentris {
     public static void keypadMethod(KeyEvent event) {
         int keyCode = event.getKeyCode();
 
-        if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX-1)) {
+        if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX - 1)) {
             PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left.
                          // That's why the x coordinate of the piece is subtracted by 1.
-            //System.out.println("pieceX = " + PieceX);
+            // System.out.println("pieceX = " + PieceX);
 
-        } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX+1)) {
+        } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX + 1)) {
             PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right.
                          // That's why the x coordinate of the piece is added by 1.
-            //System.out.println("pieceX = " + PieceX);
+            // System.out.println("pieceX = " + PieceX);
 
-        } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY+1, PieceX)) {
+        } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
             PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it
                          // is going to be placed. (To show it smoothly in the UI, drop it down using a
                          // much smaller wait then when playing the normal way.)
             fallingPiece();
-            //System.out.println("pieceY = " + PieceY);
+            // System.out.println("pieceY = " + PieceY);
 
         } else if (keyCode == up) {
             rotatePiece(true); // If the keypad up is pressed the piece should be rotated right once.
 
         } else if (keyCode == space) {
-            //System.out.println("check");
+            // System.out.println("check");
             dropPiece(); // Drop the piece if spacebar is pressed.
 
         } else if (keyCode == z) {
             rotatePiece(true); // If the keypad z is pressed the piece should be rotated right once.
-
 
         } else if (keyCode == x) {
             rotatePiece(false); // If the keypad z is pressed the piece should be rotated left once.
@@ -389,22 +345,20 @@ public class Pentris {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
         }
-        gridclone=clone2Dint(grid);
+        gridclone = clone2Dint(grid);
         addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         ui.setState(gridclone);
-        //playSound("beep.wav");
+        // playSound("beep.wav");
 
     }
 
-
-    public static void placePiece(){
+    public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         nextPiece();
-        if(!PieceFit(grid, pieceID, rotation, StartY, StartX)){
-            Lost=true;
-            
+        if (!PieceFit(grid, pieceID, rotation, StartY, StartX)) {
+            Lost = true;
+
         }
-        
 
     }
 
@@ -418,45 +372,42 @@ public class Pentris {
         return clone;
     }
 
-
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
-		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
-		{
-			for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
-			{
-				if (piece[i][j] == 1) {
-					// Add the ID of the pentomino to the board if the pentomino occupies this
-					// square
-					field[x + i][y + j] = pieceID;
-				}
-			}
-		}
-	}
-
+        for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
+        {
+            for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
+            {
+                if (piece[i][j] == 1) {
+                    // Add the ID of the pentomino to the board if the pentomino occupies this
+                    // square
+                    field[x + i][y + j] = pieceID;
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
-        for (int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[i].length;j++){
-                grid[i][j]=-1;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                grid[i][j] = -1;
             }
         }
         new Thread() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 playSound("Pentris.wav");
-                     
-                
-            }
-        //this starts the thread
-        }.start();
 
+            }
+            // this starts the thread
+        }.start();
 
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
-        gridclone=clone2Dint(grid);
+        gridclone = clone2Dint(grid);
         try {
             while (!Lost) {
-                gridclone=clone2Dint(grid);
+                gridclone = clone2Dint(grid);
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
                 
                 //System.out.println("frame");
@@ -464,13 +415,10 @@ public class Pentris {
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
                 Thread.sleep((long) fallingAcceleration(playingTime));
-    
+
                 fallingPiece();
                 lineCheck();
-                
-                
-                
-                
+
             }
             System.out.println(score);
             

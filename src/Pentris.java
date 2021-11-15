@@ -1,6 +1,23 @@
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.print.attribute.standard.Media;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequencer;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+
+
 
 public class Pentris {
     final public static int height = 15;
@@ -45,6 +62,7 @@ public class Pentris {
 
     public static UI ui = new UI(width, height, 30);
     public static int[][]gridclone=clone2Dint(grid);
+    public static boolean BEEP=false;
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -137,6 +155,45 @@ public class Pentris {
         }
     }
 
+    public static void playMidi() {
+        try {
+            // Obtains the default Sequencer connected to a default device.
+        Sequencer sequencer = MidiSystem.getSequencer();
+ 
+        // Opens the device, indicating that it should now acquire any
+        // system resources it requires and become operational.
+        sequencer.open();
+ 
+        // create a stream from a file
+        InputStream is = new BufferedInputStream(new FileInputStream(new File("pentris.mid")));
+ 
+        // Sets the current sequence on which the sequencer operates.
+        // The stream must point to MIDI file data.
+        sequencer.setSequence(is);
+ 
+        // Starts playback of the MIDI data in the currently loaded sequence.
+        sequencer.start();
+        } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    public static void playSound(String path) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
+
+
     // this method should make the piece fall by 1 if it can fall
     public static void fallingPiece() {
         if(PieceFit(grid, pieceID,rotation,PieceY+1,PieceX)){
@@ -222,11 +279,13 @@ public class Pentris {
 
                     removeLine(line); 
                     line++;//Everything moved down 1 line, so the check has to move down 1 as well
+                    playSound("line.wav");
                 }
                 else{
                     count = 0;
                 }
-            }               
+            } 
+                          
     }
 
     // this function evaluated if a piece can be placed on a give grid at a certain
@@ -308,6 +367,7 @@ public class Pentris {
         gridclone=clone2Dint(grid);
         addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         ui.setState(gridclone);
+        playSound("beep.wav");
 
     }
 
@@ -349,13 +409,22 @@ public class Pentris {
 	}
 
 
-
     public static void main(String[] args) {
         for (int i=0;i<grid.length;i++){
             for(int j=0;j<grid[i].length;j++){
                 grid[i][j]=-1;
             }
         }
+        new Thread() {
+            @Override public void run() {
+                playSound("Pentris.wav");
+                     
+                
+            }
+        //this starts the thread
+        }.start();
+
+
         nextPiece();
         long startingTime = System.currentTimeMillis();
         long currentTime;
@@ -373,6 +442,8 @@ public class Pentris {
     
                 fallingPiece();
                 lineCheck();
+                playSound("beep.wav");
+                
                 
                 
             }

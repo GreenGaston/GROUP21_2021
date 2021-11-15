@@ -72,6 +72,9 @@ public class Pentris {
     private static int space = KeyEvent.VK_SPACE;
     private static int c = KeyEvent.VK_C;
     private static int z = KeyEvent.VK_Z;
+    private static int x = KeyEvent.VK_Z;
+
+    public static boolean holdCharge=true;
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -79,13 +82,17 @@ public class Pentris {
             heldPieceID = pieceID;
             PieceX = StartX;
             PieceY = StartY;
+            holdCharge=false;
             nextPiece();
         } else {
-            int temp = pieceID;
-            pieceID = heldPieceID;
-            heldPieceID = temp;
-            PieceX = StartX;
-            PieceY = StartY;
+            if(holdCharge){
+                int temp = pieceID;
+                pieceID = heldPieceID;
+                heldPieceID = temp;
+                PieceX = StartX;
+                PieceY = StartY;
+                holdCharge=false;
+            }
         }
     }
 
@@ -206,6 +213,7 @@ public class Pentris {
         else{
             placePiece();
             playSound("beep.wav");
+            holdCharge=true;
         }
     }
 
@@ -235,6 +243,7 @@ public class Pentris {
                 placePiece();
                 nextPiece();
                 playSound("beep.wav");
+                holdCharge=true;
                 break;
             }
         }
@@ -363,7 +372,11 @@ public class Pentris {
             dropPiece(); // Drop the piece if spacebar is pressed.
 
         } else if (keyCode == z) {
-            rotatePiece(false); // If the keypad z is pressed the piece should be rotated right once.
+            rotatePiece(true); // If the keypad z is pressed the piece should be rotated right once.
+
+
+        } else if (keyCode == x) {
+            rotatePiece(false); // If the keypad z is pressed the piece should be rotated left once.
 
         } else if (keyCode == c) {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later

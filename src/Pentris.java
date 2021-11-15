@@ -20,8 +20,8 @@ import javax.sound.sampled.Clip;
 
 
 public class Pentris {
-    final public static int height = 15;
-    final public static int width = 5;
+    final public static int height = 18;
+    final public static int width = 8;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
@@ -89,7 +89,7 @@ public class Pentris {
         }
     }
 
-
+    public static int[] idlist=new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
     public static void nextPiece() {
         PieceX=StartX;
@@ -99,10 +99,13 @@ public class Pentris {
             Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6,7,8,9,10,11);
             Collections.shuffle(nextPieces);
         }
-        
+
+        //this is a suprise code for later!
+        idlist[nextPieces.get(0)]+=1;
         //System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
+    
     }
     // this method should update the nextpiece and pieceid variables
     // every piece should get its turn in 12 pieces
@@ -202,6 +205,7 @@ public class Pentris {
         }
         else{
             placePiece();
+            playSound("beep.wav");
         }
     }
 
@@ -230,6 +234,7 @@ public class Pentris {
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
                 nextPiece();
+                playSound("beep.wav");
                 break;
             }
         }
@@ -367,7 +372,7 @@ public class Pentris {
         gridclone=clone2Dint(grid);
         addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         ui.setState(gridclone);
-        playSound("beep.wav");
+        //playSound("beep.wav");
 
     }
 
@@ -442,7 +447,7 @@ public class Pentris {
     
                 fallingPiece();
                 lineCheck();
-                playSound("beep.wav");
+                
                 
                 
                 

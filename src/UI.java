@@ -27,8 +27,7 @@ public class UI extends JPanel implements KeyListener
     public UI(int x, int y, int _size)
     {
         size = _size;
-        setPreferredSize(new Dimension(x * size, y * size));
-    
+        setPreferredSize(new Dimension(x * size*2, y * size));
         window = new JFrame("Pentomino");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);

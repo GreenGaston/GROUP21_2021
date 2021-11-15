@@ -75,6 +75,9 @@ public class Pentris {
     private static int x = KeyEvent.VK_Z;
 
     public static boolean holdCharge=true;
+    public static int score=0;
+    public static int level=1;
+    public static int[] scaling={0,40,100,300,1200,4800};
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -281,6 +284,7 @@ public class Pentris {
     //this method should check if a line is full
     public static void lineCheck(){
             int count = 0; 
+            int lines = 0;
 
             for(int line = grid[0].length - 1; line >= 0; line--){//loops through every line
                 for(int i = 0; i < grid.length; i++){//loops through the width
@@ -294,11 +298,14 @@ public class Pentris {
                     removeLine(line); 
                     line++;//Everything moved down 1 line, so the check has to move down 1 as well
                     playSound("line.wav");
+                    lines++;
                 }
                 else{
                     count = 0;
                 }
-            } 
+            }
+            
+            score=score+scaling[lines]*level;
                           
     }
 
@@ -452,7 +459,7 @@ public class Pentris {
                 gridclone=clone2Dint(grid);
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
                 
-                System.out.println("frame");
+                //System.out.println("frame");
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
@@ -465,7 +472,11 @@ public class Pentris {
                 
                 
             }
+            System.out.println(score);
+            
         } catch (InterruptedException e) {
         }
+        System.out.println("check");
+        return;
     }
 }

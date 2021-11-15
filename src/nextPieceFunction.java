@@ -1,11 +1,13 @@
-public class nextPieceFunction {
+import java.util.Collections;
+
+public class nextPieceFunction extends Pentris{
     //this method should update the nextpiece and pieceid variables
     //every piece should get its turn in 12 pieces
         public static void nextPiece() { // Lianne
             PieceX = StartX; // reset starting points
             PieceY = StartY;
             rotation = 0; // reset rotation to 0
-            if (pentPieces.size() = 0) {
+            if (pentPieces.isEmpty()) {
                 // If there is only one element in the arraylist, clear the arraylist
                 // and add all the IDs to the arraylist again
                 pentPieces.add(0);

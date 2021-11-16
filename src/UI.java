@@ -12,8 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 /**
  * This class takes care of all the graphics to display a certain state.
@@ -30,7 +28,11 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
     private int[][] holdPiece=new int[5][5];
     private Color holdColor=Color.black;
+<<<<<<< HEAD
     private Boolean colorBlind=false;
+=======
+    private boolean showNotShow;
+>>>>>>> c3c5ff87ce7fe23982ff234a69e5f68a252e5d76
 
     public void setHoldPiece(int[][]piece,int pieceid){
         holdPiece=piece;
@@ -61,6 +63,7 @@ public class UI extends JPanel implements KeyListener {
         window.setTitle("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
+        window.setMinimumSize(new Dimension(500, 500));
         window.add(this);
         window.pack();
         window.setLocationRelativeTo(null);
@@ -77,11 +80,17 @@ public class UI extends JPanel implements KeyListener {
         }
     }
 
-    /**
-     * This function is called BY THE SYSTEM if required for a new frame, uses the
-     * state stored by the UI class.
-     */
-    public void paintComponent(Graphics g) {
+    public void openCloseMenu(boolean showNotShow){
+        this.showNotShow = showNotShow; // Comment out for testing and in if tests are completed
+        // return true; // Comment in for testing and out if tests are completed
+    }
+
+    public boolean getOpenMenu(){
+        return showNotShow;
+    }
+
+
+    public void drawGameLayout(Graphics g){
         Graphics2D localGraphics2D = (Graphics2D) g;
         localGraphics2D.setColor(Color.BLACK);
         localGraphics2D.fill(getVisibleRect());
@@ -119,10 +128,6 @@ public class UI extends JPanel implements KeyListener {
 
 
 
-
-
-
-
         // draw boxes around the Strings
         localGraphics2D.setColor(Color.CYAN.darker());
         localGraphics2D.setStroke(new BasicStroke(Width));
@@ -145,7 +150,32 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawString("NEXT PIECE", 250, 25);
         localGraphics2D.drawString("TIMER", 250, 235);
         localGraphics2D.drawString("HIGH SCORES", 250, 350);
+    }
 
+    public void drawMenu(Graphics g){
+        Graphics2D menu = (Graphics2D) g;
+        menu.setColor(Color.BLACK);
+        menu.fillRect(100,100,300,300);
+        menu.setColor(Color.WHITE);
+        menu.drawLine(100, 100, 400, 100);
+        menu.drawLine(100, 100, 100, 400);
+        menu.drawLine(100, 400, 400, 400);
+        menu.drawLine(400, 100, 400, 400);
+        menu.setColor(Color.WHITE);
+        menu.drawString("MENU", 105, 125);
+    }
+
+    /**
+     * This function is called BY THE SYSTEM if required for a new frame, uses the
+     * state stored by the UI class.
+     */
+    public void paintComponent(Graphics g) {
+        if (getOpenMenu()){
+            drawGameLayout(g); // Inside drawGameLayout is everything what is shown during the complete game
+            drawMenu(g);
+        }else{
+            drawGameLayout(g);
+        }
     }
 
     /**

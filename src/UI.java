@@ -12,7 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 
-
 /**
  * This class takes care of all the graphics to display a certain state.
  * Initially, you do not need to modify (or event understand) this class in
@@ -78,13 +77,13 @@ public class UI extends JPanel implements KeyListener {
             }
         }
 
-        //draw boxes around the Strings
+        // draw boxes around the Strings
         final int SquareX = 240;
         final int SquareY = 1;
         final int Width = 3;
         localGraphics2D.setColor(Color.CYAN);
         localGraphics2D.setStroke(new BasicStroke(Width));
-        Rectangle box = new Rectangle(SquareX, SquareY, 325, 210);    
+        Rectangle box = new Rectangle(SquareX, SquareY, 325, 210);
         localGraphics2D.setColor(Color.CYAN);
         localGraphics2D.draw(box);
         localGraphics2D.setColor(Color.CYAN);
@@ -96,14 +95,14 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawLine(240, 325, 478, 325);
         localGraphics2D.drawLine(240, 360, 478, 360);
 
-        //draw string for the menu's
+        // draw string for the menu's
         Font myFont = new Font("Dialog", Font.BOLD, 20);
         localGraphics2D.setFont(myFont);
         localGraphics2D.setColor(Color.WHITE);
         localGraphics2D.drawString("NEXT PIECE", 250, 25);
         localGraphics2D.drawString("TIMER", 250, 235);
-        localGraphics2D.drawString("HIGH SCORE", 250, 350);
-        
+        localGraphics2D.drawString("HIGH SCORES", 250, 350);
+
     }
 
     /**

@@ -22,6 +22,18 @@ public class UI extends JPanel implements KeyListener {
     private JFrame window;
     private int[][] state;
     private int size;
+    private final int SquareX = 240;
+    private final int SquareY = 1;
+    private final int Width = 3;
+
+    // frame.setJMenuBar(battlegui.createMenu());
+    
+    // JPanel gui = new JPanel(new GridLayout(1,2,5,5));
+    // gui.setBorder(new EmptyBorder(5,5,5,5));
+    // gui.add(battlegui.createContentPane());
+    // gui.add(battlegui.createContentPane());
+    // frame.setContentPane(gui);
+    
 
     /**
      * Constructor for the GUI. Sets everything up
@@ -32,16 +44,17 @@ public class UI extends JPanel implements KeyListener {
      */
     public UI(int x, int y, int _size) {
         size = _size;
-        setPreferredSize(new Dimension(x * size, y * size));
-
-        window = new JFrame("Pentomino");
+        
+        setPreferredSize(new Dimension(x * size * 4 , y * size));
+        window = new JFrame("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
+        window.setResizable(true);
         window.add(this);
         window.pack();
+        window. setLocationRelativeTo(null);
         window.setVisible(true);
         window.addKeyListener(this);
-
+        
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
@@ -57,7 +70,7 @@ public class UI extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         Graphics2D localGraphics2D = (Graphics2D) g;
 
-        localGraphics2D.setColor(Color.WHITE);
+        localGraphics2D.setColor(Color.BLACK);
         localGraphics2D.fill(getVisibleRect());
 
         // draw lines
@@ -78,15 +91,12 @@ public class UI extends JPanel implements KeyListener {
         }
 
         // draw boxes around the Strings
-        final int SquareX = 240;
-        final int SquareY = 1;
-        final int Width = 3;
-        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.setColor(Color.CYAN.darker());
         localGraphics2D.setStroke(new BasicStroke(Width));
         Rectangle box = new Rectangle(SquareX, SquareY, 325, 210);
-        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.setColor(Color.CYAN.darker());
         localGraphics2D.draw(box);
-        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.setColor(Color.CYAN.darker());
         localGraphics2D.drawLine(240, 40, 600, 40);
         localGraphics2D.drawLine(478, 0, 478, 1000);
         localGraphics2D.drawLine(240, 538, 600, 538);

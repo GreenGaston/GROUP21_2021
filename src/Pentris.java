@@ -61,6 +61,9 @@ public class Pentris {
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 
+    public static boolean showNotShow = false;
+
+
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
     private static int right = KeyEvent.VK_RIGHT;
@@ -70,6 +73,7 @@ public class Pentris {
     private static int c = KeyEvent.VK_C;
     private static int z = KeyEvent.VK_Z;
     private static int x = KeyEvent.VK_X;
+    private static int esc = KeyEvent.VK_ESCAPE;
 
     public static boolean holdCharge=true;
     public static int score=0;
@@ -348,12 +352,27 @@ public class Pentris {
         } else if (keyCode == c) {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
+        } else if (keyCode == esc) {
+            if (showNotShow){
+                showNotShow = false;
+                System.out.println("Game is resumed and menu is closed");
+            }else{
+                showNotShow = true;
+                System.out.println("Game is paused and menu is shown");
+            }
+    
+            ui.openCloseMenu(showNotShow);
+            pauseGame();
         }
         gridclone = clone2Dint(grid);
         addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         ui.setState(gridclone);
         // playSound("beep.wav");
 
+    }
+
+    public static void pauseGame(){
+        // TODO: Game needs to be paused when escape is pressed, because the menu will be showed by the ui.openCloseMenu()
     }
 
     public static void placePiece() {

@@ -28,11 +28,8 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
     private int[][] holdPiece=new int[5][5];
     private Color holdColor=Color.black;
-<<<<<<< HEAD
     private Boolean colorBlind=false;
-=======
     private boolean showNotShow;
->>>>>>> c3c5ff87ce7fe23982ff234a69e5f68a252e5d76
 
     public void setHoldPiece(int[][]piece,int pieceid){
         holdPiece=piece;

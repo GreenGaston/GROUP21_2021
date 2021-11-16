@@ -16,6 +16,8 @@ import javax.sound.midi.Sequencer;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pentris {
     final public static int height = 18;
@@ -420,6 +422,14 @@ public class Pentris {
         System.out.println("are you colorblind?(Y/N)");
         String color=scanner.nextLine();
         String test="Y";
+        String name="";
+        System.out.println("what is your name?");
+        //reader.nextLine();
+        name=scanner.nextLine();
+        scanner.close();
+
+
+        
         //System.out.println(color);
         if(color.equals(test)){
             //System.out.println("test");
@@ -428,12 +438,24 @@ public class Pentris {
         scanner.close();
 
 
-
+        //this thread plays the music
         new Thread() {
             @Override
             public void run() {
-                playSound("Pentris.wav");
-
+                Clip clip;
+                try {
+                    AudioInputStream input = AudioSystem.getAudioInputStream(new File("Pentris.wav"));
+                    clip = AudioSystem.getClip();
+                    clip.open(input);
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    clip.start();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
             // this starts the thread
         }.start();
@@ -461,13 +483,9 @@ public class Pentris {
             
         } catch (InterruptedException e) {
         }
-        Scanner reader = new Scanner(System.in);
-        System.out.println("what is your name?");
-        String name=reader.nextLine();
+        
+
         String scoreLine= name+":"+score+"\n";
-        reader.close();
-
-
         //this part of the code writes to scores.txt
         ArrayList<String> file=new ArrayList<String>();
         try {

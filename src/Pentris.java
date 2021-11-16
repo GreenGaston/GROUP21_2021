@@ -69,7 +69,7 @@ public class Pentris {
     private static int space = KeyEvent.VK_SPACE;
     private static int c = KeyEvent.VK_C;
     private static int z = KeyEvent.VK_Z;
-    private static int x = KeyEvent.VK_Z;
+    private static int x = KeyEvent.VK_X;
 
     public static boolean holdCharge=true;
     public static int score=0;

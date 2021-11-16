@@ -8,6 +8,10 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+
 
 /**
  * This class takes care of all the graphics to display a certain state.
@@ -76,12 +80,32 @@ public class UI extends JPanel implements KeyListener {
             }
         }
 
+        //draw boxes around the Strings
+        final int SquareX = 240;
+        final int SquareY = 1;
+        final int Width = 3;
+        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.setStroke(new BasicStroke(Width));
+        Rectangle box = new Rectangle(SquareX, SquareY, 325, 210);    
+        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.draw(box);
+        localGraphics2D.setColor(Color.CYAN);
+        localGraphics2D.drawLine(240, 40, 600, 40);
+        localGraphics2D.drawLine(478, 0, 478, 1000);
+        localGraphics2D.drawLine(240, 538, 600, 538);
+        localGraphics2D.drawLine(240, 0, 240, 1000);
+        localGraphics2D.drawLine(240, 250, 478, 250);
+        localGraphics2D.drawLine(240, 325, 478, 325);
+        localGraphics2D.drawLine(240, 360, 478, 360);
+
         //draw string for the menu's
         Font myFont = new Font("Dialog", Font.BOLD, 20);
         localGraphics2D.setFont(myFont);
         localGraphics2D.setColor(Color.WHITE);
-        localGraphics2D.drawString("Score:", 250, 25);
-        localGraphics2D.drawString("Timer:", 250, 300);
+        localGraphics2D.drawString("NEXT PIECE", 250, 25);
+        localGraphics2D.drawString("TIMER", 250, 235);
+        localGraphics2D.drawString("HIGH SCORE", 250, 350);
+        
     }
 
     /**

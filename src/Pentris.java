@@ -264,7 +264,7 @@ public class Pentris {
         }   
 
             score=score+(scaling[lines]*level);
-            System.out.println(score);
+            //System.out.println(score);
                           
     }
 
@@ -425,6 +425,7 @@ public class Pentris {
         } catch (InterruptedException e) {
         }
         System.out.println("check");
+        
         return;
     }
 }

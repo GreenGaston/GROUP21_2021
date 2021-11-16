@@ -17,8 +17,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class Pentris {
-    final public static int height = 18;
-    final public static int width = 8;
+    final public static int height = 15;
+    final public static int width = 5;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;

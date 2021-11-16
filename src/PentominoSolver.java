@@ -51,7 +51,7 @@ public class PentominoSolver {
             Width = tempHeightWidth;
         }
 
-        ui = new UI(Width, Height, UIsize);
+        ui = new UI(Width, Height, UIsize,false);
 
 
 

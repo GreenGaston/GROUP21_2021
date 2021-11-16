@@ -29,6 +29,7 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
     private int[][] holdPiece=new int[5][5];
     private Color holdColor=Color.black;
+    private Boolean colorBlind=false;
     private boolean showNotShow;
 
     public void setHoldPiece(int[][]piece,int pieceid){
@@ -51,8 +52,9 @@ public class UI extends JPanel implements KeyListener {
      * @param y     y position of the GUI
      * @param _size size of the GUI
      */
-    public UI(int x, int y, int _size) {
+    public UI(int x, int y, int _size,Boolean Colorblind) {
         size = _size;
+        Boolean colorBlind=Colorblind;
 
         setPreferredSize(new Dimension(x * size + 350, y * size + 100));
         window = new JFrame("Pentris");
@@ -182,6 +184,7 @@ public class UI extends JPanel implements KeyListener {
      *         in ICS2 course in Period 2)
      */
     private Color GetColorOfID(int i) {
+        if(!colorBlind){
         if (i == 0) {
             return Color.BLUE.brighter();
         } else if (i == 1) {
@@ -208,8 +211,40 @@ public class UI extends JPanel implements KeyListener {
             return new Color(0, 100, 0);
         } else {
             return Color.BLACK;
+        }}
+        else{
+            if (i == 0) {
+                return Color.decode("#E0C524");
+            } else if (i == 1) {
+                return Color.decode("#E0C524");
+            } else if (i == 2) {
+                return Color.decode("#E0C524");
+            } else if (i == 3) {
+                return Color.decode("#F54B35");
+            } else if (i == 4) {
+                return Color.decode("#F54B35");
+            } else if (i == 5) {
+                return Color.decode("#7163E0");
+            } else if (i == 6) {
+                return Color.decode("#7163E0");
+            } else if (i == 7) {
+                return Color.decode("#7163E0");
+            } else if (i == 8) {
+                return Color.decode("#4EEDB0");
+            } else if (i == 9) {
+                return Color.decode("#4EEDB0");
+            } else if (i == 10) {
+                return Color.decode("#F0A7E5");
+            } else if (i == 11) {
+                return Color.decode("#F0A7E5");
+            } else {
+                return Color.BLACK;
+            }}
         }
-    }
+    
+        public void setColorblind(boolean blind){
+            colorBlind=blind;
+        }
 
     /**
      * This function should be called to update the displayed state (makes a copy)

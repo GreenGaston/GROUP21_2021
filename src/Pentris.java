@@ -60,7 +60,7 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
-    public static UI ui = new UI(width, height, 30);
+    public static UI ui = new UI(width, height, 30,false);
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 
@@ -418,6 +418,19 @@ public class Pentris {
                 grid[i][j] = -1;
             }
         }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("are you colorblind?(Y/N)");
+        String color=scanner.nextLine();
+        String test="Y";
+        //System.out.println(color);
+        if(color.equals(test)){
+            //System.out.println("test");
+            ui.setColorblind(true);
+        }
+        scanner.close();
+
+
+
         new Thread() {
             @Override
             public void run() {
@@ -450,11 +463,11 @@ public class Pentris {
             
         } catch (InterruptedException e) {
         }
-        Scanner scanner = new Scanner(System.in);
+        Scanner reader = new Scanner(System.in);
         System.out.println("what is your name?");
-        String name=scanner.nextLine();
+        String name=reader.nextLine();
         String scoreLine= name+":"+score+"\n";
-        scanner.close();
+        reader.close();
 
 
         //this part of the code writes to scores.txt

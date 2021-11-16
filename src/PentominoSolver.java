@@ -1,5 +1,3 @@
-package GROUP21_2021.src;
-
 import java.util.Scanner;
 
 public class PentominoSolver {

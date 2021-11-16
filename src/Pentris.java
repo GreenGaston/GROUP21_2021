@@ -17,8 +17,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class Pentris {
-    final public static int height = 15;
-    final public static int width = 5;
+    final public static int height = 18;
+    final public static int width = 8;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
@@ -84,6 +84,7 @@ public class Pentris {
             PieceY = StartY;
             holdCharge = false;
             nextPiece();
+            ui.setHoldPiece(pentominoDatabase[heldPieceID][0],heldPieceID);
         } else {
             if (holdCharge) {
                 int temp = pieceID;
@@ -92,6 +93,7 @@ public class Pentris {
                 PieceX = StartX;
                 PieceY = StartY;
                 holdCharge = false;
+                ui.setHoldPiece(pentominoDatabase[heldPieceID][0],heldPieceID);
             }
         }
     }
@@ -257,12 +259,14 @@ public class Pentris {
 
                 removeLine(line);
                 lines++;// Everything moved down 1 line, so the check has to move down 1 as well
-                playSound("line.wav");
+
             } else {
                 count = 0;
             }
         }   
-
+            if(lines>0){
+                playSound("line.wav");
+            }
             score=score+(scaling[lines]*level);
             //System.out.println(score);
                           
@@ -395,7 +399,7 @@ public class Pentris {
         new Thread() {
             @Override
             public void run() {
-                playSound("Pentris.wav");
+                //playSound("Pentris.wav");
 
             }
             // this starts the thread

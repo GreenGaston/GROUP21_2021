@@ -25,6 +25,13 @@ public class UI extends JPanel implements KeyListener {
     private final int SquareX = 240;
     private final int SquareY = 1;
     private final int Width = 3;
+    private int[][] holdPiece=new int[5][5];
+    private Color holdColor=Color.black;
+
+    public void setHoldPiece(int[][]piece,int pieceid){
+        holdPiece=piece;
+        holdColor=GetColorOfID(pieceid);
+    }
 
     // frame.setJMenuBar(battlegui.createMenu());
 
@@ -88,6 +95,20 @@ public class UI extends JPanel implements KeyListener {
                 localGraphics2D.fill(new Rectangle2D.Double(i * size + 1, j * size + 1, size - 1, size - 1));
             }
         }
+         for (int i = 0; i < holdPiece.length; i++) {
+             for (int j = 0; j < holdPiece[0].length; j++) {
+                 if(holdPiece[i][j]>0){
+                    localGraphics2D.setColor(holdColor);
+                    localGraphics2D.fill(new Rectangle2D.Double(i * size + 300, j * size + 100, size - 1,size - 1));
+                 }
+             }
+         }
+
+
+
+
+
+
 
         // draw boxes around the Strings
         localGraphics2D.setColor(Color.CYAN.darker());

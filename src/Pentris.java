@@ -64,7 +64,7 @@ public class Pentris {
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 
-    public static boolean showNotShow = false;
+    public static boolean showMenu = false;
 
 
     // Keys used for playing pentris
@@ -356,15 +356,15 @@ public class Pentris {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
         } else if (keyCode == esc) {
-            if (showNotShow){
-                showNotShow = false;
+            if (showMenu){
+                showMenu = false;
                 System.out.println("Game is resumed and menu is closed");
             }else{
-                showNotShow = true;
+                showMenu = true;
                 System.out.println("Game is paused and menu is shown");
             }
     
-            ui.openCloseMenu(showNotShow);
+            ui.openCloseMenu(showMenu);
             pauseGame();
         }
         gridclone = clone2Dint(grid);

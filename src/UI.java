@@ -12,8 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 /**
  * This class takes care of all the graphics to display a certain state.
@@ -23,7 +21,6 @@ import javax.swing.SwingUtilities;
  */
 public class UI extends JPanel implements KeyListener {
     private JFrame window;
-    private JFrame menu;
     private int[][] state;
     private int size;
     private final int SquareX = 240;

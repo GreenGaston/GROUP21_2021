@@ -133,7 +133,7 @@ public class UI extends JPanel implements KeyListener {
         } else if (i == 7) {
             return Color.RED.brighter();
         } else if (i == 8) {
-            return new Color(0, 0, 0);
+            return new Color(123, 40, 49);
         } else if (i == 9) {
             return new Color(0, 0, 100);
         } else if (i == 10) {

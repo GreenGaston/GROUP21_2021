@@ -11,7 +11,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
-import javax.swing.border.StrokeBorder;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  * This class takes care of all the graphics to display a certain state.
@@ -56,6 +58,7 @@ public class UI extends JPanel implements KeyListener {
 
         setPreferredSize(new Dimension(x * size + 350, y * size + 100));
         window = new JFrame("Pentris");
+        window.setTitle("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setMinimumSize(new Dimension(500, 500));
@@ -64,6 +67,8 @@ public class UI extends JPanel implements KeyListener {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.addKeyListener(this);
+
+
 
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
@@ -85,9 +90,14 @@ public class UI extends JPanel implements KeyListener {
 
     public void drawGameLayout(Graphics g){
         Graphics2D localGraphics2D = (Graphics2D) g;
-
         localGraphics2D.setColor(Color.BLACK);
         localGraphics2D.fill(getVisibleRect());
+        localGraphics2D.translate(10,50);
+        Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
+        localGraphics2D.setFont(myFont2);
+        localGraphics2D.setColor(Color.CYAN.darker());
+        localGraphics2D.drawString("PENTRIS", 70, 0);
+        localGraphics2D.translate(0,50);
 
         // draw lines
         localGraphics2D.setColor(Color.WHITE);
@@ -132,7 +142,7 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawLine(240, 360, 478, 360);
 
         // draw string for the menu's
-        Font myFont = new Font("Dialog", Font.BOLD, 20);
+        Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
         localGraphics2D.setFont(myFont);
         localGraphics2D.setColor(Color.WHITE);
         localGraphics2D.drawString("NEXT PIECE", 250, 25);
@@ -189,7 +199,7 @@ public class UI extends JPanel implements KeyListener {
         } else if (i == 6) {
             return Color.RED;
         } else if (i == 7) {
-            return Color.RED.brighter();
+            return Color.YELLOW;
         } else if (i == 8) {
             return new Color(123, 40, 49);
         } else if (i == 9) {

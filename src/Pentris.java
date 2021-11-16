@@ -2,12 +2,13 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
-import javax.print.attribute.standard.Media;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -447,8 +448,49 @@ public class Pentris {
             
         } catch (InterruptedException e) {
         }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("what is your name?");
+        String name=scanner.nextLine();
+        String scoreLine= name+":"+score+"\n";
+        scanner.close();
+
+
+        //this part of the code writes to scores.txt
+        ArrayList<String> file=new ArrayList<String>();
+        try {
+            
+            File myObj = new File("Scores.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                file.add(data);
+
+                //System.out.println(data);
+                }
+            myReader.close();
+
+
+            FileWriter myWriter = new FileWriter("Scores.txt");
+            Boolean found=true;
+            for(int i=0;i<file.size();i++){
+                //System.out.println(file.get(i));
+
+
+                if(Integer.valueOf(file.get(i).split(":")[1])<score&&found){
+                    myWriter.write(scoreLine);
+                    myWriter.write(file.get(i)+"\n");
+                    found=false;
+                }
+                else{
+                    myWriter.write(file.get(i)+"\n");
+                }
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         System.out.println("check");
-        
-        return;
     }
 }

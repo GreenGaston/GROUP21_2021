@@ -399,7 +399,7 @@ public class Pentris {
         new Thread() {
             @Override
             public void run() {
-                //playSound("Pentris.wav");
+                playSound("Pentris.wav");
 
             }
             // this starts the thread

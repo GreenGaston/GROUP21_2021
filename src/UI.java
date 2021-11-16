@@ -27,13 +27,12 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
 
     // frame.setJMenuBar(battlegui.createMenu());
-    
+
     // JPanel gui = new JPanel(new GridLayout(1,2,5,5));
     // gui.setBorder(new EmptyBorder(5,5,5,5));
     // gui.add(battlegui.createContentPane());
     // gui.add(battlegui.createContentPane());
     // frame.setContentPane(gui);
-    
 
     /**
      * Constructor for the GUI. Sets everything up
@@ -44,17 +43,17 @@ public class UI extends JPanel implements KeyListener {
      */
     public UI(int x, int y, int _size) {
         size = _size;
-        
-        setPreferredSize(new Dimension(x * size * 4 , y * size));
+
+        setPreferredSize(new Dimension(x * size + 350, y * size + 100));
         window = new JFrame("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.add(this);
         window.pack();
-        window. setLocationRelativeTo(null);
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.addKeyListener(this);
-        
+
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {

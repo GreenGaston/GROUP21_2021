@@ -32,6 +32,7 @@ public class UI extends JPanel implements KeyListener {
     private Boolean colorBlind=false;
     private boolean showNotShow;
     public int rightOfGrid;
+    public int moveGridRight=100;
     private int miniSize=1;
 
     public void setHoldPiece(int[][]piece,int pieceid){
@@ -113,17 +114,17 @@ public class UI extends JPanel implements KeyListener {
         // draw lines
         localGraphics2D.setColor(Color.WHITE);
         for (int i = 0; i <= state.length; i++) {
-            localGraphics2D.drawLine(i * size+100, 0, i * size+100, state[0].length * size);
+            localGraphics2D.drawLine(i * size+moveGridRight, 0, i * size+moveGridRight, state[0].length * size);
         }
         for (int i = 0; i <= state[0].length; i++) {
-            localGraphics2D.drawLine(100, i * size, state.length * size+100, i * size);
+            localGraphics2D.drawLine(moveGridRight, i * size, state.length * size+moveGridRight, i * size);
         }
 
         // draw blocks
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[0].length; j++) {
                 localGraphics2D.setColor(GetColorOfID(state[i][j]));
-                localGraphics2D.fill(new Rectangle2D.Double(i * size + 101, j * size + 1, size - 1, size - 1));
+                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1, size - 1, size - 1));
             }
         }
         //draw holdpiece
@@ -141,7 +142,7 @@ public class UI extends JPanel implements KeyListener {
             for (int j = 0; j < nextPiece[0].length; j++) {
                 if(nextPiece[i][j]>0){
                    localGraphics2D.setColor(nextColor);
-                   localGraphics2D.fill(new Rectangle2D.Double(i * size + 300, j * size  + 100, size  - 1, size  - 1));
+                   localGraphics2D.fill(new Rectangle2D.Double(i * size + 70+rightOfGrid, j * size  + 100, size  -1, size  - 1));
                 }
             }
         }

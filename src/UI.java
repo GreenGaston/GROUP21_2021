@@ -288,29 +288,29 @@ public class UI extends JPanel implements KeyListener {
         }}
         else{
             if (i == 0) {
-                return Color.decode("#E0C524");
+                return Color.decode("#ff0000");
             } else if (i == 1) {
-                return Color.decode("#E0C524");
+                return Color.decode("#00ff00");
             } else if (i == 2) {
-                return Color.decode("#E0C524");
+                return Color.decode("#1bbf1b");
             } else if (i == 3) {
-                return Color.decode("#F54B35");
+                return Color.decode("#ff00ff");
             } else if (i == 4) {
-                return Color.decode("#F54B35");
+                return Color.decode("#ffff00");
             } else if (i == 5) {
-                return Color.decode("#7163E0");
+                return Color.decode("#ffffff");
             } else if (i == 6) {
-                return Color.decode("#7163E0");
+                return Color.decode("#ff8000");
             } else if (i == 7) {
-                return Color.decode("#7163E0");
+                return Color.decode("#e3e3ff");
             } else if (i == 8) {
-                return Color.decode("#4EEDB0");
+                return Color.decode("#adadad");
             } else if (i == 9) {
-                return Color.decode("#4EEDB0");
+                return Color.decode("#ff009d");
             } else if (i == 10) {
-                return Color.decode("#F0A7E5");
+                return Color.decode("#ff7373");
             } else if (i == 11) {
-                return Color.decode("#F0A7E5");
+                return Color.decode("#fc99ff");
             } else {
                 return Color.BLACK;
             }}

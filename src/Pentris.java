@@ -60,7 +60,7 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
-    public static UI ui = new UI(width, height, 30,false);
+    public static UI ui = new UI(width, height, 45,false);
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 

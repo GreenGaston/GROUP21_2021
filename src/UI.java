@@ -1,3 +1,5 @@
+// package src;
+
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
@@ -27,8 +29,19 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
     private int[][] holdPiece=new int[5][5];
     private Color holdColor=Color.black;
+
+    private boolean showMenu;
+    private int menuXCord = 100;
+    private int menuYCord = 400;
+    private int menuSize = menuYCord - menuXCord;
+    private String menuLetters = "Comic Sans MS";
+    private Font menuFontExtraBig = new Font(menuLetters, Font.BOLD, menuSize/10);
+    private Font menuFontBig = new Font(menuLetters, Font.BOLD, menuSize/15);
+    private Font menuFontSmall = new Font(menuLetters, Font.BOLD, menuSize/22);
+    private Font menuFontExtraSmall = new Font(menuLetters, Font.BOLD, menuSize/30);
+
+    private int level = 1;
     private Boolean colorBlind=false;
-    private boolean showNotShow;
 
     public void setHoldPiece(int[][]piece,int pieceid){
         holdPiece=piece;
@@ -52,7 +65,7 @@ public class UI extends JPanel implements KeyListener {
      */
     public UI(int x, int y, int _size,Boolean Colorblind) {
         size = _size;
-        Boolean colorBlind=Colorblind;
+        this.colorBlind=Colorblind;
 
         setPreferredSize(new Dimension(x * size + 350, y * size + 100));
         window = new JFrame("Pentris");
@@ -76,13 +89,13 @@ public class UI extends JPanel implements KeyListener {
         }
     }
 
-    public void openCloseMenu(boolean showNotShow){
-        this.showNotShow = showNotShow; // Comment out for testing and in if tests are completed
+    public void openCloseMenu(boolean showMenu){
+        this.showMenu = showMenu; // Comment out for testing and in if tests are completed
         // return true; // Comment in for testing and out if tests are completed
     }
 
-    public boolean getOpenMenu(){
-        return showNotShow;
+    public boolean getShowMenu(){
+        return showMenu;
     }
 
 
@@ -148,17 +161,53 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawString("HIGH SCORES", 250, 350);
     }
 
+    public void drawColorBlindMode(Graphics2D menu){
+        menu.setFont(menuFontBig);
+        menu.drawString("Colorblind", 140, 250);
+        menu.drawString(":" ,250, 250);
+        if (colorBlind){
+            menu.setFont(menuFontBig);
+            menu.drawString("On", 280, 250);
+            menu.drawString("/", 310, 250);
+            menu.setFont(menuFontSmall);
+            menu.drawString("Off", 320, 250);
+        }else{ 
+            menu.setFont(menuFontBig);
+            menu.drawString("Off", 320, 250);
+            menu.drawString("/", 310, 250);
+            menu.setFont(menuFontSmall);
+            menu.drawString("On", 290, 250);
+        }
+    }
+
     public void drawMenu(Graphics g){
         Graphics2D menu = (Graphics2D) g;
+        Rectangle menuBox = new Rectangle(menuXCord, menuXCord, menuSize, menuSize);
         menu.setColor(Color.BLACK);
-        menu.fillRect(100,100,300,300);
+        menu.fillRect(menuXCord, menuXCord, menuSize, menuSize);
         menu.setColor(Color.WHITE);
-        menu.drawLine(100, 100, 400, 100);
-        menu.drawLine(100, 100, 100, 400);
-        menu.drawLine(100, 400, 400, 400);
-        menu.drawLine(400, 100, 400, 400);
+        menu.draw(menuBox);
         menu.setColor(Color.WHITE);
-        menu.drawString("MENU", 105, 125);
+        menu.setFont(menuFontBig);
+        menu.drawString("MENU", menuXCord/20*21, menuYCord/16*5);
+
+        // int centerMenuXCord = menuXCord;
+
+        menu.setFont(menuFontBig);
+        menu.drawString("Controls", 165, 200);
+        menu.drawString(":" ,250, 200);
+        menu.drawString("Keyboard", 270, 200);
+
+        menu.drawString("Level", 185, 225);
+        menu.drawString(":" ,250, 225);
+        menu.drawString(""+level, 310, 225);
+        menu.setFont(menuFontExtraBig);
+        menu.drawString("+    -", 275, 225);
+
+
+        // Colorblindmode
+        drawColorBlindMode(menu);
+
     }
 
     /**
@@ -166,7 +215,7 @@ public class UI extends JPanel implements KeyListener {
      * state stored by the UI class.
      */
     public void paintComponent(Graphics g) {
-        if (getOpenMenu()){
+        if (getShowMenu()){
             drawGameLayout(g); // Inside drawGameLayout is everything what is shown during the complete game
             drawMenu(g);
         }else{

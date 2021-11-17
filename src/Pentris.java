@@ -364,7 +364,7 @@ public class Pentris {
             rotatePiece(true); // If the keypad z is pressed the piece should be rotated right once.
 
         } else if (keyCode == x) {
-            rotatePiece(false); // If the keypad z is pressed the piece should be rotated left once.
+            rotatePiece(false); // If the keypad x is pressed the piece should be rotated left once.
 
         } else if (keyCode == c) {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later

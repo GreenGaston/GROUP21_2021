@@ -279,7 +279,8 @@ public class Pentris {
                 count = 0;
 
                 removeLine(line);
-                lines++;// Everything moved down 1 line, so the check has to move down 1 as well
+                line++;// Everything moved down 1 line, so the check has to move down 1 as well
+                lines++;
 
             } else {
                 count = 0;

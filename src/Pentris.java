@@ -22,12 +22,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pentris {
-    final public static int height = 18;
-    final public static int width = 8;
+    final public static int height = 15;
+    final public static int width = 7;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
-    final public static int StartX = 0;
+    final public static int StartX = width/2-1;
 
     // This is the minimum amount of seconds the piece waits until it drops 1 down
     // again.
@@ -120,11 +120,26 @@ public class Pentris {
             Collections.shuffle(nextPieces);
         }
 
+        // String teststring="";
+        // for(int i=0;i<nextPieces.size();i++){
+        //     teststring+=nextPieces.get(i)+",";
+        // }
+        // System.out.println(teststring);
+
+
         // this is a suprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
+        //recheck for the nextpiece
+        if (nextPieces.isEmpty()) {
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.shuffle(nextPieces);
+        }
+
+        //System.out.println(nextPieces.get(0)+"testerino");
+        ui.setNextPiece(pentominoDatabase[nextPieces.get(0)][0], nextPieces.get(0));
 
     }
 
@@ -219,7 +234,6 @@ public class Pentris {
 
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
-                nextPiece();
                 playSound("beep.wav");
                 holdCharge = true;
                 break;
@@ -268,7 +282,8 @@ public class Pentris {
                 count = 0;
 
                 removeLine(line);
-                lines++;// Everything moved down 1 line, so the check has to move down 1 as well
+                line++;// Everything moved down 1 line, so the check has to move down 1 as well
+                lines++;
 
             } else {
                 count = 0;

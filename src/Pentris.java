@@ -1,3 +1,5 @@
+// package src;
+
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -66,6 +68,7 @@ public class Pentris {
     public static boolean BEEP = false;
 
     public static boolean showMenu = false;
+    public static boolean paused = false;
 
 
     // Keys used for playing pentris
@@ -374,24 +377,21 @@ public class Pentris {
         } else if (keyCode == esc) {
             if (showMenu){
                 showMenu = false;
+                paused = false;
                 System.out.println("Game is resumed and menu is closed");
             }else{
                 showMenu = true;
+                paused = true;
                 System.out.println("Game is paused and menu is shown");
             }
     
             ui.openCloseMenu(showMenu);
-            pauseGame();
         }
         gridclone = clone2Dint(grid);
         addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         ui.setState(gridclone);
         // playSound("beep.wav");
 
-    }
-
-    public static void pauseGame(){
-        // TODO: Game needs to be paused when escape is pressed, because the menu will be showed by the ui.openCloseMenu()
     }
 
     public static void placePiece() {
@@ -437,7 +437,7 @@ public class Pentris {
         Scanner scanner = new Scanner(System.in);
         System.out.println("are you colorblind?(Y/N)");
         String color=scanner.nextLine();
-        String test="Y";
+        String isColorBlind="Y";
         String name="";
         System.out.println("what is your name?");
         //reader.nextLine();
@@ -447,7 +447,7 @@ public class Pentris {
 
         
         //System.out.println(color);
-        if(color.equals(test)){
+        if(color.equals(isColorBlind)){
             //System.out.println("test");
             ui.setColorblind(true);
         }
@@ -484,7 +484,6 @@ public class Pentris {
             while (!Lost) {
                 gridclone = clone2Dint(grid);
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-                
                 //System.out.println("frame");
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
@@ -493,7 +492,6 @@ public class Pentris {
 
                 fallingPiece();
                 lineCheck();
-
             }
             System.out.println(score);
             

@@ -1,3 +1,4 @@
+Tom:900
 Bob:740
 Gaston:720
 tom:620

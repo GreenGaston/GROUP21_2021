@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -60,11 +61,7 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
-<<<<<<< HEAD
-    public static UI ui = new UI(width, height, 25,false);
-=======
     public static UI ui = new UI(width, height, 30,false);
->>>>>>> bd5fe452ec3e8d6c19faacdb297ae696ad910376
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 

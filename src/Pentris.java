@@ -21,7 +21,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pentris {
     final public static int height = 15;
-    final public static int width = 8;
+    final public static int width = 7;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
@@ -60,7 +60,7 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
-    public static UI ui = new UI(width, height, 45,false);
+    public static UI ui = new UI(width, height, 25,false);
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 

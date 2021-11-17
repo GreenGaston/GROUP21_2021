@@ -142,7 +142,7 @@ public class UI extends JPanel implements KeyListener {
             for (int j = 0; j < nextPiece[0].length; j++) {
                 if(nextPiece[i][j]>0){
                    localGraphics2D.setColor(nextColor);
-                   localGraphics2D.fill(new Rectangle2D.Double(i * size + 70+rightOfGrid, j * size  + 100, size  -1, size  - 1));
+                   localGraphics2D.fill(new Rectangle2D.Double(i * size + 70+rightOfGrid, j * size  + 70, size  -1, size  - 1));
                 }
             }
         }

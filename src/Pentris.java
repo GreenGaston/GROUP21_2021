@@ -117,11 +117,11 @@ public class Pentris {
             Collections.shuffle(nextPieces);
         }
 
-        String teststring="";
-        for(int i=0;i<nextPieces.size();i++){
-            teststring+=nextPieces.get(i)+",";
-        }
-        System.out.println(teststring);
+        // String teststring="";
+        // for(int i=0;i<nextPieces.size();i++){
+        //     teststring+=nextPieces.get(i)+",";
+        // }
+        // System.out.println(teststring);
 
 
         // this is a suprise code for later!
@@ -135,7 +135,7 @@ public class Pentris {
             Collections.shuffle(nextPieces);
         }
 
-        System.out.println(nextPieces.get(0)+"testerino");
+        //System.out.println(nextPieces.get(0)+"testerino");
         ui.setNextPiece(pentominoDatabase[nextPieces.get(0)][0], nextPieces.get(0));
 
     }

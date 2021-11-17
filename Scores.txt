@@ -14,6 +14,7 @@ Tom:240
 Jeroen:240
 t:180
 Tom:160
+Tom:160
 N:40
 asd:10
 asd:20

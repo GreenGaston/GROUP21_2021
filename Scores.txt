@@ -8,6 +8,7 @@ Gaston:720
 Tom:660
 tom:620
 t:600
+tom:560
 Tom:540
 tet:520
 Tom:460

@@ -86,6 +86,7 @@ public class Pentris {
     public static int score = 0;
     public static int level = 1;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
+    public static int beginning=(int)System.currentTimeMillis()/1000;
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -395,6 +396,26 @@ public class Pentris {
 
     }
 
+
+    public static ArrayList<String> getHighscores(){
+        ArrayList<String> highscores= new ArrayList<String>();
+        try {
+            
+            File myObj = new File("Scores.txt");
+            Scanner myReader = new Scanner(myObj);
+            String data;
+            for(int i=0;i<5&&myReader.hasNextLine();i++){
+                data = myReader.nextLine();
+                highscores.add(data);
+                
+            }
+        } catch (IOException e) {
+            //System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return highscores;
+
+    }
     public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         nextPiece();
@@ -427,6 +448,32 @@ public class Pentris {
                 }
             }
         }
+    }
+
+    public static String getTime(){
+        int playtime=((int)System.currentTimeMillis()/1000)-beginning;
+        int minutes=playtime/60;
+        int seconds=playtime%60;
+        if(minutes==0&&seconds==0){
+            return "00:00";
+
+        }
+        if(minutes==0&&seconds<10){
+            return "00:0"+seconds;
+
+        }
+        if(minutes<10&&seconds==0){
+            return "0"+minutes+":00";
+
+        }
+        if(minutes==0){
+            return "00:"+seconds;
+        }
+        if(seconds==0){
+            return minutes+":00";
+
+        }
+        return ""+minutes+":"+seconds;
     }
 
     public static void main(String[] args) {
@@ -478,6 +525,7 @@ public class Pentris {
         long startingTime = System.currentTimeMillis();
         long currentTime;
         gridclone = clone2Dint(grid);
+        beginning=(int)System.currentTimeMillis()/1000;
         try {
             while (!Lost) {
                 gridclone = clone2Dint(grid);

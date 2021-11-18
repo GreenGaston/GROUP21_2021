@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
@@ -141,6 +142,20 @@ public class UI extends JPanel implements KeyListener {
         if (size - 10 > 0) {
             miniSize = size - 10;
         }
+        //draw highscores
+        Font smallFont=new Font("Comic Sans MS", Font.BOLD, 15);
+        localGraphics2D.setFont(smallFont);
+        ArrayList<String> highscores=Pentris.getHighscores();
+        for(int i=0;i<highscores.size();i++){
+            localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 380+15*i);
+
+        }
+        //draw timer:
+        Font smallFont2=new Font("Comic Sans MS", Font.BOLD, 35);
+        localGraphics2D.setFont(smallFont2);
+        String time=Pentris.getTime();
+        localGraphics2D.drawString(time, rightOfGrid+50, 300);
+
 
 
         // draw lines

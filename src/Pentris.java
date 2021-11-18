@@ -24,7 +24,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pentris {
     final public static int height = 15;
-    final public static int width = 7;
+    final public static int width = 10;
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
@@ -93,7 +93,6 @@ public class Pentris {
             heldPieceID = pieceID;
             PieceX = StartX;
             PieceY = StartY;
-            holdCharge = false;
             nextPiece();
             ui.setHoldPiece(pentominoDatabase[heldPieceID][0],heldPieceID);
         } else {
@@ -492,6 +491,10 @@ public class Pentris {
 
                 fallingPiece();
                 lineCheck();
+                while(paused){
+
+                    Thread.sleep(100);
+                }
             }
             System.out.println(score);
             

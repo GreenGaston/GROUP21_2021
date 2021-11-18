@@ -49,6 +49,7 @@ public class UI extends JPanel implements KeyListener {
     public int rightOfGrid;
     public int moveGridRight=100;
     private int miniSize=1;
+    private boolean gamelost=false;
 
     public void setHoldPiece(int[][]piece,int pieceid){
         holdPiece=piece;
@@ -112,6 +113,8 @@ public class UI extends JPanel implements KeyListener {
 
 
     public void drawGameLayout(Graphics g){
+
+
         Graphics2D localGraphics2D = (Graphics2D) g;
         localGraphics2D.setColor(Color.BLACK);
         localGraphics2D.fill(getVisibleRect());
@@ -125,6 +128,7 @@ public class UI extends JPanel implements KeyListener {
         if(size-10>0){
             miniSize=size-10;
         }
+
 
         // draw lines
         localGraphics2D.setColor(Color.WHITE);
@@ -140,6 +144,10 @@ public class UI extends JPanel implements KeyListener {
             for (int j = 0; j < state[0].length; j++) {
                 localGraphics2D.setColor(GetColorOfID(state[i][j]));
                 localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1, size - 1, size - 1));
+                localGraphics2D.setColor(GetColorOfID(state[i][j]).darker().darker());
+                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + (size*3/4), size - 1, size -(size*3/4)));
+                localGraphics2D.setColor(GetColorOfID(state[i][j]).brighter());
+                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1 , size - 1, size -(size*3/4)));
             }
         }
         //draw holdpiece

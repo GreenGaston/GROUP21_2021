@@ -3,6 +3,7 @@ Tom:900
 e:860
 Bob:740
 Gaston:720
+Tom:660
 tom:620
 Tom:540
 tet:520

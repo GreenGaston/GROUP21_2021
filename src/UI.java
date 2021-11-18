@@ -6,9 +6,13 @@
  */
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import javax.swing.JFrame;
@@ -80,7 +84,7 @@ public class UI extends JPanel implements KeyListener {
         size = _size;
         this.colorBlind = Colorblind;
 
-        setPreferredSize(new Dimension(100 + x * size + 350, y * size + 100));
+        setPreferredSize(new Dimension(100 + x * size + 350, y * size + 100+100));
         window = new JFrame("Pentris");
         window.setTitle("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,7 +116,7 @@ public class UI extends JPanel implements KeyListener {
     }
 
 
-    public void drawGameLayout(Graphics g){
+    public void drawGameLayout(Graphics g) throws IOException{
 
 
         Graphics2D localGraphics2D = (Graphics2D) g;
@@ -194,6 +198,20 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
         localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 235);
         localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 350);
+
+
+
+
+        if(lost){
+            Image image = ImageIO.read(new File("gameover.jpg"));
+            localGraphics2D.drawImage(image,0,0,null);
+            System.out.println("LOSER");
+            }
+    }
+
+    public boolean lost=false;
+    public void setLost(){
+        lost=true;
     }
 
     public void drawColorBlindMode(Graphics2D menu) {
@@ -250,10 +268,20 @@ public class UI extends JPanel implements KeyListener {
      */
     public void paintComponent(Graphics g) {
         if (getShowMenu()) {
-            drawGameLayout(g); // Inside drawGameLayout is everything what is shown during the complete game
+            try {
+                drawGameLayout(g);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } // Inside drawGameLayout is everything what is shown during the complete game
             drawMenu(g);
         } else {
-            drawGameLayout(g);
+            try {
+                drawGameLayout(g);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

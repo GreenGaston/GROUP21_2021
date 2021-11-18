@@ -498,7 +498,8 @@ public class Pentris {
 
         } catch (InterruptedException e) {
         }
-
+        ui.setLost();
+        ui.setState(gridclone);
         String scoreLine = name + ":" + score + "\n";
         // this part of the code writes to scores.txt
         ArrayList<String> file = new ArrayList<String>();

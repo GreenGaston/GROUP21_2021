@@ -33,6 +33,8 @@ public class UI extends JPanel implements KeyListener {
     private final int Width = 3;
     private int[][] holdPiece = new int[5][5];
     private Color holdColor = Color.black;
+    private int globalX;
+    private int globalY;
 
     private boolean showMenu;
     private int menuXCord = 100;
@@ -52,6 +54,7 @@ public class UI extends JPanel implements KeyListener {
     private boolean showNotShow;
     public int rightOfGrid;
     public int moveGridRight=100;
+    public int leftOfGrid=200;
     private int miniSize=1;
     private boolean gamelost=false;
 
@@ -81,10 +84,13 @@ public class UI extends JPanel implements KeyListener {
      * @param _size size of the GUI
      */
     public UI(int x, int y, int _size, Boolean Colorblind) {
+        globalX=x;
+        globalY=y;
         size = _size;
         this.colorBlind = Colorblind;
-
-        setPreferredSize(new Dimension(100 + x * size + 350, y * size + 100+100));
+        moveGridRight=leftOfGrid;
+        rightOfGrid = leftOfGrid + size * x;
+        setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 100));
         window = new JFrame("Pentris");
         window.setTitle("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,7 +102,7 @@ public class UI extends JPanel implements KeyListener {
         window.setVisible(true);
         window.addKeyListener(this);
 
-        rightOfGrid = 100 + size * x;
+        
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
@@ -126,7 +132,10 @@ public class UI extends JPanel implements KeyListener {
         Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
         localGraphics2D.setFont(myFont2);
         localGraphics2D.setColor(Color.CYAN.darker());
-        localGraphics2D.drawString("PENTRIS", 70, 0);
+        Image logo = ImageIO.read(new File("logo.jpg"));
+        logo=logo.getScaledInstance(400, 120, logo.SCALE_DEFAULT);
+        localGraphics2D.drawImage(logo,leftOfGrid-50,-65,null);
+        //localGraphics2D.drawString("PENTRIS", 70, 0);
         localGraphics2D.translate(0, 50);
 
         if (size - 10 > 0) {
@@ -190,6 +199,7 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
         localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
         localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
+        localGraphics2D.drawLine(0,0,0,1);
 
         // draw string for the menu's
         Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
@@ -204,8 +214,9 @@ public class UI extends JPanel implements KeyListener {
 
         if(lost){
             Image image = ImageIO.read(new File("gameover.jpg"));
-            localGraphics2D.drawImage(image,0,0,null);
-            System.out.println("LOSER");
+            image=image.getScaledInstance(leftOfGrid + globalX * size + 260, globalY * size + 100,image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(image,-50,-150,null);
+            //System.out.println("LOSER");
             }
     }
 

@@ -337,40 +337,40 @@ public class Pentris {
 
     // this method should update its location and rotation based on keypad inputs
     public static void keypadMethod(KeyEvent event) {
-        if(!Lost&&Started&&!paused){
+        if(!Lost&&Started){
             int keyCode = event.getKeyCode();
 
-            if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX - 1)) {
+            if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX - 1 )&&!paused) {
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left.
                             // That's why the x coordinate of the piece is subtracted by 1.
                 // System.out.println("pieceX = " + PieceX);
 
-            } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX + 1)) {
+            } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX + 1)&&!paused) {
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right.
                             // That's why the x coordinate of the piece is added by 1.
                 // System.out.println("pieceX = " + PieceX);
 
-            } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
+            } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)&&!paused) {
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it
                             // is going to be placed. (To show it smoothly in the UI, drop it down using a
                             // much smaller wait then when playing the normal way.)
                 fallingPiece();
                 // System.out.println("pieceY = " + PieceY);
 
-            } else if (keyCode == up) {
+            } else if (keyCode == up&&!paused) {
                 rotatePiece(true); // If the keypad up is pressed the piece should be rotated right once.
 
-            } else if (keyCode == space) {
+            } else if (keyCode == space&&!paused) {
                 // System.out.println("check");
                 dropPiece(); // Drop the piece if spacebar is pressed.
 
-            } else if (keyCode == z) {
+            } else if (keyCode == z&&!paused) {
                 rotatePiece(true); // If the keypad z is pressed the piece should be rotated right once.
 
-            } else if (keyCode == x) {
+            } else if (keyCode == x&&!paused) {
                 rotatePiece(false); // If the keypad x is pressed the piece should be rotated left once.
 
-            } else if (keyCode == c) {
+            } else if (keyCode == c&&!paused) {
                 holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                             // point in the game.
             } else if (keyCode == esc) {
@@ -386,6 +386,7 @@ public class Pentris {
 
                 ui.openCloseMenu(showMenu);
             }
+
             gridclone = clone2Dint(grid);
             addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
             ui.setState(gridclone);

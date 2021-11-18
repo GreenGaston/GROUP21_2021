@@ -91,7 +91,7 @@ public class UI extends JPanel implements KeyListener {
         this.colorBlind = Colorblind;
         moveGridRight=leftOfGrid;
         rightOfGrid = leftOfGrid + size * x;
-        setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 100));
+        setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 200));
         window = new JFrame("Pentris");
         window.setTitle("Pentris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

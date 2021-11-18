@@ -27,7 +27,7 @@ public class Pentris {
 
     // the startposition for both the X and the Y
     final public static int StartY = 0;
-    final public static int StartX = width/2-1;
+    final public static int StartX = width / 2 - 1;
 
     // This is the minimum amount of seconds the piece waits until it drops 1 down
     // again.
@@ -62,13 +62,12 @@ public class Pentris {
     // variable to end the game
     public static boolean Lost = false;
 
-    public static UI ui = new UI(width, height, 30,false);
+    public static UI ui = new UI(width, height, 30, false);
     public static int[][] gridclone = clone2Dint(grid);
     public static boolean BEEP = false;
 
     public static boolean showMenu = false;
     public static boolean paused = false;
-
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -81,10 +80,10 @@ public class Pentris {
     private static int x = KeyEvent.VK_X;
     private static int esc = KeyEvent.VK_ESCAPE;
 
-    public static boolean holdCharge=true;
-    public static int score=0;
-    public static int level=1;
-    public static int[] scaling={0,40,100,300,1200,4800};
+    public static boolean holdCharge = true;
+    public static int score = 0;
+    public static int level = 1;
+    public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -94,7 +93,7 @@ public class Pentris {
             PieceY = StartY;
             holdCharge = false;
             nextPiece();
-            ui.setHoldPiece(pentominoDatabase[heldPieceID][0],heldPieceID);
+            ui.setHoldPiece(pentominoDatabase[heldPieceID][0], heldPieceID);
         } else {
             if (holdCharge) {
                 int temp = pieceID;
@@ -103,7 +102,7 @@ public class Pentris {
                 PieceX = StartX;
                 PieceY = StartY;
                 holdCharge = false;
-                ui.setHoldPiece(pentominoDatabase[heldPieceID][0],heldPieceID);
+                ui.setHoldPiece(pentominoDatabase[heldPieceID][0], heldPieceID);
             }
         }
     }
@@ -122,23 +121,22 @@ public class Pentris {
 
         // String teststring="";
         // for(int i=0;i<nextPieces.size();i++){
-        //     teststring+=nextPieces.get(i)+",";
+        // teststring+=nextPieces.get(i)+",";
         // }
         // System.out.println(teststring);
-
 
         // this is a suprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
-        //recheck for the nextpiece
+        // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
             Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             Collections.shuffle(nextPieces);
         }
 
-        //System.out.println(nextPieces.get(0)+"testerino");
+        // System.out.println(nextPieces.get(0)+"testerino");
         ui.setNextPiece(pentominoDatabase[nextPieces.get(0)][0], nextPieces.get(0));
 
     }
@@ -266,10 +264,10 @@ public class Pentris {
         grid = updatedGrid;
     }
 
-    //this method should check if a line is full
-    public static void lineCheck(){
-            int count = 0; 
-            int lines = 0;
+    // this method should check if a line is full
+    public static void lineCheck() {
+        int count = 0;
+        int lines = 0;
 
         for (int line = grid[0].length - 1; line >= 0; line--) {// loops through every line
             for (int i = 0; i < grid.length; i++) {// loops through the width
@@ -288,13 +286,13 @@ public class Pentris {
             } else {
                 count = 0;
             }
-        }   
-            if(lines>0){
-                playSound("line.wav");
-            }
-            score=score+(scaling[lines]*level);
-            //System.out.println(score);
-                          
+        }
+        if (lines > 0) {
+            playSound("line.wav");
+        }
+        score = score + (scaling[lines] * level);
+        // System.out.println(score);
+
     }
 
     // this function evaluated if a piece can be placed on a give grid at a certain
@@ -374,16 +372,16 @@ public class Pentris {
             holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                          // point in the game.
         } else if (keyCode == esc) {
-            if (showMenu){
+            if (showMenu) {
                 showMenu = false;
                 paused = false;
                 System.out.println("Game is resumed and menu is closed");
-            }else{
+            } else {
                 showMenu = true;
                 paused = true;
                 System.out.println("Game is paused and menu is shown");
             }
-    
+
             ui.openCloseMenu(showMenu);
         }
         gridclone = clone2Dint(grid);
@@ -435,25 +433,22 @@ public class Pentris {
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("are you colorblind?(Y/N)");
-        String color=scanner.nextLine();
-        String isColorBlind="Y";
-        String name="";
+        String color = scanner.nextLine();
+        String isColorBlind = "Y";
+        String name = "";
         System.out.println("what is your name?");
-        //reader.nextLine();
-        name=scanner.nextLine();
+        // reader.nextLine();
+        name = scanner.nextLine();
         scanner.close();
 
-
-        
-        //System.out.println(color);
-        if(color.equals(isColorBlind)){
-            //System.out.println("test");
+        // System.out.println(color);
+        if (color.equals(isColorBlind)) {
+            // System.out.println("test");
             ui.setColorblind(true);
         }
         scanner.close();
 
-
-        //this thread plays the music
+        // this thread plays the music
         new Thread() {
             @Override
             public void run() {
@@ -483,7 +478,7 @@ public class Pentris {
             while (!Lost) {
                 gridclone = clone2Dint(grid);
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-                //System.out.println("frame");
+                // System.out.println("frame");
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
@@ -493,40 +488,36 @@ public class Pentris {
                 lineCheck();
             }
             System.out.println(score);
-            
+
         } catch (InterruptedException e) {
         }
-        
 
-        String scoreLine= name+":"+score+"\n";
-        //this part of the code writes to scores.txt
-        ArrayList<String> file=new ArrayList<String>();
+        String scoreLine = name + ":" + score + "\n";
+        // this part of the code writes to scores.txt
+        ArrayList<String> file = new ArrayList<String>();
         try {
-            
+
             File myObj = new File("Scores.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 file.add(data);
 
-                //System.out.println(data);
-                }
+                // System.out.println(data);
+            }
             myReader.close();
 
-
             FileWriter myWriter = new FileWriter("Scores.txt");
-            Boolean found=true;
-            for(int i=0;i<file.size();i++){
-                //System.out.println(file.get(i));
+            Boolean found = true;
+            for (int i = 0; i < file.size(); i++) {
+                // System.out.println(file.get(i));
 
-
-                if(Integer.valueOf(file.get(i).split(":")[1])<score&&found){
+                if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
                     myWriter.write(scoreLine);
-                    myWriter.write(file.get(i)+"\n");
-                    found=false;
-                }
-                else{
-                    myWriter.write(file.get(i)+"\n");
+                    myWriter.write(file.get(i) + "\n");
+                    found = false;
+                } else {
+                    myWriter.write(file.get(i) + "\n");
                 }
             }
             myWriter.close();

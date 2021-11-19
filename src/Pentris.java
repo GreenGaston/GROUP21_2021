@@ -433,6 +433,7 @@ public class Pentris {
             Lost = true;
 
         }
+        lineCheck();
 
     }
 
@@ -503,6 +504,19 @@ public class Pentris {
         
 
     }
+    public static int[][] getGrid(){
+        return grid;
+    }
+    public static int getPieceID(){
+        return pieceID;
+    }
+    public static int getRotation(){
+        return rotation;
+    }
+    public static int getX(){
+        return PieceX;
+    }
+    
 
     public static void main(String[] args) {
         for (int i = 0; i < grid.length; i++) {
@@ -566,6 +580,7 @@ public class Pentris {
         long currentTime;
         gridclone = clone2Dint(grid);
         beginning=(int)System.currentTimeMillis()/1000;
+        //PentrisAI ai=new PentrisAI();
         try {
             while (!Lost) {
                 gridclone = clone2Dint(grid);
@@ -590,7 +605,7 @@ public class Pentris {
 
         } catch (InterruptedException e) {
         }
-        ui.setLost();
+        //ui.setLost();
         stopmusic=true;
         playSound("Lost.wav");
 

@@ -8,3 +8,11 @@ Loser:10
 test:0
 bot:0
 bot:0
+t:0
+t:0
+t:0
+t:0
+t:0
+t:0
+t:0
+t:0

@@ -203,14 +203,12 @@ public class UI extends JPanel implements KeyListener {
         // draw boxes around the Strings
         localGraphics2D.setColor(Color.CYAN.darker());
         localGraphics2D.setStroke(new BasicStroke(Width));
-        Rectangle box = new Rectangle(SquareX + rightOfGrid, SquareY, 325, 210);
         localGraphics2D.setColor(Color.CYAN.darker());
-        localGraphics2D.draw(box);
-        localGraphics2D.setColor(Color.CYAN.darker());
-        localGraphics2D.drawLine(10 + rightOfGrid, 40, 470 + rightOfGrid, 40);
-        localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 1000);
-        localGraphics2D.drawLine(10 + rightOfGrid, 538, 370 + rightOfGrid, 538);
-        localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 1000);
+        localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
+        localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
+        localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
+        localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
+        localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
         localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
         localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
         localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);

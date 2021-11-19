@@ -148,14 +148,14 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.setFont(smallFont);
         ArrayList<String> highscores=Pentris.getHighscores();
         for(int i=0;i<highscores.size();i++){
-            localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 380+15*i);
+            localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 350+15*i);
 
         }
         //draw timer:
         Font smallFont2=new Font("Comic Sans MS", Font.BOLD, 35);
         localGraphics2D.setFont(smallFont2);
         String time=Pentris.getTime();
-        localGraphics2D.drawString(time, rightOfGrid+50, 300);
+        localGraphics2D.drawString(time, rightOfGrid+50, 225);
 
 
 
@@ -196,7 +196,7 @@ public class UI extends JPanel implements KeyListener {
                 if (nextPiece[i][j] > 0) {
                     localGraphics2D.setColor(nextColor);
                     localGraphics2D.fill(
-                            new Rectangle2D.Double(i * size + 70 + rightOfGrid, j * size + 70, size - 1, size - 1));
+                            new Rectangle2D.Double(i * size + 30 + rightOfGrid, j * size + 50, size - 1, size - 1));
                 }
             }
         }
@@ -220,8 +220,8 @@ public class UI extends JPanel implements KeyListener {
         localGraphics2D.setFont(myFont);
         localGraphics2D.setColor(Color.WHITE);
         localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
-        localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 235);
-        localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 350);
+        localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 167);
+        localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 313);
 
 
 

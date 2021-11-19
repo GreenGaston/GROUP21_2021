@@ -1,6 +1,7 @@
 Tom:5180
 GreenGaston:720
 y:380
+Lianne:160
 Loser:10
 test:0
 bot:0

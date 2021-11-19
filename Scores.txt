@@ -1,3 +1,4 @@
 Tom:5180
 y:380
+Lianne:160
 Loser:10

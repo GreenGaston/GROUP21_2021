@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -37,15 +37,14 @@ public class UI extends JPanel implements KeyListener {
     private int globalY;
 
     private Boolean colorBlind = false;
-    private boolean showMenu;
 
     private int[][] nextPiece = new int[5][5];
     private Color nextColor = Color.black;
     public int rightOfGrid;
-    public int moveGridRight=100;
-    public int leftOfGrid=200;
-    private int miniSize=1;
-    private boolean gamelost=false;
+    public int moveGridRight = 100;
+    public int leftOfGrid = 200;
+    private int miniSize = 1;
+    private boolean gamelost = false;
 
     public void setHoldPiece(int[][] piece, int pieceid) {
         holdPiece = piece;
@@ -73,11 +72,11 @@ public class UI extends JPanel implements KeyListener {
      * @param _size size of the GUI
      */
     public UI(int x, int y, int _size, Boolean Colorblind) {
-        globalX=x;
-        globalY=y;
+        globalX = x;
+        globalY = y;
         size = _size;
         this.colorBlind = Colorblind;
-        moveGridRight=leftOfGrid;
+        moveGridRight = leftOfGrid;
         rightOfGrid = leftOfGrid + size * x;
         setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 200));
         window = new JFrame("Pentris");
@@ -91,7 +90,6 @@ public class UI extends JPanel implements KeyListener {
         window.setVisible(true);
         window.addKeyListener(this);
 
-        
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
@@ -100,9 +98,10 @@ public class UI extends JPanel implements KeyListener {
         }
     }
     
-    public boolean lost=false;
-    public void setLost(){
-        lost=true;
+    public boolean lost = false;
+
+    public void setLost() {
+        lost = true;
     }
 
     /**
@@ -112,18 +111,22 @@ public class UI extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         try {
             Graphics2D localGraphics2D = (Graphics2D) g;
+            localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(getVisibleRect());
             localGraphics2D.translate(10, 50);
             Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
             localGraphics2D.setFont(myFont2);
             localGraphics2D.setColor(Color.CYAN.darker());
-            Image logo;
-            logo = ImageIO.read(new File("logo.jpg"));
-            logo=logo.getScaledInstance(400, 120, Image.SCALE_DEFAULT);
-            localGraphics2D.drawImage(logo,leftOfGrid-50,-65,null);
+            Image logo = ImageIO.read(new File("logov2.png"));
+            logo = logo.getScaledInstance(287, 120, Image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(logo,leftOfGrid,-65,null);
             //localGraphics2D.drawString("PENTRIS", 70, 0);
             localGraphics2D.translate(0, 50);
+            Image designRight = ImageIO.read(new File("rightSideGrid.png"));
+            designRight = designRight.getScaledInstance(223,450, Image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(designRight, rightOfGrid + 5, 0, null);
+            
     
             if (size - 10 > 0) {
                 miniSize = size - 10;
@@ -133,14 +136,14 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.setFont(smallFont);
             ArrayList<String> highscores=Pentris.getHighscores();
             for(int i=0;i<highscores.size();i++){
-                localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 380+15*i);
+                localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 350+15*i);
     
             }
             //draw timer:
             Font smallFont2=new Font("Comic Sans MS", Font.BOLD, 35);
             localGraphics2D.setFont(smallFont2);
             String time=Pentris.getTime();
-            localGraphics2D.drawString(time, rightOfGrid+50, 300);
+            localGraphics2D.drawString(time, rightOfGrid+50, 225);
     
     
     
@@ -170,7 +173,8 @@ public class UI extends JPanel implements KeyListener {
                     if (holdPiece[i][j] > 0) {
                         localGraphics2D.setColor(holdColor);
                         localGraphics2D.fill(
-                        new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1, miniSize - 1));
+                                new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1, miniSize - 1));
+    
                     }
                 }
             }
@@ -180,43 +184,40 @@ public class UI extends JPanel implements KeyListener {
                     if (nextPiece[i][j] > 0) {
                         localGraphics2D.setColor(nextColor);
                         localGraphics2D.fill(
-                        new Rectangle2D.Double(i * size + 70 + rightOfGrid, j * size + 70, size - 1, size - 1));
+                                new Rectangle2D.Double(i * size + 30 + rightOfGrid, j * size + 50, size - 1, size - 1));
                     }
                 }
             }
     
             // draw boxes around the Strings
-            localGraphics2D.setColor(Color.CYAN.darker());
-            localGraphics2D.setStroke(new BasicStroke(Width));
-            localGraphics2D.setColor(Color.CYAN.darker());
-            localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
-            localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
-            localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
-            localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
-            localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
-            localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
-            localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
-            localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
-            localGraphics2D.drawLine(0,0,0,1);
+            // localGraphics2D.setColor(Color.CYAN.darker());
+            // localGraphics2D.setStroke(new BasicStroke(Width));
+            // localGraphics2D.setColor(Color.CYAN.darker());
+            // localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
+            // localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
+            // localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
+            // localGraphics2D.drawLine(0,0,0,1);
     
             // draw string for the menu's
             Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
             localGraphics2D.setFont(myFont);
             localGraphics2D.setColor(Color.WHITE);
             localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
-            localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 235);
-            localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 350);
-    
-    
-    
+            localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 167);
+            localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 313);
     
             if(lost){
                 Image image = ImageIO.read(new File("gameover.jpg"));
                 image=image.getScaledInstance(leftOfGrid + globalX * size + 260, globalY * size + 100,Image.SCALE_DEFAULT);
                 localGraphics2D.drawImage(image,-50,-150,null);
                 //System.out.println("LOSER");
-            }
-        } catch (IOException e) {
+                }
+            } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -256,8 +257,8 @@ public class UI extends JPanel implements KeyListener {
                 return new Color(100, 0, 0);
             } else if (i == 11) {
                 return new Color(0, 100, 0);
-            }else if (i==12){
-                return new Color(128,128,128);
+            } else if (i == 12) {
+                return new Color(128, 128, 128);
             } else {
                 return Color.BLACK;
             }
@@ -286,8 +287,8 @@ public class UI extends JPanel implements KeyListener {
                 return Color.decode("#ff7373");
             } else if (i == 11) {
                 return Color.decode("#fc99ff");
-            }else if (i==12){
-                return new Color(128,128,128);
+            } else if (i == 12) {
+                return new Color(128, 128, 128);
             } else {
                 return Color.BLACK;
             }

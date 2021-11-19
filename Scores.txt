@@ -1,3 +1,10 @@
 Tom:5180
+test:860
+GreenGaston:720
 y:380
+test:220
+Lianne:160
 Loser:10
+test:0
+bot:0
+bot:0

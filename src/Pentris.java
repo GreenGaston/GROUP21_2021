@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -447,6 +447,7 @@ public class Pentris {
             Lost = true;
 
         }
+        lineCheck();
 
     }
 
@@ -517,6 +518,23 @@ public class Pentris {
         
 
     }
+    
+    public static int[][] getGrid(){
+        return grid;
+    }
+    
+    public static int getPieceID(){
+        return pieceID;
+    }
+    
+    public static int getRotation(){
+        return rotation;
+    }
+    
+    public static int getX(){
+        return PieceX;
+    }
+    
 
     public static void main(String[] args) throws InterruptedException {
         startMenu startMenu = new startMenu();
@@ -589,7 +607,7 @@ public class Pentris {
         long currentTime;
         gridclone = clone2Dint(grid);
         beginning=(int)System.currentTimeMillis()/1000;
-
+        //PentrisAI ai=new PentrisAI();
         try {
             while (!Lost) {
 
@@ -615,7 +633,7 @@ public class Pentris {
 
         } catch (InterruptedException e) {
         }
-        ui.setLost();
+        //ui.setLost();
         stopmusic=true;
         playSound("Lost.wav");
 

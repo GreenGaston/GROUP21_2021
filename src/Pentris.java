@@ -70,6 +70,7 @@ public class Pentris {
 
     public static boolean showMenu = false;
     public static boolean paused = false;
+    public static boolean addShadow=false;
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -87,6 +88,7 @@ public class Pentris {
     public static int level = 1;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
     public static int beginning=(int)System.currentTimeMillis()/1000;
+    public static boolean stopmusic=false;
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -224,6 +226,8 @@ public class Pentris {
         }
         return timeIndicate;
     }
+
+        
 
     public static void dropPiece() {
 
@@ -389,6 +393,9 @@ public class Pentris {
             }
 
             gridclone = clone2Dint(grid);
+            if(addShadow){
+                addShadow(gridclone);
+            }
             addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
             ui.setState(gridclone);
             // playSound("beep.wav");
@@ -409,6 +416,7 @@ public class Pentris {
                 highscores.add(data);
                 
             }
+            myReader.close();
         } catch (IOException e) {
             //System.out.println("An error occurred.");
             e.printStackTrace();
@@ -476,6 +484,24 @@ public class Pentris {
         return ""+minutes+":"+seconds;
     }
 
+    public static void addShadow(int[][]grid){
+
+        int[][] piece= pentominoDatabase[pieceID][rotation];
+        for (int i = 1; i < 50; i++) {
+            // System.out.println("pieceY = " + PieceY);
+            if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
+                
+                addPiece(grid, piece, 12, PieceX, PieceY+i-1);
+
+                
+                break;
+            }
+        }
+
+        
+
+    }
+
     public static void main(String[] args) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -498,28 +524,40 @@ public class Pentris {
             ui.setColorblind(true);
         }
         scanner.close();
-
+        stopmusic=false;
         // this thread plays the music
-        new Thread() {
+        Thread music= new Thread() {
             @Override
             public void run() {
                 Clip clip;
+                
                 try {
                     AudioInputStream input = AudioSystem.getAudioInputStream(new File("Pentris.wav"));
                     clip = AudioSystem.getClip();
                     clip.open(input);
                     clip.loop(Clip.LOOP_CONTINUOUSLY);
                     clip.start();
+                    while(!stopmusic){
+                        Thread.sleep(40);
+                    }
+                    //System.out.println("etstestttsetset");
+                    clip.stop();
                 } catch (UnsupportedAudioFileException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (LineUnavailableException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
+                
+                
             }
             // this starts the thread
-        }.start();
+        };
+        music.start();
         Started=true;
         nextPiece();
         long startingTime = System.currentTimeMillis();
@@ -529,6 +567,9 @@ public class Pentris {
         try {
             while (!Lost) {
                 gridclone = clone2Dint(grid);
+                if(addShadow){
+                    addShadow(gridclone);
+                }
                 addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
                 // System.out.println("frame");
                 ui.setState(gridclone);
@@ -543,11 +584,15 @@ public class Pentris {
                     Thread.sleep(100);
                 }
             }
-            System.out.println(score);
+            //System.out.println(score);
 
         } catch (InterruptedException e) {
         }
         ui.setLost();
+        stopmusic=true;
+        playSound("Lost.wav");
+
+
         ui.setState(gridclone);
         String scoreLine = name + ":" + score + "\n";
         // this part of the code writes to scores.txt
@@ -562,6 +607,7 @@ public class Pentris {
 
                 // System.out.println(data);
             }
+            
             myReader.close();
 
             FileWriter myWriter = new FileWriter("Scores.txt");
@@ -577,6 +623,9 @@ public class Pentris {
                     myWriter.write(file.get(i) + "\n");
                 }
             }
+            if(found){
+                myWriter.write(scoreLine);
+            }
             myWriter.close();
             //System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -584,6 +633,6 @@ public class Pentris {
             e.printStackTrace();
         }
         
-        System.out.println("check");
+        //System.out.println("check");
     }
 }

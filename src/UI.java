@@ -344,6 +344,8 @@ public class UI extends JPanel implements KeyListener {
                 return new Color(100, 0, 0);
             } else if (i == 11) {
                 return new Color(0, 100, 0);
+            }else if (i==12){
+                return new Color(128,128,128);
             } else {
                 return Color.BLACK;
             }
@@ -372,6 +374,8 @@ public class UI extends JPanel implements KeyListener {
                 return Color.decode("#ff7373");
             } else if (i == 11) {
                 return Color.decode("#fc99ff");
+            }else if (i==12){
+                return new Color(128,128,128);
             } else {
                 return Color.BLACK;
             }

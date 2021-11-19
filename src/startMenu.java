@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -57,12 +57,14 @@ public class startMenu implements ActionListener{
     int minSizeX = 5;
     int minSizeY = 15;
     int maxSizeX = 15;
-    int maxSizeY = 30;
+    int maxSizeY = 20;
     int intSizeX = minSizeX;
     int intSizeY = minSizeY;
     String colorblindNormal = "Normal";
     String menuLetters = "Calibri";
     String playerName;
+    boolean isColorBlind;
+    boolean showMenu = true;
     public static void main(String[] args) {
         new startMenu();
     }
@@ -300,12 +302,12 @@ public class startMenu implements ActionListener{
         menuPanel.add(play);
 
     // Frame:
-        UI = new JFrame();
+        UI = new JFrame("PENTRIS");
         UI.add(menuPanel);
-        UI.setUndecorated(true);
         UI.pack();
         UI.setVisible(true);
         UI.setResizable(false);
+        UI.setLocationRelativeTo(null);
         UI.setPreferredSize(new Dimension(400, 400));
         UI.setMinimumSize(new Dimension (400,400));
     }
@@ -332,9 +334,11 @@ public class startMenu implements ActionListener{
         if (e.getSource() == buttonColormode && colorblindNormal.equals("Normal")){
             colorblindNormal = "Colorblind";
             buttonColormode.setText(colorblindNormal);
+            isColorBlind = true;
         }else if(e.getSource() == buttonColormode && colorblindNormal.equals("Colorblind")){
             colorblindNormal = "Normal";
             buttonColormode.setText(colorblindNormal);
+            isColorBlind = false;
         }
 
         // Button press for gridsize:
@@ -363,7 +367,7 @@ public class startMenu implements ActionListener{
         }
 
         // Button for entering name:
-        if (e.getSource() == nameEntered){
+        if (e.getSource() == nameEntered && inputName.getText() != ""){
             playerName = inputName.getText();
             inputName.setText("");
             System.out.println(playerName);
@@ -371,16 +375,45 @@ public class startMenu implements ActionListener{
 
         // Button to start the game and close the menu:
         if (e.getSource() == play){
-            // #TODO Implement here the code to start the game
             System.out.println("Start Game");
+            showMenu = false;
             UI.dispose();
         }
 
 
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
+            System.out.println("Start Game");
+            showMenu = false;
             UI.dispose();
         }
+    }
 
+    public boolean getIsColorblind(){
+        return isColorBlind;
+    }
+
+    public boolean getShowMenu(){
+        return showMenu;
+    }
+
+    public void setShowMenu(boolean x){
+        showMenu = x;
+    }
+
+    public String getName(){
+        return playerName;
+    }
+
+    public int getLevel(){
+        return levelInt;
+    }
+
+    public int getGridsizeX(){
+        return intSizeX;
+    }
+
+    public int getGridsizeY(){
+        return intSizeY;
     }
 }

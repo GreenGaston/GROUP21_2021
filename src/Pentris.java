@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -22,19 +22,20 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-// test to commit changes Lianne
-
 public class Pentris {
-    final public static int height = 15;
-    final public static int width = 10;
+    public static int height = 0;
+    public static int width = 0;
+
+    public static int uiWidth = 10;
+    public static int uiHeight = 18;
 
     // the startposition for both the X and the Y
-    final public static int StartY = 0;
-    final public static int StartX = width / 2 - 1;
+    public static int StartY;
+    public static int StartX;
 
     // This is the minimum amount of seconds the piece waits until it drops 1 down
     // again.
-    final public static double minimumWait = 1000;
+    final public static long minimumWait = 1000;
     // Everytime that the timeframe fits in the time, the pieces drop a bit faster
     final public static double accelerationTimeFrame = 10;
     // Every time frame the pieces will fall 0.05 seconds faster.
@@ -43,7 +44,7 @@ public class Pentris {
     // Thread.sleep(long milliseconds) to convert the milliseconds to seconds
     final public static long millisecondsToSeconds = 1000;
 
-    public static int[][] grid = new int[width][height];
+    public static int[][] grid;
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
     // contains current pieceID
     public static int pieceID;
@@ -59,16 +60,18 @@ public class Pentris {
     public static int[][][][] pentominoDatabase = PentominoDatabase.data;
 
     // the current location of a piece
-    public static volatile int PieceX = StartX;
-    public static volatile int PieceY = StartY;
+    public static volatile int PieceX;
+    public static volatile int PieceY;
 
     // variable to end the game
     public static boolean Lost = false;
     public static boolean Started= false;
 
-    public static UI ui = new UI(width, height, 30, false);
-    public static int[][] gridclone = clone2Dint(grid);
+    public static UI ui;
+    public static int[][] gridclone;
     public static boolean BEEP = false;
+
+    public static Menu menu = new Menu();
 
     public static boolean showMenu = false;
     public static boolean paused = false;
@@ -87,10 +90,16 @@ public class Pentris {
 
     public static boolean holdCharge = true;
     public static int score = 0;
-    public static int level = 1;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
     public static int beginning=(int)System.currentTimeMillis()/1000;
     public static boolean stopmusic=false;
+
+    public static String name;
+    public static int level = 1;
+    public static int gameLevel;
+    public static boolean isColorblind;
+    public static int startingLevel;
+    public static double startingAcceleration;
 
     // this method should hold the current piece
     public static void holdPiece() {
@@ -217,8 +226,8 @@ public class Pentris {
 
     // Acceleration method, should return an increasingly small int for the amount
     // of second between piece drops
-    public static double fallingAcceleration(double time) {
-        double timeIndicate = 1;
+    public static long fallingAcceleration(long time) {
+        long timeIndicate = 1;
         countingloop: for (double i = accelerationTimeFrame; i < time; i += accelerationTimeFrame) {
             timeIndicate -= acceleration;
             if (timeIndicate <= minimumWait) {
@@ -226,10 +235,21 @@ public class Pentris {
                 break countingloop;
             }
         }
+
+        if (startingLevel == 1){
+            startingAcceleration = 0;
+        }else{
+            startingAcceleration = level*0.03;
+        }
+
+        if (timeIndicate - startingAcceleration <= minimumWait){
+            timeIndicate = minimumWait;
+        }else{
+            timeIndicate -= startingAcceleration;
+        }
+
         return timeIndicate;
     }
-
-        
 
     public static void dropPiece() {
 
@@ -381,17 +401,11 @@ public class Pentris {
                 holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
                             // point in the game.
             } else if (keyCode == esc) {
-                if (showMenu) {
-                    showMenu = false;
-                    paused = false;
-                    System.out.println("Game is resumed and menu is closed");
-                } else {
-                    showMenu = true;
-                    paused = true;
+                if (!menu.getShowMenu()) {
+                    menu.UI.setVisible(true);;
+                    menu.setPaused(true);
                     System.out.println("Game is paused and menu is shown");
                 }
-
-                ui.openCloseMenu(showMenu);
             }
 
             gridclone = clone2Dint(grid);
@@ -404,7 +418,6 @@ public class Pentris {
         }
 
     }
-
 
     public static ArrayList<String> getHighscores(){
         ArrayList<String> highscores= new ArrayList<String>();
@@ -426,6 +439,7 @@ public class Pentris {
         return highscores;
 
     }
+    
     public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         nextPiece();
@@ -504,30 +518,38 @@ public class Pentris {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        startMenu startMenu = new startMenu();
+        
+        startMenu.setShowMenu(true);
+        while(startMenu.getShowMenu()){
+            Thread.sleep(100);
+        }
+
+
+        name = startMenu.getName();
+        gameLevel = startMenu.getLevel();
+        height = startMenu.getGridsizeY();
+        width = startMenu.getGridsizeX();
+        isColorblind = startMenu.getIsColorblind();
+
+        StartY = 0;
+        StartX = width/2-1;
+        PieceX = StartX;
+        PieceY = StartY;
+        grid = new int[width][height];
+        gridclone = clone2Dint(grid);
+        startingLevel = gameLevel;
+
+        ui = new UI(width, height, 30, isColorblind);
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = -1;
             }
         }
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("are you colorblind?(Y/N)");
-        String color = scanner.nextLine();
-        String isColorBlind = "Y";
-        String name = "";
-        System.out.println("what is your name?");
-        // reader.nextLine();
-        name = scanner.nextLine();
-        scanner.close();
 
-        // System.out.println(color);
-        if (color.equals(isColorBlind)) {
-            // System.out.println("test");
-            ui.setColorblind(true);
-        }
-        scanner.close();
-        stopmusic=false;
-        // this thread plays the music
+
         Thread music= new Thread() {
             @Override
             public void run() {
@@ -562,12 +584,15 @@ public class Pentris {
         music.start();
         Started=true;
         nextPiece();
+
         long startingTime = System.currentTimeMillis();
         long currentTime;
         gridclone = clone2Dint(grid);
         beginning=(int)System.currentTimeMillis()/1000;
+
         try {
             while (!Lost) {
+
                 gridclone = clone2Dint(grid);
                 if(addShadow){
                     addShadow(gridclone);
@@ -577,11 +602,11 @@ public class Pentris {
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
-                Thread.sleep((long) fallingAcceleration(playingTime));
+                Thread.sleep(fallingAcceleration(playingTime));
 
                 fallingPiece();
                 lineCheck();
-                while(paused){
+                while(menu.getPaused()){
 
                     Thread.sleep(100);
                 }

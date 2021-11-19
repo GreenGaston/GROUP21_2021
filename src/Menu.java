@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,6 +56,9 @@ public class Menu implements ActionListener{
 //////////////////////////////////////////
     String colorblindNormal = "Normal";
     String menuLetters = "Calibri";
+    boolean isColorBlind = false;
+    boolean showMenu = false;
+    boolean paused = false;
     public static void main(String[] args) {
         new Menu();
     }
@@ -306,16 +309,17 @@ public class Menu implements ActionListener{
         menuPanel.add(menu);
         menuPanel.add(closeMenu);
         menuPanel.add(continueGame);
+        
 
     // Frame:
         UI = new JFrame();
         UI.add(menuPanel);
         UI.setUndecorated(true);
         UI.pack();
-        UI.setVisible(true);
         UI.setResizable(false);
         UI.setPreferredSize(new Dimension(400, 400));
         UI.setMinimumSize(new Dimension (400,400));
+        UI.setLocationRelativeTo(null);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -323,26 +327,49 @@ public class Menu implements ActionListener{
         if (e.getSource() == buttonColormode && colorblindNormal.equals("Normal")){
             colorblindNormal = "Colorblind";
             buttonColormode.setText(colorblindNormal);
+            isColorBlind = true;
         }else if(e.getSource() == buttonColormode && colorblindNormal.equals("Colorblind")){
             colorblindNormal = "Normal";
             buttonColormode.setText(colorblindNormal);
+            isColorBlind = false;
         }
 
 
         // Button to start the game and close the menu:
         if (e.getSource() == continueGame){
-            // #TODO Implement here the code to continue the game
             System.out.println("Continue Game");
+            showMenu = false;
+            paused = false;
             UI.dispose();
         }
 
 
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
-            // #TODO Implement here the code to continue the game
             System.out.println("Continue Game");
+            showMenu = false;
+            paused = false;
             UI.dispose();
         }
+    }
+    
+    public boolean getIsColorblind(){
+        return isColorBlind;
+    }
 
+    public boolean getShowMenu(){
+        return showMenu;
+    }
+
+    public void setShowMenu(boolean x){
+        showMenu = x;
+    }
+
+    public void setPaused(boolean x){
+        paused = x;
+    }
+
+    public boolean getPaused(){
+        return paused;
     }
 }

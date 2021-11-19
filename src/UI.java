@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -14,10 +14,8 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.Graphics2D;
-import java.awt.Graphics;
+
 import javax.swing.JFrame;
-import java.awt.Dimension;
 
 /**
  * This class takes care of all the graphics to display a certain state.
@@ -27,6 +25,7 @@ import java.awt.Dimension;
  */
 public class UI extends JPanel implements KeyListener {
     private JFrame window;
+
     private int[][] state;
     private int size;
     private final int SquareX = 10;
@@ -37,22 +36,11 @@ public class UI extends JPanel implements KeyListener {
     private int globalX;
     private int globalY;
 
-    private boolean showMenu;
-    private int menuXCord = 100;
-    private int menuYCord = 400;
-    private int menuSize = menuYCord - menuXCord;
-    private String menuLetters = "Comic Sans MS";
-    private Font menuFontExtraBig = new Font(menuLetters, Font.BOLD, menuSize / 10);
-    private Font menuFontBig = new Font(menuLetters, Font.BOLD, menuSize / 15);
-    private Font menuFontSmall = new Font(menuLetters, Font.BOLD, menuSize / 22);
-    private Font menuFontExtraSmall = new Font(menuLetters, Font.BOLD, menuSize / 30);
-
-    private int level = 1;
     private Boolean colorBlind = false;
+    private boolean showMenu;
 
     private int[][] nextPiece = new int[5][5];
     private Color nextColor = Color.black;
-    private boolean showNotShow;
     public int rightOfGrid;
     public int moveGridRight=100;
     public int leftOfGrid=200;
@@ -110,180 +98,11 @@ public class UI extends JPanel implements KeyListener {
                 state[i][j] = -1;
             }
         }
-
     }
-
-    public void openCloseMenu(boolean showMenu) {
-        this.showMenu = showMenu; // Comment out for testing and in if tests are completed
-        // return true; // Comment in for testing and out if tests are completed
-    }
-
-    public boolean getShowMenu() {
-        return showMenu;
-    }
-
-
-    public void drawGameLayout(Graphics g) throws IOException{
-
-
-        Graphics2D localGraphics2D = (Graphics2D) g;
-        localGraphics2D.setColor(Color.BLACK);
-        localGraphics2D.fill(getVisibleRect());
-        localGraphics2D.translate(10, 50);
-        Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
-        localGraphics2D.setFont(myFont2);
-        localGraphics2D.setColor(Color.CYAN.darker());
-        Image logo = ImageIO.read(new File("logo.jpg"));
-        logo=logo.getScaledInstance(400, 120, logo.SCALE_DEFAULT);
-        localGraphics2D.drawImage(logo,leftOfGrid-50,-65,null);
-        //localGraphics2D.drawString("PENTRIS", 70, 0);
-        localGraphics2D.translate(0, 50);
-
-        if (size - 10 > 0) {
-            miniSize = size - 10;
-        }
-        //draw highscores
-        Font smallFont=new Font("Comic Sans MS", Font.BOLD, 15);
-        localGraphics2D.setFont(smallFont);
-        ArrayList<String> highscores=Pentris.getHighscores();
-        for(int i=0;i<highscores.size();i++){
-            localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 380+15*i);
-
-        }
-        //draw timer:
-        Font smallFont2=new Font("Comic Sans MS", Font.BOLD, 35);
-        localGraphics2D.setFont(smallFont2);
-        String time=Pentris.getTime();
-        localGraphics2D.drawString(time, rightOfGrid+50, 300);
-
-
-
-        // draw lines
-        localGraphics2D.setColor(Color.WHITE);
-        for (int i = 0; i <= state.length; i++) {
-            localGraphics2D.drawLine(i * size + moveGridRight, 0, i * size + moveGridRight, state[0].length * size);
-        }
-        for (int i = 0; i <= state[0].length; i++) {
-            localGraphics2D.drawLine(moveGridRight, i * size, state.length * size + moveGridRight, i * size);
-        }
-
-        // draw blocks
-        for (int i = 0; i < state.length; i++) {
-            for (int j = 0; j < state[0].length; j++) {
-                localGraphics2D.setColor(GetColorOfID(state[i][j]));
-                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1, size - 1, size - 1));
-                localGraphics2D.setColor(GetColorOfID(state[i][j]).darker().darker());
-                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + (size*3/4), size - 1, size -(size*3/4)));
-                localGraphics2D.setColor(GetColorOfID(state[i][j]).brighter());
-                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1 , size - 1, size -(size*3/4)));
-            }
-        }
-        // draw holdpiece
-        for (int i = 0; i < holdPiece.length; i++) {
-            for (int j = 0; j < holdPiece[0].length; j++) {
-                if (holdPiece[i][j] > 0) {
-                    localGraphics2D.setColor(holdColor);
-                    localGraphics2D.fill(
-                            new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1, miniSize - 1));
-
-                }
-            }
-        }
-        // draw nextpiece
-        for (int i = 0; i < nextPiece.length; i++) {
-            for (int j = 0; j < nextPiece[0].length; j++) {
-                if (nextPiece[i][j] > 0) {
-                    localGraphics2D.setColor(nextColor);
-                    localGraphics2D.fill(
-                            new Rectangle2D.Double(i * size + 70 + rightOfGrid, j * size + 70, size - 1, size - 1));
-                }
-            }
-        }
-
-        // draw boxes around the Strings
-        localGraphics2D.setColor(Color.CYAN.darker());
-        localGraphics2D.setStroke(new BasicStroke(Width));
-        localGraphics2D.setColor(Color.CYAN.darker());
-        localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
-        localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
-        localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
-        localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
-        localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
-        localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
-        localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
-        localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
-        localGraphics2D.drawLine(0,0,0,1);
-
-        // draw string for the menu's
-        Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
-        localGraphics2D.setFont(myFont);
-        localGraphics2D.setColor(Color.WHITE);
-        localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
-        localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 235);
-        localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 350);
-
-
-
-
-        if(lost){
-            Image image = ImageIO.read(new File("gameover.jpg"));
-            image=image.getScaledInstance(leftOfGrid + globalX * size + 260, globalY * size + 100,image.SCALE_DEFAULT);
-            localGraphics2D.drawImage(image,-50,-150,null);
-            //System.out.println("LOSER");
-            }
-    }
-
+    
     public boolean lost=false;
     public void setLost(){
         lost=true;
-    }
-
-    public void drawColorBlindMode(Graphics2D menu) {
-        menu.setFont(menuFontBig);
-        menu.drawString("Colorblind", 140, 250);
-        menu.drawString(":", 250, 250);
-        if (colorBlind) {
-            menu.setFont(menuFontBig);
-            menu.drawString("On", 280, 250);
-            menu.drawString("/", 310, 250);
-            menu.setFont(menuFontSmall);
-            menu.drawString("Off", 320, 250);
-        } else {
-            menu.setFont(menuFontBig);
-            menu.drawString("Off", 320, 250);
-            menu.drawString("/", 310, 250);
-            menu.setFont(menuFontSmall);
-            menu.drawString("On", 290, 250);
-        }
-    }
-
-    public void drawMenu(Graphics g) {
-        Graphics2D menu = (Graphics2D) g;
-        Rectangle menuBox = new Rectangle(menuXCord, menuXCord, menuSize, menuSize);
-        menu.setColor(Color.BLACK);
-        menu.fillRect(menuXCord, menuXCord, menuSize, menuSize);
-        menu.setColor(Color.WHITE);
-        menu.draw(menuBox);
-        menu.setColor(Color.WHITE);
-        menu.setFont(menuFontBig);
-        menu.drawString("MENU", menuXCord / 20 * 21, menuYCord / 16 * 5);
-
-        // int centerMenuXCord = menuXCord;
-
-        menu.setFont(menuFontBig);
-        menu.drawString("Controls", 165, 200);
-        menu.drawString(":", 250, 200);
-        menu.drawString("Keyboard", 270, 200);
-
-        menu.drawString("Level", 185, 225);
-        menu.drawString(":", 250, 225);
-        menu.drawString("" + level, 310, 225);
-        menu.setFont(menuFontExtraBig);
-        menu.drawString("+    -", 275, 225);
-
-        // Colorblindmode
-        drawColorBlindMode(menu);
-
     }
 
     /**
@@ -291,22 +110,117 @@ public class UI extends JPanel implements KeyListener {
      * state stored by the UI class.
      */
     public void paintComponent(Graphics g) {
-        if (getShowMenu()) {
-            try {
-                drawGameLayout(g);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } // Inside drawGameLayout is everything what is shown during the complete game
-            drawMenu(g);
-        } else {
-            try {
-                drawGameLayout(g);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        try {
+            Graphics2D localGraphics2D = (Graphics2D) g;
+            localGraphics2D.setColor(Color.BLACK);
+            localGraphics2D.fill(getVisibleRect());
+            localGraphics2D.translate(10, 50);
+            Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
+            localGraphics2D.setFont(myFont2);
+            localGraphics2D.setColor(Color.CYAN.darker());
+            Image logo;
+            logo = ImageIO.read(new File("logo.jpg"));
+            logo=logo.getScaledInstance(400, 120, Image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(logo,leftOfGrid-50,-65,null);
+            //localGraphics2D.drawString("PENTRIS", 70, 0);
+            localGraphics2D.translate(0, 50);
+    
+            if (size - 10 > 0) {
+                miniSize = size - 10;
             }
+            //draw highscores
+            Font smallFont=new Font("Comic Sans MS", Font.BOLD, 15);
+            localGraphics2D.setFont(smallFont);
+            ArrayList<String> highscores=Pentris.getHighscores();
+            for(int i=0;i<highscores.size();i++){
+                localGraphics2D.drawString(highscores.get(i), 50+rightOfGrid, 380+15*i);
+    
+            }
+            //draw timer:
+            Font smallFont2=new Font("Comic Sans MS", Font.BOLD, 35);
+            localGraphics2D.setFont(smallFont2);
+            String time=Pentris.getTime();
+            localGraphics2D.drawString(time, rightOfGrid+50, 300);
+    
+    
+    
+            // draw lines
+            localGraphics2D.setColor(Color.WHITE);
+            for (int i = 0; i <= state.length; i++) {
+                localGraphics2D.drawLine(i * size + moveGridRight, 0, i * size + moveGridRight, state[0].length * size);
+            }
+            for (int i = 0; i <= state[0].length; i++) {
+                localGraphics2D.drawLine(moveGridRight, i * size, state.length * size + moveGridRight, i * size);
+            }
+    
+            // draw blocks
+            for (int i = 0; i < state.length; i++) {
+                for (int j = 0; j < state[0].length; j++) {
+                    localGraphics2D.setColor(GetColorOfID(state[i][j]));
+                    localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1, size - 1, size - 1));
+                    localGraphics2D.setColor(GetColorOfID(state[i][j]).darker().darker());
+                    localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + (size*3/4), size - 1, size -(size*3/4)));
+                    localGraphics2D.setColor(GetColorOfID(state[i][j]).brighter());
+                    localGraphics2D.fill(new Rectangle2D.Double(i * size + 1+moveGridRight, j * size + 1 , size - 1, size -(size*3/4)));
+                }
+            }
+            // draw holdpiece
+            for (int i = 0; i < holdPiece.length; i++) {
+                for (int j = 0; j < holdPiece[0].length; j++) {
+                    if (holdPiece[i][j] > 0) {
+                        localGraphics2D.setColor(holdColor);
+                        localGraphics2D.fill(
+                        new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1, miniSize - 1));
+                    }
+                }
+            }
+            // draw nextpiece
+            for (int i = 0; i < nextPiece.length; i++) {
+                for (int j = 0; j < nextPiece[0].length; j++) {
+                    if (nextPiece[i][j] > 0) {
+                        localGraphics2D.setColor(nextColor);
+                        localGraphics2D.fill(
+                        new Rectangle2D.Double(i * size + 70 + rightOfGrid, j * size + 70, size - 1, size - 1));
+                    }
+                }
+            }
+    
+            // draw boxes around the Strings
+            localGraphics2D.setColor(Color.CYAN.darker());
+            localGraphics2D.setStroke(new BasicStroke(Width));
+            localGraphics2D.setColor(Color.CYAN.darker());
+            localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
+            localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
+            localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
+            localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
+            localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
+            localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
+            localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
+            localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
+            localGraphics2D.drawLine(0,0,0,1);
+    
+            // draw string for the menu's
+            Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
+            localGraphics2D.setFont(myFont);
+            localGraphics2D.setColor(Color.WHITE);
+            localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
+            localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 235);
+            localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 350);
+    
+    
+    
+    
+            if(lost){
+                Image image = ImageIO.read(new File("gameover.jpg"));
+                image=image.getScaledInstance(leftOfGrid + globalX * size + 260, globalY * size + 100,Image.SCALE_DEFAULT);
+                localGraphics2D.drawImage(image,-50,-150,null);
+                //System.out.println("LOSER");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+
     }
 
     /**

@@ -13,6 +13,8 @@ null:80
 :40
 null:40
 Jeroen:40
+lieke:40
+lieke:40
 Loser:10
 test:0
 bot:0

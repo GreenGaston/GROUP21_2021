@@ -627,8 +627,13 @@ public class Pentris {
         Started=true;
         nextPiece();
 
+        
         long startingTime = System.currentTimeMillis();
         long currentTime;
+        long pauseStart = 0;
+        long pauseEnd;
+        long pausingTime = 0;
+        boolean startPauseTimer = false;
         gridclone = clone2Dint(grid);
         beginning=(int)System.currentTimeMillis()/1000;
         //PentrisAI ai=new PentrisAI();
@@ -644,16 +649,24 @@ public class Pentris {
                 ui.setState(gridclone);
                 currentTime = System.currentTimeMillis();
                 long playingTime = currentTime - startingTime;
-                Thread.sleep(fallingAcceleration(playingTime));
+                Thread.sleep(fallingAcceleration(playingTime - pausingTime));
 
                 fallingPiece();
                 lineCheck();
 
-                ui.setColorblind(menu.getIsColorblind());
                 while(menu.getPaused()){
-
+                    startPauseTimer = true;
+                    pauseStart = System.currentTimeMillis();
                     Thread.sleep(100);
                 }
+
+                if (startPauseTimer){
+                    pauseEnd = System.currentTimeMillis();
+                    startPauseTimer = false;
+                    pausingTime += (pauseEnd - pauseStart);
+                }
+
+                ui.setColorblind(menu.getIsColorblind());
             }
             //System.out.println(score);
 

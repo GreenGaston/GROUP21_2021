@@ -71,7 +71,7 @@ public class Pentris {
     public static int[][] gridclone;
     public static boolean BEEP = false;
 
-    public static Menu menu = new Menu();
+    public static Menu menu;
 
     public static boolean showMenu = false;
     public static boolean paused = false;
@@ -498,7 +498,12 @@ public class Pentris {
             return minutes+":00";
 
         }
-        return ""+minutes+":"+seconds;
+
+        if (seconds < 10){
+            return ""+minutes+":0"+seconds;
+        }else{
+            return ""+minutes+":"+seconds;
+        }
     }
 
     public static void addShadow(int[][]grid){
@@ -550,6 +555,8 @@ public class Pentris {
         height = startMenu.getGridsizeY();
         width = startMenu.getGridsizeX();
         isColorblind = startMenu.getIsColorblind();
+
+        menu = new Menu(isColorblind);
 
         StartY = 0;
         StartX = width/2-1;
@@ -624,6 +631,8 @@ public class Pentris {
 
                 fallingPiece();
                 lineCheck();
+
+                ui.setColorblind(menu.getIsColorblind());
                 while(menu.getPaused()){
 
                     Thread.sleep(100);

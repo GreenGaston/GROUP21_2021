@@ -2,8 +2,13 @@ Tom:5180
 test:860
 GreenGaston:720
 y:380
+Jeroen:240
 test:220
 Lianne:160
+null:120
+null:80
+:40
+null:40
 Loser:10
 test:0
 bot:0
@@ -16,3 +21,4 @@ t:0
 t:0
 t:0
 t:0
+Jeroen:0

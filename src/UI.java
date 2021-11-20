@@ -36,7 +36,7 @@ public class UI extends JPanel implements KeyListener {
     private int globalX;
     private int globalY;
 
-    private Boolean colorBlind = false;
+    private Boolean colorBlind;
 
     private int[][] nextPiece = new int[5][5];
     private Color nextColor = Color.black;

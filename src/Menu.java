@@ -60,13 +60,18 @@ public class Menu implements ActionListener{
     boolean showMenu = false;
     boolean paused = false;
     public static void main(String[] args) {
-        new Menu();
+        // new Menu();
     }
 
-    public Menu(){
+    public Menu(boolean colors){
+        isColorBlind = colors;
     // Buttons:
         // ButtonColorMode:
-        buttonColormode = new JButton(colorblindNormal);
+        if (isColorBlind){
+            buttonColormode = new JButton("Colorlbind");
+        }else{
+            buttonColormode = new JButton(colorblindNormal);
+        }
         buttonColormode.addActionListener(this);
         buttonColormode.setBackground(Color.BLACK);
         buttonColormode.setForeground(Color.WHITE);
@@ -320,15 +325,16 @@ public class Menu implements ActionListener{
         UI.setPreferredSize(new Dimension(400, 400));
         UI.setMinimumSize(new Dimension (400,400));
         UI.setLocationRelativeTo(null);
+        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
     }
 
     public void actionPerformed(ActionEvent e) {
         // Button press for Colorblind:
-        if (e.getSource() == buttonColormode && colorblindNormal.equals("Normal")){
+        if (e.getSource() == buttonColormode && isColorBlind == false){
             colorblindNormal = "Colorblind";
             buttonColormode.setText(colorblindNormal);
             isColorBlind = true;
-        }else if(e.getSource() == buttonColormode && colorblindNormal.equals("Colorblind")){
+        }else if(e.getSource() == buttonColormode && isColorBlind == true){
             colorblindNormal = "Normal";
             buttonColormode.setText(colorblindNormal);
             isColorBlind = false;
@@ -371,5 +377,9 @@ public class Menu implements ActionListener{
 
     public boolean getPaused(){
         return paused;
+    }
+
+    public void setColorblind(boolean x){
+        isColorBlind = x;
     }
 }

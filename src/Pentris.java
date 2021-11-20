@@ -33,16 +33,8 @@ public class Pentris {
     public static int StartY;
     public static int StartX;
 
-    // This is the minimum amount of seconds the piece waits until it drops 1 down
-    // again.
-    final public static long minimumWait = 250;
-    // Everytime that the timeframe fits in the time, the pieces drop a bit faster
-    final public static double accelerationTimeFrame = 10;
-    // Every time frame the pieces will fall 0.05 seconds faster.
-    final public static double acceleration = 0.05;
-    // Milliseconds times 1000 creates seconds. //// This will be used for the
-    // Thread.sleep(long milliseconds) to convert the milliseconds to seconds
-    final public static long millisecondsToSeconds = 1000;
+    // Time (in milliseconds) for after which the currentlevel increases with 1.
+    final public static long levelIncreasTimeFrame = 30000;
 
     public static int[][] grid;
     public static ArrayList<Integer> pentPieces = new ArrayList<Integer>();
@@ -227,28 +219,48 @@ public class Pentris {
     // Acceleration method, should return an increasingly small int for the amount
     // of second between piece drops
     public static long fallingAcceleration(long time) {
-        long timeIndicate = 1;
-        countingloop: for (double i = accelerationTimeFrame; i < time; i += accelerationTimeFrame) {
-            timeIndicate -= acceleration;
-            if (timeIndicate <= minimumWait) {
-                timeIndicate = minimumWait;
-                break countingloop;
-            }
-        }
+        int currentLevel = calculateLevel(time);
+        long timeIndicate = 0;
 
-        if (startingLevel == 1){
-            startingAcceleration = 0;
-        }else{
-            startingAcceleration = level*0.03;
-        }
-
-        if (timeIndicate - startingAcceleration <= minimumWait){
-            timeIndicate = minimumWait;
-        }else{
-            timeIndicate -= startingAcceleration;
+        if (currentLevel == 1){
+            timeIndicate = 1000;
+        }else if (currentLevel == 2){
+            timeIndicate = 896;
+        }else if (currentLevel == 3){
+            timeIndicate = 792;
+        }else if (currentLevel == 4){
+            timeIndicate = 688;
+        }else if (currentLevel == 5){
+            timeIndicate = 583;
+        }else if (currentLevel == 6){
+            timeIndicate = 479;
+        }else if (currentLevel == 7){
+            timeIndicate = 375;
+        }else if (currentLevel == 8){
+            timeIndicate = 271;
+        }else if (currentLevel == 9){
+            timeIndicate = 167;
+        }else if (currentLevel == 10){
+            timeIndicate = 125;
+        }else if (currentLevel >= 11 && currentLevel <=13){
+            timeIndicate = 104;
+        }else if (currentLevel >=14 && currentLevel <= 16){
+            timeIndicate = 83;
+        }else if (currentLevel >= 17 && currentLevel <= 19){
+            timeIndicate = 63;
+        }else if (currentLevel >= 20 && currentLevel <= 29){
+            timeIndicate = 42;
+        }else if (currentLevel >= 30){
+            timeIndicate = 21;
         }
 
         return timeIndicate;
+    }
+
+    public static int calculateLevel(long time){
+        int currentLevel = 0;
+        currentLevel += (time/levelIncreasTimeFrame) + startingLevel;
+        return currentLevel;
     }
 
     public static void dropPiece() {

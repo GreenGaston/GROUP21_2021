@@ -72,6 +72,9 @@ public class UI extends JPanel implements KeyListener {
      * @param _size size of the GUI
      */
     public UI(int x, int y, int _size, Boolean Colorblind) {
+        // JPanel gamePanel = new JPanel();
+        // gamePanel.add(this);
+
         globalX = x;
         globalY = y;
         size = _size;
@@ -79,16 +82,16 @@ public class UI extends JPanel implements KeyListener {
         moveGridRight = leftOfGrid;
         rightOfGrid = leftOfGrid + size * x;
         setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 200));
-        window = new JFrame("Pentris");
-        window.setTitle("Pentris");
+        window = new JFrame("PENTRIS");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setMinimumSize(new Dimension(500, 500));
-        window.add(this);
+        window.add(this, BorderLayout.CENTER);
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.addKeyListener(this);
+        window.setBackground(Color.BLACK);
 
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {

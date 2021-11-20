@@ -77,7 +77,7 @@ public class Menu implements ActionListener{
         buttonColormode.setForeground(Color.WHITE);
         buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 20));
         buttonColormode.setLocation(200, 60);
-        buttonColormode.setSize(195,50);
+        buttonColormode.setSize(192,50);
 
         // CloseMenu:
         closeMenu = new JButton("Close");
@@ -85,7 +85,7 @@ public class Menu implements ActionListener{
         closeMenu.setBackground(Color.RED);
         closeMenu.setForeground(Color.WHITE);
         closeMenu.setFont(new Font(menuLetters, Font.PLAIN, 15));
-        closeMenu.setLocation(328, 5);
+        closeMenu.setLocation(325, 5);
         closeMenu.setSize(67,15);
 
         // Button to continue the game:
@@ -95,7 +95,7 @@ public class Menu implements ActionListener{
         continueGame.setForeground(Color.WHITE);
         continueGame.setFont(new Font(menuLetters, Font.BOLD, 30));
         continueGame.setLocation(100, 345);
-        continueGame.setSize(200,50);
+        continueGame.setSize(200,45);
 
 
     // Labels:
@@ -325,7 +325,7 @@ public class Menu implements ActionListener{
         UI.setPreferredSize(new Dimension(400, 400));
         UI.setMinimumSize(new Dimension (400,400));
         UI.setLocationRelativeTo(null);
-        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE));
     }
 
     public void actionPerformed(ActionEvent e) {

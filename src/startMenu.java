@@ -48,7 +48,6 @@ public class startMenu implements ActionListener{
     JButton sizeXMinus;
     JButton sizeYPlus;
     JButton sizeYMinus;
-    JButton nameEntered;
     JButton play;
 //////////////////////////////////////////
     JTextField inputName;
@@ -73,7 +72,7 @@ public class startMenu implements ActionListener{
     // Textfield:
         inputName = new JTextField();
         inputName.setLocation(200, 160);
-        inputName.setSize(130, 50);
+        inputName.setSize(195, 50);
         inputName.addActionListener(this);
 
     // Buttons:
@@ -103,15 +102,6 @@ public class startMenu implements ActionListener{
         buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 20));
         buttonColormode.setLocation(200, 105);
         buttonColormode.setSize(195,50);
-
-        // Button nameEntered:
-        nameEntered = new JButton("Enter");
-        nameEntered.addActionListener(this);
-        nameEntered.setBackground(Color.LIGHT_GRAY);
-        nameEntered.setForeground(Color.BLACK);
-        nameEntered.setFont(new Font(menuLetters, Font.BOLD, 10));
-        nameEntered.setLocation(330, 160);
-        nameEntered.setSize(65,50);
 
         // CloseMenu:
         closeMenu = new JButton("Close");
@@ -162,7 +152,7 @@ public class startMenu implements ActionListener{
         play.setForeground(Color.WHITE);
         play.setFont(new Font(menuLetters, Font.BOLD, 30));
         play.setLocation(100, 345);
-        play.setSize(200,50);
+        play.setSize(200,45);
 
 
     // Labels:
@@ -243,7 +233,7 @@ public class startMenu implements ActionListener{
         sizeX.setLocation(290, 215);
         sizeX.setSize(50,50);
 
-        sizeY = new JLabel(" "+minSizeY);
+        sizeY = new JLabel(""+minSizeY);
         sizeY.setFont(new Font(menuLetters, Font.BOLD, 20));
         sizeY.setForeground(Color.WHITE);
         sizeY.setLocation(290, 270);
@@ -283,7 +273,6 @@ public class startMenu implements ActionListener{
         menuPanel.add(name);
         menuPanel.add(colon3);
         menuPanel.add(inputName);
-        menuPanel.add(nameEntered);
 
         menuPanel.add(sizeX);
         menuPanel.add(sizeY);
@@ -304,12 +293,14 @@ public class startMenu implements ActionListener{
     // Frame:
         UI = new JFrame("PENTRIS");
         UI.add(menuPanel);
+        UI.setUndecorated(true);
         UI.pack();
         UI.setVisible(true);
         UI.setResizable(false);
         UI.setLocationRelativeTo(null);
         UI.setPreferredSize(new Dimension(400, 400));
         UI.setMinimumSize(new Dimension (400,400));
+        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -366,26 +357,23 @@ public class startMenu implements ActionListener{
             sizeY.setText(" "+intSizeY);
         }
 
-        // Button for entering name:
-        if (e.getSource() == nameEntered && inputName.getText() != ""){
+        // Button to start the game and close the menu:
+        if (e.getSource() == play && !inputName.getText().equals("") && !inputName.getText().equals("Enter your name!")){
             playerName = inputName.getText();
             inputName.setText("");
-            System.out.println(playerName);
-        }        
-
-        // Button to start the game and close the menu:
-        if (e.getSource() == play){
-            System.out.println("Start Game");
             showMenu = false;
+            System.out.println("Start Game");
+            System.out.println(playerName);            
             UI.dispose();
+        }else if (e.getSource() == play && inputName.getText().equals("")){
+            inputName.setText("Enter your name!");
         }
 
 
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
-            System.out.println("Start Game");
             showMenu = false;
-            UI.dispose();
+            System.exit(0);
         }
     }
 

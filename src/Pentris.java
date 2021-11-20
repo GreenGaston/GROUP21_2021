@@ -35,7 +35,7 @@ public class Pentris {
 
     // This is the minimum amount of seconds the piece waits until it drops 1 down
     // again.
-    final public static long minimumWait = 1000;
+    final public static long minimumWait = 250;
     // Everytime that the timeframe fits in the time, the pieces drop a bit faster
     final public static double accelerationTimeFrame = 10;
     // Every time frame the pieces will fall 0.05 seconds faster.

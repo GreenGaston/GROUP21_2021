@@ -571,7 +571,12 @@ public class Pentris {
         menu = new Menu(isColorblind);
 
         StartY = 0;
-        StartX = width/2-1;
+        if (width <= 6){
+            StartX = 0;
+        }else{
+            StartX = width/2-1;
+        }
+
         PieceX = StartX;
         PieceY = StartY;
         grid = new int[width][height];

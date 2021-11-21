@@ -38,6 +38,8 @@ public class UI extends JPanel implements KeyListener {
 
     private Boolean colorBlind;
 
+    private long playingTime;
+
     private int[][] nextPiece = new int[5][5];
     private Color nextColor = Color.black;
     public int rightOfGrid;

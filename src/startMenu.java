@@ -365,8 +365,8 @@ public class startMenu implements ActionListener, MouseListener{
             playerName = inputName.getText();
             inputName.setText("");
             showMenu = false;
-            System.out.println("Start Game");
-            System.out.println(playerName);            
+            // System.out.println("Start Game");
+            // System.out.println(playerName);            
             UI.dispose();
         }else if (e.getSource() == play && inputName.getText().equals("")){
             inputName.setText("Enter your name!");

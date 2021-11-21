@@ -343,7 +343,7 @@ public class Menu implements ActionListener{
 
         // Button to start the game and close the menu:
         if (e.getSource() == continueGame){
-            System.out.println("Continue Game");
+            // System.out.println("Continue Game");
             showMenu = false;
             paused = false;
             UI.dispose();
@@ -352,7 +352,7 @@ public class Menu implements ActionListener{
 
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
-            System.out.println("Continue Game");
+            // System.out.println("Continue Game");
             showMenu = false;
             paused = false;
             UI.dispose();

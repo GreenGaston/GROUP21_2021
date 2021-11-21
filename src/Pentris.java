@@ -85,6 +85,7 @@ public class Pentris {
     public static int score = 0;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
     public static int beginning=(int)System.currentTimeMillis()/1000;
+    public static long pausingTime;
     public static boolean stopmusic=false;
 
     public static String name;
@@ -417,7 +418,7 @@ public class Pentris {
                 if (!menu.getShowMenu()) {
                     menu.UI.setVisible(true);;
                     menu.setPaused(true);
-                    System.out.println("Game is paused and menu is shown");
+                    // System.out.println("Game is paused and menu is shown");
                 }
             }
 
@@ -489,7 +490,7 @@ public class Pentris {
     }
 
     public static String getTime(){
-        int playtime=((int)System.currentTimeMillis()/1000)-beginning;
+        int playtime=((int)System.currentTimeMillis()/1000)-beginning-((int)pausingTime/1000);
         int minutes=playtime/60;
         int seconds=playtime%60;
         if(minutes==0&&seconds==0){
@@ -634,14 +635,13 @@ public class Pentris {
             long currentTime;
             long pauseStart = 0;
             long pauseEnd;
-            long pausingTime = 0;
+            pausingTime = 0;
             boolean startPauseTimer = false;
             gridclone = clone2Dint(grid);
             beginning=(int)System.currentTimeMillis()/1000;
             //PentrisAI ai=new PentrisAI();
             try {
                 while (!Lost) {
-
                     gridclone = clone2Dint(grid);
                     if(addShadow){
                         addShadow(gridclone);
@@ -656,9 +656,12 @@ public class Pentris {
                     fallingPiece();
                     lineCheck();
 
-                    while(menu.getPaused()){
+                    if(menu.getPaused()){
                         startPauseTimer = true;
                         pauseStart = System.currentTimeMillis();
+                    }
+
+                    while(menu.getPaused()){
                         Thread.sleep(100);
                     }
 
@@ -666,6 +669,9 @@ public class Pentris {
                         pauseEnd = System.currentTimeMillis();
                         startPauseTimer = false;
                         pausingTime += (pauseEnd - pauseStart);
+                        // System.out.println(pauseEnd);
+                        // System.out.println(pauseStart);
+                        // System.out.println(pausingTime);
                     }
 
                     ui.setColorblind(menu.getIsColorblind());

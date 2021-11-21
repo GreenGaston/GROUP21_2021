@@ -295,7 +295,7 @@ public class endMenu implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         // Button to start the game and close the menu:
         if (e.getSource() == restartGame){
-            System.out.println("Restart Game");
+            // System.out.println("Restart Game");
             showMenu = false;
             lost = false;
             UI.dispose();
@@ -304,7 +304,7 @@ public class endMenu implements ActionListener{
 
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
-            System.out.println("Exit Game");
+            // System.out.println("Exit Game");
             showMenu = false;
             lost = true;
             UI.dispose();

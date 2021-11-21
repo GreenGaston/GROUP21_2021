@@ -3,10 +3,13 @@ test:860
 GreenGaston:720
 Jeroen:700
 Jeroen:540
+Jeroen:440
+Jeroen:400
 y:380
 Jeroen:240
 Jeroen:240
 test:220
+Jeroen:220
 Jeroen:200
 lieke:200
 Lianne:160
@@ -14,6 +17,7 @@ lieke:140
 null:120
 Enter your name!Hub:120
 lieke:120
+Jeroen:120
 Jeroen:120
 n:100
 null:80

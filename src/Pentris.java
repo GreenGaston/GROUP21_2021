@@ -64,6 +64,7 @@ public class Pentris {
     public static boolean BEEP = false;
 
     public static Menu menu;
+    public static endMenu endMenu;
 
     public static boolean showMenu = false;
     public static boolean paused = false;
@@ -554,169 +555,180 @@ public class Pentris {
     
 
     public static void main(String[] args) throws InterruptedException {
-        startMenu startMenu = new startMenu();
-        
-        startMenu.setShowMenu(true);
-        while(startMenu.getShowMenu()){
-            Thread.sleep(100);
-        }
-
-
-        name = startMenu.getName();
-        gameLevel = startMenu.getLevel();
-        height = startMenu.getGridsizeY();
-        width = startMenu.getGridsizeX();
-        isColorblind = startMenu.getIsColorblind();
-
-        menu = new Menu(isColorblind);
-
-        StartY = 0;
-        if (width <= 6){
-            StartX = 0;
-        }else{
-            StartX = width/2-1;
-        }
-
-        PieceX = StartX;
-        PieceY = StartY;
-        grid = new int[width][height];
-        gridclone = clone2Dint(grid);
-        startingLevel = gameLevel;
-
-        ui = new UI(width, height, 30, isColorblind);
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = -1;
+        while (!Lost){
+            startMenu startMenu = new startMenu();
+            
+            startMenu.setShowMenu(true);
+            while(startMenu.getShowMenu()){
+                Thread.sleep(100);
             }
-        }
 
 
-        Thread music= new Thread() {
-            @Override
-            public void run() {
-                Clip clip;
-                
-                try {
-                    AudioInputStream input = AudioSystem.getAudioInputStream(new File("Pentris.wav"));
-                    clip = AudioSystem.getClip();
-                    clip.open(input);
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    clip.start();
-                    while(!stopmusic){
-                        Thread.sleep(40);
+            name = startMenu.getName();
+            gameLevel = startMenu.getLevel();
+            height = startMenu.getGridsizeY();
+            width = startMenu.getGridsizeX();
+            isColorblind = startMenu.getIsColorblind();
+
+            menu = new Menu(isColorblind);
+
+            StartY = 0;
+            if (width <= 6){
+                StartX = 0;
+            }else{
+                StartX = width/2-1;
+            }
+
+            PieceX = StartX;
+            PieceY = StartY;
+            grid = new int[width][height];
+            gridclone = clone2Dint(grid);
+            startingLevel = gameLevel;
+
+            ui = new UI(width, height, 30, isColorblind);
+
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    grid[i][j] = -1;
+                }
+            }
+
+
+            Thread music= new Thread() {
+                @Override
+                public void run() {
+                    Clip clip;
+                    
+                    try {
+                        AudioInputStream input = AudioSystem.getAudioInputStream(new File("Pentris.wav"));
+                        clip = AudioSystem.getClip();
+                        clip.open(input);
+                        clip.loop(Clip.LOOP_CONTINUOUSLY);
+                        clip.start();
+                        while(!stopmusic){
+                            Thread.sleep(40);
+                        }
+                        //System.out.println("etstestttsetset");
+                        clip.stop();
+                    } catch (UnsupportedAudioFileException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
-                    //System.out.println("etstestttsetset");
-                    clip.stop();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    
+                    
+                }
+                // this starts the thread
+            };
+            music.start();
+            Started=true;
+            nextPiece();
+
+            
+            long startingTime = System.currentTimeMillis();
+            long currentTime;
+            long pauseStart = 0;
+            long pauseEnd;
+            long pausingTime = 0;
+            boolean startPauseTimer = false;
+            gridclone = clone2Dint(grid);
+            beginning=(int)System.currentTimeMillis()/1000;
+            //PentrisAI ai=new PentrisAI();
+            try {
+                while (!Lost) {
+
+                    gridclone = clone2Dint(grid);
+                    if(addShadow){
+                        addShadow(gridclone);
+                    }
+                    addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+                    // System.out.println("frame");
+                    ui.setState(gridclone);
+                    currentTime = System.currentTimeMillis();
+                    long playingTime = currentTime - startingTime;
+                    Thread.sleep(fallingAcceleration(playingTime - pausingTime));
+
+                    fallingPiece();
+                    lineCheck();
+
+                    while(menu.getPaused()){
+                        startPauseTimer = true;
+                        pauseStart = System.currentTimeMillis();
+                        Thread.sleep(100);
+                    }
+
+                    if (startPauseTimer){
+                        pauseEnd = System.currentTimeMillis();
+                        startPauseTimer = false;
+                        pausingTime += (pauseEnd - pauseStart);
+                    }
+
+                    ui.setColorblind(menu.getIsColorblind());
+                }
+                //System.out.println(score);
+
+            } catch (InterruptedException e) {
+            }
+            //ui.setLost();
+            stopmusic=true;
+            playSound("Lost.wav");
+
+
+            ui.setState(gridclone);
+            String scoreLine = name + ":" + score + "\n";
+            // this part of the code writes to scores.txt
+            ArrayList<String> file = new ArrayList<String>();
+            try {
+
+                File myObj = new File("Scores.txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    file.add(data);
+
+                    // System.out.println(data);
                 }
                 
-                
-            }
-            // this starts the thread
-        };
-        music.start();
-        Started=true;
-        nextPiece();
+                myReader.close();
 
-        
-        long startingTime = System.currentTimeMillis();
-        long currentTime;
-        long pauseStart = 0;
-        long pauseEnd;
-        long pausingTime = 0;
-        boolean startPauseTimer = false;
-        gridclone = clone2Dint(grid);
-        beginning=(int)System.currentTimeMillis()/1000;
-        //PentrisAI ai=new PentrisAI();
-        try {
-            while (!Lost) {
+                FileWriter myWriter = new FileWriter("Scores.txt");
+                Boolean found = true;
+                for (int i = 0; i < file.size(); i++) {
+                    // System.out.println(file.get(i));
 
-                gridclone = clone2Dint(grid);
-                if(addShadow){
-                    addShadow(gridclone);
+                    if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
+                        myWriter.write(scoreLine);
+                        myWriter.write(file.get(i) + "\n");
+                        found = false;
+                    } else {
+                        myWriter.write(file.get(i) + "\n");
+                    }
                 }
-                addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-                // System.out.println("frame");
-                ui.setState(gridclone);
-                currentTime = System.currentTimeMillis();
-                long playingTime = currentTime - startingTime;
-                Thread.sleep(fallingAcceleration(playingTime - pausingTime));
-
-                fallingPiece();
-                lineCheck();
-
-                while(menu.getPaused()){
-                    startPauseTimer = true;
-                    pauseStart = System.currentTimeMillis();
-                    Thread.sleep(100);
+                if(found){
+                    myWriter.write(scoreLine);
                 }
-
-                if (startPauseTimer){
-                    pauseEnd = System.currentTimeMillis();
-                    startPauseTimer = false;
-                    pausingTime += (pauseEnd - pauseStart);
-                }
-
-                ui.setColorblind(menu.getIsColorblind());
-            }
-            //System.out.println(score);
-
-        } catch (InterruptedException e) {
-        }
-        //ui.setLost();
-        stopmusic=true;
-        playSound("Lost.wav");
-
-
-        ui.setState(gridclone);
-        String scoreLine = name + ":" + score + "\n";
-        // this part of the code writes to scores.txt
-        ArrayList<String> file = new ArrayList<String>();
-        try {
-
-            File myObj = new File("Scores.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                file.add(data);
-
-                // System.out.println(data);
+                myWriter.close();
+                //System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                //System.out.println("An error occurred.");
+                e.printStackTrace();
             }
             
-            myReader.close();
+            //System.out.println("check");
 
-            FileWriter myWriter = new FileWriter("Scores.txt");
-            Boolean found = true;
-            for (int i = 0; i < file.size(); i++) {
-                // System.out.println(file.get(i));
-
-                if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
-                    myWriter.write(scoreLine);
-                    myWriter.write(file.get(i) + "\n");
-                    found = false;
-                } else {
-                    myWriter.write(file.get(i) + "\n");
-                }
+            endMenu = new endMenu();
+            endMenu.setLost(Lost);
+            while (endMenu.getLost()){
+                endMenu.UI.setVisible(true);
+                Thread.sleep(100);
             }
-            if(found){
-                myWriter.write(scoreLine);
-            }
-            myWriter.close();
-            //System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            //System.out.println("An error occurred.");
-            e.printStackTrace();
+            Lost = endMenu.getLost();
+            ui.window.dispose();
         }
-        
-        //System.out.println("check");
     }
 }

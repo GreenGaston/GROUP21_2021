@@ -24,7 +24,7 @@ import javax.swing.JFrame;
  * Computer Science 2 course.
  */
 public class UI extends JPanel implements KeyListener {
-    private JFrame window;
+    JFrame window;
 
     private int[][] state;
     private int size;

@@ -1,10 +1,12 @@
-// package src;
+package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class startMenu implements ActionListener{
+public class startMenu implements ActionListener, MouseListener{
     JFrame UI;
 //////////////////////////////////////////
     JPanel menuPanel;
@@ -74,6 +76,7 @@ public class startMenu implements ActionListener{
         inputName.setLocation(200, 160);
         inputName.setSize(195, 50);
         inputName.addActionListener(this);
+        inputName.addMouseListener(this);
 
     // Buttons:
         // ButtonPlus:
@@ -403,5 +406,20 @@ public class startMenu implements ActionListener{
 
     public int getGridsizeY(){
         return intSizeY;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == inputName){
+            inputName.setText("");
+        }
+    }
+
+    public void mousePressed(MouseEvent e) {
+    }
+    public void mouseReleased(MouseEvent e) {
+    }
+    public void mouseEntered(MouseEvent e) {
+    }
+    public void mouseExited(MouseEvent e) {
     }
 }

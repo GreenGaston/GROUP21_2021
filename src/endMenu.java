@@ -305,9 +305,7 @@ public class endMenu implements ActionListener{
         // Button for closing the menu:
         if (e.getSource() == closeMenu){
             // System.out.println("Exit Game");
-            showMenu = false;
-            lost = true;
-            UI.dispose();
+            System.exit(0);
         }
     }
     

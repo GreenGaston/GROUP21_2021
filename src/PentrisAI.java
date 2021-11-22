@@ -5,6 +5,7 @@ public class PentrisAI {
     int bestrotation=0;
     int bestX=0;
     int[] best;
+    public static int[][][][] pentominoDatabase = PentominoDatabase.data;
 
     public PentrisAI(){
         
@@ -24,7 +25,7 @@ public class PentrisAI {
                 if(Pentris.getRotation()!=bestrotation){
                     Pentris.rotatePiece(true);
                 }
-                
+                //TODO make move horizontalmove
                 if(Pentris.getX()<bestX){
                     Pentris.moveHorizontal(true);
 
@@ -85,7 +86,7 @@ public class PentrisAI {
     }
 
     public static int[] simulateDrop(int[][]grid,int pieceID,int rotation,int PieceX,int PieceY){
-        int[][]cloneGrid=Pentris.clone2Dint(grid);
+        int[][]cloneGrid=clone2Dint(grid);
         if (!PieceFit(grid, pieceID, rotation, PieceY, PieceX)){
             int[] bla={9999,9999};
             return bla;
@@ -96,62 +97,24 @@ public class PentrisAI {
             if (!PieceFit(cloneGrid, pieceID, rotation, PieceX, PieceY+i)) {
                 PieceY += i - 1; // Piece has to be added on this Y position
                 //System.out.println("dropped  "+PieceY);
+                Search.addPiece(cloneGrid, pentominoDatabase[pieceID][rotation], rotation, PieceX, PieceY);
                 break;
                 
             }
         }
+        //clearing lines
 
-        int height=999;
-        for(int i=0;i<cloneGrid.length;i++){
-            for(int j=0;j<cloneGrid[i].length;j++){
-                if (cloneGrid[i][j]>-1){
-                    height=i;
-                }
-            }
-        }
+        //TODO: hier moeten de lines worden weggehaald van die grid
+
+        int height=calcHeight(cloneGrid);
         //code to check amount of lines cleared
-        ArrayList<Integer> lineCords= new ArrayList<Integer>();
-        boolean full=true;
-        for(int i=0;i<cloneGrid.length;i++){
-            for(int j=0;j<cloneGrid[i].length;j++){
-                if(cloneGrid[i][j]==-1){
-                    full=false;
-                }
-            }
-            if(full){
-                lineCords.add(i);
-            }
-        }
+        int holes=calcHoles(grid);
+
+    
 
 
 
-        int linesCleared=lineCords.size();
-        //code to remove all lines from grid
-        for(int i=0;i<lineCords.size();i++){
-            removeLine(lineCords.get(i), cloneGrid);
-        }
-
-
-
-
-       
-        //code to count the amount of holes
-        int holes=0;
-        Boolean columnTop=false;
-        for(int i=0;i<cloneGrid[0].length;i++){
-            for(int j=0;j<cloneGrid.length;j++){
-                if(cloneGrid[j][i]>-1){
-                    columnTop=true;
-                }
-                if(columnTop&&cloneGrid[j][i]==-1){
-                    holes++;
-                }
-            }
-            columnTop=false;
-        }
-        System.out.println(holes);
-
-        int[] bla={height-linesCleared,holes};
+        int[] bla={height,holes};
         return bla;
 
 
@@ -220,4 +183,55 @@ public class PentrisAI {
         return best;
 
     }
+
+    public static int calcHoles(int[][] grid){
+        int[][]cloneGrid= clone2Dint(grid);
+        
+        int holes=0;
+        boolean foundTop=false;
+        for(int i=0;i<cloneGrid.length;i++){
+            for(int j=0;j<cloneGrid[0].length;j++){
+                if(cloneGrid[i][j]>-1){
+                    foundTop=true;
+                }
+                if(foundTop&&cloneGrid[i][j]==-1){
+                    holes++;
+
+                }
+            }
+            System.out.println("line:"+i+" is"+holes);
+            foundTop=false;
+        }
+        return holes;
+    }
+
+    public static int calcHeight(int[][]grid){
+        int[][]cloneGrid=clone2Dint(grid);
+        boolean topFound=false;
+        int top=0;
+        for(int i=0;i<cloneGrid[0].length;i++){
+            for(int j=0;j<cloneGrid.length;j++){
+                if(cloneGrid[j][i]>-1){
+                    top=cloneGrid[0].length-i;
+                    topFound=true;
+                    break;
+                }
+            }
+            if(topFound){
+                break;
+            }
+        }
+        return top;
+
+    }
+    public static int[][] clone2Dint(int[][] list) {
+        int[][] clone = new int[list.length][list[0].length];
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                clone[i][j] = list[i][j];
+            }
+        }
+        return clone;
+    }
+
 }

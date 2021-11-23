@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -451,7 +450,6 @@ public class Pentris {
             e.printStackTrace();
         }
         return highscores;
-
     }
     
     public static void placePiece() {
@@ -459,10 +457,8 @@ public class Pentris {
         nextPiece();
         if (!PieceFit(grid, pieceID, rotation, StartY, StartX)) {
             Lost = true;
-
         }
         lineCheck();
-
     }
 
     public static int[][] clone2Dint(int[][] list) {
@@ -493,64 +489,52 @@ public class Pentris {
         int playtime=((int)System.currentTimeMillis()/1000)-beginning-((int)pausingTime/1000);
         int minutes=playtime/60;
         int seconds=playtime%60;
-        if(minutes==0&&seconds==0){
+        if(minutes==0&&seconds==0) {
             return "00:00";
-
         }
-        if(minutes==0&&seconds<10){
+        if(minutes==0&&seconds<10) {
             return "00:0"+seconds;
-
         }
-        if(minutes<10&&seconds==0){
+        if(minutes<10&&seconds==0) {
             return "0"+minutes+":00";
-
         }
-        if(minutes==0){
+        if(minutes==0) {
             return "00:"+seconds;
         }
-        if(seconds==0){
+        if(seconds==0) {
             return minutes+":00";
-
         }
-
-        if (seconds < 10){
+        if (seconds < 10) {
             return ""+minutes+":0"+seconds;
-        }else{
+        }else {
             return ""+minutes+":"+seconds;
         }
     }
 
     public static void addShadow(int[][]grid){
-
         int[][] piece= pentominoDatabase[pieceID][rotation];
         for (int i = 1; i < 50; i++) {
             // System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
-                
                 addPiece(grid, piece, 12, PieceX, PieceY+i-1);
-
-                
                 break;
             }
         }
-
-        
-
     }
     
-    public static int[][] getGrid(){
+    public static int[][] getGrid() {
         return grid;
     }
     
-    public static int getPieceID(){
+    public static int getPieceID() {
         return pieceID;
     }
     
-    public static int getRotation(){
+    public static int getRotation() {
         return rotation;
     }
     
-    public static int getX(){
+    public static int getX() {
         return PieceX;
     }
     
@@ -570,7 +554,6 @@ public class Pentris {
             height = startMenu.getGridsizeY();
             width = startMenu.getGridsizeX();
             isColorblind = startMenu.getIsColorblind();
-
             menu = new Menu(isColorblind);
 
             StartY = 0;
@@ -593,7 +576,6 @@ public class Pentris {
                     grid[i][j] = -1;
                 }
             }
-
 
             Thread music= new Thread() {
                 @Override
@@ -621,16 +603,13 @@ public class Pentris {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    
-                    
                 }
                 // this starts the thread
             };
+
             music.start();
             Started=true;
             nextPiece();
-
-            
             long startingTime = System.currentTimeMillis();
             long currentTime;
             long pauseStart = 0;
@@ -640,6 +619,7 @@ public class Pentris {
             gridclone = clone2Dint(grid);
             beginning=(int)System.currentTimeMillis()/1000;
             //PentrisAI ai=new PentrisAI();
+
             try {
                 while (!Lost) {
                     gridclone = clone2Dint(grid);
@@ -660,11 +640,9 @@ public class Pentris {
                         startPauseTimer = true;
                         pauseStart = System.currentTimeMillis();
                     }
-
                     while(menu.getPaused()){
                         Thread.sleep(100);
                     }
-
                     if (startPauseTimer){
                         pauseEnd = System.currentTimeMillis();
                         startPauseTimer = false;
@@ -673,24 +651,20 @@ public class Pentris {
                         // System.out.println(pauseStart);
                         // System.out.println(pausingTime);
                     }
-
                     ui.setColorblind(menu.getIsColorblind());
                 }
                 //System.out.println(score);
-
             } catch (InterruptedException e) {
             }
             //ui.setLost();
             stopmusic=true;
             playSound("Lost.wav");
 
-
             ui.setState(gridclone);
             String scoreLine = name + ":" + score + "\n";
             // this part of the code writes to scores.txt
             ArrayList<String> file = new ArrayList<String>();
             try {
-
                 File myObj = new File("Scores.txt");
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
@@ -701,7 +675,6 @@ public class Pentris {
                 }
                 
                 myReader.close();
-
                 FileWriter myWriter = new FileWriter("Scores.txt");
                 Boolean found = true;
                 for (int i = 0; i < file.size(); i++) {
@@ -715,7 +688,7 @@ public class Pentris {
                         myWriter.write(file.get(i) + "\n");
                     }
                 }
-                if(found){
+                if(found) {
                     myWriter.write(scoreLine);
                 }
                 myWriter.close();
@@ -726,7 +699,6 @@ public class Pentris {
             }
             
             //System.out.println("check");
-
             endMenu = new endMenu();
             endMenu.setLost(Lost);
             while (endMenu.getLost()){

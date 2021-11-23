@@ -123,14 +123,21 @@ public class UI extends JPanel implements KeyListener {
             Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
             localGraphics2D.setFont(myFont2);
             localGraphics2D.setColor(Color.CYAN.darker());
+            
             Image logo = ImageIO.read(new File("logov2.png"));
             logo = logo.getScaledInstance(287, 120, Image.SCALE_DEFAULT);
-            localGraphics2D.drawImage(logo, leftOfGrid, -65, null);
+            localGraphics2D.drawImage(logo, leftOfGrid-60, -65, null);
             // localGraphics2D.drawString("PENTRIS", 70, 0);
             localGraphics2D.translate(0, 50);
-            Image designRight = ImageIO.read(new File("rightSideGrid.png"));
+
+            Image designRight = ImageIO.read(new File("rightSideGrid.png")); // the design on the right side of the grid
             designRight = designRight.getScaledInstance(223, 450, Image.SCALE_DEFAULT);
             localGraphics2D.drawImage(designRight, rightOfGrid + 5, 0, null);
+
+            Image designLeft = ImageIO.read(new File("leftSideGrid.png")); // the design on the left side of the grid
+            designLeft = designLeft.getScaledInstance(173, 460, Image.SCALE_DEFAULT); // original: 573x1522
+            localGraphics2D.drawImage(designLeft, leftOfGrid - 175, -8 , null);
+            //
 
             if (size - 10 > 0) {
                 miniSize = size - 10;

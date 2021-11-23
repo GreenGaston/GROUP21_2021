@@ -737,4 +737,7 @@ public class Pentris {
             ui.window.dispose();
         }
     }
+
+    public static void moveHorizontal(boolean b) {
+    }
 }

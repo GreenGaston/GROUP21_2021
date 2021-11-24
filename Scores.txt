@@ -34,6 +34,7 @@ lieke:40
 Jeroen:40
 Jeroen:40
 jeroen:40
+test:40
 Loser:10
 test:0
 bot:0

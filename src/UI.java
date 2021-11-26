@@ -83,7 +83,7 @@ public class UI extends JPanel implements KeyListener {
         this.colorBlind = Colorblind;
         moveGridRight = leftOfGrid;
         rightOfGrid = leftOfGrid + size * x;
-        setPreferredSize(new Dimension(leftOfGrid + x * size + 260, y * size + 200));
+        setPreferredSize(new Dimension(leftOfGrid + 200 + x * size + 85, y * size + 145));
         window = new JFrame("PENTRIS");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(true);
@@ -119,31 +119,30 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(getVisibleRect());
-            localGraphics2D.translate(10, 50);
-            Font myFont2 = new Font("Comic Sans MS", Font.BOLD, 60);
+            localGraphics2D.translate(35, 65);
+            Font myFont2 = new Font("Nidus Sans", Font.BOLD, 60);
             localGraphics2D.setFont(myFont2);
             localGraphics2D.setColor(Color.CYAN.darker());
-            
+
             Image logo = ImageIO.read(new File("logov2.png"));
             logo = logo.getScaledInstance(287, 120, Image.SCALE_DEFAULT);
-            localGraphics2D.drawImage(logo, leftOfGrid-60, -65, null);
+            localGraphics2D.drawImage(logo, leftOfGrid - 60, -65, null);
             // localGraphics2D.drawString("PENTRIS", 70, 0);
             localGraphics2D.translate(0, 50);
 
             Image designRight = ImageIO.read(new File("rightSideGrid.png")); // the design on the right side of the grid
-            designRight = designRight.getScaledInstance(223, 450, Image.SCALE_DEFAULT);
-            localGraphics2D.drawImage(designRight, rightOfGrid + 5, 0, null);
+            designRight = designRight.getScaledInstance(215, 456, Image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(designRight, rightOfGrid + 5, -2, null);
 
-            Image designLeft = ImageIO.read(new File("leftSideGrid.png")); // the design on the left side of the grid
-            designLeft = designLeft.getScaledInstance(173, 460, Image.SCALE_DEFAULT); // original: 573x1522
-            localGraphics2D.drawImage(designLeft, leftOfGrid - 175, -8 , null);
-            //
+            Image designLeft = ImageIO.read(new File("leftSideGrid2.png")); // the design on the left side of the grid
+            designLeft = designLeft.getScaledInstance(215, 470, Image.SCALE_DEFAULT);
+            localGraphics2D.drawImage(designLeft, leftOfGrid - 215, -11, null);
 
             if (size - 10 > 0) {
                 miniSize = size - 10;
             }
             // draw highscores
-            Font smallFont = new Font("Comic Sans MS", Font.BOLD, 15);
+            Font smallFont = new Font("Nidus Sans", Font.BOLD, 15);
             localGraphics2D.setFont(smallFont);
             ArrayList<String> highscores = Pentris.getHighscores();
             for (int i = 0; i < highscores.size(); i++) {
@@ -151,7 +150,7 @@ public class UI extends JPanel implements KeyListener {
 
             }
             // draw timer:
-            Font smallFont2 = new Font("Comic Sans MS", Font.BOLD, 35);
+            Font smallFont2 = new Font("Nidus Sans", Font.BOLD, 35);
             localGraphics2D.setFont(smallFont2);
             String time = Pentris.getTime();
             localGraphics2D.drawString(time, rightOfGrid + 50, 225);
@@ -164,6 +163,21 @@ public class UI extends JPanel implements KeyListener {
             for (int i = 0; i <= state[0].length; i++) {
                 localGraphics2D.drawLine(moveGridRight, i * size, state.length * size + moveGridRight, i * size);
             }
+            // draw lines around grid
+            localGraphics2D.setColor(Color.CYAN);
+            localGraphics2D.setStroke(new BasicStroke(Width + 4));
+            // localGraphics2D.drawLine(leftOfGrid-1, -1, state.length * size +2
+            // ,state[0].length * size +2);
+            localGraphics2D.drawLine(leftOfGrid - 4, 1, leftOfGrid - 4, state[0].length * size + 1);
+            localGraphics2D.drawLine(rightOfGrid + 4, 1, rightOfGrid + 4, state[0].length * size + 1);
+            localGraphics2D.setStroke(new BasicStroke(Width));
+            localGraphics2D.drawLine(leftOfGrid - 1, -1, state.length * size + 2 + leftOfGrid - 1, -1);
+            localGraphics2D.setStroke(new BasicStroke(Width + 1));
+            localGraphics2D.drawLine(leftOfGrid - 1, state[0].length * size + 3,
+                    state.length * size + 3 + leftOfGrid - 1, state[0].length * size + 2);
+
+            // localGraphics2D.drawRect(leftOfGrid-1, -1, state.length * size +2
+            // ,state[0].length * size +2);
 
             // draw blocks
             for (int i = 0; i < state.length; i++) {
@@ -201,27 +215,15 @@ public class UI extends JPanel implements KeyListener {
                 }
             }
 
-            // draw boxes around the Strings
-            // localGraphics2D.setColor(Color.CYAN.darker());
-            // localGraphics2D.setStroke(new BasicStroke(Width));
-            // localGraphics2D.setColor(Color.CYAN.darker());
-            // localGraphics2D.drawLine(10 + rightOfGrid, 0, 248 + rightOfGrid, 0);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 40, 248 + rightOfGrid, 40);
-            // localGraphics2D.drawLine(248 + rightOfGrid, 0, 248 + rightOfGrid, 535);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 538, 248 + rightOfGrid, 538);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 0, 10 + rightOfGrid, 535);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 250, 248 + rightOfGrid, 250);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 325, 248 + rightOfGrid, 325);
-            // localGraphics2D.drawLine(10 + rightOfGrid, 360, 248 + rightOfGrid, 360);
-            // localGraphics2D.drawLine(0,0,0,1);
-
             // draw string for the menu's
-            Font myFont = new Font("Comic Sans MS", Font.BOLD, 20);
+            Font myFont = new Font("Nidus Sans", Font.BOLD, 20);
             localGraphics2D.setFont(myFont);
-            localGraphics2D.setColor(Color.WHITE);
+            localGraphics2D.setColor(Color.CYAN);
             localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
             localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 167);
             localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 313);
+            localGraphics2D.drawString("CURRENT SCORE", leftOfGrid - 200, 25);
+            localGraphics2D.drawString("STORED PIECE", leftOfGrid - 200, 167);
 
             if (lost) {
                 Image image = ImageIO.read(new File("gameover.jpg"));
@@ -247,7 +249,7 @@ public class UI extends JPanel implements KeyListener {
     private Color GetColorOfID(int i) {
         if (!colorBlind) {
             if (i == 0) {
-                return Color.BLUE.brighter();
+                return Color.MAGENTA.brighter();
             } else if (i == 1) {
                 return Color.BLUE.darker();
             } else if (i == 2) {

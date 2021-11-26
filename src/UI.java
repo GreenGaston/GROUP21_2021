@@ -122,7 +122,7 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.translate(35, 65);
             Font myFont2 = new Font("Nidus Sans", Font.BOLD, 60);
             localGraphics2D.setFont(myFont2);
-            localGraphics2D.setColor(Color.CYAN.darker());
+            localGraphics2D.setColor(Color.WHITE);
 
             Image logo = ImageIO.read(new File("logov2.png"));
             logo = logo.getScaledInstance(287, 120, Image.SCALE_DEFAULT);
@@ -175,6 +175,7 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.setStroke(new BasicStroke(Width + 1));
             localGraphics2D.drawLine(leftOfGrid - 1, state[0].length * size + 3,
                     state.length * size + 3 + leftOfGrid - 1, state[0].length * size + 2);
+            localGraphics2D.setColor(Color.WHITE);
 
             // localGraphics2D.drawRect(leftOfGrid-1, -1, state.length * size +2
             // ,state[0].length * size +2);

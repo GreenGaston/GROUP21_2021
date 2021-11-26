@@ -56,7 +56,7 @@ public class Pentris {
 
     // variable to end the game
     public static boolean Lost = false;
-    public static boolean Started= false;
+    public static boolean Started = false;
 
     public static UI ui;
     public static int[][] gridclone;
@@ -67,7 +67,7 @@ public class Pentris {
 
     public static boolean showMenu = false;
     public static boolean paused = false;
-    public static boolean addShadow=false;
+    public static boolean addShadow = false;
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -83,9 +83,9 @@ public class Pentris {
     public static boolean holdCharge = true;
     public static int score = 0;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
-    public static int beginning=(int)System.currentTimeMillis()/1000;
+    public static int beginning = (int) System.currentTimeMillis() / 1000;
     public static long pausingTime;
-    public static boolean stopmusic=false;
+    public static boolean stopmusic = false;
 
     public static String name;
     public static int level = 1;
@@ -223,44 +223,44 @@ public class Pentris {
         int currentLevel = calculateLevel(time);
         long timeIndicate = 0;
 
-        if (currentLevel == 1){
+        if (currentLevel == 1) {
             timeIndicate = 1000;
-        }else if (currentLevel == 2){
+        } else if (currentLevel == 2) {
             timeIndicate = 896;
-        }else if (currentLevel == 3){
+        } else if (currentLevel == 3) {
             timeIndicate = 792;
-        }else if (currentLevel == 4){
+        } else if (currentLevel == 4) {
             timeIndicate = 688;
-        }else if (currentLevel == 5){
+        } else if (currentLevel == 5) {
             timeIndicate = 583;
-        }else if (currentLevel == 6){
+        } else if (currentLevel == 6) {
             timeIndicate = 479;
-        }else if (currentLevel == 7){
+        } else if (currentLevel == 7) {
             timeIndicate = 375;
-        }else if (currentLevel == 8){
+        } else if (currentLevel == 8) {
             timeIndicate = 271;
-        }else if (currentLevel == 9){
+        } else if (currentLevel == 9) {
             timeIndicate = 167;
-        }else if (currentLevel == 10){
+        } else if (currentLevel == 10) {
             timeIndicate = 125;
-        }else if (currentLevel >= 11 && currentLevel <=13){
+        } else if (currentLevel >= 11 && currentLevel <= 13) {
             timeIndicate = 104;
-        }else if (currentLevel >=14 && currentLevel <= 16){
+        } else if (currentLevel >= 14 && currentLevel <= 16) {
             timeIndicate = 83;
-        }else if (currentLevel >= 17 && currentLevel <= 19){
+        } else if (currentLevel >= 17 && currentLevel <= 19) {
             timeIndicate = 63;
-        }else if (currentLevel >= 20 && currentLevel <= 29){
+        } else if (currentLevel >= 20 && currentLevel <= 29) {
             timeIndicate = 42;
-        }else if (currentLevel >= 30){
+        } else if (currentLevel >= 30) {
             timeIndicate = 21;
         }
 
         return timeIndicate;
     }
 
-    public static int calculateLevel(long time){
+    public static int calculateLevel(long time) {
         int currentLevel = 0;
-        currentLevel += (time/levelIncreasTimeFrame) + startingLevel;
+        currentLevel += (time / levelIncreasTimeFrame) + startingLevel;
         return currentLevel;
     }
 
@@ -377,52 +377,53 @@ public class Pentris {
 
     // this method should update its location and rotation based on keypad inputs
     public static void keypadMethod(KeyEvent event) {
-        if(!Lost&&Started){
+        if (!Lost && Started) {
             int keyCode = event.getKeyCode();
 
-            if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX - 1 )&&!paused) {
+            if (keyCode == left && PieceFit(grid, pieceID, rotation, PieceY, PieceX - 1) && !paused) {
                 PieceX -= 1; // If the keypad left is pressed the piece should go 1 position to the left.
-                            // That's why the x coordinate of the piece is subtracted by 1.
+                             // That's why the x coordinate of the piece is subtracted by 1.
                 // System.out.println("pieceX = " + PieceX);
 
-            } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX + 1)&&!paused) {
+            } else if (keyCode == right && PieceFit(grid, pieceID, rotation, PieceY, PieceX + 1) && !paused) {
                 PieceX += 1; // If the keypad right is pressed the piece should go 1 position to the right.
-                            // That's why the x coordinate of the piece is added by 1.
+                             // That's why the x coordinate of the piece is added by 1.
                 // System.out.println("pieceX = " + PieceX);
 
-            } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)&&!paused) {
+            } else if (keyCode == down && PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX) && !paused) {
                 PieceY += 1; // If the keypad down is pressed the piece should go down to the place where it
-                            // is going to be placed. (To show it smoothly in the UI, drop it down using a
-                            // much smaller wait then when playing the normal way.)
+                             // is going to be placed. (To show it smoothly in the UI, drop it down using a
+                             // much smaller wait then when playing the normal way.)
                 fallingPiece();
                 // System.out.println("pieceY = " + PieceY);
 
-            } else if (keyCode == up&&!paused) {
+            } else if (keyCode == up && !paused) {
                 rotatePiece(true); // If the keypad up is pressed the piece should be rotated right once.
 
-            } else if (keyCode == space&&!paused) {
+            } else if (keyCode == space && !paused) {
                 // System.out.println("check");
                 dropPiece(); // Drop the piece if spacebar is pressed.
 
-            } else if (keyCode == z&&!paused) {
+            } else if (keyCode == z && !paused) {
                 rotatePiece(true); // If the keypad z is pressed the piece should be rotated right once.
 
-            } else if (keyCode == x&&!paused) {
+            } else if (keyCode == x && !paused) {
                 rotatePiece(false); // If the keypad x is pressed the piece should be rotated left once.
 
-            } else if (keyCode == c&&!paused) {
+            } else if (keyCode == c && !paused) {
                 holdPiece(); // If the keypad c is pessed the piece should be stored and used at a later
-                            // point in the game.
+                             // point in the game.
             } else if (keyCode == esc) {
                 if (!menu.getShowMenu()) {
-                    menu.UI.setVisible(true);;
+                    menu.UI.setVisible(true);
+                    ;
                     menu.setPaused(true);
                     // System.out.println("Game is paused and menu is shown");
                 }
             }
 
             gridclone = clone2Dint(grid);
-            if(addShadow){
+            if (addShadow) {
                 addShadow(gridclone);
             }
             addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
@@ -432,26 +433,26 @@ public class Pentris {
 
     }
 
-    public static ArrayList<String> getHighscores(){
-        ArrayList<String> highscores= new ArrayList<String>();
+    public static ArrayList<String> getHighscores() {
+        ArrayList<String> highscores = new ArrayList<String>();
         try {
-            
+
             File myObj = new File("Scores.txt");
             Scanner myReader = new Scanner(myObj);
             String data;
-            for(int i=0;i<5&&myReader.hasNextLine();i++){
+            for (int i = 0; i < 5 && myReader.hasNextLine(); i++) {
                 data = myReader.nextLine();
                 highscores.add(data);
-                
+
             }
             myReader.close();
         } catch (IOException e) {
-            //System.out.println("An error occurred.");
+            // System.out.println("An error occurred.");
             e.printStackTrace();
         }
         return highscores;
     }
-    
+
     public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
         nextPiece();
@@ -485,69 +486,67 @@ public class Pentris {
         }
     }
 
-    public static String getTime(){
-        int playtime=((int)System.currentTimeMillis()/1000)-beginning-((int)pausingTime/1000);
-        int minutes=playtime/60;
-        int seconds=playtime%60;
-        if(minutes==0&&seconds==0) {
+    public static String getTime() {
+        int playtime = ((int) System.currentTimeMillis() / 1000) - beginning - ((int) pausingTime / 1000);
+        int minutes = playtime / 60;
+        int seconds = playtime % 60;
+        if (minutes == 0 && seconds == 0) {
             return "00:00";
         }
-        if(minutes==0&&seconds<10) {
-            return "00:0"+seconds;
+        if (minutes == 0 && seconds < 10) {
+            return "00:0" + seconds;
         }
-        if(minutes<10&&seconds==0) {
-            return "0"+minutes+":00";
+        if (minutes < 10 && seconds == 0) {
+            return "0" + minutes + ":00";
         }
-        if(minutes==0) {
-            return "00:"+seconds;
+        if (minutes == 0) {
+            return "00:" + seconds;
         }
-        if(seconds==0) {
-            return minutes+":00";
+        if (seconds == 0) {
+            return minutes + ":00";
         }
         if (seconds < 10) {
-            return ""+minutes+":0"+seconds;
-        }else {
-            return ""+minutes+":"+seconds;
+            return "" + minutes + ":0" + seconds;
+        } else {
+            return "" + minutes + ":" + seconds;
         }
     }
 
-    public static void addShadow(int[][]grid){
-        int[][] piece= pentominoDatabase[pieceID][rotation];
+    public static void addShadow(int[][] grid) {
+        int[][] piece = pentominoDatabase[pieceID][rotation];
         for (int i = 1; i < 50; i++) {
             // System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
-                addPiece(grid, piece, 12, PieceX, PieceY+i-1);
+                addPiece(grid, piece, 12, PieceX, PieceY + i - 1);
                 break;
             }
         }
     }
-    
+
     public static int[][] getGrid() {
         return grid;
     }
-    
+
     public static int getPieceID() {
         return pieceID;
     }
-    
+
     public static int getRotation() {
         return rotation;
     }
-    
+
     public static int getX() {
         return PieceX;
     }
-    
 
     public static void main(String[] args) throws InterruptedException {
-        while (!Lost){
+        while (!Lost) {
             startMenu startMenu = new startMenu();
-            
+
             startMenu.setShowMenu(true);
-            while(startMenu.getShowMenu()){
+            while (startMenu.getShowMenu()) {
                 Thread.sleep(100);
             }
-
 
             name = startMenu.getName();
             gameLevel = startMenu.getLevel();
@@ -557,10 +556,10 @@ public class Pentris {
             menu = new Menu(isColorblind);
 
             StartY = 0;
-            if (width <= 6){
+            if (width <= 6) {
                 StartX = 0;
-            }else{
-                StartX = width/2-1;
+            } else {
+                StartX = width / 2 - 1;
             }
 
             PieceX = StartX;
@@ -577,21 +576,21 @@ public class Pentris {
                 }
             }
 
-            Thread music= new Thread() {
+            Thread music = new Thread() {
                 @Override
                 public void run() {
                     Clip clip;
-                    
+
                     try {
                         AudioInputStream input = AudioSystem.getAudioInputStream(new File("Pentris.wav"));
                         clip = AudioSystem.getClip();
                         clip.open(input);
                         clip.loop(Clip.LOOP_CONTINUOUSLY);
                         clip.start();
-                        while(!stopmusic){
+                        while (!stopmusic) {
                             Thread.sleep(40);
                         }
-                        //System.out.println("etstestttsetset");
+                        // System.out.println("etstestttsetset");
                         clip.stop();
                     } catch (UnsupportedAudioFileException e) {
                         e.printStackTrace();
@@ -608,7 +607,7 @@ public class Pentris {
             };
 
             music.start();
-            Started=true;
+            Started = true;
             nextPiece();
             long startingTime = System.currentTimeMillis();
             long currentTime;
@@ -617,13 +616,13 @@ public class Pentris {
             pausingTime = 0;
             boolean startPauseTimer = false;
             gridclone = clone2Dint(grid);
-            beginning=(int)System.currentTimeMillis()/1000;
-            //PentrisAI ai=new PentrisAI();
+            beginning = (int) System.currentTimeMillis() / 1000;
+            // PentrisAI ai=new PentrisAI();
 
             try {
                 while (!Lost) {
                     gridclone = clone2Dint(grid);
-                    if(addShadow){
+                    if (addShadow) {
                         addShadow(gridclone);
                     }
                     addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
@@ -636,14 +635,14 @@ public class Pentris {
                     fallingPiece();
                     lineCheck();
 
-                    if(menu.getPaused()){
+                    if (menu.getPaused()) {
                         startPauseTimer = true;
                         pauseStart = System.currentTimeMillis();
                     }
-                    while(menu.getPaused()){
+                    while (menu.getPaused()) {
                         Thread.sleep(100);
                     }
-                    if (startPauseTimer){
+                    if (startPauseTimer) {
                         pauseEnd = System.currentTimeMillis();
                         startPauseTimer = false;
                         pausingTime += (pauseEnd - pauseStart);
@@ -653,11 +652,11 @@ public class Pentris {
                     }
                     ui.setColorblind(menu.getIsColorblind());
                 }
-                //System.out.println(score);
+                // System.out.println(score);
             } catch (InterruptedException e) {
             }
-            //ui.setLost();
-            stopmusic=true;
+            // ui.setLost();
+            stopmusic = true;
             playSound("Lost.wav");
 
             ui.setState(gridclone);
@@ -673,7 +672,7 @@ public class Pentris {
 
                     // System.out.println(data);
                 }
-                
+
                 myReader.close();
                 FileWriter myWriter = new FileWriter("Scores.txt");
                 Boolean found = true;
@@ -688,20 +687,20 @@ public class Pentris {
                         myWriter.write(file.get(i) + "\n");
                     }
                 }
-                if(found) {
+                if (found) {
                     myWriter.write(scoreLine);
                 }
                 myWriter.close();
-                //System.out.println("Successfully wrote to the file.");
+                // System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
-                //System.out.println("An error occurred.");
+                // System.out.println("An error occurred.");
                 e.printStackTrace();
             }
-            
-            //System.out.println("check");
+
+            // System.out.println("check");
             endMenu = new endMenu();
             endMenu.setLost(Lost);
-            while (endMenu.getLost()){
+            while (endMenu.getLost()) {
                 endMenu.UI.setVisible(true);
                 Thread.sleep(100);
             }

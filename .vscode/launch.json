@@ -1,0 +1,70 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Menu",
+            "request": "launch",
+            "mainClass": "Menu",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoBuilder",
+            "request": "launch",
+            "mainClass": "PentominoBuilder",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoDatabase",
+            "request": "launch",
+            "mainClass": "PentominoDatabase",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoSolver",
+            "request": "launch",
+            "mainClass": "PentominoSolver",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pentris",
+            "request": "launch",
+            "mainClass": "Pentris",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch Search",
+            "request": "launch",
+            "mainClass": "Search",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch endMenu",
+            "request": "launch",
+            "mainClass": "endMenu",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch startMenu",
+            "request": "launch",
+            "mainClass": "startMenu",
+            "projectName": "GROUP21_2021_2c7a220"
+        }
+    ]
+}

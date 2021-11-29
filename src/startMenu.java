@@ -15,11 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class startMenu implements ActionListener, MouseListener{
+public class startMenu implements ActionListener, MouseListener {
     JFrame UI;
-//////////////////////////////////////////
+    //////////////////////////////////////////
     JPanel menuPanel;
-//////////////////////////////////////////
+    //////////////////////////////////////////
     JLabel colon1;
     JLabel colon2;
     JLabel colon3;
@@ -41,7 +41,7 @@ public class startMenu implements ActionListener, MouseListener{
     JLabel name;
 
     JLabel menu;
-//////////////////////////////////////////
+    //////////////////////////////////////////
     JButton buttonPlus;
     JButton buttonMinus;
     JButton buttonColormode;
@@ -51,9 +51,9 @@ public class startMenu implements ActionListener, MouseListener{
     JButton sizeYPlus;
     JButton sizeYMinus;
     JButton play;
-//////////////////////////////////////////
+    //////////////////////////////////////////
     JTextField inputName;
-//////////////////////////////////////////
+    //////////////////////////////////////////
     int levelInt = 1;
     int minSizeX = 5;
     int minSizeY = 15;
@@ -62,91 +62,92 @@ public class startMenu implements ActionListener, MouseListener{
     int intSizeX = minSizeX;
     int intSizeY = minSizeY;
     String colorblindNormal = "Normal";
-    String menuLetters = "Calibri";
+    String menuLetters = "Nidus Sans";
     String playerName;
     boolean isColorBlind;
     boolean showMenu = true;
+
     public static void main(String[] args) {
         new startMenu();
     }
 
-    public startMenu(){
-    // Textfield:
+    public startMenu() {
+        // Textfield:
         inputName = new JTextField();
         inputName.setLocation(200, 160);
         inputName.setSize(195, 50);
         inputName.addActionListener(this);
         inputName.addMouseListener(this);
 
-    // Buttons:
+        // Buttons:
         // ButtonPlus:
         buttonPlus = new JButton("+");
         buttonPlus.addActionListener(this);
         buttonPlus.setBackground(Color.BLACK);
         buttonPlus.setForeground(Color.WHITE);
-        buttonPlus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        buttonPlus.setFont(new Font(menuLetters, Font.BOLD, 26));
         buttonPlus.setLocation(345, 50);
-        buttonPlus.setSize(50,50);
-        
+        buttonPlus.setSize(50, 50);
+
         // ButtonMinus:
-        buttonMinus= new JButton("-");
+        buttonMinus = new JButton("-");
         buttonMinus.addActionListener(this);
         buttonMinus.setBackground(Color.BLACK);
         buttonMinus.setForeground(Color.WHITE);
-        buttonMinus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        buttonMinus.setFont(new Font(menuLetters, Font.BOLD, 26));
         buttonMinus.setLocation(200, 50);
-        buttonMinus.setSize(50,50);
+        buttonMinus.setSize(50, 50);
 
         // ButtonColorMode:
         buttonColormode = new JButton(colorblindNormal);
         buttonColormode.addActionListener(this);
         buttonColormode.setBackground(Color.BLACK);
         buttonColormode.setForeground(Color.WHITE);
-        buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 20));
+        buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 18));
         buttonColormode.setLocation(200, 105);
-        buttonColormode.setSize(195,50);
+        buttonColormode.setSize(195, 50);
 
         // CloseMenu:
         closeMenu = new JButton("Close");
         closeMenu.addActionListener(this);
         closeMenu.setBackground(Color.RED);
         closeMenu.setForeground(Color.WHITE);
-        closeMenu.setFont(new Font(menuLetters, Font.PLAIN, 15));
+        closeMenu.setFont(new Font(menuLetters, Font.PLAIN, 13));
         closeMenu.setLocation(328, 5);
-        closeMenu.setSize(67,15);
+        closeMenu.setSize(67, 15);
 
         // Buttons for gridsizes:
         sizeXMinus = new JButton("-");
         sizeXMinus.addActionListener(this);
         sizeXMinus.setBackground(Color.BLACK);
         sizeXMinus.setForeground(Color.WHITE);
-        sizeXMinus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        sizeXMinus.setFont(new Font(menuLetters, Font.BOLD, 26));
         sizeXMinus.setLocation(200, 215);
-        sizeXMinus.setSize(50,50);
+        sizeXMinus.setSize(50, 50);
 
         sizeXPlus = new JButton("+");
         sizeXPlus.addActionListener(this);
         sizeXPlus.setBackground(Color.BLACK);
         sizeXPlus.setForeground(Color.WHITE);
-        sizeXPlus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        sizeXPlus.setFont(new Font(menuLetters, Font.BOLD, 26));
         sizeXPlus.setLocation(345, 215);
-        sizeXPlus.setSize(50,50);
+        sizeXPlus.setSize(50, 50);
 
         sizeYMinus = new JButton("-");
         sizeYMinus.addActionListener(this);
         sizeYMinus.setBackground(Color.BLACK);
         sizeYMinus.setForeground(Color.WHITE);
-        sizeYMinus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        sizeYMinus.setFont(new Font(menuLetters, Font.BOLD, 26));
         sizeYMinus.setLocation(200, 270);
-        sizeYMinus.setSize(50,50);
+        sizeYMinus.setSize(50, 50);
 
         sizeYPlus = new JButton("+");
         sizeYPlus.addActionListener(this);
         sizeYPlus.setBackground(Color.BLACK);
         sizeYPlus.setForeground(Color.WHITE);
-        sizeYPlus.setFont(new Font(menuLetters, Font.BOLD, 30));
+        sizeYPlus.setFont(new Font(menuLetters, Font.BOLD, 26));
         sizeYPlus.setLocation(345, 270);
-        sizeYPlus.setSize(50,50);
+        sizeYPlus.setSize(50, 50);
 
         // Button to start the game:
         play = new JButton("Start Game");
@@ -155,113 +156,111 @@ public class startMenu implements ActionListener, MouseListener{
         play.setForeground(Color.WHITE);
         play.setFont(new Font(menuLetters, Font.BOLD, 30));
         play.setLocation(100, 345);
-        play.setSize(200,45);
+        play.setSize(200, 45);
 
-
-    // Labels:
+        // Labels:
         // Labels for level:
         level = new JLabel("Level");
-        level.setFont(new Font(menuLetters, Font.BOLD, 20));
-        level.setForeground(Color.WHITE);
+        level.setFont(new Font(menuLetters, Font.BOLD, 18));
+        level.setForeground(Color.CYAN);
         level.setLocation(20, 50);
-        level.setSize(100,50);
+        level.setSize(100, 50);
 
         colon1 = new JLabel(":");
-        colon1.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colon1.setForeground(Color.WHITE);
+        colon1.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon1.setForeground(Color.CYAN);
         colon1.setLocation(150, 50);
-        colon1.setSize(20,50);
+        colon1.setSize(20, 50);
 
-        levelNumber = new JLabel(" "+levelInt);
-        levelNumber.setFont(new Font(menuLetters, Font.BOLD, 20));
+        levelNumber = new JLabel(" " + levelInt);
+        levelNumber.setFont(new Font(menuLetters, Font.BOLD, 18));
         levelNumber.setForeground(Color.WHITE);
         levelNumber.setLocation(290, 50);
-        levelNumber.setSize(50,50);
+        levelNumber.setSize(50, 50);
 
         // Labels for colorblind:
         colorblindmode = new JLabel("Colormode");
-        colorblindmode.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colorblindmode.setForeground(Color.WHITE);
+        colorblindmode.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colorblindmode.setForeground(Color.CYAN);
         colorblindmode.setLocation(20, 105);
-        colorblindmode.setSize(100,50);
+        colorblindmode.setSize(100, 50);
 
         colon2 = new JLabel(":");
-        colon2.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colon2.setForeground(Color.WHITE);
+        colon2.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon2.setForeground(Color.CYAN);
         colon2.setLocation(150, 105);
-        colon2.setSize(20,50);
+        colon2.setSize(20, 50);
 
         // Labels for name:
         name = new JLabel("Name");
-        name.setFont(new Font(menuLetters, Font.BOLD, 20));
-        name.setForeground(Color.WHITE);
+        name.setFont(new Font(menuLetters, Font.BOLD, 18));
+        name.setForeground(Color.CYAN);
         name.setLocation(20, 160);
-        name.setSize(100,50);
+        name.setSize(100, 50);
 
         colon3 = new JLabel(":");
-        colon3.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colon3.setForeground(Color.WHITE);
+        colon3.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon3.setForeground(Color.CYAN);
         colon3.setLocation(150, 160);
         colon3.setSize(20, 50);
 
         // Labels for menu titel:
         menu = new JLabel("MENU");
         menu.setFont(new Font(menuLetters, Font.BOLD, 30));
-        menu.setForeground(Color.WHITE);
-        menu.setLocation(160,5);
-        menu.setSize(100,50);
+        menu.setForeground(Color.CYAN);
+        menu.setLocation(160, 5);
+        menu.setSize(100, 50);
 
         // Labels for gridsizes
         gridSizes = new JLabel("Gridsize");
-        gridSizes.setFont(new Font(menuLetters, Font.BOLD, 20));
-        gridSizes.setForeground(Color.WHITE);
+        gridSizes.setFont(new Font(menuLetters, Font.BOLD, 18));
+        gridSizes.setForeground(Color.CYAN);
         gridSizes.setLocation(20, 215);
-        gridSizes.setSize(100,50);
+        gridSizes.setSize(100, 50);
 
         x = new JLabel("X");
-        x.setFont(new Font(menuLetters, Font.BOLD, 20));
-        x.setForeground(Color.WHITE);
+        x.setFont(new Font(menuLetters, Font.BOLD, 18));
+        x.setForeground(Color.CYAN);
         x.setLocation(120, 215);
-        x.setSize(100,50);
+        x.setSize(100, 50);
 
         y = new JLabel("Y");
-        y.setFont(new Font(menuLetters, Font.BOLD, 20));
-        y.setForeground(Color.WHITE);
+        y.setFont(new Font(menuLetters, Font.BOLD, 18));
+        y.setForeground(Color.CYAN);
         y.setLocation(120, 270);
-        y.setSize(100,50);
+        y.setSize(100, 50);
 
-        sizeX = new JLabel(" "+minSizeX);
-        sizeX.setFont(new Font(menuLetters, Font.BOLD, 20));
+        sizeX = new JLabel(" " + minSizeX);
+        sizeX.setFont(new Font(menuLetters, Font.BOLD, 18));
         sizeX.setForeground(Color.WHITE);
         sizeX.setLocation(290, 215);
-        sizeX.setSize(50,50);
+        sizeX.setSize(50, 50);
 
-        sizeY = new JLabel(""+minSizeY);
-        sizeY.setFont(new Font(menuLetters, Font.BOLD, 20));
+        sizeY = new JLabel("" + minSizeY);
+        sizeY.setFont(new Font(menuLetters, Font.BOLD, 18));
         sizeY.setForeground(Color.WHITE);
         sizeY.setLocation(290, 270);
-        sizeY.setSize(50,50);
+        sizeY.setSize(50, 50);
 
         colon4 = new JLabel(":");
-        colon4.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colon4.setForeground(Color.WHITE);
+        colon4.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon4.setForeground(Color.CYAN);
         colon4.setLocation(150, 215);
-        colon4.setSize(20,50);
-        
+        colon4.setSize(20, 50);
+
         colon5 = new JLabel(":");
-        colon5.setFont(new Font(menuLetters, Font.BOLD, 20));
-        colon5.setForeground(Color.WHITE);
+        colon5.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon5.setForeground(Color.CYAN);
         colon5.setLocation(150, 270);
-        colon5.setSize(20,50);
+        colon5.setSize(20, 50);
 
-
-    // Panel:
+        // Panel:
         // Menupanel:
         menuPanel = new JPanel();
         menuPanel.setBorder(BorderFactory.createEmptyBorder());
         menuPanel.setLayout(null);
         menuPanel.setBackground(Color.BLACK);
-        menuPanel.setPreferredSize(new Dimension(400,400));
+        menuPanel.setPreferredSize(new Dimension(400, 400));
 
         menuPanel.add(level);
         menuPanel.add(colon1);
@@ -293,7 +292,7 @@ public class startMenu implements ActionListener, MouseListener{
         menuPanel.add(closeMenu);
         menuPanel.add(play);
 
-    // Frame:
+        // Frame:
         UI = new JFrame("PENTRIS");
         UI.add(menuPanel);
         UI.setUndecorated(true);
@@ -302,124 +301,127 @@ public class startMenu implements ActionListener, MouseListener{
         UI.setResizable(false);
         UI.setLocationRelativeTo(null);
         UI.setPreferredSize(new Dimension(400, 400));
-        UI.setMinimumSize(new Dimension (400,400));
-        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE));
+        UI.setMinimumSize(new Dimension(400, 400));
+        UI.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
     }
 
     public void actionPerformed(ActionEvent e) {
         // Button press for Level:
-        if (e.getSource() == buttonPlus && levelInt == 1){
+        if (e.getSource() == buttonPlus && levelInt == 1) {
             levelInt = 5;
-        }else if (e.getSource() == buttonMinus && levelInt == 5){
+        } else if (e.getSource() == buttonMinus && levelInt == 5) {
             levelInt = 1;
-        }else if (e.getSource() == buttonPlus && levelInt < 25){
+        } else if (e.getSource() == buttonPlus && levelInt < 25) {
             levelInt += 5;
-        }else if (e.getSource() == buttonMinus && levelInt > 1) {
+        } else if (e.getSource() == buttonMinus && levelInt > 1) {
             levelInt -= 5;
         }
 
-        if (levelInt >= 10){
-            levelNumber.setText(""+levelInt);
-        }else{
-            levelNumber.setText(" "+levelInt);
+        if (levelInt >= 10) {
+            levelNumber.setText("" + levelInt);
+        } else {
+            levelNumber.setText(" " + levelInt);
         }
 
         // Button press for Colorblind:
-        if (e.getSource() == buttonColormode && colorblindNormal.equals("Normal")){
+        if (e.getSource() == buttonColormode && colorblindNormal.equals("Normal")) {
             colorblindNormal = "Colorblind";
             buttonColormode.setText(colorblindNormal);
             isColorBlind = true;
-        }else if(e.getSource() == buttonColormode && colorblindNormal.equals("Colorblind")){
+        } else if (e.getSource() == buttonColormode && colorblindNormal.equals("Colorblind")) {
             colorblindNormal = "Normal";
             buttonColormode.setText(colorblindNormal);
             isColorBlind = false;
         }
 
         // Button press for gridsize:
-        if (e.getSource() == sizeXMinus && intSizeX > minSizeX){
+        if (e.getSource() == sizeXMinus && intSizeX > minSizeX) {
             intSizeX--;
-        }else if (e.getSource() == sizeXPlus && intSizeX < maxSizeX){
+        } else if (e.getSource() == sizeXPlus && intSizeX < maxSizeX) {
             intSizeX++;
-        }else if (e.getSource() == sizeYMinus && intSizeY > minSizeY){
+        } else if (e.getSource() == sizeYMinus && intSizeY > minSizeY) {
             intSizeY--;
-        }else if (e.getSource() == sizeYPlus && intSizeY < maxSizeY){
+        } else if (e.getSource() == sizeYPlus && intSizeY < maxSizeY) {
             intSizeY++;
         }
 
-        if (intSizeX >= 10 && intSizeY >= 10){
-            sizeX.setText(""+intSizeX);
-            sizeY.setText(""+intSizeY);
-        }else if (intSizeX >= 10){
-            sizeX.setText(""+intSizeX);
-            sizeY.setText(" "+intSizeY);    
-        }else if (intSizeY >= 10){
-            sizeX.setText(" "+intSizeX);
-            sizeY.setText(""+intSizeY);    
-        }else{
-            sizeX.setText(" "+intSizeX);
-            sizeY.setText(" "+intSizeY);
+        if (intSizeX >= 10 && intSizeY >= 10) {
+            sizeX.setText("" + intSizeX);
+            sizeY.setText("" + intSizeY);
+        } else if (intSizeX >= 10) {
+            sizeX.setText("" + intSizeX);
+            sizeY.setText(" " + intSizeY);
+        } else if (intSizeY >= 10) {
+            sizeX.setText(" " + intSizeX);
+            sizeY.setText("" + intSizeY);
+        } else {
+            sizeX.setText(" " + intSizeX);
+            sizeY.setText(" " + intSizeY);
         }
 
         // Button to start the game and close the menu:
-        if (e.getSource() == play && !inputName.getText().equals("") && !inputName.getText().equals("Enter your name!")){
+        if (e.getSource() == play && !inputName.getText().equals("")
+                && !inputName.getText().equals("Enter your name!")) {
             playerName = inputName.getText();
             inputName.setText("");
             showMenu = false;
             // System.out.println("Start Game");
-            // System.out.println(playerName);            
+            // System.out.println(playerName);
             UI.dispose();
-        }else if (e.getSource() == play && inputName.getText().equals("")){
+        } else if (e.getSource() == play && inputName.getText().equals("")) {
             inputName.setText("Enter your name!");
         }
 
-
         // Button for closing the menu:
-        if (e.getSource() == closeMenu){
+        if (e.getSource() == closeMenu) {
             showMenu = false;
             System.exit(0);
         }
     }
 
-    public boolean getIsColorblind(){
+    public boolean getIsColorblind() {
         return isColorBlind;
     }
 
-    public boolean getShowMenu(){
+    public boolean getShowMenu() {
         return showMenu;
     }
 
-    public void setShowMenu(boolean x){
+    public void setShowMenu(boolean x) {
         showMenu = x;
     }
 
-    public String getName(){
+    public String getName() {
         return playerName;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return levelInt;
     }
 
-    public int getGridsizeX(){
+    public int getGridsizeX() {
         return intSizeX;
     }
 
-    public int getGridsizeY(){
+    public int getGridsizeY() {
         return intSizeY;
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == inputName){
+        if (e.getSource() == inputName) {
             inputName.setText("");
         }
     }
 
     public void mousePressed(MouseEvent e) {
     }
+
     public void mouseReleased(MouseEvent e) {
     }
+
     public void mouseEntered(MouseEvent e) {
     }
+
     public void mouseExited(MouseEvent e) {
     }
 }

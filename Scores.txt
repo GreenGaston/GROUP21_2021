@@ -46,6 +46,8 @@ t:40
 t:40
 t:40
 t:40
+test:40
+test:40
 Loser:10
 test:0
 bot:0

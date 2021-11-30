@@ -18,11 +18,11 @@ public class basicAI {
 
 
     public static ArrayList<Integer> getRobotMovements(){
-        a = 0.91006;      //height
-        b = 0.55;      //holes
-        c = 0.28;      //bump
-        d = 0.86;     //lines cleared
-        e = 0.15;      //Highest vs lowest
+        a = 0.51006;        //height
+        b = 0.55;           //amount of holes
+        c = 0.28;           //the bumpiness
+        d = 0.86;           //amount of lines cleared
+        e = 0.15;           //Highest vs lowest point
         piececount++;
         robotMovements();
         return botmovements;
@@ -39,7 +39,7 @@ public class basicAI {
 
     ///make 2 list and add them to one and another
     public static void robotMovements(){
-        high = 1000;
+        high = 10000;
         current = 0;
         //testgrid = test123;
         botmovements = new ArrayList<>();
@@ -83,25 +83,25 @@ public class basicAI {
                 current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;
                
                 
-                 System.out.println();
+                 //System.out.println();
                 if(current <= high){
                     botmovements = cloneArrayList(botmovementstest);
                     xmovement = x;
                     high = current;
-                     //debugging part:
-                 System.out.println("------------------------------------------------------------------");
-                 System.out.println("Piece number: " + piececount);
-                 System.out.println();
-                 System.out.println("sum of height: " + sumOfArrayList(heightofgridelements));
-                 System.out.println("Amount of hole: " + calcHoles(testgridlocal));
-                 System.out.println("Lines cleared: " + lineCheck(testgridlocal));
-                 System.out.println("The bumpiness: " + bumpiness);
-                 System.out.println("The difference between maxmin: " + highmin);
-                 System.out.println();
-                 System.out.println("Current score: " + current + " highscore: " + high);
-                 System.out.println("movement: " + botmovementstest);
-                 System.out.println();
-                 printGrid(testgridlocal);
+                //debugging part:
+                //  System.out.println("------------------------------------------------------------------");
+                //  System.out.println("Piece number: " + piececount);
+                //  System.out.println();
+                //  System.out.println("sum of height: " + sumOfArrayList(heightofgridelements));
+                //  System.out.println("Amount of hole: " + calcHoles(testgridlocal));
+                //  System.out.println("Lines cleared: " + lineCheck(testgridlocal));
+                //  System.out.println("The bumpiness: " + bumpiness);
+                //  System.out.println("The difference between maxmin: " + highmin);
+                //  System.out.println();
+                //  System.out.println("Current score: " + current + " highscore: " + high);
+                //  System.out.println("movement: " + botmovementstest);
+                //  System.out.println();
+                //  printGrid(testgridlocal);
                 }
                 bumpiness = 0;      
                 highmin = 0;

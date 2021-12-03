@@ -51,6 +51,7 @@ public class startMenu implements ActionListener, MouseListener {
     JButton sizeYPlus;
     JButton sizeYMinus;
     JButton play;
+    JButton startBot;
     //////////////////////////////////////////
     JTextField inputName;
     //////////////////////////////////////////
@@ -66,6 +67,7 @@ public class startMenu implements ActionListener, MouseListener {
     String playerName;
     boolean isColorBlind;
     boolean showMenu = true;
+    boolean playBot = false;
 
     public static void main(String[] args) {
         new startMenu();
@@ -155,8 +157,17 @@ public class startMenu implements ActionListener, MouseListener {
         play.setBackground(Color.BLUE);
         play.setForeground(Color.WHITE);
         play.setFont(new Font(menuLetters, Font.BOLD, 30));
-        play.setLocation(100, 345);
+        play.setLocation(25, 345);
         play.setSize(200, 45);
+
+        // Button to start the game with the bot:
+        startBot = new JButton("BOT");
+        startBot.addActionListener(this);
+        startBot.setBackground(Color.BLUE);
+        startBot.setForeground(Color.WHITE);
+        startBot.setFont(new Font(menuLetters, Font.BOLD, 30));
+        startBot.setLocation(250, 345);
+        startBot.setSize(125, 45);
 
         // Labels:
         // Labels for level:
@@ -291,6 +302,7 @@ public class startMenu implements ActionListener, MouseListener {
         menuPanel.add(menu);
         menuPanel.add(closeMenu);
         menuPanel.add(play);
+        menuPanel.add(startBot);
 
         // Frame:
         UI = new JFrame("PENTRIS");
@@ -372,6 +384,13 @@ public class startMenu implements ActionListener, MouseListener {
             inputName.setText("Enter your name!");
         }
 
+        if (e.getSource() == startBot){
+            playerName = "BOT";
+            showMenu = false;
+            playBot = true;
+            UI.dispose();
+        }
+
         // Button for closing the menu:
         if (e.getSource() == closeMenu) {
             showMenu = false;
@@ -405,6 +424,10 @@ public class startMenu implements ActionListener, MouseListener {
 
     public int getGridsizeY() {
         return intSizeY;
+    }
+    
+    public boolean getPlayBot() {
+        return playBot;
     }
 
     public void mouseClicked(MouseEvent e) {

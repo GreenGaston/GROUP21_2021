@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -555,6 +555,7 @@ public class Pentris {
             height = startMenu.getGridsizeY();
             width = startMenu.getGridsizeX();
             isColorblind = startMenu.getIsColorblind();
+            boolean playBot = startMenu.getPlayBot();
             menu = new Menu(isColorblind);
 
             StartY = 0;
@@ -622,33 +623,36 @@ public class Pentris {
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
-            //TetrisAI-----------------------------------------------------------------------------------------------------------------------
-            Robot excecuter = new Robot();
-            basicAI ai = new basicAI();       
-            Thread tetrisbot = new Thread(){
+//TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            if (playBot){
+                Robot excecuter = new Robot();
+                basicAI ai = new basicAI();       
+                Thread tetrisbot = new Thread(){
 
-        public void run(){
-            try{
-                while(!Lost){
-                    ai.testgrid = grid;
-                    ai.getRobotMovements();
-                    ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                    //System.out.println("Inputted movements: " + ai.botmovements);
+                    public void run(){
+                        try{
+                            while(!Lost){
+                                ai.testgrid = grid;
+                                ai.getRobotMovements();
+                                ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
+                                //System.out.println("Inputted movements: " + ai.botmovements);
 
-                    for(int i = 0; i < movements.size(); i++){
-                        int current = movements.get(i);
-                        excecuter.keyPress(current);
-                        excecuter.delay(50);
+                                for(int i = 0; i < movements.size(); i++){
+                                    int current = movements.get(i);
+                                    excecuter.keyPress(current);
+                                    excecuter.delay(50);
+                                }
+                                Thread.sleep(1000);
+                            }
+                        }catch(InterruptedException e){
+
+                        }
+                        
                     }
-                    Thread.sleep(1000);
-                }
-            }catch(InterruptedException e){
-
+                };tetrisbot.start();
             }
-            
-        }
-};tetrisbot.start();
 //-------------------------------------------------------------------------------------------------------------------------------
+
             try {
                 while (!Lost) {
                     gridclone = clone2Dint(grid);

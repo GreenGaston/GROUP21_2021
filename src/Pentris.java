@@ -557,6 +557,7 @@ public class Pentris {
             isColorblind = startMenu.getIsColorblind();
             boolean playBot = startMenu.getPlayBot();
             menu = new Menu(isColorblind);
+            stopmusic = false;
 
             StartY = 0;
             if (width <= 6) {

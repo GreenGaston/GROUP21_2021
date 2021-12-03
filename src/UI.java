@@ -232,12 +232,11 @@ public class UI extends JPanel implements KeyListener {
                         Image.SCALE_DEFAULT);
                 localGraphics2D.drawImage(image, -50, -150, null);
                 // System.out.println("LOSER");
-            }
+             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     /**

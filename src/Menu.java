@@ -76,7 +76,7 @@ public class Menu implements ActionListener {
         buttonColormode.addActionListener(this);
         buttonColormode.setBackground(Color.BLACK);
         buttonColormode.setForeground(Color.WHITE);
-        buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 18));
+        buttonColormode.setFont(new Font(menuLetters, Font.BOLD, 16));
         buttonColormode.setLocation(200, 60);
         buttonColormode.setSize(192, 50);
 
@@ -101,13 +101,13 @@ public class Menu implements ActionListener {
         // Labels:
         // Labels for colorblind:
         colorblindmode = new JLabel("Colormode");
-        colorblindmode.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colorblindmode.setFont(new Font(menuLetters, Font.BOLD, 16));
         colorblindmode.setForeground(Color.WHITE);
         colorblindmode.setLocation(20, 60);
         colorblindmode.setSize(100, 50);
 
         colon1 = new JLabel(":");
-        colon1.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon1.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon1.setForeground(Color.WHITE);
         colon1.setLocation(150, 60);
         colon1.setSize(20, 50);
@@ -127,13 +127,13 @@ public class Menu implements ActionListener {
         controls.setSize(100, 50);
 
         esc = new JLabel("Esc");
-        esc.setFont(new Font(menuLetters, Font.BOLD, 18));
+        esc.setFont(new Font(menuLetters, Font.BOLD, 16));
         esc.setForeground(Color.WHITE);
         esc.setLocation(127, 130);
         esc.setSize(100, 50);
 
         left = new JLabel("Left");
-        left.setFont(new Font(menuLetters, Font.BOLD, 18));
+        left.setFont(new Font(menuLetters, Font.BOLD, 16));
         left.setForeground(Color.WHITE);
         left.setLocation(120, 155);
         left.setSize(100, 50);
@@ -145,103 +145,103 @@ public class Menu implements ActionListener {
         right.setSize(100, 50);
 
         down = new JLabel("Down");
-        down.setFont(new Font(menuLetters, Font.BOLD, 18));
+        down.setFont(new Font(menuLetters, Font.BOLD, 16));
         down.setForeground(Color.WHITE);
         down.setLocation(105, 205);
         down.setSize(100, 50);
 
         spacebar = new JLabel("Spacebar");
-        spacebar.setFont(new Font(menuLetters, Font.BOLD, 18));
+        spacebar.setFont(new Font(menuLetters, Font.BOLD, 16));
         spacebar.setForeground(Color.WHITE);
         spacebar.setLocation(77, 230);
         spacebar.setSize(100, 50);
 
         up_x = new JLabel("Up / X");
-        up_x.setFont(new Font(menuLetters, Font.BOLD, 18));
+        up_x.setFont(new Font(menuLetters, Font.BOLD, 16));
         up_x.setForeground(Color.WHITE);
         up_x.setLocation(98, 255);
         up_x.setSize(100, 50);
 
         z = new JLabel("Z");
-        z.setFont(new Font(menuLetters, Font.BOLD, 18));
+        z.setFont(new Font(menuLetters, Font.BOLD, 16));
         z.setForeground(Color.WHITE);
         z.setLocation(141, 280);
         z.setSize(100, 50);
 
         c = new JLabel("C");
-        c.setFont(new Font(menuLetters, Font.BOLD, 18));
+        c.setFont(new Font(menuLetters, Font.BOLD, 16));
         c.setForeground(Color.WHITE);
         c.setLocation(141, 305);
         c.setSize(100, 50);
 
         openMenu = new JLabel("Open menu");
         openMenu.setForeground(Color.WHITE);
-        openMenu.setFont(new Font(menuLetters, Font.BOLD, 18));
+        openMenu.setFont(new Font(menuLetters, Font.BOLD, 16));
         openMenu.setLocation(250, 130);
         openMenu.setSize(100, 50);
 
         goLeft = new JLabel("Go left");
         goLeft.setForeground(Color.WHITE);
-        goLeft.setFont(new Font(menuLetters, Font.BOLD, 18));
+        goLeft.setFont(new Font(menuLetters, Font.BOLD, 16));
         goLeft.setLocation(250, 155);
         goLeft.setSize(100, 50);
 
         goRight = new JLabel("Go right");
         goRight.setForeground(Color.WHITE);
-        goRight.setFont(new Font(menuLetters, Font.BOLD, 18));
+        goRight.setFont(new Font(menuLetters, Font.BOLD, 16));
         goRight.setLocation(250, 180);
         goRight.setSize(100, 50);
 
         softDrop = new JLabel("Soft drop");
         softDrop.setForeground(Color.WHITE);
-        softDrop.setFont(new Font(menuLetters, Font.BOLD, 18));
+        softDrop.setFont(new Font(menuLetters, Font.BOLD, 16));
         softDrop.setLocation(250, 205);
         softDrop.setSize(100, 50);
 
         hardDrop = new JLabel("Hard drop");
         hardDrop.setForeground(Color.WHITE);
-        hardDrop.setFont(new Font(menuLetters, Font.BOLD, 18));
+        hardDrop.setFont(new Font(menuLetters, Font.BOLD, 16));
         hardDrop.setLocation(250, 230);
         hardDrop.setSize(100, 50);
 
         rotateRight = new JLabel("Rotate right");
         rotateRight.setForeground(Color.WHITE);
-        rotateRight.setFont(new Font(menuLetters, Font.BOLD, 18));
+        rotateRight.setFont(new Font(menuLetters, Font.BOLD, 16));
         rotateRight.setLocation(250, 255);
         rotateRight.setSize(100, 50);
 
         rotateLeft = new JLabel("Rotate left");
         rotateLeft.setForeground(Color.WHITE);
-        rotateLeft.setFont(new Font(menuLetters, Font.BOLD, 18));
+        rotateLeft.setFont(new Font(menuLetters, Font.BOLD, 16));
         rotateLeft.setLocation(250, 280);
         rotateLeft.setSize(100, 50);
 
         storePiece = new JLabel("Store/Use piece");
         storePiece.setForeground(Color.WHITE);
-        storePiece.setFont(new Font(menuLetters, Font.BOLD, 18));
+        storePiece.setFont(new Font(menuLetters, Font.BOLD, 16));
         storePiece.setLocation(250, 305);
         storePiece.setSize(150, 50);
 
         colon2 = new JLabel(":");
-        colon2.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon2.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon2.setForeground(Color.WHITE);
         colon2.setLocation(200, 130);
         colon2.setSize(20, 50);
 
         colon3 = new JLabel(":");
-        colon3.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon3.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon3.setForeground(Color.WHITE);
         colon3.setLocation(200, 155);
         colon3.setSize(20, 50);
 
         colon4 = new JLabel(":");
-        colon4.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon4.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon4.setForeground(Color.WHITE);
         colon4.setLocation(200, 180);
         colon4.setSize(20, 50);
 
         colon5 = new JLabel(":");
-        colon5.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon5.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon5.setForeground(Color.WHITE);
         colon5.setLocation(200, 205);
         colon5.setSize(20, 50);
@@ -253,19 +253,19 @@ public class Menu implements ActionListener {
         colon6.setSize(20, 50);
 
         colon7 = new JLabel(":");
-        colon7.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon7.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon7.setForeground(Color.WHITE);
         colon7.setLocation(200, 255);
         colon7.setSize(20, 50);
 
         colon8 = new JLabel(":");
-        colon8.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon8.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon8.setForeground(Color.WHITE);
         colon8.setLocation(200, 280);
         colon8.setSize(20, 50);
 
         colon9 = new JLabel(":");
-        colon9.setFont(new Font(menuLetters, Font.BOLD, 18));
+        colon9.setFont(new Font(menuLetters, Font.BOLD, 16));
         colon9.setForeground(Color.WHITE);
         colon9.setLocation(200, 305);
         colon9.setSize(20, 50);

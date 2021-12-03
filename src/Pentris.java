@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.awt.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
@@ -539,7 +540,8 @@ public class Pentris {
         return PieceX;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static ArrayList<Integer> botmovements;
+    public static void main(String[] args) throws InterruptedException, AWTException {
         while (!Lost) {
             startMenu startMenu = new startMenu();
 
@@ -559,7 +561,8 @@ public class Pentris {
             if (width <= 6) {
                 StartX = 0;
             } else {
-                StartX = width / 2 - 1;
+                StartX = 0;
+                //StartX = width / 2 - 1;
             }
 
             PieceX = StartX;
@@ -619,6 +622,33 @@ public class Pentris {
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
+            //TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            Robot excecuter = new Robot();
+            basicAI ai = new basicAI();       
+            Thread tetrisbot = new Thread(){
+
+        public void run(){
+            try{
+                while(!Lost){
+                    ai.testgrid = grid;
+                    ai.getRobotMovements();
+                    ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
+                    //System.out.println("Inputted movements: " + ai.botmovements);
+
+                    for(int i = 0; i < movements.size(); i++){
+                        int current = movements.get(i);
+                        excecuter.keyPress(current);
+                        excecuter.delay(50);
+                    }
+                    Thread.sleep(1000);
+                }
+            }catch(InterruptedException e){
+
+            }
+            
+        }
+};tetrisbot.start();
+//-------------------------------------------------------------------------------------------------------------------------------
             try {
                 while (!Lost) {
                     gridclone = clone2Dint(grid);

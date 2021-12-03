@@ -8,17 +8,22 @@ Jeroen:400
 y:380
 Jeroen:240
 Jeroen:240
+bot4:240
 test:220
 Jeroen:220
 Jeroen:200
 lieke:200
 Lianne:160
+bot3:160
+bot5:160
 lieke:140
 null:120
 Enter your name!Hub:120
 lieke:120
 Jeroen:120
 Jeroen:120
+bot1:120
+bot6:120
 n:100
 null:80
 lieke:80
@@ -46,6 +51,9 @@ t:40
 t:40
 t:40
 t:40
+test:40
+test:40
+bot2:40
 Loser:10
 test:0
 bot:0

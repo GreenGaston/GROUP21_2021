@@ -429,6 +429,10 @@ public class startMenu implements ActionListener, MouseListener {
     public boolean getPlayBot() {
         return playBot;
     }
+    
+    public void setPlayBot(boolean b) {
+        playBot = b;
+    }
 
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == inputName) {

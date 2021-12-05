@@ -18,11 +18,11 @@ public class basicAI {
 
 
     public static ArrayList<Integer> getRobotMovements(){
-        a = 0.51006;        //height
-        b = 0.55;           //amount of holes
-        c = 0.28;           //the bumpiness
-        d = 0.86;           //amount of lines cleared
-        e = 0.15;           //Highest vs lowest point
+        a = 0.31006;        //height
+        b = 0.45;           //amount of holes
+        c = 0.38;           //the bumpiness
+        d = 0.96;           //amount of lines cleared
+        e = 0.5;           //Highest vs lowest point
         piececount++;
         robotMovements();
         return botmovements;
@@ -54,19 +54,19 @@ public class basicAI {
         int y = 0;
         int k = 4;
         int xmovement = 0;
-        for(int j =0; j < testgrid.length - Pentris.pentominoDatabase[pieceID][k].length + 1; j++){
-            ArrayList<Integer> movementx = new ArrayList<>();
+        k = 4;
+        for(int i = 3; i >= 0; i--){
+            
             //System.out.println("X: " + x);
            
-            
-            for(int i = 3; i >= 0; i--){
-                k--;
-                ArrayList<Integer> botmovementstest = cloneArrayList(movementx);
-
-               
-                for(int bmv = 0; bmv < i; bmv++){
-                    botmovementstest.add(KeyEvent.VK_UP);
-                }
+            k--;
+            ArrayList<Integer> botmovementstest = new ArrayList<>();
+            for(int bmv = 0; bmv < i; bmv++){
+                botmovementstest.add(KeyEvent.VK_UP);
+            }
+           
+            for(int j =0; j < testgrid.length - Pentris.pentominoDatabase[pieceID][k].length + 1; j++){
+                //ArrayList<Integer> movementx = cloneArrayList(botmovementstest);
 
                 //simulating spacebar
                 testgridlocal = clone2Dint(testgrid);
@@ -80,7 +80,7 @@ public class basicAI {
                     bumpiness += Math.abs(heightofgridelements.get(i) - heightofgridelements.get(i+1));
                     //System.out.println("bump: " + bumpiness);
                 }
-                current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;
+                current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;///highmin * 
                
                 
                  //System.out.println();
@@ -88,6 +88,10 @@ public class basicAI {
                     botmovements = cloneArrayList(botmovementstest);
                     xmovement = x;
                     high = current;
+
+                    for(int l =0; l < j; l++){
+                        botmovements.add(KeyEvent.VK_RIGHT);
+                    }
                 //debugging part:
                 //  System.out.println("------------------------------------------------------------------");
                 //  System.out.println("Piece number: " + piececount);
@@ -101,19 +105,21 @@ public class basicAI {
                 //  System.out.println("Current score: " + current + " highscore: " + high);
                 //  System.out.println("movement: " + botmovementstest);
                 //  System.out.println();
-                //  printGrid(testgridlocal);
+                 //printGrid(testgridlocal);
                 }
+                
                 bumpiness = 0;      
                 highmin = 0;
-                y = 0;       
-               
+                y = 0;   
+                x++;
+
             }
-            x++;
-            k = 4;
+            x = 0;
+            
+            
+            //k = 4;
         }
-        for(int l =0; l < xmovement; l++){
-            botmovements.add(KeyEvent.VK_RIGHT);
-        }
+        
         botmovements.add(KeyEvent.VK_SPACE);
         Pentris.botmovements = cloneArrayList(botmovements);
         

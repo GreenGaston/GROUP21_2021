@@ -119,7 +119,7 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() { //TODO: add shuffle back
+    public static void nextPiece() { 
         PieceX = StartX;
         PieceY = StartY;
         rotation = 0;

@@ -13,6 +13,8 @@ Jeroen:400
 y:380
 bug:360
 yeet:360
+bug:340
+bug:260
 Jeroen:240
 Jeroen:240
 bot4:240
@@ -43,6 +45,7 @@ bot6:120
 tres:120
 TEST:120
 test:120
+bug:120
 n:100
 null:80
 lieke:80
@@ -50,6 +53,9 @@ lieke:80
 lieke:80
 lieke:80
 t:80
+test:80
+test:80
+bug:80
 :40
 null:40
 Jeroen:40
@@ -75,6 +81,10 @@ test:40
 bot2:40
 TEST:40
 test:40
+bug:40
+bug:40
+bug:40
+bug:40
 Loser:10
 test:0
 bot:0
@@ -122,3 +132,4 @@ t:0
 t:0
 t:0
 TEST:0
+bug:0

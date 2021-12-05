@@ -195,17 +195,19 @@ public class UI extends JPanel implements KeyListener {
                 }
             }
             // draw holdpiece
+            localGraphics2D.translate(15, 180);
             for (int i = 0; i < holdPiece.length; i++) {
                 for (int j = 0; j < holdPiece[0].length; j++) {
                     if (holdPiece[i][j] > 0) {
                         localGraphics2D.setColor(holdColor);
-                        localGraphics2D.fill(new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1,
-                                miniSize - 1));
-
+                        localGraphics2D.fill(new Rectangle2D.Double(i * miniSize * 1.5 + 15, j * miniSize * 1.5 + 105,
+                                miniSize * 1.5 - 1.5,
+                                miniSize * 1.5 - 1.5));
                     }
                 }
             }
             // draw nextpiece
+            localGraphics2D.translate(-15, -180);
             for (int i = 0; i < nextPiece.length; i++) {
                 for (int j = 0; j < nextPiece[0].length; j++) {
                     if (nextPiece[i][j] > 0) {
@@ -232,9 +234,9 @@ public class UI extends JPanel implements KeyListener {
                         Image.SCALE_DEFAULT);
                 localGraphics2D.drawImage(image, -50, -150, null);
                 // System.out.println("LOSER");
-             }
+            }
         } catch (IOException e) {
-             // TODO Auto-generated catch block
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -257,7 +259,7 @@ public class UI extends JPanel implements KeyListener {
             } else if (i == 3) {
                 return Color.GREEN;
             } else if (i == 4) {
-                return Color.MAGENTA;
+                return Color.RED.darker();
             } else if (i == 5) {
                 return Color.PINK;
             } else if (i == 6) {

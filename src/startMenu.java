@@ -15,13 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+// import javax.imageio.ImageIO;
+// import java.io.File;
+// import java.io.IOException;
 
 public class startMenu implements ActionListener, MouseListener {
     JFrame UI;
@@ -314,12 +310,14 @@ public class startMenu implements ActionListener, MouseListener {
     }
 
     // public void paintComponent(Graphics g) throws IOException {
-    //         Graphics2D localGraphics2D = (Graphics2D) g;
-    //         localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-           
-    //         Image design = ImageIO.read(new File("background.png")); // the design on the right side of the grid
-    //         design = design.getScaledInstance(400, 400, Image.SCALE_DEFAULT);
-    //         localGraphics2D.drawImage(design, 0, 0, null);
+    // Graphics2D localGraphics2D = (Graphics2D) g;
+    // localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+    // RenderingHints.VALUE_ANTIALIAS_ON);
+
+    // Image design = ImageIO.read(new File("background.png")); // the design on the
+    // right side of the grid
+    // design = design.getScaledInstance(400, 400, Image.SCALE_DEFAULT);
+    // localGraphics2D.drawImage(design, 0, 0, null);
     // }
 
     public void actionPerformed(ActionEvent e) {

@@ -119,13 +119,13 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() {
+    public static void nextPiece() { 
         PieceX = StartX;
         PieceY = StartY;
         rotation = 0;
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
+           Collections.shuffle(nextPieces);
         }
 
         // String teststring="";
@@ -134,14 +134,14 @@ public class Pentris {
         // }
         // System.out.println(teststring);
 
-        // this is a suprise code for later!
+        // this is a surprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
             Collections.shuffle(nextPieces);
         }
 
@@ -306,8 +306,8 @@ public class Pentris {
         grid = updatedGrid;
     }
 
-    // this method should check if a line is full
-    public static void lineCheck() {
+    // Method that checks if a line is full
+    public static void lineCheck() { //TODO: bugfixing: when last pentomino fills entire line, remove line and show menu
         int count = 0;
         int lines = 0;
 
@@ -319,12 +319,10 @@ public class Pentris {
             }
             if (count >= grid.length) {// if the count is equal to the grid[line] lenght then the line is full and
                                        // needs to be removed.
-                count = 0;
-
                 removeLine(line);
+                count = 0;
                 line++;// Everything moved down 1 line, so the check has to move down 1 as well
                 lines++;
-
             } else {
                 count = 0;
             }
@@ -334,7 +332,10 @@ public class Pentris {
         }
         score = score + (scaling[lines] * level);
         // System.out.println(score);
+    }
 
+    public static int getScore() { // returns the score so that we can show it in the GUI
+        return score;
     }
 
     // this function evaluated if a piece can be placed on a give grid at a certain

@@ -14,10 +14,12 @@ y:380
 bug:360
 yeet:360
 bug:340
+test:320
 bug:260
 Jeroen:240
 Jeroen:240
 bot4:240
+test:240
 test:220
 Jeroen:220
 test:220
@@ -56,6 +58,7 @@ t:80
 test:80
 test:80
 bug:80
+test:80
 :40
 null:40
 Jeroen:40

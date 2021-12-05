@@ -332,7 +332,10 @@ public class Pentris {
         }
         score = score + (scaling[lines] * level);
         // System.out.println(score);
+    }
 
+    public static int getScore() { // returns the score so that we can show it in the GUI
+        return score;
     }
 
     // this function evaluated if a piece can be placed on a give grid at a certain

@@ -141,14 +141,22 @@ public class UI extends JPanel implements KeyListener {
             if (size - 10 > 0) {
                 miniSize = size - 10;
             }
+   
             // draw highscores
             Font smallFont = new Font("Nidus Sans", Font.BOLD, 15);
             localGraphics2D.setFont(smallFont);
             ArrayList<String> highscores = Pentris.getHighscores();
             for (int i = 0; i < highscores.size(); i++) {
                 localGraphics2D.drawString(highscores.get(i), 50 + rightOfGrid, 350 + 15 * i);
-
             }
+
+            // draw current score
+            Font smallFont3 = new Font("Nidus Sans", Font.BOLD, 40);
+            localGraphics2D.setFont(smallFont3);
+            int score = Pentris.getScore();
+            String showScore = Integer.toString(score);
+            localGraphics2D.drawString(showScore, leftOfGrid - 139, 100);
+
             // draw timer:
             Font smallFont2 = new Font("Nidus Sans", Font.BOLD, 35);
             localGraphics2D.setFont(smallFont2);

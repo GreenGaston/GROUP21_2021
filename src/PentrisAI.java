@@ -8,7 +8,6 @@ public class PentrisAI {
     public static int[][][][] pentominoDatabase = PentominoDatabase.data;
 
     public PentrisAI() {
-
         Thread ai = new Thread() {
             public void run() {
                 while (true) {
@@ -36,13 +35,10 @@ public class PentrisAI {
                     if (Pentris.getX() == bestX && Pentris.getRotation() == bestrotation) {
                         Pentris.dropPiece();
                     }
-
                 }
-
             }
         };
         ai.start();
-
     }
 
     public static Boolean PieceFit(int[][] grid, int PieceID, int Piecemutation, int x, int y) {
@@ -96,20 +92,16 @@ public class PentrisAI {
                 // System.out.println("dropped "+PieceY);
                 Search.addPiece(cloneGrid, pentominoDatabase[pieceID][rotation], rotation, PieceX, PieceY);
                 break;
-
             }
         }
         // clearing lines
-
         // TODO: hier moeten de lines worden weggehaald van die grid
 
         int height = calcHeight(cloneGrid);
         // code to check amount of lines cleared
         int holes = calcHoles(grid);
-
         int[] bla = { height, holes };
         return bla;
-
     }
 
     // this method removes a line from the grid
@@ -130,7 +122,6 @@ public class PentrisAI {
                     updatedGrid[i][gridLine] = grid[i][placeInGrid];
                     placeInGrid--;
                 }
-
             }
         }
         grid = updatedGrid;
@@ -147,7 +138,6 @@ public class PentrisAI {
         for (int i = 0; i < grid[0].length; i++) {
             for (int j = 0; j < 4; j++) {
                 heightAndHoles[i] = simulateDrop(grid, pieceID, j, i, 0);
-
             }
         }
 
@@ -164,15 +154,12 @@ public class PentrisAI {
                 bestX = i / 4;
                 bestRotation = i % 4;
             }
-
         }
         int[] best = { bestX, bestRotation };
-
         return best;
-
     }
 
-    public static int calcHoles(int[][] grid) {
+    public static int calcHoles(int[][] grid) { 
         int[][] cloneGrid = clone2Dint(grid);
 
         int holes = 0;

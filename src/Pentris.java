@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -141,11 +141,11 @@ public class Pentris {
         if (nextPieces.isEmpty()) {
     //-----------------------------------------------------
     // Scenario Normal:
-            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            // Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.shuffle(nextPieces);
     //-----------------------------------------------------
     // Scenario 1:
-            Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
@@ -193,11 +193,11 @@ public class Pentris {
         if (nextPieces.isEmpty()) {
     //-----------------------------------------------------
     // Scenario Normal:
-            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            // Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.shuffle(nextPieces);
     //-----------------------------------------------------
     // Scenario 1:
-    Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);

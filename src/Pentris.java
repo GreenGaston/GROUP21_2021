@@ -123,13 +123,57 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() { 
+    public static void nextPiece() {
+
+        // In this method there are multiple out-commented orders of the pentominos.
+        // Every order is shown as follows:
+        //------------------------------------------
+        // Scenario <Nr.>
+        // <Order Here>
+        //------------------------------------------
+        // Comment only one option in to use.
+        // MAKE SURE TO COMMENT THE SAME SCENARIO IN FOR BOTH EMPTYCHECKS AND REFILLS!!
+
+
         PieceX = StartX;
         PieceY = StartY;
         rotation = 0;
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
-           Collections.shuffle(nextPieces);
+    //-----------------------------------------------------
+    // Scenario Normal:
+            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            // Collections.shuffle(nextPieces);
+    //-----------------------------------------------------
+    // Scenario 1:
+            Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+    //-----------------------------------------------------
+    // Scenario 2:
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
+    //-----------------------------------------------------
+    // Scenario 3:
+            // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
+    //-----------------------------------------------------
+    // Scenario 4:
+            // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
+    //-----------------------------------------------------
+    // Scenario 5:
+            // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
+    //-----------------------------------------------------
+    // Scenario 6:
+            // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
+    //-----------------------------------------------------
+    // Scenario 7:
+            // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
+    //-----------------------------------------------------
+    // Scenario 8:
+            // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
+    //-----------------------------------------------------
+    // Scenario 9:
+            // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
+    //-----------------------------------------------------
+    // Scenario 10:
+            // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
+    //-----------------------------------------------------
         }
 
         // String teststring="";
@@ -142,10 +186,45 @@ public class Pentris {
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
+
+
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
-            Collections.shuffle(nextPieces);
+    //-----------------------------------------------------
+    // Scenario Normal:
+            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            // Collections.shuffle(nextPieces);
+    //-----------------------------------------------------
+    // Scenario 1:
+    Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+    //-----------------------------------------------------
+    // Scenario 2:
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
+    //-----------------------------------------------------
+    // Scenario 3:
+            // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
+    //-----------------------------------------------------
+    // Scenario 4:
+            // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
+    //-----------------------------------------------------
+    // Scenario 5:
+            // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
+    //-----------------------------------------------------
+    // Scenario 6:
+            // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
+    //-----------------------------------------------------
+    // Scenario 7:
+            // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
+    //-----------------------------------------------------
+    // Scenario 8:
+            // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
+    //-----------------------------------------------------
+    // Scenario 9:
+            // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
+    //-----------------------------------------------------
+    // Scenario 10:
+            // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
+    //-----------------------------------------------------
         }
 
         // System.out.println(nextPieces.get(0)+"testerino");

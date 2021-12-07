@@ -32,6 +32,7 @@ lieke:200
 test:200
 test:200
 e:200
+test:200
 Lianne:160
 bot3:160
 bot5:160

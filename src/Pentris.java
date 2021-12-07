@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -843,6 +843,8 @@ public class Pentris {
             }
             Lost = endMenu.getLost();
             ui.window.dispose();
+            score = 0;
+            nextPieces.clear();
         }
     }
 

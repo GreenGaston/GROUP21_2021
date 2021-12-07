@@ -35,6 +35,7 @@ Jeroen:40
 Jeroen:40
 jeroen:40
 test:40
+Gilles:40
 Loser:10
 test:0
 bot:0
@@ -69,3 +70,7 @@ lieke:0
 lieke:0
 Jeroen:0
 djjd:0
+lol:0
+lol:0
+lol:0
+s:0

@@ -3,13 +3,16 @@ test:860
 e:820
 GreenGaston:720
 Jeroen:700
+BOT:700
 test:620
 e:580
 Jeroen:540
 da:500
+BOT:500
 test:460
 Jeroen:440
 Jeroen:400
+BOT:400
 y:380
 bug:360
 yeet:360
@@ -49,6 +52,7 @@ tres:120
 TEST:120
 test:120
 bug:120
+BOT:120
 n:100
 null:80
 lieke:80

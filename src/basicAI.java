@@ -6,11 +6,11 @@ import java.util.Collections;
 
 public class basicAI {
     //public static int[][] testgrid = Pentris.grid;
-    public static int[][] testgrid = Pentris.grid;
+    public int[][] testgrid = Pentris.grid;
     public static int piececount = 0;
     public static ArrayList<Integer> heightofgridelements;
     public static ArrayList<Integer> amountofholes;
-    public static ArrayList<Integer> botmovements = new ArrayList<>();
+    public ArrayList<Integer> botmovements = new ArrayList<>();
     public static double high = 1000;
     public static double current;
     public static double a, b, c, d, e;
@@ -19,7 +19,7 @@ public class basicAI {
     public boolean runrobot;
 
 
-    public static ArrayList<Integer> getRobotMovements(){
+    public ArrayList<Integer> getRobotMovements(){
         a = 0.31006;        //height
         b = 0.45;           //amount of holes
         c = 0.38;           //the bumpiness
@@ -30,7 +30,7 @@ public class basicAI {
         return botmovements;
     }
 
-    public static ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
+    public ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
         ArrayList<Integer> clone = new ArrayList<>();
         for(int i =0; i < list.size(); i++){
             clone.add(list.get(i));
@@ -40,7 +40,7 @@ public class basicAI {
 
 
     ///make 2 list and add them to one and another
-    public static void robotMovements(){
+    public void robotMovements(){
         high = 10000;
         current = 0;
         //testgrid = test123;

@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -233,8 +233,8 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.drawString("NEXT PIECE", 20 + rightOfGrid, 25);
             localGraphics2D.drawString("TIMER", 20 + rightOfGrid, 167);
             localGraphics2D.drawString("HIGH SCORES", 20 + rightOfGrid, 313);
-            localGraphics2D.drawString("STORED PIECE", leftOfGrid - 200, 25);
-            localGraphics2D.drawString("CURRENT SCORE", leftOfGrid - 200, 167);
+            localGraphics2D.drawString("CURRENT SCORE", leftOfGrid - 200, 25);
+            localGraphics2D.drawString("STORED PIECE", leftOfGrid - 200, 167);
 
             if (lost) {
                 Image image = ImageIO.read(new File("gameover.jpg"));

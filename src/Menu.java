@@ -102,75 +102,75 @@ public class Menu implements ActionListener {
         // Labels for colorblind:
         colorblindmode = new JLabel("Colormode");
         colorblindmode.setFont(new Font(menuLetters, Font.BOLD, 16));
-        colorblindmode.setForeground(Color.WHITE);
+        colorblindmode.setForeground(Color.CYAN);
         colorblindmode.setLocation(20, 60);
         colorblindmode.setSize(100, 50);
 
         colon1 = new JLabel(":");
         colon1.setFont(new Font(menuLetters, Font.BOLD, 16));
-        colon1.setForeground(Color.WHITE);
+        colon1.setForeground(Color.CYAN);
         colon1.setLocation(150, 60);
         colon1.setSize(20, 50);
 
         // Labels for menu titel:
         menu = new JLabel("MENU");
         menu.setFont(new Font(menuLetters, Font.BOLD, 28));
-        menu.setForeground(Color.WHITE);
+        menu.setForeground(Color.CYAN);
         menu.setLocation(160, 5);
         menu.setSize(100, 50);
 
         // Labels for controls:
         controls = new JLabel("Controls");
         controls.setFont(new Font(menuLetters, Font.BOLD, 23));
-        controls.setForeground(Color.WHITE);
+        controls.setForeground(Color.CYAN);
         controls.setLocation(157, 105);
         controls.setSize(100, 50);
 
         esc = new JLabel("Esc");
         esc.setFont(new Font(menuLetters, Font.BOLD, 16));
-        esc.setForeground(Color.WHITE);
+        esc.setForeground(Color.CYAN);
         esc.setLocation(127, 130);
         esc.setSize(100, 50);
 
         left = new JLabel("Left");
         left.setFont(new Font(menuLetters, Font.BOLD, 16));
-        left.setForeground(Color.WHITE);
+        left.setForeground(Color.CYAN);
         left.setLocation(120, 155);
         left.setSize(100, 50);
 
         right = new JLabel("Right");
         right.setFont(new Font(menuLetters, Font.BOLD, 18));
-        right.setForeground(Color.WHITE);
+        right.setForeground(Color.CYAN);
         right.setLocation(110, 180);
         right.setSize(100, 50);
 
         down = new JLabel("Down");
         down.setFont(new Font(menuLetters, Font.BOLD, 16));
-        down.setForeground(Color.WHITE);
+        down.setForeground(Color.CYAN);
         down.setLocation(105, 205);
         down.setSize(100, 50);
 
         spacebar = new JLabel("Spacebar");
         spacebar.setFont(new Font(menuLetters, Font.BOLD, 16));
-        spacebar.setForeground(Color.WHITE);
+        spacebar.setForeground(Color.CYAN);
         spacebar.setLocation(77, 230);
         spacebar.setSize(100, 50);
 
         up_x = new JLabel("Up / X");
         up_x.setFont(new Font(menuLetters, Font.BOLD, 16));
-        up_x.setForeground(Color.WHITE);
+        up_x.setForeground(Color.CYAN);
         up_x.setLocation(98, 255);
         up_x.setSize(100, 50);
 
         z = new JLabel("Z");
         z.setFont(new Font(menuLetters, Font.BOLD, 16));
-        z.setForeground(Color.WHITE);
+        z.setForeground(Color.CYAN);
         z.setLocation(141, 280);
         z.setSize(100, 50);
 
         c = new JLabel("C");
         c.setFont(new Font(menuLetters, Font.BOLD, 16));
-        c.setForeground(Color.WHITE);
+        c.setForeground(Color.CYAN);
         c.setLocation(141, 305);
         c.setSize(100, 50);
 

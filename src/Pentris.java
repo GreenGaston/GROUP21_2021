@@ -1,4 +1,4 @@
-//package src;
+package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -69,6 +69,10 @@ public class Pentris {
     public static boolean showMenu = false;
     public static boolean paused = false;
     public static boolean addShadow = false;
+
+    public static boolean startPauseTimer;
+    public static long pauseStart;
+    public static long pauseEnd;
 
     // Keys used for playing pentris
     private static int left = KeyEvent.VK_LEFT;
@@ -609,10 +613,9 @@ public class Pentris {
             nextPiece();
             long startingTime = System.currentTimeMillis();
             long currentTime;
-            long pauseStart = 0;
-            long pauseEnd;
+            pauseStart = 0;
             pausingTime = 0;
-            boolean startPauseTimer = false;
+            startPauseTimer = false;
             gridclone = clone2Dint(grid);
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
@@ -637,6 +640,24 @@ public class Pentris {
                                     excecuter.delay(50);
                                 }
                                 Thread.sleep(1000);
+
+                                if (menu.getPaused()) {
+                                    startPauseTimer = true;
+                                    pauseStart = System.currentTimeMillis();
+                                }
+                                while (menu.getPaused()) {
+                                    Thread.sleep(100);
+                                }
+                                if (startPauseTimer) {
+                                    pauseEnd = System.currentTimeMillis();
+                                    startPauseTimer = false;
+                                    pausingTime += (pauseEnd - pauseStart);
+                                    // System.out.println(pauseEnd);
+                                    // System.out.println(pauseStart);
+                                    // System.out.println(pausingTime);
+                                }
+                                ui.setColorblind(menu.getIsColorblind());
+            
                             }
                         }catch(InterruptedException e){
 

@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -647,8 +647,7 @@ public class Pentris {
             if (width <= 6) {
                 StartX = 0;
             } else {
-                StartX = 0;
-                //StartX = width / 2 - 1;
+                StartX = width / 2 - 1;
             }
 
             PieceX = StartX;
@@ -709,6 +708,7 @@ public class Pentris {
 
 //TetrisAI-----------------------------------------------------------------------------------------------------------------------
             if (playBot){
+                StartX = 0;
                 Robot excecuter = new Robot();
                 basicAI ai = new basicAI();       
                 Thread tetrisbot = new Thread(){

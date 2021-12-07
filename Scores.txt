@@ -1,11 +1,17 @@
 Tom:5180
+BOT:1140
+BOT:1000
 test:860
+BOT:860
 e:820
 GreenGaston:720
 Jeroen:700
 BOT:700
+BOT:660
 test:620
+BOT:600
 e:580
+BOT:560
 Jeroen:540
 da:500
 BOT:500
@@ -16,6 +22,7 @@ BOT:400
 y:380
 bug:360
 yeet:360
+BOT:360
 bug:340
 test:320
 bug:260
@@ -23,6 +30,7 @@ Jeroen:240
 Jeroen:240
 bot4:240
 test:240
+BOT:240
 test:220
 Jeroen:220
 test:220
@@ -33,12 +41,14 @@ test:200
 test:200
 e:200
 test:200
+BOT:200
 Lianne:160
 bot3:160
 bot5:160
 okay:160
 e:160
 d:160
+BOT:160
 lieke:140
 test:140
 null:120
@@ -53,6 +63,7 @@ TEST:120
 test:120
 bug:120
 BOT:120
+TEST:120
 n:100
 null:80
 lieke:80

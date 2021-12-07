@@ -134,7 +134,6 @@ public class Pentris {
         // }
         // System.out.println(teststring);
 
-        // this is a surprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
@@ -279,7 +278,6 @@ public class Pentris {
                 break;
             }
         }
-
     }
 
     // this method removes a line from the grid
@@ -300,14 +298,12 @@ public class Pentris {
                     updatedGrid[i][gridLine] = grid[i][placeInGrid];
                     placeInGrid--;
                 }
-
             }
-        }
-        grid = updatedGrid;
+        } grid = updatedGrid;
     }
 
     // Method that checks if a line is full
-    public static void lineCheck() { //TODO: bugfixing: when last pentomino fills entire line, remove line and show menu
+    public static void lineCheck() { 
         int count = 0;
         int lines = 0;
 
@@ -423,7 +419,6 @@ public class Pentris {
                     // System.out.println("Game is paused and menu is shown");
                 }
             }
-
             gridclone = clone2Dint(grid);
             if (addShadow) {
                 addShadow(gridclone);
@@ -432,20 +427,17 @@ public class Pentris {
             ui.setState(gridclone);
             // playSound("beep.wav");
         }
-
     }
 
-    public static ArrayList<String> getHighscores() {
+    public static ArrayList<String> getHighscores() { // reads highscore file
         ArrayList<String> highscores = new ArrayList<String>();
         try {
-
             File myObj = new File("Scores.txt");
             Scanner myReader = new Scanner(myObj);
             String data;
             for (int i = 0; i < 5 && myReader.hasNextLine(); i++) {
                 data = myReader.nextLine();
                 highscores.add(data);
-
             }
             myReader.close();
         } catch (IOException e) {
@@ -706,7 +698,6 @@ public class Pentris {
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
                     file.add(data);
-
                     // System.out.println(data);
                 }
 
@@ -715,7 +706,6 @@ public class Pentris {
                 Boolean found = true;
                 for (int i = 0; i < file.size(); i++) {
                     // System.out.println(file.get(i));
-
                     if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
                         myWriter.write(scoreLine);
                         myWriter.write(file.get(i) + "\n");

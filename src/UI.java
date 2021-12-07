@@ -335,7 +335,6 @@ public class UI extends JPanel implements KeyListener {
                 state[i][j] = _state[i][j];
             }
         }
-
         // Tells the system a frame update is required
         repaint();
     }

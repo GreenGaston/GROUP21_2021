@@ -23,8 +23,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Pentris { // the main class for our PENTRIS game
-    // Is a Tetris game with falling pentominoes, with an AI playing the game added to it
-    
+    // Is a Tetris game with falling pentominoes, with an AI playing the game added
+    // to it
+
     public static int height = 0;
     public static int width = 0;
 
@@ -130,10 +131,10 @@ public class Pentris { // the main class for our PENTRIS game
 
         // In this method there are multiple out-commented orders of the pentominos.
         // Every order is shown as follows:
-        //------------------------------------------
+        // ------------------------------------------
         // Scenario <Nr.>
         // <Order Here>
-        //------------------------------------------
+        // ------------------------------------------
         // Comment only one option in to use.
         // MAKE SURE TO COMMENT THE SAME SCENARIO IN FOR BOTH EMPTYCHECKS AND REFILLS!!
 
@@ -141,41 +142,41 @@ public class Pentris { // the main class for our PENTRIS game
         PieceY = StartY;
         rotation = 0;
         if (nextPieces.isEmpty()) {
-    //-----------------------------------------------------
-    // Scenario Normal:
+            // -----------------------------------------------------
+            // Scenario Normal:
             // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             // Collections.shuffle(nextPieces);
-    //-----------------------------------------------------
-    // Scenario 1:
+            // -----------------------------------------------------
+            // Scenario 1:
             Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
-    //-----------------------------------------------------
-    // Scenario 2:
+            // -----------------------------------------------------
+            // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // String teststring="";
@@ -192,41 +193,41 @@ public class Pentris { // the main class for our PENTRIS game
 
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
-    //-----------------------------------------------------
-    // Scenario Normal:
+            // -----------------------------------------------------
+            // Scenario Normal:
             // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             // Collections.shuffle(nextPieces);
-    //-----------------------------------------------------
-    // Scenario 1:
-    Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
-    //-----------------------------------------------------
-    // Scenario 2:
+            // -----------------------------------------------------
+            // Scenario 1:
+            Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+            // -----------------------------------------------------
+            // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // System.out.println(nextPieces.get(0)+"testerino");
@@ -300,7 +301,6 @@ public class Pentris { // the main class for our PENTRIS game
         }
     }
 
-    
     public static long fallingAcceleration(long time) { // returns an increasingly small int for the amount
         // of second between piece drops
         int currentLevel = calculateLevel(time);
@@ -336,7 +336,8 @@ public class Pentris { // the main class for our PENTRIS game
             timeIndicate = 42;
         } else if (currentLevel >= 30) {
             timeIndicate = 21;
-        } return timeIndicate;
+        }
+        return timeIndicate;
     }
 
     public static int calculateLevel(long time) { // method that calculates the level on which the game is being played
@@ -359,8 +360,9 @@ public class Pentris { // the main class for our PENTRIS game
         }
 
     }
-// TODO: COMMENTING
-    public static void removeLine(int line) { //  method that removes a line from the grid
+
+    // TODO: COMMENTING
+    public static void removeLine(int line) { // method that removes a line from the grid
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
@@ -383,7 +385,7 @@ public class Pentris { // the main class for our PENTRIS game
         grid = updatedGrid;
     }
 
-    public static void lineCheck() {    // Method that checks if a line is full
+    public static void lineCheck() { // Method that checks if a line is full
         int count = 0;
         int lines = 0;
 
@@ -618,6 +620,7 @@ public class Pentris { // the main class for our PENTRIS game
     }
 
     public static ArrayList<Integer> botmovements;
+
     public static void main(String[] args) throws InterruptedException, AWTException {
         while (!Lost) {
             startMenu startMenu = new startMenu();
@@ -641,7 +644,7 @@ public class Pentris { // the main class for our PENTRIS game
                 StartX = 0;
             } else {
                 StartX = 0;
-                //StartX = width / 2 - 1;
+                // StartX = width / 2 - 1;
             }
 
             PieceX = StartX;
@@ -700,21 +703,21 @@ public class Pentris { // the main class for our PENTRIS game
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
-//TetrisAI-----------------------------------------------------------------------------------------------------------------------
-            if (playBot){
+            // TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            if (playBot) {
                 Robot excecuter = new Robot();
-                basicAI ai = new basicAI();       
-                Thread tetrisbot = new Thread(){
+                basicAI ai = new basicAI();
+                Thread tetrisbot = new Thread() {
 
-                    public void run(){
-                        try{
-                            while(!Lost){
+                    public void run() {
+                        try {
+                            while (!Lost) {
                                 ai.testgrid = grid;
                                 ai.getRobotMovements();
                                 ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                                //System.out.println("Inputted movements: " + ai.botmovements);
+                                // System.out.println("Inputted movements: " + ai.botmovements);
 
-                                for(int i = 0; i < movements.size(); i++){
+                                for (int i = 0; i < movements.size(); i++) {
                                     int current = movements.get(i);
                                     excecuter.keyPress(current);
                                     excecuter.delay(50);
@@ -737,17 +740,18 @@ public class Pentris { // the main class for our PENTRIS game
                                     // System.out.println(pausingTime);
                                 }
                                 ui.setColorblind(menu.getIsColorblind());
-            
+
                             }
-                        }catch(InterruptedException e){
+                        } catch (InterruptedException e) {
 
                         }
-                        
+
                     }
-                };tetrisbot.start();
+                };
+                tetrisbot.start();
             }
             startMenu.setPlayBot(false);
-//-------------------------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------------------------
 
             try {
                 while (!Lost) {

@@ -752,26 +752,25 @@ public class Pentris { // the main class for our PENTRIS game
             // PentrisAI ai=new PentrisAI();
 
 //TetrisAI-----------------------------------------------------------------------------------------------------------------------
-            if (playBot){
-                StartX = 0;
-                Robot excecuter = new Robot();
-                basicAI ai = new basicAI();
-                Thread tetrisbot = new Thread() {
+if (playBot){//if the bot is not selected in the menue, don't start the thread
+Robot excecuter = new Robot();
+basicAI ai = new basicAI();       
+Thread tetrisbot = new Thread(){
 
-                    public void run() {
-                        try {
-                            while (!Lost) {
-                                ai.testgrid = grid;
-                                ai.getRobotMovements();
-                                ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                                // System.out.println("Inputted movements: " + ai.botmovements);
-
-                                for (int i = 0; i < movements.size(); i++) {
-                                    int current = movements.get(i);
-                                    excecuter.keyPress(current);
-                                    excecuter.delay(50);
-                                }
-                                Thread.sleep(1000);
+    public void run(){
+                    try{
+                        while(!Lost){//while not lost the bot should keep playing
+                            ai.testgrid = grid; //updates the testgrid for the bot
+                            ai.getRobotMovements(); //recieves the movements the robot should do
+                            ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
+                        
+                            //excecutes the movements of the bot
+                            for(int i = 0; i < movements.size(); i++){
+                                int current = movements.get(i);
+                                excecuter.keyPress(current);
+                                excecuter.delay(50); //the bot should wait 50ms before excecuting the next move
+                            }
+                            Thread.sleep(800);
 
                                 if (menu.getPaused()) {
                                     startPauseTimer = true;
@@ -800,7 +799,7 @@ public class Pentris { // the main class for our PENTRIS game
                 tetrisbot.start();
             }
             startMenu.setPlayBot(false);
-            // -------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------
 
             // ------------------------------------------------------------------------------
             //main code of the game

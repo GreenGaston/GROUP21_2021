@@ -22,7 +22,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Pentris {
+public class Pentris { // the main class for our PENTRIS game
+    // Is a Tetris game with falling pentominoes, with an AI playing the game added to it
+    
     public static int height = 0;
     public static int width = 0;
 
@@ -123,7 +125,8 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() {
+    public static void nextPiece() { // method that decides the order in which the pentominoes will fall
+        // creates an arraylist with all pentominoes in the optimal order
 
         // In this method there are multiple out-commented orders of the pentominos.
         // Every order is shown as follows:
@@ -133,7 +136,6 @@ public class Pentris {
         //------------------------------------------
         // Comment only one option in to use.
         // MAKE SURE TO COMMENT THE SAME SCENARIO IN FOR BOTH EMPTYCHECKS AND REFILLS!!
-
 
         PieceX = StartX;
         PieceY = StartY;
@@ -187,7 +189,6 @@ public class Pentris {
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
-
 
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
@@ -274,7 +275,6 @@ public class Pentris {
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static void playSound(String path) {
@@ -289,8 +289,7 @@ public class Pentris {
         }
     }
 
-    // this method should make the piece fall by 1 if it can fall
-    public static void fallingPiece() {
+    public static void fallingPiece() { // method that makes the piece fall by 1 if it can fall
         if (PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
             PieceY += 1;
             // System.out.println("fell");
@@ -301,9 +300,9 @@ public class Pentris {
         }
     }
 
-    // Acceleration method, should return an increasingly small int for the amount
-    // of second between piece drops
-    public static long fallingAcceleration(long time) {
+    
+    public static long fallingAcceleration(long time) { // returns an increasingly small int for the amount
+        // of second between piece drops
         int currentLevel = calculateLevel(time);
         long timeIndicate = 0;
 
@@ -337,12 +336,10 @@ public class Pentris {
             timeIndicate = 42;
         } else if (currentLevel >= 30) {
             timeIndicate = 21;
-        }
-
-        return timeIndicate;
+        } return timeIndicate;
     }
 
-    public static int calculateLevel(long time) {
+    public static int calculateLevel(long time) { // method that calculates the level on which the game is being played
         int currentLevel = 0;
         currentLevel += (time / levelIncreasTimeFrame) + startingLevel;
         return currentLevel;
@@ -351,9 +348,7 @@ public class Pentris {
     public static void dropPiece() {
 
         for (int i = 1; i < 50; i++) {
-            // System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
-                // System.out.println("her");
 
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
@@ -364,9 +359,8 @@ public class Pentris {
         }
 
     }
-
-    // this method removes a line from the grid
-    public static void removeLine(int line) {
+// TODO: COMMENTING
+    public static void removeLine(int line) { //  method that removes a line from the grid
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
@@ -389,8 +383,7 @@ public class Pentris {
         grid = updatedGrid;
     }
 
-    // Method that checks if a line is full
-    public static void lineCheck() { //TODO: bugfixing: when last pentomino fills entire line, remove line and show menu
+    public static void lineCheck() {    // Method that checks if a line is full
         int count = 0;
         int lines = 0;
 

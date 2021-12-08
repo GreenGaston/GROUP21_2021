@@ -11,6 +11,7 @@ da:500
 BOT:500
 test:460
 Jeroen:440
+lianne:440
 Jeroen:400
 BOT:400
 y:380

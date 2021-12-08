@@ -361,8 +361,8 @@ public class Pentris { // the main class for our PENTRIS game
 
     }
 
-    // TODO: COMMENTING
-    public static void removeLine(int line) { // method that removes a line from the grid
+    
+    public static void removeLine(int line) { // method that removes a line from the grid 
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
@@ -513,6 +513,7 @@ public class Pentris { // the main class for our PENTRIS game
 
     }
 
+    // this method reads the file Scores.txt to get the highscores 
     public static ArrayList<String> getHighscores() {
         ArrayList<String> highscores = new ArrayList<String>();
         try {
@@ -533,15 +534,22 @@ public class Pentris { // the main class for our PENTRIS game
         return highscores;
     }
 
+
+    //this method places the piece on it current location 
     public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+        //select a next piece
         nextPiece();
+        //if that piece doesnt fit anymore you lost
         if (!PieceFit(grid, pieceID, rotation, StartY, StartX)) {
             Lost = true;
         }
+        //check for filled lines
         lineCheck();
     }
 
+
+    //method for cloning the grid
     public static int[][] clone2Dint(int[][] list) {
         int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
@@ -552,6 +560,8 @@ public class Pentris { // the main class for our PENTRIS game
         return clone;
     }
 
+
+    //this method adds a piece to a grid 
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
         for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
         {
@@ -566,10 +576,20 @@ public class Pentris { // the main class for our PENTRIS game
         }
     }
 
+
+    //this method get the time since you have been playing 
+    //the time is returned as a string in a 00:00 format
+    //where the first 2 numbers are minutes
+    //and the second 2 are seconds
     public static String getTime() {
+        //get time since playing
         int playtime = ((int) System.currentTimeMillis() / 1000) - beginning - ((int) pausingTime / 1000);
+        //get minutes
         int minutes = playtime / 60;
+        //get seconds
         int seconds = playtime % 60;
+        
+        //format it to 00:00
         if (minutes == 0 && seconds == 0) {
             return "00:00";
         }
@@ -592,6 +612,8 @@ public class Pentris { // the main class for our PENTRIS game
         }
     }
 
+
+    //this method adds a shadow under the current piece
     public static void addShadow(int[][] grid) {
         int[][] piece = pentominoDatabase[pieceID][rotation];
         for (int i = 1; i < 50; i++) {
@@ -603,18 +625,23 @@ public class Pentris { // the main class for our PENTRIS game
         }
     }
 
+
+    // method to get the grid
     public static int[][] getGrid() {
         return grid;
     }
 
+     // method to get the pieceid
     public static int getPieceID() {
         return pieceID;
     }
 
+     // method to get the rotation
     public static int getRotation() {
         return rotation;
     }
 
+     // method to get the x coordinate
     public static int getX() {
         return PieceX;
     }
@@ -622,13 +649,20 @@ public class Pentris { // the main class for our PENTRIS game
     public static ArrayList<Integer> botmovements;
 
     public static void main(String[] args) throws InterruptedException, AWTException {
+        //while you havent lost
         while (!Lost) {
+            //make a start menu
             startMenu startMenu = new startMenu();
 
+            //make it visible
             startMenu.setShowMenu(true);
+            //wait until it closes
             while (startMenu.getShowMenu()) {
                 Thread.sleep(100);
             }
+
+
+            //get set variables from the start menu
 
             name = startMenu.getName();
             gameLevel = startMenu.getLevel();
@@ -639,6 +673,7 @@ public class Pentris { // the main class for our PENTRIS game
             menu = new Menu(isColorblind);
             stopmusic = false;
 
+            //set the starting position
             StartY = 0;
             if (width <= 6) {
                 StartX = 0;
@@ -646,20 +681,27 @@ public class Pentris { // the main class for our PENTRIS game
                 StartX = width / 2 - 1;
             }
 
+            //set the current coordinates to the start position
             PieceX = StartX;
             PieceY = StartY;
+
+            //make a grid and clone it
             grid = new int[width][height];
             gridclone = clone2Dint(grid);
+            //set the starting level
             startingLevel = gameLevel;
 
+            //make the ui
             ui = new UI(width, height, 30, isColorblind);
 
+            //fill grid with -1 aka empty spaces
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[i].length; j++) {
                     grid[i][j] = -1;
                 }
             }
 
+            //thread for playing the main music
             Thread music = new Thread() {
                 @Override
                 public void run() {
@@ -687,18 +729,25 @@ public class Pentris { // the main class for our PENTRIS game
                         e.printStackTrace();
                     }
                 }
-                // this starts the thread
+                
             };
 
+            // this starts the thread
             music.start();
+            //variable to prevent movement before game has started
             Started = true;
+            //select the next piece
             nextPiece();
+            //get the starting time
             long startingTime = System.currentTimeMillis();
             long currentTime;
+            //variables for storing time in the pause menu
             pauseStart = 0;
             pausingTime = 0;
             startPauseTimer = false;
+            //clone the grid
             gridclone = clone2Dint(grid);
+            //get starting time in seconds
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
@@ -753,22 +802,37 @@ public class Pentris { // the main class for our PENTRIS game
             startMenu.setPlayBot(false);
             // -------------------------------------------------------------------------------------------------------------------------------
 
+            // ------------------------------------------------------------------------------
+            //main code of the game
             try {
+                //if you havent lost
                 while (!Lost) {
+                    //clone the grid
                     gridclone = clone2Dint(grid);
+                    //add a shadow if thats turned on
                     if (addShadow) {
                         addShadow(gridclone);
                     }
+                    //add the current piece to the clone
                     addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-                    // System.out.println("frame");
+                    
+                    //update the ui with new clonegrid
                     ui.setState(gridclone);
+                    //get the time and calculate playing time
                     currentTime = System.currentTimeMillis();
                     long playingTime = currentTime - startingTime;
+
+                    //make this thread wait based on falling acceleration
                     Thread.sleep(fallingAcceleration(playingTime - pausingTime));
 
+
+                    //make the piece fall 1 tile
                     fallingPiece();
+                    //check for filled lines
                     lineCheck();
 
+
+                    //if the menu is paused get the current time and wait untill its closed
                     if (menu.getPaused()) {
                         startPauseTimer = true;
                         pauseStart = System.currentTimeMillis();
@@ -776,40 +840,50 @@ public class Pentris { // the main class for our PENTRIS game
                     while (menu.getPaused()) {
                         Thread.sleep(100);
                     }
+                    //subtract the paused time from the timer
                     if (startPauseTimer) {
                         pauseEnd = System.currentTimeMillis();
                         startPauseTimer = false;
                         pausingTime += (pauseEnd - pauseStart);
-                        // System.out.println(pauseEnd);
-                        // System.out.println(pauseStart);
-                        // System.out.println(pausingTime);
+                        
                     }
+
+                    //set the colorblind mode for it could have been changed
                     ui.setColorblind(menu.getIsColorblind());
                 }
-                // System.out.println(score);
+                
             } catch (InterruptedException e) {
             }
-            // ui.setLost();
+        
+
+            //once youve lost stop the music and play a lost jingle
             stopmusic = true;
             playSound("Lost.wav");
 
+
+            //change ui 1 last time
             ui.setState(gridclone);
+
+            // make a String for Scores.txt to store your score
             String scoreLine = name + ":" + score + "\n";
             // this part of the code writes to scores.txt
             ArrayList<String> file = new ArrayList<String>();
             try {
+
+                //reads and stores every line of Scores.txt
                 File myObj = new File("Scores.txt");
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
                     file.add(data);
 
-                    // System.out.println(data);
+                    
                 }
 
                 myReader.close();
                 FileWriter myWriter = new FileWriter("Scores.txt");
                 Boolean found = true;
+                //this writes all scores back into the file while putting the current score in the right place
                 for (int i = 0; i < file.size(); i++) {
                     // System.out.println(file.get(i));
 
@@ -825,15 +899,16 @@ public class Pentris { // the main class for our PENTRIS game
                     myWriter.write(scoreLine);
                 }
                 myWriter.close();
-                // System.out.println("Successfully wrote to the file.");
+                
             } catch (IOException e) {
-                // System.out.println("An error occurred.");
+                System.out.println("An error occurred.");
                 e.printStackTrace();
             }
 
-            // System.out.println("check");
+            // make and show the end menu
             endMenu = new endMenu();
             endMenu.setLost(Lost);
+            //wait untill menu closes 
             while (endMenu.getLost()) {
                 endMenu.UI.setVisible(true);
                 Thread.sleep(100);
@@ -843,8 +918,5 @@ public class Pentris { // the main class for our PENTRIS game
             score = 0;
             nextPieces.clear();
         }
-    }
-
-    public static void moveHorizontal(boolean b) {
     }
 }

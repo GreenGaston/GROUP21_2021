@@ -19,19 +19,19 @@ import java.io.IOException;
 
 public class endMenu extends JFrame implements ActionListener {
     // public class SwingDemo extends javax.swing.JFrame {
-    //     Image background = Toolkit.getDefaultToolkit().getImage("background.png");
-    //     public SwingDemo() throws IOException {
-    //        this.setContentPane(new JPanel() {
-    //           @Override
-    //           public void paintComponent(Graphics g) {
-    //              super.paintComponent(g);
-    //              g.drawImage(background, 0, 0, null);
-    //           }
-    //        });
-    //        pack();
-    //        setVisible(true);
-    //     }
-    //  }
+    // Image background = Toolkit.getDefaultToolkit().getImage("background.png");
+    // public SwingDemo() throws IOException {
+    // this.setContentPane(new JPanel() {
+    // @Override
+    // public void paintComponent(Graphics g) {
+    // super.paintComponent(g);
+    // g.drawImage(background, 0, 0, null);
+    // }
+    // });
+    // pack();
+    // setVisible(true);
+    // }
+    // }
     JFrame UI;
     //////////////////////////////////////////
     JPanel menuPanel;
@@ -76,10 +76,10 @@ public class endMenu extends JFrame implements ActionListener {
     public static void main(String[] args) {
         new endMenu();
         // try {
-        //     new SwingDemo();
+        // new SwingDemo();
         // } catch (IOException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
         // }
     }
 

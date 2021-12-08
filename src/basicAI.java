@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class basicAI {
-    //public static int[][] testgrid = Pentris.grid;
+    // public static int[][] testgrid = Pentris.grid;
     public int[][] testgrid = Pentris.grid;
     public static int piececount = 0;
     public static ArrayList<Integer> heightofgridelements;
@@ -18,122 +18,121 @@ public class basicAI {
     public static int[][] pieceToPlace;
     public boolean runrobot;
 
-
-    public ArrayList<Integer> getRobotMovements(){
-        a = 0.31006;        //height
-        b = 0.45;           //amount of holes
-        c = 0.38;           //the bumpiness
-        d = 0.96;           //amount of lines cleared
-        e = 0.5;           //Highest vs lowest point
+    public ArrayList<Integer> getRobotMovements() {
+        a = 0.31006; // height
+        b = 0.45; // amount of holes
+        c = 0.38; // the bumpiness
+        d = 0.96; // amount of lines cleared
+        e = 0.5; // Highest vs lowest point
         piececount++;
         robotMovements();
         return botmovements;
     }
 
-    public ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
+    public ArrayList<Integer> cloneArrayList(ArrayList<Integer> list) {
         ArrayList<Integer> clone = new ArrayList<>();
-        for(int i =0; i < list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             clone.add(list.get(i));
         }
         return clone;
     }
 
-
-    ///make 2 list and add them to one and another
-    public void robotMovements(){
+    /// make 2 list and add them to one and another
+    public void robotMovements() {
         high = 10000;
         current = 0;
-        //testgrid = test123;
+        // testgrid = test123;
         botmovements = new ArrayList<>();
         int pieceID = Pentris.getPieceID();
-        //int pieceID = 9;
+        // int pieceID = 9;
         botmovements = new ArrayList<Integer>();
         int[][] testgridlocal = clone2Dint(Pentris.grid);
-       
+
         int bumpiness = 0;
-        int highmin =0;
-        int x = 0; 
+        int highmin = 0;
+        int x = 0;
         int y = 0;
         int k = 4;
         int xmovement = 0;
         k = 4;
-        for(int i = 3; i >= 0; i--){
-            
-            //System.out.println("X: " + x);
-           
+        for (int i = 3; i >= 0; i--) {
+
+            // System.out.println("X: " + x);
+
             k--;
             ArrayList<Integer> botmovementstest = new ArrayList<>();
-            for(int bmv = 0; bmv < i; bmv++){
+            for (int bmv = 0; bmv < i; bmv++) {
                 botmovementstest.add(KeyEvent.VK_UP);
             }
-           
-            for(int j =0; j < testgrid.length - Pentris.pentominoDatabase[pieceID][k].length + 1; j++){
-                //ArrayList<Integer> movementx = cloneArrayList(botmovementstest);
 
-                //simulating spacebar
+            for (int j = 0; j < testgrid.length - Pentris.pentominoDatabase[pieceID][k].length + 1; j++) {
+                // ArrayList<Integer> movementx = cloneArrayList(botmovementstest);
+
+                // simulating spacebar
                 testgridlocal = clone2Dint(testgrid);
                 pieceToPlace = Pentris.pentominoDatabase[pieceID][i];
                 dropPiece(testgridlocal, pieceToPlace, y, x);
                 heightofgridelements = cloneArrayList(checkHeight(testgridlocal));
                 highmin = Math.abs(Collections.max(heightofgridelements) - Collections.min(heightofgridelements));
-                
 
-                for(int bump = 0; bump < heightofgridelements.size() - 1; bump++){
-                    bumpiness += Math.abs(heightofgridelements.get(i) - heightofgridelements.get(i+1));
-                    //System.out.println("bump: " + bumpiness);
+                for (int bump = 0; bump < heightofgridelements.size() - 1; bump++) {
+                    bumpiness += Math.abs(heightofgridelements.get(i) - heightofgridelements.get(i + 1));
+                    // System.out.println("bump: " + bumpiness);
                 }
-                current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;///highmin * 
-               
-                
-                 //System.out.println();
-                if(current <= high){
+                current = sumOfArrayList(heightofgridelements) * a + calcHoles(testgridlocal) * b + bumpiness * c
+                        - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;/// highmin
+                                                                                                                 /// *
+
+                // System.out.println();
+                if (current <= high) {
                     botmovements = cloneArrayList(botmovementstest);
                     xmovement = x;
                     high = current;
 
-                    for(int l =0; l < j; l++){
+                    for (int l = 0; l < j; l++) {
                         botmovements.add(KeyEvent.VK_RIGHT);
                     }
-                //debugging part:
-                //  System.out.println("------------------------------------------------------------------");
-                //  System.out.println("Piece number: " + piececount);
-                //  System.out.println();
-                //  System.out.println("sum of height: " + sumOfArrayList(heightofgridelements));
-                //  System.out.println("Amount of hole: " + calcHoles(testgridlocal));
-                //  System.out.println("Lines cleared: " + lineCheck(testgridlocal));
-                //  System.out.println("The bumpiness: " + bumpiness);
-                //  System.out.println("The difference between maxmin: " + highmin);
-                //  System.out.println();
-                //  System.out.println("Current score: " + current + " highscore: " + high);
-                //  System.out.println("movement: " + botmovementstest);
-                //  System.out.println();
-                 //printGrid(testgridlocal);
+                    // debugging part:
+                    // System.out.println("------------------------------------------------------------------");
+                    // System.out.println("Piece number: " + piececount);
+                    // System.out.println();
+                    // System.out.println("sum of height: " + sumOfArrayList(heightofgridelements));
+                    // System.out.println("Amount of hole: " + calcHoles(testgridlocal));
+                    // System.out.println("Lines cleared: " + lineCheck(testgridlocal));
+                    // System.out.println("The bumpiness: " + bumpiness);
+                    // System.out.println("The difference between maxmin: " + highmin);
+                    // System.out.println();
+                    // System.out.println("Current score: " + current + " highscore: " + high);
+                    // System.out.println("movement: " + botmovementstest);
+                    // System.out.println();
+                    // printGrid(testgridlocal);
                 }
-                
-                bumpiness = 0;      
+
+                bumpiness = 0;
                 highmin = 0;
-                y = 0;   
+                y = 0;
                 x++;
 
             }
             x = 0;
-            
-            
-            //k = 4;
+
+            // k = 4;
         }
-        
+
         botmovements.add(KeyEvent.VK_SPACE);
         Pentris.botmovements = cloneArrayList(botmovements);
-        
+
     }
-    public static int sumOfArrayList(ArrayList<Integer> list){
+
+    public static int sumOfArrayList(ArrayList<Integer> list) {
         int sum = 0;
-        for(int i = 0; i < list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             sum += list.get(i);
         }
         return sum;
 
     }
+
     public static int[][] clone2Dint(int[][] list) {
         int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
@@ -143,11 +142,11 @@ public class basicAI {
         }
         return clone;
     }
-    
+
     public static void dropPiece(int[][] grid, int[][] piece, int PieceY, int PieceX) {
 
         for (int i = 1; i < 50; i++) {
-          
+
             if (!PieceFit(grid, piece, PieceY + i, PieceX)) {
                 PieceY += i - 1; // Piece has to be added on this Y position
                 addPiece(grid, piece, PieceX, PieceY);
@@ -202,97 +201,92 @@ public class basicAI {
             }
         }
     }
-    //checks height of field
-    public static ArrayList<Integer> checkHeight(int[][] grid){
+
+    // checks height of field
+    public static ArrayList<Integer> checkHeight(int[][] grid) {
         ArrayList<Integer> heightofgridelements1 = new ArrayList<Integer>();
         int top;
         boolean check;
-        for(int i = 0; i < grid.length; i++){
+        for (int i = 0; i < grid.length; i++) {
             top = 0;
             check = false;
-            inner:
-            for(int j =0; j < grid[i].length; j++){
-               if(grid[i][j] > -1){
+            inner: for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] > -1) {
                     heightofgridelements1.add(grid[i].length - top);
                     check = true;
                     break inner;
-               }
-               top++;
+                }
+                top++;
             }
-            if(check == false){
+            if (check == false) {
                 heightofgridelements1.add(0);
-            }          
+            }
         }
         return heightofgridelements1;
     }
-    
 
-
-    //debugging part to print out the grid 
-public static void printGrid(int[][] field){
-    for(int j = 0; j < field[0].length; j++){
-        for(int i = 0; i < field.length; i++){
-            if(i == 0){
-                System.out.print("|");
+    // debugging part to print out the grid
+    public static void printGrid(int[][] field) {
+        for (int j = 0; j < field[0].length; j++) {
+            for (int i = 0; i < field.length; i++) {
+                if (i == 0) {
+                    System.out.print("|");
+                }
+                if (field[i][j] == 0) {
+                    System.out.print("[ ]");
+                } else if (field[i][j] > -1) {
+                    System.out.print("[ ]");
+                } else {
+                    System.out.print("   ");
+                }
+                if (i == field.length - 1) {
+                    System.out.print("|");
+                }
             }
-            if(field[i][j] == 0){
-                System.out.print("[ ]");
-            }
-            else if(field[i][j] > -1){
-                System.out.print("[ ]");
-            }
-            else{
-                System.out.print("   ");
-            }
-            if(i == field.length - 1){
-                System.out.print("|");
-            }
+            System.out.println();
         }
         System.out.println();
     }
-    System.out.println();
-}
 
-public static int lineCheck(int[][] grid) {
-    int count = 0;
-    int lines = 0;
+    public static int lineCheck(int[][] grid) {
+        int count = 0;
+        int lines = 0;
 
+        for (int line = grid[0].length - 1; line >= 0; line--) {// loops through every line
+            for (int i = 0; i < grid.length; i++) {// loops through the width
+                if (grid[i][line] > -1) {// checks if every element in a line is > than -1 and thus filled
+                    count++;
+                }
+            }
+            if (count >= grid.length) {// if the count is equal to the grid[line] lenght then the line is full and
+                                       // needs to be removed.
+                count = 0;
+                lines++;
 
-    for (int line = grid[0].length - 1; line >= 0; line--) {// loops through every line
-        for (int i = 0; i < grid.length; i++) {// loops through the width
-            if (grid[i][line] > -1) {// checks if every element in a line is > than -1 and thus filled
-                count++;
+            } else {
+                count = 0;
             }
         }
-        if (count >= grid.length) {// if the count is equal to the grid[line] lenght then the line is full and
-                                   // needs to be removed.
-            count = 0;
-            lines++;
-
-        } else {
-            count = 0;
-        }
+        return lines;
     }
-    return lines;
-}
 
-public static int calcHoles(int[][] grid) {
-    int[][] cloneGrid = clone2Dint(grid);
+    public static int calcHoles(int[][] grid) {
+        int[][] cloneGrid = clone2Dint(grid);
 
-    int holes = 0;
-    boolean foundTop = false;
-    for (int i = 0; i < cloneGrid.length; i++) {
-        for (int j = 0; j < cloneGrid[0].length; j++) {
-            if (cloneGrid[i][j] > -1) {
-                foundTop = true;
+        int holes = 0;
+        boolean foundTop = false;
+        for (int i = 0; i < cloneGrid.length; i++) {
+            for (int j = 0; j < cloneGrid[0].length; j++) {
+                if (cloneGrid[i][j] > -1) {
+                    foundTop = true;
+                }
+                if (foundTop && cloneGrid[i][j] == -1) {
+                    holes++;
+
+                }
             }
-            if (foundTop && cloneGrid[i][j] == -1) {
-                holes++;
-
-            }
+            foundTop = false;
         }
-        foundTop = false;
+        return holes;
     }
-    return holes;
-}
 }

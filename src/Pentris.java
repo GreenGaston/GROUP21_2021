@@ -22,7 +22,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Pentris {
+public class Pentris { // the main class for our PENTRIS game
+    // Is a Tetris game with falling pentominoes, with an AI playing the game added
+    // to it
+
     public static int height = 0;
     public static int width = 0;
 
@@ -123,17 +126,17 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() {
+    public static void nextPiece() { // method that decides the order in which the pentominoes will fall
+        // creates an arraylist with all pentominoes in the optimal order
 
         // In this method there are multiple out-commented orders of the pentominos.
         // Every order is shown as follows:
-        //------------------------------------------
+        // ------------------------------------------
         // Scenario <Nr.>
         // <Order Here>
-        //------------------------------------------
+        // ------------------------------------------
         // Comment only one option in to use.
         // MAKE SURE TO COMMENT THE SAME SCENARIO IN FOR BOTH EMPTYCHECKS AND REFILLS!!
-
 
         PieceX = StartX;
         PieceY = StartY;
@@ -149,31 +152,31 @@ public class Pentris {
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // String teststring="";
@@ -188,7 +191,6 @@ public class Pentris {
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
 
-
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
     //-----------------------------------------------------
@@ -201,31 +203,31 @@ public class Pentris {
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // System.out.println(nextPieces.get(0)+"testerino");
@@ -274,7 +276,6 @@ public class Pentris {
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static void playSound(String path) {
@@ -289,8 +290,7 @@ public class Pentris {
         }
     }
 
-    // this method should make the piece fall by 1 if it can fall
-    public static void fallingPiece() {
+    public static void fallingPiece() { // method that makes the piece fall by 1 if it can fall
         if (PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
             PieceY += 1;
             // System.out.println("fell");
@@ -301,9 +301,8 @@ public class Pentris {
         }
     }
 
-    // Acceleration method, should return an increasingly small int for the amount
-    // of second between piece drops
-    public static long fallingAcceleration(long time) {
+    public static long fallingAcceleration(long time) { // returns an increasingly small int for the amount
+        // of second between piece drops
         int currentLevel = calculateLevel(time);
         long timeIndicate = 0;
 
@@ -338,11 +337,10 @@ public class Pentris {
         } else if (currentLevel >= 30) {
             timeIndicate = 21;
         }
-
         return timeIndicate;
     }
 
-    public static int calculateLevel(long time) {
+    public static int calculateLevel(long time) { // method that calculates the level on which the game is being played
         int currentLevel = 0;
         currentLevel += (time / levelIncreasTimeFrame) + startingLevel;
         return currentLevel;
@@ -351,9 +349,7 @@ public class Pentris {
     public static void dropPiece() {
 
         for (int i = 1; i < 50; i++) {
-            // System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
-                // System.out.println("her");
 
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
@@ -365,8 +361,8 @@ public class Pentris {
 
     }
 
-    // this method removes a line from the grid
-    public static void removeLine(int line) {
+    // TODO: COMMENTING
+    public static void removeLine(int line) { // method that removes a line from the grid
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
@@ -389,8 +385,7 @@ public class Pentris {
         grid = updatedGrid;
     }
 
-    // Method that checks if a line is full
-    public static void lineCheck() { //TODO: bugfixing: when last pentomino fills entire line, remove line and show menu
+    public static void lineCheck() { // Method that checks if a line is full
         int count = 0;
         int lines = 0;
 
@@ -625,6 +620,7 @@ public class Pentris {
     }
 
     public static ArrayList<Integer> botmovements;
+
     public static void main(String[] args) throws InterruptedException, AWTException {
         while (!Lost) {
             startMenu startMenu = new startMenu();
@@ -710,18 +706,18 @@ public class Pentris {
             if (playBot){
                 StartX = 0;
                 Robot excecuter = new Robot();
-                basicAI ai = new basicAI();       
-                Thread tetrisbot = new Thread(){
+                basicAI ai = new basicAI();
+                Thread tetrisbot = new Thread() {
 
-                    public void run(){
-                        try{
-                            while(!Lost){
+                    public void run() {
+                        try {
+                            while (!Lost) {
                                 ai.testgrid = grid;
                                 ai.getRobotMovements();
                                 ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                                //System.out.println("Inputted movements: " + ai.botmovements);
+                                // System.out.println("Inputted movements: " + ai.botmovements);
 
-                                for(int i = 0; i < movements.size(); i++){
+                                for (int i = 0; i < movements.size(); i++) {
                                     int current = movements.get(i);
                                     excecuter.keyPress(current);
                                     excecuter.delay(50);
@@ -744,17 +740,18 @@ public class Pentris {
                                     // System.out.println(pausingTime);
                                 }
                                 ui.setColorblind(menu.getIsColorblind());
-            
+
                             }
-                        }catch(InterruptedException e){
+                        } catch (InterruptedException e) {
 
                         }
-                        
+
                     }
-                };tetrisbot.start();
+                };
+                tetrisbot.start();
             }
             startMenu.setPlayBot(false);
-//-------------------------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------------------------
 
             try {
                 while (!Lost) {

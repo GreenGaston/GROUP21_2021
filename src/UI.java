@@ -73,27 +73,29 @@ public class UI extends JPanel implements KeyListener {
      * @param y     y position of the GUI
      * @param _size size of the GUI
      */
-    public UI(int x, int y, int _size, Boolean Colorblind) {
+    public UI(int x, int y, int _size, Boolean Colorblind) { // create a JPanel for which we set the size and make two
+                                                             // integers
         // JPanel gamePanel = new JPanel();
         // gamePanel.add(this);
 
         globalX = x;
         globalY = y;
         size = _size;
-        this.colorBlind = Colorblind;
-        moveGridRight = leftOfGrid;
+        this.colorBlind = Colorblind; // use a different panel for the colorBlind version
+        moveGridRight = leftOfGrid; // make two integers called leftOfGrid and rightOfGrid, this is a bugfix to
+                                    // ensure that the panels resize when the gridsize changes
         rightOfGrid = leftOfGrid + size * x;
-        setPreferredSize(new Dimension(leftOfGrid + 200 + x * size + 85, y * size + 145));
-        window = new JFrame("PENTRIS");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
-        window.setMinimumSize(new Dimension(500, 500));
-        window.add(this, BorderLayout.CENTER);
+        setPreferredSize(new Dimension(leftOfGrid + 200 + x * size + 85, y * size + 145)); // settings of the window:
+        window = new JFrame("PENTRIS"); // name
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // exit when press close
+        window.setResizable(true); // make it resizable
+        window.setMinimumSize(new Dimension(500, 500)); // size of the window
+        window.add(this, BorderLayout.CENTER); // layout of the window
         window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-        window.addKeyListener(this);
-        window.setBackground(Color.BLACK);
+        window.setLocationRelativeTo(null); // set to middle of the screen
+        window.setVisible(true); // make visible
+        window.addKeyListener(this); // code reacts to pressing the buttons
+        window.setBackground(Color.BLACK); // background color is black
 
         state = new int[x][y];
         for (int i = 0; i < state.length; i++) {
@@ -113,7 +115,7 @@ public class UI extends JPanel implements KeyListener {
      * This function is called BY THE SYSTEM if required for a new frame, uses the
      * state stored by the UI class.
      */
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) { // method that adds all images and texts
         try {
             Graphics2D localGraphics2D = (Graphics2D) g;
             localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -141,7 +143,7 @@ public class UI extends JPanel implements KeyListener {
             if (size - 10 > 0) {
                 miniSize = size - 10;
             }
-   
+
             // draw highscores
             Font smallFont = new Font("Nidus Sans", Font.BOLD, 15);
             localGraphics2D.setFont(smallFont);
@@ -185,9 +187,6 @@ public class UI extends JPanel implements KeyListener {
                     state.length * size + 3 + leftOfGrid - 1, state[0].length * size + 2);
             localGraphics2D.setColor(Color.WHITE);
 
-            // localGraphics2D.drawRect(leftOfGrid-1, -1, state.length * size +2
-            // ,state[0].length * size +2);
-
             // draw blocks
             for (int i = 0; i < state.length; i++) {
                 for (int j = 0; j < state[0].length; j++) {
@@ -226,7 +225,7 @@ public class UI extends JPanel implements KeyListener {
                 }
             }
 
-            // draw string for the menu's
+            // draw strings for the menu's
             Font myFont = new Font("Nidus Sans", Font.BOLD, 20);
             localGraphics2D.setFont(myFont);
             localGraphics2D.setColor(Color.CYAN);
@@ -236,14 +235,14 @@ public class UI extends JPanel implements KeyListener {
             localGraphics2D.drawString("CURRENT SCORE", leftOfGrid - 200, 25);
             localGraphics2D.drawString("STORED PIECE", leftOfGrid - 200, 167);
 
-            if (lost) {
+            if (lost) { // show the gameover picture
                 Image image = ImageIO.read(new File("gameover.jpg"));
                 image = image.getScaledInstance(leftOfGrid + globalX * size + 260, globalY * size + 100,
                         Image.SCALE_DEFAULT);
                 localGraphics2D.drawImage(image, -50, -150, null);
                 // System.out.println("LOSER");
             }
-        } catch (IOException e) {
+        } catch (IOException e) { // catch the error if operation fails
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -256,7 +255,7 @@ public class UI extends JPanel implements KeyListener {
      * @return the color to represent the pentomino. It uses the class Color (more
      *         in ICS2 course in Period 2)
      */
-    private Color GetColorOfID(int i) {
+    private Color GetColorOfID(int i) { // create the colorblind colors
         if (!colorBlind) {
             if (i == 0) {
                 return Color.MAGENTA.brighter();
@@ -287,7 +286,7 @@ public class UI extends JPanel implements KeyListener {
             } else {
                 return Color.BLACK;
             }
-        } else {
+        } else { // create the colors for the normal mode
             if (i == 0) {
                 return Color.decode("#ff0000");
             } else if (i == 1) {
@@ -335,18 +334,17 @@ public class UI extends JPanel implements KeyListener {
                 state[i][j] = _state[i][j];
             }
         }
-
-        // Tells the system a frame update is required
-        repaint();
+        repaint(); // Tells the system a frame update is required
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) { // empty method required by interface
     }
 
     public void keyPressed(KeyEvent e) {
-        Pentris.keypadMethod(e);
+        Pentris.keypadMethod(e); // call the keypadmethod which we made in the main,this method should update its
+                                 // location and rotation based on keypad inputs
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) { // empty method required by interface
     }
 }

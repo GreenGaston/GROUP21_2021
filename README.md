@@ -11,19 +11,6 @@
         - Type this with capital letters and without anything in between.
     - You will also be asked to put in a grid size, the x and y respectively.
 
-<<<<<<< HEAD
-# haha change this again 
-=======
-<<<<<<< HEAD
-# This is a test!
-=======
-<<<<<<< HEAD
-# Samanta's test (:
-=======
-# This is a test.
-# TestLianne
-
-
->>>>>>> 1ae07b7e111cae2c1ca5410e397fbcba286dd320
->>>>>>> 1510b743176fea51ad57d94df3d0920a72b68145
->>>>>>> 9e9fdb2bca2650ea02c6d1ed85afd4d4d6c96d26
+# phase 2
+    to start the program of phase 2 
+    please open pentris.java

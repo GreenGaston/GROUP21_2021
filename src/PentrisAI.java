@@ -159,7 +159,7 @@ public class PentrisAI {
         return best;
     }
 
-    public static int calcHoles(int[][] grid) { 
+    public static int calcHoles(int[][] grid) {
         int[][] cloneGrid = clone2Dint(grid);
 
         int holes = 0;

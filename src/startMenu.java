@@ -399,7 +399,7 @@ public class startMenu implements ActionListener, MouseListener {
             inputName.setText("Enter your name!");
         }
 
-        if (e.getSource() == startBot){
+        if (e.getSource() == startBot) {
             playerName = "BOT";
             showMenu = false;
             playBot = true;
@@ -440,11 +440,11 @@ public class startMenu implements ActionListener, MouseListener {
     public int getGridsizeY() {
         return intSizeY;
     }
-    
+
     public boolean getPlayBot() {
         return playBot;
     }
-    
+
     public void setPlayBot(boolean b) {
         playBot = b;
     }

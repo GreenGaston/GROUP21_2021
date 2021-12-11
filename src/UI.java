@@ -1,4 +1,4 @@
-// package src;
+//package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -141,14 +141,22 @@ public class UI extends JPanel implements KeyListener {
             if (size - 10 > 0) {
                 miniSize = size - 10;
             }
+   
             // draw highscores
             Font smallFont = new Font("Nidus Sans", Font.BOLD, 15);
             localGraphics2D.setFont(smallFont);
             ArrayList<String> highscores = Pentris.getHighscores();
             for (int i = 0; i < highscores.size(); i++) {
                 localGraphics2D.drawString(highscores.get(i), 50 + rightOfGrid, 350 + 15 * i);
-
             }
+
+            // draw current score
+            Font smallFont3 = new Font("Nidus Sans", Font.BOLD, 40);
+            localGraphics2D.setFont(smallFont3);
+            int score = Pentris.getScore();
+            String showScore = Integer.toString(score);
+            localGraphics2D.drawString(showScore, leftOfGrid - 139, 100);
+
             // draw timer:
             Font smallFont2 = new Font("Nidus Sans", Font.BOLD, 35);
             localGraphics2D.setFont(smallFont2);
@@ -195,17 +203,19 @@ public class UI extends JPanel implements KeyListener {
                 }
             }
             // draw holdpiece
+            localGraphics2D.translate(15, 180);
             for (int i = 0; i < holdPiece.length; i++) {
                 for (int j = 0; j < holdPiece[0].length; j++) {
                     if (holdPiece[i][j] > 0) {
                         localGraphics2D.setColor(holdColor);
-                        localGraphics2D.fill(new Rectangle2D.Double(i * miniSize + 10, j * miniSize + 70, miniSize - 1,
-                                miniSize - 1));
-
+                        localGraphics2D.fill(new Rectangle2D.Double(i * miniSize * 1.5 + 15, j * miniSize * 1.5 + 105,
+                                miniSize * 1.5 - 1.5,
+                                miniSize * 1.5 - 1.5));
                     }
                 }
             }
             // draw nextpiece
+            localGraphics2D.translate(-15, -180);
             for (int i = 0; i < nextPiece.length; i++) {
                 for (int j = 0; j < nextPiece[0].length; j++) {
                     if (nextPiece[i][j] > 0) {
@@ -237,7 +247,6 @@ public class UI extends JPanel implements KeyListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -258,7 +267,7 @@ public class UI extends JPanel implements KeyListener {
             } else if (i == 3) {
                 return Color.GREEN;
             } else if (i == 4) {
-                return Color.MAGENTA;
+                return Color.RED.darker();
             } else if (i == 5) {
                 return Color.PINK;
             } else if (i == 6) {

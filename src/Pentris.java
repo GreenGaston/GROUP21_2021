@@ -1,4 +1,4 @@
-// package src;
+//package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.awt.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
@@ -118,13 +119,13 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() {
+    public static void nextPiece() { 
         PieceX = StartX;
         PieceY = StartY;
         rotation = 0;
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
+           Collections.shuffle(nextPieces);
         }
 
         // String teststring="";
@@ -133,14 +134,14 @@ public class Pentris {
         // }
         // System.out.println(teststring);
 
-        // this is a suprise code for later!
+        // this is a surprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
-            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.addAll(nextPieces, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1);
             Collections.shuffle(nextPieces);
         }
 
@@ -305,8 +306,8 @@ public class Pentris {
         grid = updatedGrid;
     }
 
-    // this method should check if a line is full
-    public static void lineCheck() {
+    // Method that checks if a line is full
+    public static void lineCheck() { //TODO: bugfixing: when last pentomino fills entire line, remove line and show menu
         int count = 0;
         int lines = 0;
 
@@ -318,12 +319,10 @@ public class Pentris {
             }
             if (count >= grid.length) {// if the count is equal to the grid[line] lenght then the line is full and
                                        // needs to be removed.
-                count = 0;
-
                 removeLine(line);
+                count = 0;
                 line++;// Everything moved down 1 line, so the check has to move down 1 as well
                 lines++;
-
             } else {
                 count = 0;
             }
@@ -333,7 +332,10 @@ public class Pentris {
         }
         score = score + (scaling[lines] * level);
         // System.out.println(score);
+    }
 
+    public static int getScore() { // returns the score so that we can show it in the GUI
+        return score;
     }
 
     // this function evaluated if a piece can be placed on a give grid at a certain
@@ -539,7 +541,8 @@ public class Pentris {
         return PieceX;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static ArrayList<Integer> botmovements;
+    public static void main(String[] args) throws InterruptedException, AWTException {
         while (!Lost) {
             startMenu startMenu = new startMenu();
 
@@ -553,13 +556,16 @@ public class Pentris {
             height = startMenu.getGridsizeY();
             width = startMenu.getGridsizeX();
             isColorblind = startMenu.getIsColorblind();
+            boolean playBot = startMenu.getPlayBot();
             menu = new Menu(isColorblind);
+            stopmusic = false;
 
             StartY = 0;
             if (width <= 6) {
                 StartX = 0;
             } else {
-                StartX = width / 2 - 1;
+                StartX = 0;
+                //StartX = width / 2 - 1;
             }
 
             PieceX = StartX;
@@ -618,6 +624,37 @@ public class Pentris {
             gridclone = clone2Dint(grid);
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
+
+//TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            if (playBot){
+                Robot excecuter = new Robot();
+                basicAI ai = new basicAI();       
+                Thread tetrisbot = new Thread(){
+
+                    public void run(){
+                        try{
+                            while(!Lost){
+                                ai.testgrid = grid;
+                                ai.getRobotMovements();
+                                ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
+                                //System.out.println("Inputted movements: " + ai.botmovements);
+
+                                for(int i = 0; i < movements.size(); i++){
+                                    int current = movements.get(i);
+                                    excecuter.keyPress(current);
+                                    excecuter.delay(50);
+                                }
+                                Thread.sleep(1000);
+                            }
+                        }catch(InterruptedException e){
+
+                        }
+                        
+                    }
+                };tetrisbot.start();
+            }
+            startMenu.setPlayBot(false);
+//-------------------------------------------------------------------------------------------------------------------------------
 
             try {
                 while (!Lost) {

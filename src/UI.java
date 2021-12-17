@@ -1,4 +1,4 @@
-//package src;
+// package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -28,8 +28,6 @@ public class UI extends JPanel implements KeyListener {
 
     private int[][] state;
     private int size;
-    private final int SquareX = 10;
-    private final int SquareY = 1;
     private final int Width = 3;
     private int[][] holdPiece = new int[5][5];
     private Color holdColor = Color.black;
@@ -38,15 +36,12 @@ public class UI extends JPanel implements KeyListener {
 
     private Boolean colorBlind;
 
-    private long playingTime;
-
     private int[][] nextPiece = new int[5][5];
     private Color nextColor = Color.black;
     public int rightOfGrid;
     public int moveGridRight = 100;
     public int leftOfGrid = 200;
     private int miniSize = 1;
-    private boolean gamelost = false;
 
     public void setHoldPiece(int[][] piece, int pieceid) {
         holdPiece = piece;
@@ -243,7 +238,6 @@ public class UI extends JPanel implements KeyListener {
                 // System.out.println("LOSER");
             }
         } catch (IOException e) { // catch the error if operation fails
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -91,6 +91,7 @@ public class Pentris { // the main class for our PENTRIS game
     public static boolean holdCharge = true;
     public static int score = 0;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
+    //public static int[] scaling={0,1,2,3,4,5};
     public static int beginning = (int) System.currentTimeMillis() / 1000;
     public static long pausingTime;
     public static boolean stopmusic = false;
@@ -881,22 +882,13 @@ public class Pentris { // the main class for our PENTRIS game
                 }
 
                 myReader.close();
-                FileWriter myWriter = new FileWriter("Scores.txt");
-                Boolean found = true;
-                //this writes all scores back into the file while putting the current score in the right place
-                for (int i = 0; i < file.size(); i++) {
-                    // System.out.println(file.get(i));
 
-                    if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
-                        myWriter.write(scoreLine);
-                        myWriter.write(file.get(i) + "\n");
-                        found = false;
-                    } else {
-                        myWriter.write(file.get(i) + "\n");
-                    }
-                }
-                if (found) {
-                    myWriter.write(scoreLine);
+                
+                FileWriter myWriter = new FileWriter("Scores.txt");
+                //this writes all scores back into the file while putting the current score in the right place
+                for (int i = 0; i < file.size(); i++) {    
+                    myWriter.write(file.get(i) + "\n");
+            
                 }
                 myWriter.close();
                 

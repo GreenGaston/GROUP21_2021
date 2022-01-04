@@ -193,6 +193,9 @@ public class UI extends JPanel implements KeyListener {
                     localGraphics2D.setColor(GetColorOfID(state[i][j]));
                     localGraphics2D.fill(
                             new Rectangle2D.Double(i * size + 1 + moveGridRight, j * size + 1, size - 1, size - 1));
+
+
+                            
                     localGraphics2D.setColor(GetColorOfID(state[i][j]).darker().darker());
                     localGraphics2D.fill(new Rectangle2D.Double(i * size + 1 + moveGridRight, j * size + (size * 3 / 4),
                             size - 1, size - (size * 3 / 4)));

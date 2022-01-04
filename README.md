@@ -12,9 +12,4 @@
     - You will also be asked to put in a grid size, the x and y respectively.
 
 # phase 2
-<<<<<<< HEAD
 to play the tetris/pentris game please open pentris.java
-=======
-    to start the program of phase 2 
-    please open pentris.java
->>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de

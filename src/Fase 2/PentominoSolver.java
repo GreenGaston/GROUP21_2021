@@ -1,125 +1,82 @@
 // package src;
 
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.*;
-import java.util.stream.Stream;
-import java.util.stream.IntStream;
 
-import java.util.List;
-
-
-
-public class PentominoSolver3D {
-    public static int[][][] answerGrid;
+public class PentominoSolver {
+    public static int[][] answerGrid;
     public static UI ui;
-    public static String[] combinations= new String[100];//parcels
-    public static String[] pentCombinations= new String[136];
+
     public static void main(String[] args) {
-        
-        // Scanner scanner=new Scanner(System.in);
+        int UIsize = 25;
 
-        // System.out.print("Type in your choice for the length of the x-axes: ");
-        // int Width = scanner.nextInt();
-        // System.out.print("Type in your choice for the length of the y-axes: ");
-        // int Height = scanner.nextInt();
-        // System.out.print("Type in your choice for the length of the z-axes: ");
-        //int Depth = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
 
-        int totalVolume=34*5*4;
+        System.out.println("What characters do you want to fill the grid with?");
+        System.out.println("You can choose from the following letters:\nF, I, L, N, P, T, U, V, W, X, Y, Z.");
+        System.out.println("Type in all your characters in CAPITAL LETTERS and as a word.");
+        System.out.print("Your choice of characters is: ");
+        String stringOfChars = scanner.nextLine();
+        char[] input = stringOfChars.toCharArray();
 
-        if(totalVolume%5!=0){
-             System.out.println("imposible dimensions");
-             return;
-         }
+        // Input optimization
+        input = Optimise(input);
 
-        // findCombinations(totalVolume, "");
-        // System.out.println("found all combinations");
-        int[][][] grid=new int[34][5][4];
+        int[] tempListIDs = ChartoPieceID(input);
+        System.out.println("You have chosen for " + tempListIDs.length + " pieces.");
+        // // Print out pieceIDs of the player's choice. For testing purposes.
+        // for (int i = 0; i < tempListIDs.length; i++){
+        // if (i == tempListIDs.length-1){
+        // System.out.println(tempListIDs[i]+".");
+        // }else{
+        // System.out.print(tempListIDs[i]+",");
+        // }
+        // }
 
-
-        findPentCombinations(totalVolume, "");
-        System.out.println("found all combinations");
-        char[] testlist={'P'};
-        SolvePentomino3D(grid, pieceIDs, depth);
-        
-
-        int[] pieceIDs;
-        for(int i=0;i<combinations.length;i++){
-            
-            pieceIDs=ChartoPieceID(StringTochar(combinations[i]));
-            if(SolvePentomino3D(grid, pieceIDs, pieceIDs.length)){
-
-                
-                break;
-            };
+        System.out.println();
+        System.out.println("What sizes do you want the grid to be?");
+        System.out.print("Type in your choice for the length of the x-axes: ");
+        int Width = scanner.nextInt();
+        System.out.print("Type in your choice for the length of the y-axes: ");
+        int Height = scanner.nextInt();
+        System.out.println("You have chosen for a grid of " + Width + " by " + Height + ".");
+        System.out.println();
+        int tempHeightWidth;
+        if (Height > Width) {
+            tempHeightWidth = Height;
+            Height = Width;
+            Width = tempHeightWidth;
         }
 
+        ui = new UI(Width, Height, UIsize, false);
 
-
-
-        char[] chara1={'P','P','T','I','I','I','P','P','T'};
-        int[] chara=ChartoPieceID(chara1);
-
-        
-       
-    }
-
-
-    public static char[] StringTochar(String jargon){
-        char[] list=new char[jargon.length()];
-        for(int i=0;i<jargon.length();i++){
-            list[i]=jargon.charAt(i);
-        }
-        return list;
-
-    }
-
-    public static void findPentCombinations(int Volume, String combination){
-        if(Volume==0){
-            for(int i=0;i<pentCombinations.length;i++){
-                if(pentCombinations[i]==""){
-                    pentCombinations[i]=combination;
-                    return;
-                }
+        // make an empty grid
+        int[][] grid = new int[Width][Height];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = -1;
             }
         }
-        findCombinations(Volume-5, combination+"T");
-        findCombinations(Volume-5, combination+"P");
-        findCombinations(Volume-5, combination+"L");
-    }
-    public static void findCombinations(int Volume,String combination){
-        
-        if(Volume==0){
-            for(int i=0;i<combinations.length;i++){
-                if(combinations[i]==""){
-                    combinations[i]=combination;
-                    return;
-                }
-            }
-        }
-        if(Volume-16>=0){
-            findCombinations(Volume-16, combination+"A");
-        }
-        if(Volume-24>=0){
-            findCombinations(Volume-24, combination+"B");
-        }
-        if(Volume-29>=0){
-            findCombinations(Volume-29, combination+"B");
-        }
-        
 
-    }
+        int[] pieceIDs = tempListIDs;
 
-    public static void fillNegative(int[][][] grid){
-        for(int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[0].length;j++){
-                for(int k=0;k<grid[0][0].length;k++){
-                    grid[i][j][k]=-1;
-                }
+        // Check if enough pieces are given to fill the grid
+        if (pieceIDs.length * 5 >= Width * Height) {
+            long Beginning = System.currentTimeMillis();
+            if (SolvePentomino(grid, pieceIDs, pieceIDs.length)) {
+                ui.setState(answerGrid);
+                System.out.println("Solution found");
+
+                long Ending = System.currentTimeMillis();
+                System.out.println(
+                        "It took " + (Ending - Beginning) + " milliseconds to find a solution for this puzzle.");
+            } else {
+                System.out.println("No solution possible with given pieces. Try other input!");
             }
+        } else {
+            System.out.println("There were too few pieces given to fill the grid. Try again!");
         }
-        return;
+
+        scanner.close();
 
     }
 
@@ -129,79 +86,62 @@ public class PentominoSolver3D {
     // if it is able to do so it will call itself again with the same pieces but
     // removing the that was just placed
     // it also gives the grid with the placed piece
-    public static boolean SolvePentomino3D(int[][][] grid, int[] pieceIDs, int depth) {
+    public static boolean SolvePentomino(int[][] grid, int[] pieceIDs, int depth) {
 
         // ui.setState(grid);
 
-        int[] emptyCords = findNextEmpty3D(grid);
-        int[][][] gridClone = clone3Dint(grid);
-        int[][][] secondaryClone = clone3Dint(grid);
-        int[][] slice;
-        int[][] sliceclone;
+        int[] emptyCords = findNextEmpty(grid);
+        int[][] gridClone = clone2Dint(grid);
+        int[][] secondaryClone = clone2Dint(grid);
 
         // this is the exit condition, once it has reached a depth of 1, meaning it only
         // has one piece left, it will try and put it on the board.
         // if it can then it will return true which will in turn make the one above
         // return true etc.
         if (depth == 1) {
-            for(int k=0;k<3;k++){
-                slice=get2DSlice(grid, k, emptyCords[0], emptyCords[1], emptyCords[2]);
-                for (int i = 0; i < PentominoDatabase.data[pieceIDs[0]].length; i++) {
+            for (int i = 0; i < PentominoDatabase.data[pieceIDs[0]].length; i++) {
+                if (PieceFit(gridClone, pieceIDs[0], i, adjustX(emptyCords[1], pieceIDs[0], i), emptyCords[0])) {
+                    Search.addPiece(gridClone, PentominoDatabase.data[pieceIDs[0]][i], pieceIDs[0], emptyCords[0],
+                            adjustX(emptyCords[1], pieceIDs[0], i));
+                    answerGrid = gridClone;
 
-                        if (PieceFit(slice, pieceIDs[0], i, adjustX(emptyCords[1], pieceIDs[0], i), emptyCords[0])) {
-                            Search.addPiece(slice, PentominoDatabase.data[pieceIDs[0]][i], pieceIDs[0], emptyCords[0],
-                                    adjustX(emptyCords[1], pieceIDs[0], i));
-                            add2Dslice(grid, slice, k, emptyCords[k] );
-                            answerGrid = gridClone;
-
-                            return true;
-                        }
-                    }
+                    return true;
                 }
 
-            return false;
+            }
 
+            return false;
         }
 
         // if it isnt the final piece then it will try to fit all pieces in all posible
         // permutations on the next available tile
         else {
 
-            //TODO: account for 3d dimensional rotations
-
             for (int i = 0; i < pieceIDs.length; i++) {// for every piece
-                for(int k=0;k<3;k++){
-                    slice=get2DSlice(grid, k, emptyCords[0], emptyCords[1], emptyCords[2]);
-                    sliceclone=clone2Dint(slice);
-                    
 
                 for (int j = 0; j < PentominoDatabase.data[pieceIDs[i]].length; j++) {// for every permutation that
                                                                                       // piece has
-                    
 
-                    if (PieceFit(slice, pieceIDs[i], j, adjustX(emptyCords[1], pieceIDs[i], j), emptyCords[0])) {// if
+                    if (PieceFit(gridClone, pieceIDs[i], j, adjustX(emptyCords[1], pieceIDs[i], j), emptyCords[0])) {// if
                                                                                                                      // the
                                                                                                                      // piece
                                                                                                                      // fits
-                        
-                        addPiece(slice, PentominoDatabase.data[pieceIDs[i]][j], pieceIDs[i], emptyCords[0],
+
+                        Search.addPiece(gridClone, PentominoDatabase.data[pieceIDs[i]][j], pieceIDs[i], emptyCords[0],
                                 adjustX(emptyCords[1], pieceIDs[i], j));// add it to a clone of the grid
-                        add2Dslice(gridClone, slice, k, emptyCords[k]);
-                        
+
                         int[] temporaryPieces = removeID(pieceIDs, i);// make a copy of the idlist without the id of the
                                                                       // piece that was just placed
 
                         // call itself with the clone and the new pieceidlist
-                        if (SolvePentomino3D(gridClone, temporaryPieces, depth - 1)) {
+                        if (SolvePentomino(gridClone, temporaryPieces, depth - 1)) {
                             // this is part of the exit condition once it returns true all functions will
                             // halt searching for solutions
                             return true;
                         }
 
                         // clear the clone of pieces placed for the next loop
-                        gridClone = clone3Dint(secondaryClone);
-                        slice=sliceclone;
-                    }
+                        gridClone = clone2Dint(secondaryClone);
                     }
                 }
             }
@@ -210,36 +150,18 @@ public class PentominoSolver3D {
         return false;
     }
 
-
-    public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
-		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
-		{
-			for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
-			{
-				if (piece[i][j] == 1) {
-					// Add the ID of the pentomino to the board if the pentomino occupies this
-					// square
-					field[x + i][y + j] = pieceID;
-				}
-			}
-		}
-	}
-
     // this function finds the next empty square
 
-    public static int[] findNextEmpty3D(int[][][] Grid) {
-        int[] emptyCords = new int[3];
+    public static int[] findNextEmpty(int[][] Grid) {
+        int[] emptyCords = new int[2];
 
         for (int i = 0; i < Grid.length; i++) {
             for (int j = 0; j < Grid[0].length; j++) {
-                for(int k=0; k< Grid[0][0].length;k++){
-                    if (Grid[i][j][k] == -1) {
-                        emptyCords[0] = i;
-                        emptyCords[1] = j;
-                        emptyCords[2] = k;
-                        return emptyCords;
+                if (Grid[i][j] == -1) {
+                    emptyCords[0] = i;
+                    emptyCords[1] = j;
+                    return emptyCords;
 
-                    }
                 }
             }
         }
@@ -247,19 +169,15 @@ public class PentominoSolver3D {
     }
 
     // this is a function for testing purposes
-    public static int[][][] clone3Dint(int[][][] list) {
-        int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
+    public static int[][] clone2Dint(int[][] list) {
+        int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
             for (int j = 0; j < list[i].length; j++) {
-                for(int k=0; k< list[0][0].length;k++){
-                    clone[i][j][k] = list[i][j][k];
-                }
+                clone[i][j] = list[i][j];
             }
         }
         return clone;
     }
-
-    
 
     // this function makes a copy of a list while removing a certain index of said
     // list
@@ -315,122 +233,14 @@ public class PentominoSolver3D {
     // System.out.println("");
     // }
     // }
-    public static int[][] get2DSlice(int[][][] grid , int orientation, int x,int y, int z){
-        //System.out.println("x:"+x+" y:"+y+" z:"+z);
-        if(orientation==0){
-            return grid[x];
-        }
-        if(orientation==1){
-            int[][] new2DGrid=new int[grid.length][grid[0][0].length];
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[0][0].length;j++){
-                    new2DGrid[i][j]=grid[i][y][j];
-                }
-            }
-            return new2DGrid;
-        }
-        else{
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[i].length;j++){
-                    System.out.print(grid[i][j]);
-                }
-                System.out.println("");
-            }
-            System.out.println("laatste");
-            int[][] new2DGrid=new int[grid.length][grid[0].length];
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[0].length;j++){
-                    //System.out.println("stats: i:"+i+" j:"+j+" z:"+z);
-                    new2DGrid[i][j]=-1;
-                    new2DGrid[i][j]=grid[i][j][z];
-                    
-                }
-            }
-            return new2DGrid;
-        }
-    }
-
-    public static int[][] clone2Dint(int[][] list) {
-        int[][] clone = new int[list.length][list[0].length];
-        for (int i = 0; i < list.length; i++) {
-            for (int j = 0; j < list[i].length; j++) {
-                clone[i][j] = list[i][j];
-            }
-        }
-        return clone;
-    }
-
-    public static void add2Dslice(int[][][] grid, int[][]slice,int orientation,int depth){
-        if(orientation==0){
-            grid[depth]=slice;
-            return;
-
-        }
-        if(orientation==1){
-            int[][] new2DGrid=new int[grid.length][grid[0][0].length];
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[0][0].length;j++){
-                    grid[i][depth][j] = slice[i][j];
-                }
-            }
-            return;
-
-        }
-        if(orientation==2){
-            int[][] new2DGrid=new int[grid.length][grid[0].length];
-            for(int i=0;i<grid.length;i++){
-                for(int j=0;j<grid[0].length;j++){
-                    new2DGrid[i][j]=grid[i][j][depth];
-                }
-            }
-            return;
-
-        }
-    }
 
     public static int[] ChartoPieceID(char[] list) {
         int[] CharToPiece = new int[list.length];
         for (int i = 0; i < list.length; i++) {
-            CharToPiece[i] = characterToID(list[i]);
+            CharToPiece[i] = Search.characterToID(list[i]);
         }
         return CharToPiece;
     }
-    public static int characterToID(char character) {
-		int pentID = -1;
-		if (character == 'X') {
-			pentID = 0;
-		} else if (character == 'I') {
-			pentID = 1;
-		} else if (character == 'Z') {
-			pentID = 2;
-		} else if (character == 'T') {
-			pentID = 3;
-		} else if (character == 'U') {
-			pentID = 4;
-		} else if (character == 'V') {
-			pentID = 5;
-		} else if (character == 'W') {
-			pentID = 6;
-		} else if (character == 'Y') {
-			pentID = 7;
-		} else if (character == 'L') {
-			pentID = 8;
-		} else if (character == 'P') {
-			pentID = 9;
-		} else if (character == 'N') {
-			pentID = 10;
-		} else if (character == 'F') {
-			pentID = 11;
-		} else if (character == 'A') {
-			pentID = 12;
-		} else if (character == 'B') {
-			pentID = 13;
-		} else if (character == 'C') {
-			pentID = 14;
-		}
-		return pentID;
-	}
-
 
     public static char[] sortingAG(int[] Numberlist, char[] characters) {
         int p = 1;
@@ -514,7 +324,6 @@ public class PentominoSolver3D {
         return optimisedmatrix;
     }
 
-    //TODO; make this 3D
     // this function evaluated if a piece can be placed on a give grid at a certain
     // x and y location
     public static boolean PieceFit(int[][] grid, int PieceID, int Piecemutation, int x, int y) {
@@ -542,11 +351,14 @@ public class PentominoSolver3D {
                         }
                     }
                 }
-                //int[][] gridclone = clone2Dint(grid);
-                //Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
+                int[][] gridclone = clone2Dint(grid);
+                Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
 
-                
-                return true;
+                if (checkMinus(gridclone)) {
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
                 return false;
             }
@@ -555,9 +367,6 @@ public class PentominoSolver3D {
         }
     }
 
-
-
-    //TODO; make this 3D
     // Function which checks whether a -1 in the grid is surrounded by zeros, if so,
     // return true.
     public static boolean checkMinus(int[][] arrays) {

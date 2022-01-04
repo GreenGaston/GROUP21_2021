@@ -11,11 +11,7 @@ e:580
 Jeroen:540
 da:500
 BOT:500
-<<<<<<< HEAD
 sdf:480
-=======
-Jeroen:480
->>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de
 test:460
 Jeroen:440
 lianne:440

@@ -29,6 +29,14 @@ public class AlgorithmX {
      * 5. repeat this algorithm recursively on the reduced matrix A
      * source: https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
      * 
+     * Genetisch algorithm:
+     * random character strings maken en aan een hele hoop data containers toevoegen 
+     * strings staan voor pentominoe peices die we willen gebruiken
+     * voor iedere char string evaluate hoe goed die de ruimte vult en wat score is
+     * met selectiemodel genen mixen en nieuwe generaties maken
+     * 5% kans voor character om te veranderen in ander character
+     * Als heel vaak doen --> gemiddelde score voor elke generatie wordt beter (survival of fittest)
+     * Heel dichtbij de oplossing
      * @param args
      */
 
@@ -82,6 +90,7 @@ public class AlgorithmX {
             }
     
             // TODO: For each column j such that Ar,j = 1
+            // pak lijn Ar,c als eerste lijn geselecteerd en komt een rij tegen met een 1 op zelfde locatie als in andere rij, dan haal je die eruit.
             // for (j = 0; j < matrixA[0].length; j++) {
             //     // * for each row k such that Ak,j = 1
             //     for (k = 0; k < matrixA[0].length; k++) {

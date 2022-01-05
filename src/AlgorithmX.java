@@ -41,32 +41,6 @@ public class AlgorithmX {
 
      -------------------------------------------------------------------------------------------------
 
-     PSEUDO CODE:
-     f( h.right == h ) { 
-     printSolutions(); 
-     return; 
-    } 
-    else { 
-     ColumnNode column = getMinColumn(); 
-     cover(column); 
-
-     for( Node row = column.down ; rowNode != column ;
-        rowNode = rowNode.down ) { 
-            solutions.add( rowNode ); 
-
-            for( Node rightNode = row.right ; rightNode != row ;
-                 rightNode = rightNode.right ) 
-                    cover( rightNode ); 
-
-     Search( k+1); 
-     solutions.remove( rowNode ); 
-     column = rowNode.column; 
-
-     for( Node leftNode = rowNode.left ; leftNode != row ;
-              leftNode = leftNode.left )                                                                             
-            uncover( leftNode ); 
-     } 
-     uncover( column ); 
 } 
      * source: 1. https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-2-implementation-dlx/?ref=lbp
      *         2. https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-1/
@@ -92,60 +66,80 @@ public class AlgorithmX {
 
     }
 
-    public static int chooseColumn() {
+    public static int chooseColRow() {
         // TODO: Otherwise choose a column c (deterministically)
         // choose the column with the smallest possible size
-        return columns;
-    }
-
-    public static int chooseRow() {
-        // TODO: Choose a row r such that Ar,c = 1 (nondeterministically)
-        return rows;
+         // According to Donald Knuth's paper, it is most efficient to choose the column with the smallest possible size.
+   // That is what we do.
+        ColumnNode rightOfRoot = (ColumnNode)root.right; // we cast the node to the right of the root to be a ColumnNode
+        ColumnNode smallest = rightOfRoot; 
+        while(rightOfRoot.right != root) 
+        {
+         rightOfRoot = (ColumnNode)rightOfRoot.right;
+         if(rightOfRoot.size < smallest.size) // choosing which column has the lowest size
+            {
+            smallest = rightOfRoot;
+            }         
+        }      
+        return smallest;
     }
 
     public void exactCover() {
         // TODO: remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
-    }
+        Node column = dataNode.column; 
+
+        column.right.left = column.left; 
+        column.left.right = column.right; 
+
+        for( Node row = column.down ; row != column ; row = row.down ) 
+            for( Node rightNode = row.right ; rightNode != row ; 
+                rightNode = rightNode.right ) { 
+                rightNode.up.down = rightNode.down; 
+                rightNode.down.up = rightNode.up; 
+            } 
+} 
     
     public void uncover() { // add back all values of the column of the list
         //TODO: uncover column
-    }
+        Node column = dataNode.column; 
 
-    public static boolean hasRows(ArrayList matrixA) {
-        // Check if the matrix has columns, if not, terminate successfully
-        
-        for (i = 0; i < matrixA.size(); i++) {
-            countCols++;
-            if (countCols > 0) {
-                hasR = true;
-             }
-        } return hasR;
-    }
-
-    public void search(ArrayList matrixA, int k) {
-        if(hasRows(matrixA)==true) {
-            c = chooseColumn();
-            r = chooseRow();
-
-            while(r!=c) {
-                if(k < partialSolution.size()) {
-                    partialSolution.remove(k);
-                }
-                partialSolution.add(k,r); // Include row r in the partial solution
-            }
+        for( Node row = column.up ; row != column ; row = row.up ) 
+        for( Node leftNode = row.left ; leftNode != row ;
+         leftNode = leftNode.right ) { 
+         leftNode.up.down = leftNode; 
+         leftNode.down.up = leftNode; 
+        } 
+        column.right.left = column; 
+        column.left.right = column; 
+} 
     
-            // TODO: For each column j such that Ar,j = 1
-            // pak lijn Ar,c als eerste lijn geselecteerd en komt een rij tegen met een 1 op zelfde locatie als in andere rij, dan haal je die eruit.
-            // for (j = 0; j < matrixA[0].length; j++) {
-            //     // * for each row k such that Ak,j = 1
-            //     for (k = 0; k < matrixA[0].length; k++) {
-            //         listA.remove(k); // * delete row k from matrix A
-            //     }
-            //     listA.remove(j); // * delete column j from matrix A
-            // }
-            search(matrixA,k+1); // repeat this algorithm recursively on the reduced matrix A
+    public void search(int k) {
+        if( h.right == h ) { 
+            System.out.println(partialSolution);
+        return; 
+       } else { 
+        ColumnNode column = chooseColumn(); 
+        cover(column); 
+    
+        for( Node row = column.down ; rowNode != column ;
+           rowNode = rowNode.down ) { 
+               partialSolution.add( rowNode ); 
+    
+               for( Node rightNode = row.right ; rightNode != row ;
+                    rightNode = rightNode.right ) 
+                       cover( rightNode ); 
+    
+        search( k+1); 
+        partialSolution.remove( rowNode ); 
+        column = rowNode.column; 
+    
+        for( Node leftNode = rowNode.left ; leftNode != row ;
+                 leftNode = leftNode.left )                                                                             
+               uncover( leftNode ); 
+        } 
+        uncover( column );    
         }
     }
 }

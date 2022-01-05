@@ -10,13 +10,13 @@ public class AlgorithmX {
     static int rows, columns;
     static int r, c;
     static int countCols = 0;
-    private static int[][] matrixA;
     private static ArrayList perfectSolution = new ArrayList();
     private static ArrayList partialSolution = new ArrayList();
 
     /*******************************************************************************************************************************************
      * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
-     * Knuth's algorithm X pseudocode:
+     * -------------------------------------------------------------------------------------------------
+     * PSEUDO CODE: 
      * 1. If the matrix A has no columns, the current partial solution is a valid
      * solution; terminate successfully
      * 1. Otherwise choose a column c (deterministically)
@@ -29,6 +29,48 @@ public class AlgorithmX {
      * 5. repeat this algorithm recursively on the reduced matrix A
      * source: https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
      * 
+     * Knuth's algorithm uses the dancing link technique: 
+     * We tansform the exact cover problem in form of matrix of 0 and 1
+     * Each 1 is represented by a node of linked list and the whole matrix is transformed into a mesh of 4 way connected nodes
+     * Each node contains: 
+     ** Pointer to node left to it
+     ** Pointer to node right of it
+     ** Pointer to node above it
+     ** Pointer to node below it
+     ** Pointer to list header node to which it belongs
+
+     -------------------------------------------------------------------------------------------------
+
+     PSEUDO CODE:
+     f( h.right == h ) { 
+     printSolutions(); 
+     return; 
+    } 
+    else { 
+     ColumnNode column = getMinColumn(); 
+     cover(column); 
+
+     for( Node row = column.down ; rowNode != column ;
+        rowNode = rowNode.down ) { 
+            solutions.add( rowNode ); 
+
+            for( Node rightNode = row.right ; rightNode != row ;
+                 rightNode = rightNode.right ) 
+                    cover( rightNode ); 
+
+     Search( k+1); 
+     solutions.remove( rowNode ); 
+     column = rowNode.column; 
+
+     for( Node leftNode = rowNode.left ; leftNode != row ;
+              leftNode = leftNode.left )                                                                             
+            uncover( leftNode ); 
+     } 
+     uncover( column ); 
+} 
+     * source: 1. https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-2-implementation-dlx/?ref=lbp
+     *         2. https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-1/
+     * 
      * Genetisch algorithm:
      * random character strings maken en aan een hele hoop data containers toevoegen 
      * strings staan voor pentominoe peices die we willen gebruiken
@@ -37,6 +79,12 @@ public class AlgorithmX {
      * 5% kans voor character om te veranderen in ander character
      * Als heel vaak doen --> gemiddelde score voor elke generatie wordt beter (survival of fittest)
      * Heel dichtbij de oplossing
+     * 
+     * -----------------------------------------------------------------------------------------------
+     * 
+     * REFERENCES: 
+     * https://www.ocf.berkeley.edu/~jchu/publicportal/sudoku/sudoku.paper.html
+     * https://arxiv.org/pdf/cs/0011047.pdf
      * @param args
      */
 
@@ -65,10 +113,10 @@ public class AlgorithmX {
         //TODO: uncover column
     }
 
-    public static boolean hasRows(int[][] matrixA) {
+    public static boolean hasRows(ArrayList matrixA) {
         // Check if the matrix has columns, if not, terminate successfully
         
-        for (i = 0; i < matrixA.length; i++) {
+        for (i = 0; i < matrixA.size(); i++) {
             countCols++;
             if (countCols > 0) {
                 hasR = true;
@@ -76,9 +124,8 @@ public class AlgorithmX {
         } return hasR;
     }
 
-    public void search(int[][] matrixA, int k) {
+    public void search(ArrayList matrixA, int k) {
         if(hasRows(matrixA)==true) {
-            List listA = Arrays.asList(matrixA);
             c = chooseColumn();
             r = chooseRow();
 

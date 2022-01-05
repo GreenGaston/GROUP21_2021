@@ -8,6 +8,17 @@ public class AlgorithmX {
     // private static ArrayList perfectSolution = new ArrayList();
     private static ArrayList partialSolution = new ArrayList();
 
+    class Node { // class that implements dancing links
+        // a mesh of 4 way connected nodes
+        // each node contains:
+    Node left; // Pointer to node left to it
+    Node right; // Pointer to node right of it
+    Node above; // Pointer to node above it
+    Node below; // Pointer to node below it
+    Node header; // Pointer to list header node to which it belongs
+
+    }
+
     /*******************************************************************************************************************************************
      * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
      * -------------------------------------------------------------------------------------------------
@@ -24,7 +35,7 @@ public class AlgorithmX {
      * 5. repeat this algorithm recursively on the reduced matrix A
      * source: https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
      * 
-     * Knuth's algorithm uses the dancing link technique:
+     * Knuth's algorithm X uses the dancing link technique:
      * We transform the exact cover problem in form of matrix of 0 and 1
      * Each 1 is represented by a node of linked list and the whole matrix is
      * transformed into a mesh of 4 way connected nodes
@@ -71,11 +82,11 @@ public class AlgorithmX {
         // According to Donald Knuth's paper, it is most efficient to choose the column
         // with the smallest possible size.
         // That is what we do.
-        ColumnNode rightOfRoot = (ColumnNode) root.right; // we cast the node to the right of the root to be a
+        ColNode rightOfRoot = (ColNode) root.right; // we cast the node to the right of the root to be a
                                                           // ColumnNode
-        ColumnNode smallest = rightOfRoot;
+        ColNode smallest = rightOfRoot;
         while (rightOfRoot.right != root) {
-            rightOfRoot = (ColumnNode) rightOfRoot.right;
+            rightOfRoot = (ColNode) rightOfRoot.right;
             if (rightOfRoot.size < smallest.size) // choosing which column has the lowest size
             {
                 smallest = rightOfRoot;
@@ -118,14 +129,14 @@ public class AlgorithmX {
             System.out.println(partialSolution);
             return;
         } else {
-            ColumnNode column = chooseColumn();
+            ColNode column = chooseColRow();
             cover(column);
 
             for (Node row = column.down; rowNode != column; rowNode = rowNode.down) {
                 partialSolution.add(rowNode);
 
                 for (Node rightNode = row.right; rightNode != row; rightNode = rightNode.right)
-                    cover(rightNode);
+                    exactCover(rightNode);
 
                 search(k + 1);
                 partialSolution.remove(rowNode);

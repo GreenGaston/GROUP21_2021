@@ -1,45 +1,36 @@
 Tom:5180
-BOT:1140
-BOT:1000
-KK:960
+Jeroen:4800
 test:860
-BOT:860
 e:820
+Jeroen:800
 GreenGaston:720
 Jeroen:700
 BOT:700
-BOT:660
 test:620
-BOT:600
 e:580
-BOT:560
-lianne:560
 Jeroen:540
-lianne:520
 da:500
 BOT:500
-KK:480
+sdf:480
 test:460
 Jeroen:440
+lianne:440
+Jeroen:440
+BOT:440
+Jeroen:420
 Jeroen:400
 BOT:400
-BOT:400
-KK:400
 y:380
 bug:360
 yeet:360
-BOT:360
 bug:340
 test:320
-Lianne:280
-BOT:280
+qwe:300
 bug:260
-piet:260
 Jeroen:240
 Jeroen:240
 bot4:240
 test:240
-BOT:240
 test:220
 Jeroen:220
 test:220
@@ -50,17 +41,21 @@ test:200
 test:200
 e:200
 test:200
-BOT:200
-Lianne:200
+d:200
+asd:200
 Lianne:160
 bot3:160
 bot5:160
 okay:160
 e:160
 d:160
-BOT:160
 lieke:140
 test:140
+<<<<<<< HEAD
+asd:140
+=======
+Jeroen:140
+>>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de
 null:120
 Enter your name!Hub:120
 lieke:120
@@ -73,8 +68,11 @@ TEST:120
 test:120
 bug:120
 BOT:120
-TEST:120
+<<<<<<< HEAD
 BOT:120
+=======
+Jeroen:120
+>>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de
 n:100
 null:80
 lieke:80
@@ -86,6 +84,11 @@ test:80
 test:80
 bug:80
 test:80
+<<<<<<< HEAD
+dsf:80
+=======
+Jeroen:80
+>>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de
 :40
 null:40
 Jeroen:40
@@ -115,7 +118,21 @@ bug:40
 bug:40
 bug:40
 bug:40
+<<<<<<< HEAD
+poke:40
+df:40
+asd:40
+dies:40
+df:18
+test:11
+=======
+Jeroen:40
+Jeroen:40
+>>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de
 Loser:10
+t:9
+greengaston:5
+wr:2
 test:0
 bot:0
 bot:0
@@ -163,3 +180,13 @@ t:0
 t:0
 TEST:0
 bug:0
+<<<<<<< HEAD
+etst:0
+f:0
+asd:0
+=======
+Jeroen:0
+Jeroen:0
+Jeroen:0
+BOT:0
+>>>>>>> d2bbb71543271f3117bc4a833dce8471d1d637de

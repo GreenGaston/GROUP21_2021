@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -20,16 +20,20 @@ public class basicAI {
 
 
     public ArrayList<Integer> getRobotMovements(){
-        a = 0.31006;        //height
-        b = 0.45;           //amount of holes
-        c = 0.38;           //the bumpiness
-        d = 0.96;           //amount of lines cleared
-        e = 0.5;           //Highest vs lowest point
+        //These values decide the weight of each check in the score
+        a = 0.31006;            //height
+        b = 0.45;               //amount of holes
+        c = 0.3;                //the bumpiness
+        d = 0.96;               //amount of lines cleared
+        e = 0.5;                //Highest vs lowest point
         piececount++;
+        
+        //decides the best movements and return them
         robotMovements();
         return botmovements;
     }
 
+    //This method clones an arraylist
     public ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
         ArrayList<Integer> clone = new ArrayList<>();
         for(int i =0; i < list.size(); i++){
@@ -39,53 +43,53 @@ public class basicAI {
     }
 
 
-    ///make 2 list and add them to one and another
+   
     public void robotMovements(){
-        high = 10000;
-        current = 0;
-        //testgrid = test123;
-        botmovements = new ArrayList<>();
-        int pieceID = Pentris.getPieceID();
-        //int pieceID = 9;
-        botmovements = new ArrayList<Integer>();
-        int[][] testgridlocal = clone2Dint(Pentris.grid);
+        high = 10000; //the highest score is set 10000, so that every other score is below this
+        current = 0; //this is the variable for the score every space simulation cycle
+        botmovements = new ArrayList<>(); //an empty list that will contain all the bot key inputs
+        int pieceID = Pentris.getPieceID(); //the pieceId of the piece to place
+        botmovements = new ArrayList<Integer>();//this will contain the best bot key inputs
+        int[][] testgridlocal = clone2Dint(Pentris.grid); //the grid that will be used for testing
        
-        int bumpiness = 0;
-        int highmin =0;
-        int x = 0; 
-        int y = 0;
-        int k = 4;
+        int bumpiness = 0; //the bumbiness component of the score
+        int highmin =0; //the highvslow component of the score
+        int x = 0; //x coordinate of the piece
+        int y = 0; //y coordinate of the piece
+        int k = 4; //amount of mutations of every piece
         int xmovement = 0;
         k = 4;
         for(int i = 3; i >= 0; i--){
+            k--; //changing the mutation
             
-            //System.out.println("X: " + x);
-           
-            k--;
             ArrayList<Integer> botmovementstest = new ArrayList<>();
-            for(int bmv = 0; bmv < i; bmv++){
+            if(piececount == 1){
+                botmovementstest.add(KeyEvent.VK_RIGHT);
+            }
+
+            for(int bmv = 0; bmv < i; bmv++){ 
                 botmovementstest.add(KeyEvent.VK_UP);
             }
            
             for(int j =0; j < testgrid.length - Pentris.pentominoDatabase[pieceID][k].length + 1; j++){
-                //ArrayList<Integer> movementx = cloneArrayList(botmovementstest);
 
                 //simulating spacebar
                 testgridlocal = clone2Dint(testgrid);
                 pieceToPlace = Pentris.pentominoDatabase[pieceID][i];
                 dropPiece(testgridlocal, pieceToPlace, y, x);
-                heightofgridelements = cloneArrayList(checkHeight(testgridlocal));
-                highmin = Math.abs(Collections.max(heightofgridelements) - Collections.min(heightofgridelements));
-                
 
-                for(int bump = 0; bump < heightofgridelements.size() - 1; bump++){
-                    bumpiness += Math.abs(heightofgridelements.get(i) - heightofgridelements.get(i+1));
-                    //System.out.println("bump: " + bumpiness);
+                //calculating the rating of a certain  move
+                heightofgridelements = cloneArrayList(checkHeight(testgridlocal)); //calculating the height
+                highmin = Math.abs(Collections.max(heightofgridelements) - Collections.min(heightofgridelements)); // calculating the height difference between the highest and lowest point
+                for(int bump = 0; bump < heightofgridelements.size() - 1; bump++){ //calculating the bumpiness
+                    bumpiness += Math.abs(heightofgridelements.get(bump) - heightofgridelements.get(bump+1));
+                    
                 }
-                current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e + Collections.max(heightofgridelements) * 5;///highmin * 
+                //calculating the rating of the current move
+                current = sumOfArrayList(heightofgridelements)* a + calcHoles(testgridlocal) * b + bumpiness * c - lineCheck(testgridlocal) * d + highmin * e;
                
                 
-                 //System.out.println();
+                //if the rating is better than the previous one, store the movements in the botmovements arraylist
                 if(current <= high){
                     botmovements = cloneArrayList(botmovementstest);
                     xmovement = x;
@@ -94,22 +98,9 @@ public class basicAI {
                     for(int l =0; l < j; l++){
                         botmovements.add(KeyEvent.VK_RIGHT);
                     }
-                //debugging part:
-                //  System.out.println("------------------------------------------------------------------");
-                //  System.out.println("Piece number: " + piececount);
-                //  System.out.println();
-                //  System.out.println("sum of height: " + sumOfArrayList(heightofgridelements));
-                //  System.out.println("Amount of hole: " + calcHoles(testgridlocal));
-                //  System.out.println("Lines cleared: " + lineCheck(testgridlocal));
-                //  System.out.println("The bumpiness: " + bumpiness);
-                //  System.out.println("The difference between maxmin: " + highmin);
-                //  System.out.println();
-                //  System.out.println("Current score: " + current + " highscore: " + high);
-                //  System.out.println("movement: " + botmovementstest);
-                //  System.out.println();
-                 //printGrid(testgridlocal);
                 }
                 
+                //setting all the values to null and increasing the x
                 bumpiness = 0;      
                 highmin = 0;
                 y = 0;   
@@ -117,15 +108,15 @@ public class basicAI {
 
             }
             x = 0;
-            
-            
-            //k = 4;
         }
         
+        //at the end of the botmovements it should add the space keyevent
         botmovements.add(KeyEvent.VK_SPACE);
         Pentris.botmovements = cloneArrayList(botmovements);
         
     }
+
+    //calculates the sum of all the values in an integer arraylist
     public static int sumOfArrayList(ArrayList<Integer> list){
         int sum = 0;
         for(int i = 0; i < list.size(); i++){
@@ -134,6 +125,8 @@ public class basicAI {
         return sum;
 
     }
+
+    //clones a 3d integer array
     public static int[][] clone2Dint(int[][] list) {
         int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
@@ -144,11 +137,13 @@ public class basicAI {
         return clone;
     }
     
+
+    //simulates the drop o fa piece
     public static void dropPiece(int[][] grid, int[][] piece, int PieceY, int PieceX) {
 
         for (int i = 1; i < 50; i++) {
           
-            if (!PieceFit(grid, piece, PieceY + i, PieceX)) {
+            if (!PieceFit(grid, piece, PieceY + i, PieceX)) {//as long as the piece fits, drop the piece 1 down
                 PieceY += i - 1; // Piece has to be added on this Y position
                 addPiece(grid, piece, PieceX, PieceY);
                 break;
@@ -157,6 +152,7 @@ public class basicAI {
 
     }
 
+    //checks if the piece fits
     public static Boolean PieceFit(int[][] grid, int[][] piece, int x, int y) {
         // if the x is negative then the starting point is of the grid and therefor
         // invalid
@@ -189,6 +185,7 @@ public class basicAI {
         }
     }
 
+    //adds the piece to the board
     public static void addPiece(int[][] field, int[][] piece, int x, int y) {
         for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
         {
@@ -202,6 +199,7 @@ public class basicAI {
             }
         }
     }
+
     //checks height of field
     public static ArrayList<Integer> checkHeight(int[][] grid){
         ArrayList<Integer> heightofgridelements1 = new ArrayList<Integer>();
@@ -212,14 +210,14 @@ public class basicAI {
             check = false;
             inner:
             for(int j =0; j < grid[i].length; j++){
-               if(grid[i][j] > -1){
-                    heightofgridelements1.add(grid[i].length - top);
-                    check = true;
-                    break inner;
+               if(grid[i][j] > -1){ //if the grid at a certain point from the top is filled with a value higher than -1, there is a part of a piece there
+                    heightofgridelements1.add(grid[i].length - top); //adding the height of the colunn to the arraylist
+                    check = true; //if this is true the height is not 0
+                    break inner;//break the loop and look for the top in the next column
                }
                top++;
             }
-            if(check == false){
+            if(check == false){//if there is no piece(part) in this column, the height is 0
                 heightofgridelements1.add(0);
             }          
         }
@@ -276,6 +274,8 @@ public static int lineCheck(int[][] grid) {
     return lines;
 }
 
+
+//calculates the amount of holes in the grid
 public static int calcHoles(int[][] grid) {
     int[][] cloneGrid = clone2Dint(grid);
 

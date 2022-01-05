@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
@@ -22,9 +22,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Pentris {
-    public static int height = 0;
-    public static int width = 0;
+public class Pentris { // the main class for our PENTRIS game
+    // Is a Tetris game with falling pentominoes, with an AI playing the game added
+    // to it
+
+    public static int height = 15;
+    public static int width = 5;
 
     public static int uiWidth = 10;
     public static int uiHeight = 18;
@@ -88,14 +91,15 @@ public class Pentris {
     public static boolean holdCharge = true;
     public static int score = 0;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
+    //public static int[] scaling={0,1,2,3,4,5};
     public static int beginning = (int) System.currentTimeMillis() / 1000;
     public static long pausingTime;
     public static boolean stopmusic = false;
 
-    public static String name;
+    public static String name = "";
     public static int level = 1;
-    public static int gameLevel;
-    public static boolean isColorblind;
+    public static int gameLevel = 1;
+    public static boolean isColorblind = false;
     public static int startingLevel;
     public static double startingAcceleration;
 
@@ -123,17 +127,17 @@ public class Pentris {
     public static int[] idlist = new int[12];
     private static ArrayList<Integer> nextPieces = new ArrayList<Integer>();
 
-    public static void nextPiece() {
+    public static void nextPiece() { // method that decides the order in which the pentominoes will fall
+        // creates an arraylist with all pentominoes in the optimal order
 
         // In this method there are multiple out-commented orders of the pentominos.
         // Every order is shown as follows:
-        //------------------------------------------
+        // ------------------------------------------
         // Scenario <Nr.>
         // <Order Here>
-        //------------------------------------------
+        // ------------------------------------------
         // Comment only one option in to use.
         // MAKE SURE TO COMMENT THE SAME SCENARIO IN FOR BOTH EMPTYCHECKS AND REFILLS!!
-
 
         PieceX = StartX;
         PieceY = StartY;
@@ -141,39 +145,39 @@ public class Pentris {
         if (nextPieces.isEmpty()) {
     //-----------------------------------------------------
     // Scenario Normal:
-            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            // Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.shuffle(nextPieces);
     //-----------------------------------------------------
     // Scenario 1:
-            Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // String teststring="";
@@ -182,49 +186,49 @@ public class Pentris {
         // }
         // System.out.println(teststring);
 
+        // this is a surprise code for later!
         idlist[nextPieces.get(0)] += 1;
         // System.out.println(nextPieces.get(0));
         pieceID = nextPieces.get(0);
         nextPieces.remove(0);
 
-
         // recheck for the nextpiece
         if (nextPieces.isEmpty()) {
     //-----------------------------------------------------
     // Scenario Normal:
-            // Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
-            // Collections.shuffle(nextPieces);
+            Collections.addAll(nextPieces, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+            Collections.shuffle(nextPieces);
     //-----------------------------------------------------
     // Scenario 1:
-    Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
+            // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 7, 10, 1, 6, 2, 5);
     //-----------------------------------------------------
     // Scenario 2:
             // Collections.addAll(nextPieces, 9, 4, 0, 11, 8, 3, 10, 7, 6, 2, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 3:
+            // -----------------------------------------------------
+            // Scenario 3:
             // Collections.addAll(nextPieces, 1, 5, 2, 6, 7, 10, 3, 4, 0, 9, 11, 8);
-    //-----------------------------------------------------
-    // Scenario 4:
+            // -----------------------------------------------------
+            // Scenario 4:
             // Collections.addAll(nextPieces, 5, 2, 6, 7, 1, 10, 3, 8, 11, 9, 0, 4);
-    //-----------------------------------------------------
-    // Scenario 5:
+            // -----------------------------------------------------
+            // Scenario 5:
             // Collections.addAll(nextPieces, 6, 5, 7, 3, 11, 9, 2, 0, 4, 10, 8, 1);
-    //-----------------------------------------------------
-    // Scenario 6:
+            // -----------------------------------------------------
+            // Scenario 6:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 9, 11, 3, 7, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 7:
+            // -----------------------------------------------------
+            // Scenario 7:
             // Collections.addAll(nextPieces, 8, 4, 0, 9, 10, 2, 11, 3, 7, 6, 5, 1);
-    //-----------------------------------------------------
-    // Scenario 8:
+            // -----------------------------------------------------
+            // Scenario 8:
             // Collections.addAll(nextPieces, 1, 8, 10, 4, 0, 2, 11, 7, 9, 3, 6, 5);
-    //-----------------------------------------------------
-    // Scenario 9:
+            // -----------------------------------------------------
+            // Scenario 9:
             // Collections.addAll(nextPieces, 4, 0, 8, 1, 5, 9, 6, 7, 3, 10, 11, 2);
-    //-----------------------------------------------------
-    // Scenario 10:
+            // -----------------------------------------------------
+            // Scenario 10:
             // Collections.addAll(nextPieces, 9, 11, 4, 0, 5, 8, 6, 2, 10, 7, 3, 1);
-    //-----------------------------------------------------
+            // -----------------------------------------------------
         }
 
         // System.out.println(nextPieces.get(0)+"testerino");
@@ -273,7 +277,6 @@ public class Pentris {
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static void playSound(String path) {
@@ -288,8 +291,7 @@ public class Pentris {
         }
     }
 
-    // this method should make the piece fall by 1 if it can fall
-    public static void fallingPiece() {
+    public static void fallingPiece() { // method that makes the piece fall by 1 if it can fall
         if (PieceFit(grid, pieceID, rotation, PieceY + 1, PieceX)) {
             PieceY += 1;
             // System.out.println("fell");
@@ -300,9 +302,8 @@ public class Pentris {
         }
     }
 
-    // Acceleration method, should return an increasingly small int for the amount
-    // of second between piece drops
-    public static long fallingAcceleration(long time) {
+    public static long fallingAcceleration(long time) { // returns an increasingly small int for the amount
+        // of second between piece drops
         int currentLevel = calculateLevel(time);
         long timeIndicate = 0;
 
@@ -337,11 +338,10 @@ public class Pentris {
         } else if (currentLevel >= 30) {
             timeIndicate = 21;
         }
-
         return timeIndicate;
     }
 
-    public static int calculateLevel(long time) {
+    public static int calculateLevel(long time) { // method that calculates the level on which the game is being played
         int currentLevel = 0;
         currentLevel += (time / levelIncreasTimeFrame) + startingLevel;
         return currentLevel;
@@ -350,9 +350,7 @@ public class Pentris {
     public static void dropPiece() {
 
         for (int i = 1; i < 50; i++) {
-            // System.out.println("pieceY = " + PieceY);
             if (!PieceFit(grid, pieceID, rotation, PieceY + i, PieceX)) {
-                // System.out.println("her");
 
                 PieceY += i - 1; // Piece has to be added on this Y position
                 placePiece();
@@ -361,10 +359,11 @@ public class Pentris {
                 break;
             }
         }
+
     }
 
-    // this method removes a line from the grid
-    public static void removeLine(int line) {
+    
+    public static void removeLine(int line) { // method that removes a line from the grid 
         int[][] updatedGrid = new int[grid.length][grid[0].length];
         int placeInGrid;
 
@@ -381,12 +380,13 @@ public class Pentris {
                     updatedGrid[i][gridLine] = grid[i][placeInGrid];
                     placeInGrid--;
                 }
+
             }
-        } grid = updatedGrid;
+        }
+        grid = updatedGrid;
     }
 
-    // Method that checks if a line is full
-    public static void lineCheck() { 
+    public static void lineCheck() { // Method that checks if a line is full
         int count = 0;
         int lines = 0;
 
@@ -502,6 +502,7 @@ public class Pentris {
                     // System.out.println("Game is paused and menu is shown");
                 }
             }
+
             gridclone = clone2Dint(grid);
             if (addShadow) {
                 addShadow(gridclone);
@@ -510,17 +511,21 @@ public class Pentris {
             ui.setState(gridclone);
             // playSound("beep.wav");
         }
+
     }
 
-    public static ArrayList<String> getHighscores() { // reads highscore file
+    // this method reads the file Scores.txt to get the highscores 
+    public static ArrayList<String> getHighscores() {
         ArrayList<String> highscores = new ArrayList<String>();
         try {
+
             File myObj = new File("Scores.txt");
             Scanner myReader = new Scanner(myObj);
             String data;
             for (int i = 0; i < 5 && myReader.hasNextLine(); i++) {
                 data = myReader.nextLine();
                 highscores.add(data);
+
             }
             myReader.close();
         } catch (IOException e) {
@@ -530,15 +535,22 @@ public class Pentris {
         return highscores;
     }
 
+
+    //this method places the piece on it current location 
     public static void placePiece() {
         addPiece(grid, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
+        //select a next piece
         nextPiece();
+        //if that piece doesnt fit anymore you lost
         if (!PieceFit(grid, pieceID, rotation, StartY, StartX)) {
             Lost = true;
         }
+        //check for filled lines
         lineCheck();
     }
 
+
+    //method for cloning the grid
     public static int[][] clone2Dint(int[][] list) {
         int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
@@ -549,6 +561,8 @@ public class Pentris {
         return clone;
     }
 
+
+    //this method adds a piece to a grid 
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
         for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
         {
@@ -563,10 +577,20 @@ public class Pentris {
         }
     }
 
+
+    //this method get the time since you have been playing 
+    //the time is returned as a string in a 00:00 format
+    //where the first 2 numbers are minutes
+    //and the second 2 are seconds
     public static String getTime() {
+        //get time since playing
         int playtime = ((int) System.currentTimeMillis() / 1000) - beginning - ((int) pausingTime / 1000);
+        //get minutes
         int minutes = playtime / 60;
+        //get seconds
         int seconds = playtime % 60;
+        
+        //format it to 00:00
         if (minutes == 0 && seconds == 0) {
             return "00:00";
         }
@@ -589,6 +613,8 @@ public class Pentris {
         }
     }
 
+
+    //this method adds a shadow under the current piece
     public static void addShadow(int[][] grid) {
         int[][] piece = pentominoDatabase[pieceID][rotation];
         for (int i = 1; i < 50; i++) {
@@ -600,63 +626,93 @@ public class Pentris {
         }
     }
 
+
+    // method to get the grid
     public static int[][] getGrid() {
         return grid;
     }
 
+     // method to get the pieceid
     public static int getPieceID() {
         return pieceID;
     }
 
+     // method to get the rotation
     public static int getRotation() {
         return rotation;
     }
 
+     // method to get the x coordinate
     public static int getX() {
         return PieceX;
     }
 
     public static ArrayList<Integer> botmovements;
-    public static void main(String[] args) throws InterruptedException, AWTException {
-        while (!Lost) {
-            startMenu startMenu = new startMenu();
 
+    public static void main(String[] args) throws InterruptedException, AWTException {
+        boolean playBot = false;
+
+        //while you havent lost
+        while (!Lost) {
+            //make a start menu
+            startMenu startMenu;
+            // If the bot has played the game the run before,
+            // reset the starting variables for name
+            if(playBot){
+                name = "";
+            }
+            startMenu = new startMenu(name, gameLevel, height, width, isColorblind);
+
+            startMenu.setPlayBot(false);
+
+            //make it visible
             startMenu.setShowMenu(true);
+            //wait until it closes
             while (startMenu.getShowMenu()) {
                 Thread.sleep(100);
             }
+
+
+            //get set variables from the start menu
 
             name = startMenu.getName();
             gameLevel = startMenu.getLevel();
             height = startMenu.getGridsizeY();
             width = startMenu.getGridsizeX();
             isColorblind = startMenu.getIsColorblind();
-            boolean playBot = startMenu.getPlayBot();
+            playBot = startMenu.getPlayBot();
             menu = new Menu(isColorblind);
             stopmusic = false;
 
+            //set the starting position
             StartY = 0;
             if (width <= 6) {
                 StartX = 0;
             } else {
-                StartX = 0;
-                //StartX = width / 2 - 1;
+                StartX = width / 2 - 1;
             }
 
+            //set the current coordinates to the start position
             PieceX = StartX;
             PieceY = StartY;
+
+            //make a grid and clone it
             grid = new int[width][height];
             gridclone = clone2Dint(grid);
+            //set the starting level
             startingLevel = gameLevel;
 
+            //make the ui
             ui = new UI(width, height, 30, isColorblind);
 
+            //fill grid with -1 aka empty spaces
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[i].length; j++) {
                     grid[i][j] = -1;
                 }
             }
 
+            //thread for playing the main music
             Thread music = new Thread() {
                 @Override
                 public void run() {
@@ -680,45 +736,50 @@ public class Pentris {
                     } catch (LineUnavailableException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
-                // this starts the thread
+                
             };
 
+            // this starts the thread
             music.start();
+            //variable to prevent movement before game has started
             Started = true;
+            //select the next piece
             nextPiece();
+            //get the starting time
             long startingTime = System.currentTimeMillis();
             long currentTime;
+            //variables for storing time in the pause menu
             pauseStart = 0;
             pausingTime = 0;
             startPauseTimer = false;
+            //clone the grid
             gridclone = clone2Dint(grid);
+            //get starting time in seconds
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
-//TetrisAI-----------------------------------------------------------------------------------------------------------------------
-            if (playBot){
-                Robot excecuter = new Robot();
-                basicAI ai = new basicAI();       
+            //TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            if (playBot){//if the bot is not selected in the menue, don't start the thread
+            Robot excecuter = new Robot();
+            basicAI ai = new basicAI();       
                 Thread tetrisbot = new Thread(){
-
                     public void run(){
                         try{
-                            while(!Lost){
-                                ai.testgrid = grid;
-                                ai.getRobotMovements();
+                            while(!Lost){//while not lost the bot should keep playing
+                                ai.testgrid = grid; //updates the testgrid for the bot
+                                ai.getRobotMovements(); //recieves the movements the robot should do
                                 ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                                //System.out.println("Inputted movements: " + ai.botmovements);
-
+                            
+                                //excecutes the movements of the bot
                                 for(int i = 0; i < movements.size(); i++){
                                     int current = movements.get(i);
                                     excecuter.keyPress(current);
-                                    excecuter.delay(50);
+                                    excecuter.delay(50); //the bot should wait 50ms before excecuting the next move
                                 }
-                                Thread.sleep(1000);
+                                Thread.sleep(800);
 
                                 if (menu.getPaused()) {
                                     startPauseTimer = true;
@@ -735,35 +796,48 @@ public class Pentris {
                                     // System.out.println(pauseStart);
                                     // System.out.println(pausingTime);
                                 }
+
                                 ui.setColorblind(menu.getIsColorblind());
-            
                             }
-                        }catch(InterruptedException e){
-
+                        } catch (InterruptedException e) {
                         }
-                        
                     }
-                };tetrisbot.start();
+                };
+                tetrisbot.start();
             }
-            startMenu.setPlayBot(false);
-//-------------------------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------------------------
 
+            // ------------------------------------------------------------------------------
+            //main code of the game
             try {
+                //if you havent lost
                 while (!Lost) {
+                    //clone the grid
                     gridclone = clone2Dint(grid);
+                    //add a shadow if thats turned on
                     if (addShadow) {
                         addShadow(gridclone);
                     }
+                    //add the current piece to the clone
                     addPiece(gridclone, pentominoDatabase[pieceID][rotation], pieceID, PieceX, PieceY);
-                    // System.out.println("frame");
+                    
+                    //update the ui with new clonegrid
                     ui.setState(gridclone);
+                    //get the time and calculate playing time
                     currentTime = System.currentTimeMillis();
                     long playingTime = currentTime - startingTime;
+
+                    //make this thread wait based on falling acceleration
                     Thread.sleep(fallingAcceleration(playingTime - pausingTime));
 
+
+                    //make the piece fall 1 tile
                     fallingPiece();
+                    //check for filled lines
                     lineCheck();
 
+
+                    //if the menu is paused get the current time and wait untill its closed
                     if (menu.getPaused()) {
                         startPauseTimer = true;
                         pauseStart = System.currentTimeMillis();
@@ -771,71 +845,74 @@ public class Pentris {
                     while (menu.getPaused()) {
                         Thread.sleep(100);
                     }
+                    //subtract the paused time from the timer
                     if (startPauseTimer) {
                         pauseEnd = System.currentTimeMillis();
                         startPauseTimer = false;
                         pausingTime += (pauseEnd - pauseStart);
-                        // System.out.println(pauseEnd);
-                        // System.out.println(pauseStart);
-                        // System.out.println(pausingTime);
+                        
                     }
+
+                    //set the colorblind mode for it could have been changed
                     ui.setColorblind(menu.getIsColorblind());
                 }
-                // System.out.println(score);
+                
             } catch (InterruptedException e) {
             }
-            // ui.setLost();
+        
+
+            //once youve lost stop the music and play a lost jingle
             stopmusic = true;
             playSound("Lost.wav");
 
+
+            //change ui 1 last time
             ui.setState(gridclone);
+
+            // make a String for Scores.txt to store your score
             String scoreLine = name + ":" + score + "\n";
             // this part of the code writes to scores.txt
             ArrayList<String> file = new ArrayList<String>();
             try {
+
+                //reads and stores every line of Scores.txt
                 File myObj = new File("Scores.txt");
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
                     file.add(data);
-                    // System.out.println(data);
+
+                    
                 }
 
                 myReader.close();
+
+                
                 FileWriter myWriter = new FileWriter("Scores.txt");
-                Boolean found = true;
-                for (int i = 0; i < file.size(); i++) {
-                    // System.out.println(file.get(i));
-                    if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
-                        myWriter.write(scoreLine);
-                        myWriter.write(file.get(i) + "\n");
-                        found = false;
-                    } else {
-                        myWriter.write(file.get(i) + "\n");
-                    }
-                }
-                if (found) {
-                    myWriter.write(scoreLine);
+                //this writes all scores back into the file while putting the current score in the right place
+                for (int i = 0; i < file.size(); i++) {    
+                    myWriter.write(file.get(i) + "\n");
+            
                 }
                 myWriter.close();
-                // System.out.println("Successfully wrote to the file.");
+                
             } catch (IOException e) {
-                // System.out.println("An error occurred.");
+                System.out.println("An error occurred.");
                 e.printStackTrace();
             }
 
-            // System.out.println("check");
+            // make and show the end menu
             endMenu = new endMenu();
             endMenu.setLost(Lost);
+            //wait untill menu closes 
             while (endMenu.getLost()) {
                 endMenu.UI.setVisible(true);
                 Thread.sleep(100);
             }
             Lost = endMenu.getLost();
             ui.window.dispose();
+            score = 0;
+            nextPieces.clear();
         }
-    }
-
-    public static void moveHorizontal(boolean b) {
     }
 }

@@ -15,10 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-// import javax.imageio.ImageIO;
-// import java.io.File;
-// import java.io.IOException;
-
 public class startMenu implements ActionListener, MouseListener {
     JFrame UI;
     //////////////////////////////////////////
@@ -74,12 +70,18 @@ public class startMenu implements ActionListener, MouseListener {
     boolean playBot = false;
 
     public static void main(String[] args) {
-        new startMenu();
+        new startMenu("", 1, 15, 5, false);
     }
 
-    public startMenu() {
+    public startMenu(String playerName, int levelInt, int intSizeY, int intSizeX, boolean isColorBlind) {
+        this.playerName = playerName;
+        this.levelInt = levelInt;
+        this.intSizeY = intSizeY;
+        this.intSizeX = intSizeX;
+        this.isColorBlind = isColorBlind;
+
         // Textfield:
-        inputName = new JTextField();
+        inputName = new JTextField(playerName);
         inputName.setLocation(200, 160);
         inputName.setSize(195, 50);
         inputName.addActionListener(this);
@@ -105,6 +107,9 @@ public class startMenu implements ActionListener, MouseListener {
         buttonMinus.setSize(50, 50);
 
         // ButtonColorMode:
+        if (isColorBlind){
+            colorblindNormal = "Colorblind";
+        }
         buttonColormode = new JButton(colorblindNormal);
         buttonColormode.addActionListener(this);
         buttonColormode.setBackground(Color.BLACK);
@@ -187,7 +192,11 @@ public class startMenu implements ActionListener, MouseListener {
         colon1.setLocation(150, 50);
         colon1.setSize(20, 50);
 
-        levelNumber = new JLabel(" " + levelInt);
+        if (levelInt < 10){
+            levelNumber = new JLabel(" " + levelInt);
+        }else{
+            levelNumber = new JLabel("" + levelInt);
+        }
         levelNumber.setFont(new Font(menuLetters, Font.BOLD, 18));
         levelNumber.setForeground(Color.WHITE);
         levelNumber.setLocation(290, 50);
@@ -245,13 +254,17 @@ public class startMenu implements ActionListener, MouseListener {
         y.setLocation(120, 270);
         y.setSize(100, 50);
 
-        sizeX = new JLabel(" " + minSizeX);
+        if (intSizeX < 10){
+            sizeX = new JLabel(" " + intSizeX);
+        }else{
+            sizeX = new JLabel("" + intSizeX);
+        }
         sizeX.setFont(new Font(menuLetters, Font.BOLD, 18));
         sizeX.setForeground(Color.WHITE);
         sizeX.setLocation(290, 215);
         sizeX.setSize(50, 50);
 
-        sizeY = new JLabel("" + minSizeY);
+        sizeY = new JLabel("" + intSizeY);
         sizeY.setFont(new Font(menuLetters, Font.BOLD, 18));
         sizeY.setForeground(Color.WHITE);
         sizeY.setLocation(290, 270);
@@ -321,16 +334,6 @@ public class startMenu implements ActionListener, MouseListener {
         UI.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
     }
 
-    // public void paintComponent(Graphics g) throws IOException {
-    // Graphics2D localGraphics2D = (Graphics2D) g;
-    // localGraphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-    // RenderingHints.VALUE_ANTIALIAS_ON);
-
-    // Image design = ImageIO.read(new File("background.png")); // the design on the
-    // right side of the grid
-    // design = design.getScaledInstance(400, 400, Image.SCALE_DEFAULT);
-    // localGraphics2D.drawImage(design, 0, 0, null);
-    // }
 
     public void actionPerformed(ActionEvent e) {
         // Button press for Level:
@@ -399,7 +402,7 @@ public class startMenu implements ActionListener, MouseListener {
             inputName.setText("Enter your name!");
         }
 
-        if (e.getSource() == startBot){
+        if (e.getSource() == startBot) {
             playerName = "BOT";
             showMenu = false;
             playBot = true;
@@ -417,6 +420,10 @@ public class startMenu implements ActionListener, MouseListener {
         return isColorBlind;
     }
 
+    public void setIsColorblind(boolean c){
+        isColorBlind = c;
+    }
+
     public boolean getShowMenu() {
         return showMenu;
     }
@@ -429,22 +436,38 @@ public class startMenu implements ActionListener, MouseListener {
         return playerName;
     }
 
+    public void setName(String n){
+        playerName = n;
+    }
+
     public int getLevel() {
         return levelInt;
+    }
+
+    public void setLevel(int l){
+        levelInt = l;
     }
 
     public int getGridsizeX() {
         return intSizeX;
     }
 
+    public void setGridsizeX(int x){
+        intSizeX = x;
+    }
+
     public int getGridsizeY() {
         return intSizeY;
     }
-    
+
+    public void setGridsizeY(int y){
+        intSizeY = y;
+    }
+
     public boolean getPlayBot() {
         return playBot;
     }
-    
+
     public void setPlayBot(boolean b) {
         playBot = b;
     }

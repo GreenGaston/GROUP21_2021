@@ -1,15 +1,15 @@
-package src;
+// package src;
 
 import java.util.ArrayList;
 
-public class Knuth_X_Table {
+public class Knuth_X_Table_Parcels {
     int columnLength;
     int rowLength;
     int layersAmount;
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table table = new Knuth_X_Table(5, 8, 33);
+        Knuth_X_Table_Parcels table = new Knuth_X_Table_Parcels(5, 8, 33);
         //TODO make sure that the user can acces both the boxes and the pieces by clicking a button
         //TODO make sure that button changes the value of the useBoxes boolean
         // boolean useBoxes = false;
@@ -37,7 +37,7 @@ public class Knuth_X_Table {
         // storedPiece2 = table.flipPiece(storedPiece2);
     }
     
-    public Knuth_X_Table(int rows, int columns, int layers){
+    public Knuth_X_Table_Parcels(int rows, int columns, int layers){
         this.columnLength = rows;
         this.rowLength = columns;
         this.layersAmount = layers;

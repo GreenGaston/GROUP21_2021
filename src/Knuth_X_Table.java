@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.util.ArrayList;
 
@@ -9,8 +9,7 @@ public class Knuth_X_Table {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table table = new Knuth_X_Table(5, 5, 5);
-        // Knuth_X_Table table = new Knuth_X_Table(5, 8, 33);
+        Knuth_X_Table table = new Knuth_X_Table(5, 8, 33);
         //TODO make sure that the user can acces both the boxes and the pieces by clicking a button
         //TODO make sure that button changes the value of the useBoxes boolean
         // boolean useBoxes = false;
@@ -39,8 +38,8 @@ public class Knuth_X_Table {
     }
     
     public Knuth_X_Table(int rows, int columns, int layers){
-        this.columnLength = columns;
-        this.rowLength = rows;
+        this.columnLength = rows;
+        this.rowLength = columns;
         this.layersAmount = layers;
         this.layerSize = columnLength*rowLength;
         this.volume = layerSize*layersAmount;
@@ -79,7 +78,7 @@ public class Knuth_X_Table {
 
                     // // Used for test purposes
                     // // Using the next 3 lines to be able to stop on a certain step in the programm
-                    // if (k == 1225 && i == 0 && j == 0){
+                    // if (k == 137 && i == 1 && j == 1){
                     //     System.out.println("Start here");
                     // }
 
@@ -181,7 +180,7 @@ public class Knuth_X_Table {
         }        
 
         // Check if the piece fits with the calculated values
-        if(layerCount+piece.length <= layersAmount && rowCount+piece[0].length < rowLength){
+        if(layerCount+piece.length <= layersAmount && rowCount+piece[0].length <= columnLength){
             return true;
         }else{
             return false;
@@ -208,10 +207,10 @@ public class Knuth_X_Table {
         }
         
         // Check in what column the piece will be placed
-        int columnCount = layerPosition-rowCount*rowLength;
+        int columnCount = layerPosition-1-rowCount*rowLength;
         
         // Check if the piece fits with the calculated values
-        if(layerCount+piece.length <= layersAmount && columnCount+piece[0].length < columnLength){
+        if(layerCount+piece.length <= layersAmount && columnCount+piece[0].length <= rowLength){
             return true;
         }else{
             return false;
@@ -235,9 +234,9 @@ public class Knuth_X_Table {
         }
         
         // Check in what column the piece will be placed
-        int columnCount = layerPosition-rowCount*rowLength;
+        int columnCount = layerPosition-1-rowCount*rowLength;
         
-        if (rowCount+piece.length > rowLength || columnCount+piece[0].length > columnLength){
+        if (rowCount+piece.length > columnLength || columnCount+piece[0].length > rowLength){
             return false;
         }else{
             return true;

@@ -1,14 +1,16 @@
+// package src;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class basicAI {
     //public static int[][] testgrid = Pentris.grid;
-    public static int[][] testgrid = Pentris.grid;
+    public int[][] testgrid = Pentris.grid;
     public static int piececount = 0;
     public static ArrayList<Integer> heightofgridelements;
     public static ArrayList<Integer> amountofholes;
-    public static ArrayList<Integer> botmovements = new ArrayList<>();
+    public ArrayList<Integer> botmovements = new ArrayList<>();
     public static double high = 1000;
     public static double current;
     public static double a, b, c, d, e;
@@ -17,7 +19,7 @@ public class basicAI {
     public boolean runrobot;
 
 
-    public static ArrayList<Integer> getRobotMovements(){
+    public ArrayList<Integer> getRobotMovements(){
         //These values decide the weight of each check in the score
         a = 0.31006;            //height
         b = 0.45;               //amount of holes
@@ -32,7 +34,7 @@ public class basicAI {
     }
 
     //This method clones an arraylist
-    public static ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
+    public ArrayList<Integer> cloneArrayList(ArrayList<Integer> list){
         ArrayList<Integer> clone = new ArrayList<>();
         for(int i =0; i < list.size(); i++){
             clone.add(list.get(i));
@@ -42,7 +44,7 @@ public class basicAI {
 
 
    
-    public static void robotMovements(){
+    public void robotMovements(){
         high = 10000; //the highest score is set 10000, so that every other score is below this
         current = 0; //this is the variable for the score every space simulation cycle
         botmovements = new ArrayList<>(); //an empty list that will contain all the bot key inputs

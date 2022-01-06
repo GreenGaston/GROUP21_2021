@@ -26,8 +26,8 @@ public class Pentris { // the main class for our PENTRIS game
     // Is a Tetris game with falling pentominoes, with an AI playing the game added
     // to it
 
-    public static int height = 0;
-    public static int width = 0;
+    public static int height = 15;
+    public static int width = 5;
 
     public static int uiWidth = 10;
     public static int uiHeight = 18;
@@ -91,14 +91,15 @@ public class Pentris { // the main class for our PENTRIS game
     public static boolean holdCharge = true;
     public static int score = 0;
     public static int[] scaling = { 0, 40, 100, 300, 1200, 4800 };
+    //public static int[] scaling={0,1,2,3,4,5};
     public static int beginning = (int) System.currentTimeMillis() / 1000;
     public static long pausingTime;
     public static boolean stopmusic = false;
 
-    public static String name;
+    public static String name = "";
     public static int level = 1;
-    public static int gameLevel;
-    public static boolean isColorblind;
+    public static int gameLevel = 1;
+    public static boolean isColorblind = false;
     public static int startingLevel;
     public static double startingAcceleration;
 
@@ -649,10 +650,20 @@ public class Pentris { // the main class for our PENTRIS game
     public static ArrayList<Integer> botmovements;
 
     public static void main(String[] args) throws InterruptedException, AWTException {
+        boolean playBot = false;
+
         //while you havent lost
         while (!Lost) {
             //make a start menu
-            startMenu startMenu = new startMenu();
+            startMenu startMenu;
+            // If the bot has played the game the run before,
+            // reset the starting variables for name
+            if(playBot){
+                name = "";
+            }
+            startMenu = new startMenu(name, gameLevel, height, width, isColorblind);
+
+            startMenu.setPlayBot(false);
 
             //make it visible
             startMenu.setShowMenu(true);
@@ -669,7 +680,7 @@ public class Pentris { // the main class for our PENTRIS game
             height = startMenu.getGridsizeY();
             width = startMenu.getGridsizeX();
             isColorblind = startMenu.getIsColorblind();
-            boolean playBot = startMenu.getPlayBot();
+            playBot = startMenu.getPlayBot();
             menu = new Menu(isColorblind);
             stopmusic = false;
 
@@ -725,7 +736,6 @@ public class Pentris { // the main class for our PENTRIS game
                     } catch (LineUnavailableException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -751,26 +761,25 @@ public class Pentris { // the main class for our PENTRIS game
             beginning = (int) System.currentTimeMillis() / 1000;
             // PentrisAI ai=new PentrisAI();
 
-//TetrisAI-----------------------------------------------------------------------------------------------------------------------
-if (playBot){//if the bot is not selected in the menue, don't start the thread
-Robot excecuter = new Robot();
-basicAI ai = new basicAI();       
-Thread tetrisbot = new Thread(){
-
-    public void run(){
-                    try{
-                        while(!Lost){//while not lost the bot should keep playing
-                            ai.testgrid = grid; //updates the testgrid for the bot
-                            ai.getRobotMovements(); //recieves the movements the robot should do
-                            ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
-                        
-                            //excecutes the movements of the bot
-                            for(int i = 0; i < movements.size(); i++){
-                                int current = movements.get(i);
-                                excecuter.keyPress(current);
-                                excecuter.delay(50); //the bot should wait 50ms before excecuting the next move
-                            }
-                            Thread.sleep(800);
+            //TetrisAI-----------------------------------------------------------------------------------------------------------------------
+            if (playBot){//if the bot is not selected in the menue, don't start the thread
+            Robot excecuter = new Robot();
+            basicAI ai = new basicAI();       
+                Thread tetrisbot = new Thread(){
+                    public void run(){
+                        try{
+                            while(!Lost){//while not lost the bot should keep playing
+                                ai.testgrid = grid; //updates the testgrid for the bot
+                                ai.getRobotMovements(); //recieves the movements the robot should do
+                                ArrayList<Integer> movements = ai.cloneArrayList(ai.botmovements);
+                            
+                                //excecutes the movements of the bot
+                                for(int i = 0; i < movements.size(); i++){
+                                    int current = movements.get(i);
+                                    excecuter.keyPress(current);
+                                    excecuter.delay(50); //the bot should wait 50ms before excecuting the next move
+                                }
+                                Thread.sleep(800);
 
                                 if (menu.getPaused()) {
                                     startPauseTimer = true;
@@ -787,19 +796,16 @@ Thread tetrisbot = new Thread(){
                                     // System.out.println(pauseStart);
                                     // System.out.println(pausingTime);
                                 }
-                                ui.setColorblind(menu.getIsColorblind());
 
+                                ui.setColorblind(menu.getIsColorblind());
                             }
                         } catch (InterruptedException e) {
-
                         }
-
                     }
                 };
                 tetrisbot.start();
             }
-            startMenu.setPlayBot(false);
-// -------------------------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------------------------
 
             // ------------------------------------------------------------------------------
             //main code of the game
@@ -880,22 +886,13 @@ Thread tetrisbot = new Thread(){
                 }
 
                 myReader.close();
-                FileWriter myWriter = new FileWriter("Scores.txt");
-                Boolean found = true;
-                //this writes all scores back into the file while putting the current score in the right place
-                for (int i = 0; i < file.size(); i++) {
-                    // System.out.println(file.get(i));
 
-                    if (Integer.valueOf(file.get(i).split(":")[1]) < score && found) {
-                        myWriter.write(scoreLine);
-                        myWriter.write(file.get(i) + "\n");
-                        found = false;
-                    } else {
-                        myWriter.write(file.get(i) + "\n");
-                    }
-                }
-                if (found) {
-                    myWriter.write(scoreLine);
+                
+                FileWriter myWriter = new FileWriter("Scores.txt");
+                //this writes all scores back into the file while putting the current score in the right place
+                for (int i = 0; i < file.size(); i++) {    
+                    myWriter.write(file.get(i) + "\n");
+            
                 }
                 myWriter.close();
                 

@@ -11,11 +11,23 @@ public class AlgorithmX {
     class Node { // class that implements dancing links
         // a mesh of 4 way connected nodes
         // each node contains:
-    Node left; // Pointer to node left to it
-    Node right; // Pointer to node right of it
-    Node above; // Pointer to node above it
-    Node below; // Pointer to node below it
-    Node header; // Pointer to list header node to which it belongs
+        Node left; // Pointer to node left to it
+        Node right; // Pointer to node right of it
+        Node above; // Pointer to node above it
+        Node below; // Pointer to node below it
+        Node header; // Pointer to list header node to which it belongs
+
+        int size = 0;
+        int limitation = -1;
+        int num = -1;
+        int position = -1;
+
+        public class ColNode { // inner class of Node, for every column of the linked list, there is a
+                               // columnNode that contains identifying info about that specific column as well
+                               // as the size of the column ( number of Nodes in it)
+            // Each Node points to four other nodes and its columnNode
+
+        }
 
     }
 
@@ -45,6 +57,9 @@ public class AlgorithmX {
      ** Pointer to node above it
      ** Pointer to node below it
      ** Pointer to list header node to which it belongs
+
+     DANCING LINKS PRINCIPLE:
+     - Dancing links 
      * 
      * -------------------------------------------------------------------------------------------------
      * 
@@ -76,24 +91,27 @@ public class AlgorithmX {
         // test with 4x4 and 5x5
     }
 
-    public static int chooseColRow() {
+    public static ColNode chooseColRow() {
         // TODO: Otherwise choose a column c (deterministically)
         // choose the column with the smallest possible size
         // According to Donald Knuth's paper, it is most efficient to choose the column
         // with the smallest possible size.
         // That is what we do.
         ColNode rightOfRoot = (ColNode) root.right; // we cast the node to the right of the root to be a
-                                                          // ColumnNode
+                                                    // ColumnNode
         ColNode smallest = rightOfRoot;
         while (rightOfRoot.right != root) {
             rightOfRoot = (ColNode) rightOfRoot.right;
-            if (rightOfRoot.size < smallest.size) // choosing which column has the lowest size
+            if (rightOfRoot.size() < smallest.size()) // choosing which column has the lowest size
             {
                 smallest = rightOfRoot;
             }
         }
         return smallest;
     }
+
+    private Object dataNode;
+    private Object rowNode;
 
     public void exactCover() {
         // TODO: remove the columns head by remapping the node to its left to the node
@@ -125,12 +143,13 @@ public class AlgorithmX {
     }
 
     public void search(int k) {
+        // TODO: find out how to implement the right variables
         if (h.right == h) {
             System.out.println(partialSolution);
             return;
         } else {
             ColNode column = chooseColRow();
-            cover(column);
+            exactCover(column);
 
             for (Node row = column.down; rowNode != column; rowNode = rowNode.down) {
                 partialSolution.add(rowNode);

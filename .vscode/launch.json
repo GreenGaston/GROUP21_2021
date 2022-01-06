@@ -9,6 +9,13 @@
             "name": "Launch Pentris",
             "request": "launch",
             "mainClass": "Pentris",
+            "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pentris",
+            "request": "launch",
+            "mainClass": "Pentris",
             "projectName": "GROUP21_2021_1f0d57cf"
         },
         {

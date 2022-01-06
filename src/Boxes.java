@@ -1,11 +1,15 @@
 public class Boxes {
     int[] All_Boxes;
 	int score;
+	int[] rotations;
+	int[] orientations;
 	
 	/*I think the names of these methods are pretty self-explanatory.
 	They come in handy in my GA file. */
-	public Boxes(int[] All_Boxes) {
+	public Boxes(int[] All_Boxes, int[] rotations, int[] orientations) {
 		this.All_Boxes = All_Boxes;
+		this.rotations= rotations;
+		this.orientations= orientations;
 		this.score = 0;
 		calculateScore();
 	}
@@ -20,6 +24,22 @@ public class Boxes {
 
 	public void setBoxes(int[] All_Boxes) {
 		this.All_Boxes = All_Boxes;
+	}
+
+	public int[] getRotation(){
+		return rotations;
+	}
+
+	public void setRotation(int[] rotations){
+		this.rotations = rotations;
+	}
+
+	public int[] getOrientation(){
+		return orientations;
+	}
+
+	public void setOrientation(int[] orientations){
+		this.orientations = orientations;
 	}
 
 	public int getScore() {

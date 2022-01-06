@@ -1,38 +1,15 @@
 package src;
-
 import java.util.*;
+import src.AlgorithmX.Node.ColNode;
 import java.io.*;
 
-public class AlgorithmX {
+public class AlgorithmX { // class that implements knuth's algorithm X: with dancing links
     static int i, j, k, r, c, rows, columns;
     // private static ArrayList perfectSolution = new ArrayList();
     private static ArrayList partialSolution = new ArrayList();
 
-    class Node { // class that implements dancing links
-        // a mesh of 4 way connected nodes
-        // each node contains:
-        Node left; // Pointer to node left to it
-        Node right; // Pointer to node right of it
-        Node above; // Pointer to node above it
-        Node below; // Pointer to node below it
-        Node header; // Pointer to list header node to which it belongs
-
-        int size = 0;
-        int limitation = -1;
-        int num = -1;
-        int position = -1;
-
-        public class ColNode { // inner class of Node, for every column of the linked list, there is a
-                               // columnNode that contains identifying info about that specific column as well
-                               // as the size of the column ( number of Nodes in it)
-            // Each Node points to four other nodes and its columnNode
-
-        }
-
-    }
-
-    /*******************************************************************************************************************************************
-     * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
+/*********************************************************************
+ * * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
      * -------------------------------------------------------------------------------------------------
      * PSEUDO CODE:
      * 1. If the matrix A has no columns, the current partial solution is a valid
@@ -47,6 +24,36 @@ public class AlgorithmX {
      * 5. repeat this algorithm recursively on the reduced matrix A
      * source: https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
      * 
+ */
+
+    static class Node { // class that implements DANCING LINKS
+        // a mesh of 4 way connected nodes
+        // each node contains:
+        Node left; // Pointer to node left to it
+        Node right; // Pointer to node right of it
+        Node above; // Pointer to node above it
+        Node below; // Pointer to node below it
+        Node header; // Pointer to list header node to which it belongs
+
+        int size = 0;
+        int limitation = -1; // TODO: figure out what to do with this, is a part of DANCING LINKS
+        int num = -1;
+        int position = -1;
+
+        int data;
+        Node nest;
+        Node prev; // variables for a Node in a Circular Doubly Linked list
+
+        static class ColNode { // inner class of Node, for every column of the linked list, there is a
+                               // columnNode that contains identifying info about that specific column as well
+                               // as the size of the column ( number of Nodes in it)
+            // Each Node points to four other nodes and its columnNode
+
+        }
+    }
+
+    /*******************************************************************************************
+     * DOCUMENTATION #2: DANING LINKS TECHNIQUE
      * Knuth's algorithm X uses the dancing link technique:
      * We transform the exact cover problem in form of matrix of 0 and 1
      * Each 1 is represented by a node of linked list and the whole matrix is
@@ -57,39 +64,28 @@ public class AlgorithmX {
      ** Pointer to node above it
      ** Pointer to node below it
      ** Pointer to list header node to which it belongs
-
-     DANCING LINKS PRINCIPLE:
-     - Dancing links 
      * 
+     * DANCING LINKS PRINCIPLE:
+     * - Dancing links is a technique that relies on the idea of a doubly circular
+     * linked list.
+     *  
+     * DOUBLY CIRCULAR LINKED LISTS:
+     * Has properties of both doubly linked list and circular linked list in which
+     * two consecutive elements are linked or connected by previous and next pointer
+     * an dthe last node points to first node by next pointer
+     * The first node points to the last node by the previous pointer as well
      * -------------------------------------------------------------------------------------------------
-     * 
-     * }
      * source: 1.
      * https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-2-implementation-dlx/?ref=lbp
      * 2. https://www.geeksforgeeks.org/exact-cover-problem-algorithm-x-set-1/
-     * 
-     * Genetisch algorithm:
-     * random character strings maken en aan een hele hoop data containers toevoegen
-     * strings staan voor pentominoe peices die we willen gebruiken
-     * voor iedere char string evaluate hoe goed die de ruimte vult en wat score is
-     * met selectiemodel genen mixen en nieuwe generaties maken
-     * 5% kans voor character om te veranderen in ander character
-     * Als heel vaak doen --> gemiddelde score voor elke generatie wordt beter
-     * (survival of fittest)
-     * Heel dichtbij de oplossing
-     * 
-     * -----------------------------------------------------------------------------------------------
-     * 
+     * 3. https://www.geeksforgeeks.org/doubly-circular-linked-list-set-1-introduction-and-insertion/
+     
      * REFERENCES:
      * https://www.ocf.berkeley.edu/~jchu/publicportal/sudoku/sudoku.paper.html
      * https://arxiv.org/pdf/cs/0011047.pdf
      * 
      * @param args
      */
-
-    public static void main(String[] args) {
-        // test with 4x4 and 5x5
-    }
 
     public static ColNode chooseColRow() {
         // TODO: Otherwise choose a column c (deterministically)
@@ -167,4 +163,18 @@ public class AlgorithmX {
             uncover(column);
         }
     }
+    public static void main(String[] args) {
+        // test with 4x4 and 5x5
+    }
+    /******************************************************************
+     * GENETIC ALGORITHM SIDE NOTE FOR MY OWN UNDERSTANDING:
+     * random character strings maken en aan een hele hoop data containers toevoegen
+     * strings staan voor pentominoe peices die we willen gebruiken
+     * voor iedere char string evaluate hoe goed die de ruimte vult en wat score is
+     * met selectiemodel genen mixen en nieuwe generaties maken
+     * 5% kans voor character om te veranderen in ander character
+     * Als heel vaak doen --> gemiddelde score voor elke generatie wordt beter
+     * (survival of fittest)
+     * Heel dichtbij de oplossing
+     */
 }

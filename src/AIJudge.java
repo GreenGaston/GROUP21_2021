@@ -1,3 +1,5 @@
+// package src;
+
 public class AIJudge {
     public static int[][][] grid = new int[2][5][5];
     public static void main(String[] args){

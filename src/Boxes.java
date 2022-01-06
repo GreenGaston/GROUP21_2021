@@ -1,3 +1,5 @@
+// package src;
+
 public class Boxes {
     int[] All_Boxes;
 	int score;

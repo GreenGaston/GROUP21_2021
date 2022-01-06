@@ -1,17 +1,17 @@
-public class AIJudge {
+public class AIJudgepentominoes {
     public static int[][][] grid = new int[2][5][5];
+    public static int score=0;
     public static void main(String[] args){
 
     }
     
 
-    public static int judge(int[] PieceIDs,int[] rotations, int[] orientations){
+    //judges an individual based on the filled volume
+    public static int judgeVolume(int[] PieceIDs,int[] rotations, int[] orientations){
         
-        if(PieceIDs.length>136){
-            return 0;
-        }
+        
         emptyGrid();
-        int score=0;
+        score=0;
         
         for(int i=0;i<PieceIDs.length;i++){
             tryPlacePiece(PieceIDs[i], rotations[i], orientations[i]);
@@ -20,11 +20,29 @@ public class AIJudge {
         emptyGrid();
         return score;
     }
+    //judges an individual based on the values of the pieces that can be placed
+    public static int judgeValues(int[] PieceIDs,int[] rotations,int[] orientations){
+        emptyGrid();
+        score=0;
+        
+        for(int i=0;i<PieceIDs.length;i++){
+            tryPlacePieceValues(PieceIDs[i], rotations[i], orientations[i]);
+        }
+        
+        emptyGrid();
+        return score;
+
+    }
+
+
+
+
+    //fill the grid with -1 aka empty spaces
     public static void emptyGrid(){
         fillNegative(grid);
     }
 
-    //
+    //try and place a piece on the grid if 
     public static void tryPlacePiece(int pieceID,int rotation,int orientation){
         int[] cords=findNextEmpty3D(grid);
         int[][]slice=get2DSlice(grid, orientation, cords[0], cords[1], cords[2]);
@@ -37,6 +55,38 @@ public class AIJudge {
         }
         
         
+    }
+    public static void tryPlacePieceValues(int pieceID,int rotation,int orientation){
+        int[] cords=findNextEmpty3D(grid);
+        int[][]slice=get2DSlice(grid, orientation, cords[0], cords[1], cords[2]);
+        int[] tempcords=getcoords(orientation, cords[0], cords[1], cords[2]);
+
+        if(PieceFit(slice, pieceID, rotation, adjustX(tempcords[1],pieceID,rotation), tempcords[0])){
+            addPiece(slice, PentominoDatabase.data[pieceID][rotation], pieceID, tempcords[0], tempcords[1]);
+            add2Dslice(grid, slice, orientation, tempcords[2]);
+            addScore(pieceID);
+            
+
+        }
+        
+        
+
+    }
+
+    public static void addScore(int piece){
+        if(piece==3){
+            score+=5;
+
+        }
+        if(piece==8){
+            score+=3;
+
+        }
+        if(piece==9){
+            score+=4;
+
+        }
+
     }
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
 		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino

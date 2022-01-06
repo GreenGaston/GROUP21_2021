@@ -13,9 +13,6 @@ public class MemberNode { // class that implements DANCING LINKS
     MemberNode header; // Pointer to list header node to which it belongs
 
     int size = 0;
-    int limitation = -1; // TODO: figure out what to do with this, is a part of DANCING LINKS
-    int num = -1;
-    int position = -1;
 
     int data;
     MemberNode next;

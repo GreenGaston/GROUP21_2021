@@ -1,7 +1,5 @@
 package src;
-
 import java.util.*;
-
 import java.io.*;
 
 public class TeamX { // class that implements knuth's algorithm X: with dancing links
@@ -45,23 +43,18 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             start = new_node;
             return;
             // If list is not empty
-
             /* Find last node */
             MemberNode last = (start).prev;
 
             // Create Node dynamically
             MemberNode new_node = new MemberNode();
             new_node.data = value;
-
             // Start is going to be next of new_node
             new_node.next = start;
-
             // Make new node previous of start
             (start).prev = new_node;
-
             // Make last previous of new node
             new_node.prev = last;
-
             // Make new node next of old last
             last.next = new_node;
         }
@@ -72,7 +65,6 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     static void insertBegin(int value) {
         // Pointer points to last Node
         MemberNode last = (start).prev;
-
         MemberNode new_node = new MemberNode();
         new_node.data = value; // Inserting the data
 
@@ -109,8 +101,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         next.prev = new_node;
     }
 
-    public static ColNode chooseColRow() {
-        // TODO: Otherwise choose a column c (deterministically)
+    public static ColNode chooseColRow() { // Otherwise choose a column c (deterministically)
         // choose the column with the smallest possible size
         // According to Donald Knuth's paper, it is most efficient to choose the column
         // with the smallest possible size.
@@ -120,16 +111,13 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         ColNode smallest = rightOfRoot;
         while (rightOfRoot.right != root) {
             rightOfRoot = (ColNode) rightOfRoot.right;
-            if (rightOfRoot.size < smallest.size) // choosing which column has the lowest size
-            {
+            if (rightOfRoot.size < smallest.size) {// choosing which column has the lowest size
                 smallest = rightOfRoot;
             }
-        }
-        return smallest;
+        } return smallest;
     }
 
-    public void exactCover(MemberNode something) {
-        // TODO: remove the columns head by remapping the node to its left to the node
+    public void exactCover(MemberNode something) { // remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
         MemberNode column = dataNode.column;
@@ -145,7 +133,6 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     }
 
     public void uncover(MemberNode something) { // add back all values of the column of the list
-        // TODO: uncover column
         MemberNode column = dataNode.column;
 
         for (MemberNode row = column.above; row != column; row = row.above)
@@ -158,8 +145,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     }
 
     public void search(int k) {
-        // TODO: find out how to implement the right variables
-        if (h.right == h) {
+        if (root.right == root) {
             System.out.println(partialSolution);
             return;
         } else {
@@ -172,7 +158,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
                 for (MemberNode rightNode = row.right; rightNode != row; rightNode = rightNode.right)
                     exactCover(rightNode);
 
-                search(k + 1);
+                search(k+1);
                 partialSolution.remove(rowNode);
                 column = rowNode.column;
 

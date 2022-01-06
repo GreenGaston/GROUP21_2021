@@ -1,17 +1,18 @@
 package src;
+
 import java.util.*;
 
 import java.io.*;
 
 public class TeamX { // class that implements knuth's algorithm X: with dancing links
-// Compare this to the hungergames: TeamX is team Katniss.
+    // Compare this to the hungergames: TeamX is team Katniss.
 
     static int i, j, k, r, c, rows, columns;
     // private static ArrayList perfectSolution = new ArrayList();
     private static ArrayList partialSolution = new ArrayList();
 
-/*********************************************************************
- * * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
+    /*********************************************************************
+     * * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
      * -------------------------------------------------------------------------------------------------
      * PSEUDO CODE:
      * 1. If the matrix A has no columns, the current partial solution is a valid
@@ -26,89 +27,87 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
      * 5. repeat this algorithm recursively on the reduced matrix A
      * source: https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
      * 
- */
+     */
 
- static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
-// TODO: root
-// TODO: dataNode
-// TODO: h
-// TODO: rowNode
+    static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
+    // TODO: root
+    // TODO: dataNode
+    // TODO: h
+    // TODO: rowNode
 
-static void insertEnd(int value) {
-    // If the list is empty, create a single node
-    // circular and doubly list
-    if (start == null)
-    {
-        MemberNode new_node = new MemberNode();
-        new_node.data = value;
-        new_node.next = new_node.prev = new_node;
-        start = new_node;
-        return;
-        // If list is not empty
- 
-    /* Find last node */
-    MemberNode last = (start).prev;
- 
-    // Create Node dynamically
-    MemberNode new_node = new MemberNode();
-    new_node.data = value;
- 
-    // Start is going to be next of new_node
-    new_node.next = start;
- 
-    // Make new node previous of start
-    (start).prev = new_node;
- 
-    // Make last previous of new node
-    new_node.prev = last;
- 
-    // Make new node next of old last
-    last.next = new_node;
+    static void insertEnd(int value) {
+        // If the list is empty, create a single node
+        // circular and doubly list
+        if (start == null) {
+            MemberNode new_node = new MemberNode();
+            new_node.data = value;
+            new_node.next = new_node.prev = new_node;
+            start = new_node;
+            return;
+            // If list is not empty
+
+            /* Find last node */
+            MemberNode last = (start).prev;
+
+            // Create Node dynamically
+            MemberNode new_node = new MemberNode();
+            new_node.data = value;
+
+            // Start is going to be next of new_node
+            new_node.next = start;
+
+            // Make new node previous of start
+            (start).prev = new_node;
+
+            // Make last previous of new node
+            new_node.prev = last;
+
+            // Make new node next of old last
+            last.next = new_node;
+        }
     }
-}
-// Function to insert Node at the beginning
-// of the List,
-static void insertBegin(int value)
-{
-    // Pointer points to last Node
-    MemberNode last = (start).prev;
- 
-    MemberNode new_node = new MemberNode();
-    new_node.data = value; // Inserting the data
- 
-    // setting up previous and next of new node
-    new_node.next = start;
-    new_node.prev = last;
- 
-    // Update next and previous pointers of start
-    // and last.
-    last.next = (start).prev = new_node;
- 
-    // Update start pointer
-    start = new_node;
-}
- 
-// Function to insert node with value as value1.
-// The new node is inserted after the node with
-// with value2
-static void insertAfter(int value1,
-                                    int value2)
-{
-    MemberNode new_node = new MemberNode();
-    new_node.data = value1; // Inserting the data
- 
-    // Find node having value2 and next node of it
-    MemberNode temp = start;
-    while (temp.data != value2)
-        temp = temp.next;
-    MemberNode next = temp.next;
- 
-    // insert new_node between temp and next.
-    temp.next = new_node;
-    new_node.prev = temp;
-    new_node.next = next;
-    next.prev = new_node;
-}
+
+    // Function to insert Node at the beginning
+    // of the List,
+    static void insertBegin(int value) {
+        // Pointer points to last Node
+        MemberNode last = (start).prev;
+
+        MemberNode new_node = new MemberNode();
+        new_node.data = value; // Inserting the data
+
+        // setting up previous and next of new node
+        new_node.next = start;
+        new_node.prev = last;
+
+        // Update next and previous pointers of start
+        // and last.
+        last.next = (start).prev = new_node;
+
+        // Update start pointer
+        start = new_node;
+    }
+
+    // Function to insert node with value as value1.
+    // The new node is inserted after the node with
+    // with value2
+    static void insertAfter(int value1,
+            int value2) {
+        MemberNode new_node = new MemberNode();
+        new_node.data = value1; // Inserting the data
+
+        // Find node having value2 and next node of it
+        MemberNode temp = start;
+        while (temp.data != value2)
+            temp = temp.next;
+        MemberNode next = temp.next;
+
+        // insert new_node between temp and next.
+        temp.next = new_node;
+        new_node.prev = temp;
+        new_node.next = next;
+        next.prev = new_node;
+    }
 
     public static ColNode chooseColRow() {
         // TODO: Otherwise choose a column c (deterministically)
@@ -129,7 +128,7 @@ static void insertAfter(int value1,
         return smallest;
     }
 
-    public void exactCover() {
+    public void exactCover(MemberNode something) {
         // TODO: remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
@@ -145,7 +144,7 @@ static void insertAfter(int value1,
             }
     }
 
-    public void uncover() { // add back all values of the column of the list
+    public void uncover(MemberNode something) { // add back all values of the column of the list
         // TODO: uncover column
         MemberNode column = dataNode.column;
 
@@ -183,6 +182,7 @@ static void insertAfter(int value1,
             uncover(column);
         }
     }
+
     public static void main(String[] args) {
         // TODO: test with 4x4 and 5x5
     }

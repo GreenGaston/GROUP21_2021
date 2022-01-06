@@ -9,24 +9,12 @@ public class Knuth_X_Table_LPT {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(5, 8, 33);
-            int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
-            ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
-            tempList = table.fillTable(pieceDatabase);
-            // table.print2DInt(table.arrayListToArray(tempList));
-            System.out.println("Total pieces placed: "+tempList.size());
-
-        
-        // // Used for test purposes
-        // int[][] testPiece = {{0,0,1},{0,1,1},{1,1,0}};
-        // int[][] storedPiece = table.rotatePiece(testPiece);
-        // storedPiece = table.rotatePiece(storedPiece);
-        // storedPiece = table.rotatePiece(storedPiece);
-        // storedPiece = table.rotatePiece(storedPiece);
-        // int[][] storedPiece2 = table.flipPiece(testPiece);
-        // storedPiece2 = table.flipPiece(storedPiece2);
-        // storedPiece2 = table.flipPiece(storedPiece2);
-        // storedPiece2 = table.flipPiece(storedPiece2);
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 5);
+        int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
+        ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
+        tempList = table.fillTable(pieceDatabase);
+        // table.print2DInt(table.arrayListToArray(tempList));
+        System.out.println("Total pieces placed: "+tempList.size());
     }
     
     public Knuth_X_Table_LPT(int rows, int columns, int layers){
@@ -234,65 +222,7 @@ public class Knuth_X_Table_LPT {
             return true;
         }
     }
-    
-    // // Rotating the piece 90 degrees to the right
-    // public int[][] rotatePiece(int[][] piece){
-        //     int[][] rotatedPiece = new int[piece[0].length][piece.length];
         
-        //     int l = rotatedPiece[0].length-1;
-        //     int k = 0;
-    //     boolean firstVisit = true;
-    //     // Go through piece array from top left to top right all to way to bottom right
-    //     // Simultaniously go through the new piece array from top right to bottom left
-    //     for (int i = 0; i < piece.length; i++){
-    //         for (int j = 0; j < piece[0].length; j++){
-    //             if(firstVisit){
-        //                 k = 0;
-    //                 firstVisit = false;
-    //             }
-    //             rotatedPiece[k][l] = piece[i][j];
-    //             k++;
-    //             if (k > rotatedPiece.length){
-        //                 k = 0;
-    //             }
-    //         }
-    //         l--;
-    //         firstVisit = true;
-    //     }
-    //     print2DInt(piece);
-    //     print2DInt(rotatedPiece);
-    //     return rotatedPiece;
-    // }
-    
-    // // Flipping the piece horizontally
-    // public int[][] flipPiece(int[][] piece){
-    //     int[][] flippedPiece = new int[piece.length][piece[0].length];
-        
-    //     int l = flippedPiece[0].length-1;
-    //     int k = 0;
-    //     boolean firstVisit = true;
-    //     // Go through piece array from top left to top right all to way to bottom right
-    //     // Simultaniously go through the new piece array from top right to bottom left
-    //     for (int i = 0; i < piece.length; i++){
-        //         for (int j = 0; j < piece[0].length; j++){
-    //             if(firstVisit){
-        //                 l = flippedPiece[0].length-1;
-        //                 firstVisit = false;
-        //             }
-        //             flippedPiece[k][l] = piece[i][j];
-    //             l--;
-    //             if (l < 0){
-    //                 l = flippedPiece[0].length-1;
-    //             }
-    //         }
-    //         k++;
-    //         firstVisit = true;
-    //     }
-    //     print2DInt(piece);
-    //     print2DInt(flippedPiece);
-    //     return flippedPiece;
-    // }
-    
     private ArrayList<Integer> fillWithZero(ArrayList<Integer> list) {
         for (int i = 0; i < volume; i++){
             list.add(0);
@@ -320,7 +250,7 @@ public class Knuth_X_Table_LPT {
     }
 
     // Used for test purposes
-    public int[][] arrayListToArray(ArrayList<ArrayList<Integer>> list){
+    private int[][] arrayListToArray(ArrayList<ArrayList<Integer>> list){
         int[][] tempArray = new int[list.size()][list.get(0).size()];
         for (int i = 0; i < list.size(); i++){
             for (int j = 0; j < list.get(0).size(); j++){

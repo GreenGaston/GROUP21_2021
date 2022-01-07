@@ -7,19 +7,9 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     // Compare this to the hungergames: TeamX is team Katniss.
 
     static int i, k, c, rows, columns;
-    public int height, width;
+    int size;
     static ColNode root = null; // starting root
     private static ArrayList partialSolution = new ArrayList();
-
-    class Coord {
-        public int x;
-        public int y;
-    
-        Coord(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
 
     /*********************************************************************
      * * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
@@ -53,42 +43,39 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
      */
 
     static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
-    // TODO: dataNode
-    // TODO: N (the size)
 
-    public ColNode createLists(int height, int width, LinkedList<Coord> list, ArrayList<ArrayList<Integer>> list2 ) {
-        this.width = width;
-        this.height = height;
+    public ColNode createLists(ArrayList<ArrayList<Integer>> list2) {
 
         // creating column headers
         root = new ColNode(); // the root is used as an entry-way to the linked list i.e. we access the list
                               // through the root
         ColNode curColumn = root;
+
         for (int col = 0; col < list2.size(); col++) // getting the column heads from the sparse matrix and filling
-                                                         // in the information about the
+                                                     // in the information about the
         // constraints. We iterate for all the column heads, thus going through all the
         // items in the first row of the sparse matrix
         {
             ColNode id = new ColNode();
-            if (col < 3 * N * N) {
+            if (col < 3 * size * size) {
                 // identifying the digit
-                int digit = (col / (3 * N)) + 1;
+                int digit = (col / (3 * size)) + 1;
                 id.num = digit;
                 // is it for a row, column or block?
-                int index = col - (digit - 1) * 3 * N;
-                if (index < N) {
+                int index = col - (digit - 1) * 3 * size;
+                if (index < size) {
                     id.limitation = 0; // we're in the row constraint
                     id.position = index;
-                } else if (index < 2 * N) {
+                } else if (index < 2 * size) {
                     id.limitation = 1; // we're in the column constraint
-                    id.position = index - N;
+                    id.position = index - size;
                 } else {
                     id.limitation = 2; // we're in the block constraint
-                    id.position = index - 2 * N;
+                    id.position = index - 2 * size;
                 }
             } else {
                 id.limitation = 3; // we're in the cell constraint
-                id.position = col - 3 * N * N;
+                id.position = col - 3 * size * size;
             }
             curColumn.right = new ColNode();
             curColumn.right.left = curColumn;
@@ -106,12 +93,15 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             curColumn = (ColNode) root.right;
             MemberNode lastCreatedElement = null;
             MemberNode firstElement = null;
+
             for (int col = 0; col < list2.get(row).size(); col++) {
-                if (list2.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here i.e.
-                                           // we were given this value in the Grid
+                if (list2.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here
+                                                  // i.e.
+                // we were given this value in the Grid
                 {
                     // create a new data element and link it
                     MemberNode colElement = curColumn;
+
                     while (colElement.below != null) {
                         colElement = colElement.below;
                     }
@@ -130,6 +120,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
                 }
                 curColumn = (ColNode) curColumn.right;
             }
+
             // link the first and the last element, again making it circular
             if (lastCreatedElement != null) {
                 lastCreatedElement.right = firstElement;
@@ -137,6 +128,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             }
         }
         curColumn = (ColNode) root.right;
+
         // link the last column elements with the corresponding columnHeads
         for (int i = 0; i < list2.get(0).size(); i++) {
             MemberNode colElement = curColumn;
@@ -147,12 +139,12 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             curColumn.above = colElement;
             curColumn = (ColNode) curColumn.right;
         }
-        return root; // We've made the doubly-linked list; we return the root of the list
+        return root; // return the root of the list
     }
 
     public void search(int k) {
         if (root.right == root) { // If the matrix A has no columns, the current partial solution is a valid
-            System.out.println(partialSolution); 
+            System.out.println(partialSolution);
             return; // terminate successfully
 
         } else {
@@ -160,27 +152,66 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             exactCover(col);
             MemberNode row = col.below;
 
-            while(row != col) {
-                if(k < partialSolution.size()) {
-                    partialSolution.remove(k); 
-                } partialSolution.add(k,row); //add the solution
+            while (row != col) {
+                if (k < partialSolution.size()) {
+                    partialSolution.remove(k);
+                }
+                partialSolution.add(k, row); // add the solution
                 MemberNode j = row.right;
 
                 while (j != row) {
                     exactCover(j.header);
                     j = j.right;
-                } 
-                search(k+1); // recursion 
-                
-                MemberNode r2 = (MemberNode)partialSolution.get(k);
+                }
+                search(k + 1); // recursion
+
+                MemberNode r2 = (MemberNode) partialSolution.get(k);
                 MemberNode j2 = r2.left;
-                
+
                 while (j2 != r2) {
                     uncover(j2.header);
                     j2 = j2.left;
-                } row = row.below;
-            } uncover(col);
+                }
+                row = row.below;
+            }
+            uncover(col);
         }
+    }
+
+    private void mapSolvedToGrid() 
+    {
+     int[] result = new int[size*size];
+     for(Iterator it = partialSolution.iterator(); it.hasNext();)  // we use Iterators to iterate over every single element of the ArrayList
+      // we stop iterating once we run out of elements in the list
+     {
+      // for the first step, we pull all the values of the solved Sudoku board from the linked list to an array result[] in order
+      int number = -1; // initialize number and cell number to be a value that can't occur
+      int cellNo = -1;
+      MemberNode element = (MemberNode)it.next();
+      MemberNode next = element;
+      do {
+       if (next.header.info.constraint == 0) 
+       { // if we're in the row constraint
+        number = next.header.info.number; 
+       } 
+       else if (next.header.info.constraint == 3) 
+       { // if we're in the cell constraint
+        cellNo = next.header.info.position;
+       }
+       next = next.right;
+      } while(element != next);
+      result[cellNo] = number; // feed values into result[]
+     }
+     // for the second step, we feed all the values of the array result[] (in order) to the Grid   
+     int resultCounter=0;
+     for (int r=0; r<N; r++) // iterates for the rows
+     {
+      for (int c=0; c<N; c++) // iterates for the columns
+      {
+       Grid[r][c]=result[resultCounter];
+       resultCounter++;
+      }
+     }  
     }
 
     static void insertEnd(int value) {
@@ -271,7 +302,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     public void exactCover(MemberNode column) { // remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
-        //MemberNode column = MemberNode.column;
+        // MemberNode column = MemberNode.column;
         MemberNode curRow = column.below;
 
         column.right.left = column.left;
@@ -286,7 +317,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
     public void uncover(MemberNode column) { // add back all values of the column of the list
         MemberNode curRow = column.above;
-       // MemberNode column = dataNode.column;
+        // MemberNode column = dataNode.column;
 
         for (MemberNode row = column.above; row != column; row = row.above)
             for (MemberNode curNode = curRow.left; curNode != row; curNode = curNode.right) {
@@ -294,7 +325,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
                 curNode.below.above = curNode;
             }
         column.right.left = column; // reinsert column head
-        column.left.right = column; 
+        column.left.right = column;
     }
 
     public static void main(String[] args) {

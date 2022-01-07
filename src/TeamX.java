@@ -6,7 +6,7 @@ import java.io.*;
 public class TeamX { // class that implements knuth's algorithm X: with dancing links
     // Compare this to the hungergames: TeamX is team Katniss.
 
-    static int i, j, k, r, c, rows, columns;
+    static int i, k, c, rows, columns;
     public int height, width;
     static ColNode root = null; // starting root
     private static ArrayList partialSolution = new ArrayList();
@@ -69,8 +69,6 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         // constraints. We iterate for all the column heads, thus going through all the
         // items in the first row of the sparse matrix
         {
-            // We create the ColumnID that will store the information. We will later map
-            // this ID to the current curColumn
             ColNode id = new ColNode();
             if (col < 3 * N * N) {
                 // identifying the digit
@@ -157,24 +155,26 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             System.out.println(partialSolution);
             return;
         } else {
-            ColNode column = chooseColRow();
+            ColNode column = chooseColRow(); // choose a column to cover
             exactCover(column);
 
-            for (MemberNode row = column.below; rowNode != column; rowNode = rowNode.down) {
-                partialSolution.add(rowNode);
+            for (MemberNode row = column.below; k != column; k = k.down) {
+                partialSolution.add(k);
 
                 for (MemberNode rightNode = row.right; rightNode != row; rightNode = rightNode.right)
                     exactCover(rightNode);
 
-                search(k+1);
-                partialSolution.remove(rowNode);
-                column = rowNode.column;
+                search(k+1); // recursion 
 
-                for (MemberNode leftNode = rowNode.left; leftNode != row; leftNode = leftNode.left)
+                partialSolution.remove(k);
+                column = k.column;
+
+                for (MemberNode leftNode = k.left; leftNode != row; leftNode = leftNode.left)
                     uncover(leftNode);
             }
             uncover(column);
         }
+    }
 
     static void insertEnd(int value) {
         // If the list is empty, create a single node
@@ -261,7 +261,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         return smallest;
     }
 
-    public void exactCover() { // remove the columns head by remapping the node to its left to the node
+    public void exactCover(MemberNode column) { // remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
         MemberNode column = MemberNode.column;
@@ -276,16 +276,17 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             }
     }
 
-    public void uncover() { // add back all values of the column of the list
-        MemberNode column = dataNode.column;
+    public void uncover(MemberNode column) { // add back all values of the column of the list
+        MemberNode curRow = column.above;
+       // MemberNode column = dataNode.column;
 
         for (MemberNode row = column.above; row != column; row = row.above)
-            for (MemberNode leftNode = row.left; leftNode != row; leftNode = leftNode.right) {
-                leftNode.above.below = leftNode;
-                leftNode.below.above = leftNode;
+            for (MemberNode curNode = curRow.left; curNode != row; curNode = curNode.right) {
+                curNode.above.below = curNode; // reinsert node into linked list
+                curNode.below.above = curNode;
             }
-        column.right.left = column;
-        column.left.right = column; // relink to row
+        column.right.left = column; // reinsert column head
+        column.left.right = column; 
     }
 
     public static void main(String[] args) {

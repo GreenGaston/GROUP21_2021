@@ -8,7 +8,7 @@ public class ColNode extends MemberNode { // subclass of Node, for every column 
     // closer to Finnick than to Katniss
 
     // Each Node points to four other nodes and its columnNode
-    int limitation = -1; // TODO: figure out what to do with this, is a part of DANCING LINKS
+    int limitation = -1; 
     int num = -1;
     int position = -1;
 

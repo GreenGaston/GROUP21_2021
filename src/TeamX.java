@@ -80,7 +80,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             curColumn.right = new ColNode();
             curColumn.right.left = curColumn;
             curColumn = (ColNode) curColumn.right;
-            curColumn.info = id; // the information about the column is set to the new column
+            // curColumn.info = id; // the information about the column is set to the new column
             curColumn.header = curColumn;
         }
         curColumn.right = root; // making the list circular i.e. the right-most ColumnHead is linked to the root
@@ -178,109 +178,77 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         }
     }
 
-    private void mapSolvedToGrid() 
-    {
-     int[] result = new int[size*size];
-     for(Iterator it = partialSolution.iterator(); it.hasNext();)  // we use Iterators to iterate over every single element of the ArrayList
-      // we stop iterating once we run out of elements in the list
-     {
-      // for the first step, we pull all the values of the solved Sudoku board from the linked list to an array result[] in order
-      int number = -1; // initialize number and cell number to be a value that can't occur
-      int cellNo = -1;
-      MemberNode element = (MemberNode)it.next();
-      MemberNode next = element;
-      do {
-       if (next.header.info.constraint == 0) 
-       { // if we're in the row constraint
-        number = next.header.info.number; 
-       } 
-       else if (next.header.info.constraint == 3) 
-       { // if we're in the cell constraint
-        cellNo = next.header.info.position;
-       }
-       next = next.right;
-      } while(element != next);
-      result[cellNo] = number; // feed values into result[]
-     }
-     // for the second step, we feed all the values of the array result[] (in order) to the Grid   
-     int resultCounter=0;
-     for (int r=0; r<N; r++) // iterates for the rows
-     {
-      for (int c=0; c<N; c++) // iterates for the columns
-      {
-       Grid[r][c]=result[resultCounter];
-       resultCounter++;
-      }
-     }  
-    }
 
-    static void insertEnd(int value) {
-        // If the list is empty, create a single node
-        // circular and doubly list
-        if (start == null) {
-            MemberNode new_node = new MemberNode();
-            new_node.data = value;
-            new_node.next = new_node.prev = new_node;
-            start = new_node;
-            return;
-            // If list is not empty
-            /* Find last node */
-            MemberNode last = (start).prev;
+/***********************************************************
+ * IF WE WOULDN'T USE DANCING LINKS: THIS BULLSHIT IS THE ALTERNATIVE:
+ * // static void insertEnd(int value) {
+    //     // If the list is empty, create a single node
+    //     // circular and doubly list
+    //     if (start == null) {
+    //         MemberNode new_node = new MemberNode();
+    //         new_node.data = value;
+    //         new_node.next = new_node.prev = new_node;
+    //         start = new_node;
+    //         return;
+    //         // If list is not empty
+    //         /* Find last node */
+    //         MemberNode last = (start).prev;
 
-            // Create Node dynamically
-            MemberNode new_node = new MemberNode();
-            new_node.data = value;
-            // Start is going to be next of new_node
-            new_node.next = start;
-            // Make new node previous of start
-            (start).prev = new_node;
-            // Make last previous of new node
-            new_node.prev = last;
-            // Make new node next of old last
-            last.next = new_node;
-        }
-    }
+    //         // Create Node dynamically
+    //         MemberNode new_node = new MemberNode();
+    //         new_node.data = value;
+    //         // Start is going to be next of new_node
+    //         new_node.next = start;
+    //         // Make new node previous of start
+    //         (start).prev = new_node;
+    //         // Make last previous of new node
+    //         new_node.prev = last;
+    //         // Make new node next of old last
+    //         last.next = new_node;
+    //     }
+    // }
 
-    // Function to insert Node at the beginning
-    // of the List,
-    static void insertBegin(int value) {
-        // Pointer points to last Node
-        MemberNode last = (start).prev;
-        MemberNode new_node = new MemberNode();
-        new_node.data = value; // Inserting the data
+    // // Function to insert Node at the beginning
+    // // of the List,
+    // static void insertBegin(int value) {
+    //     // Pointer points to last Node
+    //     MemberNode last = (start).prev;
+    //     MemberNode new_node = new MemberNode();
+    //     new_node.data = value; // Inserting the data
 
-        // setting up previous and next of new node
-        new_node.next = start;
-        new_node.prev = last;
+    //     // setting up previous and next of new node
+    //     new_node.next = start;
+    //     new_node.prev = last;
 
-        // Update next and previous pointers of start
-        // and last.
-        last.next = (start).prev = new_node;
+    //     // Update next and previous pointers of start
+    //     // and last.
+    //     last.next = (start).prev = new_node;
 
-        // Update start pointer
-        start = new_node;
-    }
+    //     // Update start pointer
+    //     start = new_node;
+    // }
 
-    // Function to insert node with value as value1.
-    // The new node is inserted after the node with
-    // with value2
-    static void insertAfter(int value1,
-            int value2) {
-        MemberNode new_node = new MemberNode();
-        new_node.data = value1; // Inserting the data
+    // // Function to insert node with value as value1.
+    // // The new node is inserted after the node with
+    // // with value2
+    // static void insertAfter(int value1,
+    //         int value2) {
+    //     MemberNode new_node = new MemberNode();
+    //     new_node.data = value1; // Inserting the data
 
-        // Find node having value2 and next node of it
-        MemberNode temp = start;
-        while (temp.data != value2)
-            temp = temp.next;
-        MemberNode next = temp.next;
+    //     // Find node having value2 and next node of it
+    //     MemberNode temp = start;
+    //     while (temp.data != value2)
+    //         temp = temp.next;
+    //     MemberNode next = temp.next;
 
-        // insert new_node between temp and next.
-        temp.next = new_node;
-        new_node.prev = temp;
-        new_node.next = next;
-        next.prev = new_node;
-    }
+    //     // insert new_node between temp and next.
+    //     temp.next = new_node;
+    //     new_node.prev = temp;
+    //     new_node.next = next;
+    //     next.prev = new_node;
+    // }
+ 
 
     public static ColNode chooseColRow() { // Otherwise choose a column c (deterministically)
         // choose the column with the smallest possible size
@@ -303,16 +271,24 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         // to its right so that the linked list no longer contains a way to access the
         // column head.
         // MemberNode column = MemberNode.column;
-        MemberNode curRow = column.below;
-
+       
         column.right.left = column.left;
         column.left.right = column.right; // unlink from row
 
-        for (MemberNode row = column.below; row != column; row = row.below)
-            for (MemberNode rightNode = row.right; rightNode != row; rightNode = rightNode.right) {
-                rightNode.above.below = rightNode.below;
-                rightNode.below.above = rightNode.above;
-            }
+        MemberNode rightRow = column.below;
+       
+        while(rightRow != column) // because it's circular!
+        {
+         MemberNode rightNode = rightRow.right;
+         while(rightNode != rightRow) 
+         {
+          rightNode.below.above = rightNode.above;
+          rightNode.above.below = rightNode.below;
+          rightNode.header.size--;
+          rightNode = rightNode.right;
+         }
+         rightRow = rightRow.below;
+        }
     }
 
     public void uncover(MemberNode column) { // add back all values of the column of the list

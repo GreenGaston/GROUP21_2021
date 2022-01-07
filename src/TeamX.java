@@ -44,14 +44,14 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
     static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
 
-    public ColNode createLists(ArrayList<ArrayList<Integer>> list2) {
+    public ColNode createLists(ArrayList<ArrayList<Integer>> tempList) {
 
         // creating column headers
         root = new ColNode(); // the root is used as an entry-way to the linked list i.e. we access the list
                               // through the root
         ColNode curColumn = root;
 
-        for (int col = 0; col < list2.size(); col++) // getting the column heads from the sparse matrix and filling
+        for (int col = 0; col < tempList.size(); col++) // getting the column heads from the sparse matrix and filling
                                                      // in the information about the
         // constraints. We iterate for all the column heads, thus going through all the
         // items in the first row of the sparse matrix
@@ -88,14 +88,14 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
         // Once all the ColumnHeads are set, we iterate over the entire matrix
         // Iterate over all the rows
-        for (int row = 0; row < list2.size(); row++) {
+        for (int row = 0; row < tempList.size(); row++) {
             // iterator over all the columns
             curColumn = (ColNode) root.right;
             MemberNode lastCreatedElement = null;
             MemberNode firstElement = null;
 
-            for (int col = 0; col < list2.get(row).size(); col++) {
-                if (list2.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here
+            for (int col = 0; col < tempList.get(row).size(); col++) {
+                if (tempList.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here
                                                   // i.e.
                 // we were given this value in the Grid
                 {
@@ -130,7 +130,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         curColumn = (ColNode) root.right;
 
         // link the last column elements with the corresponding columnHeads
-        for (int i = 0; i < list2.get(0).size(); i++) {
+        for (int i = 0; i < tempList.get(0).size(); i++) {
             MemberNode colElement = curColumn;
             while (colElement.below != null) {
                 colElement = colElement.below;
@@ -233,7 +233,11 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     }
 
     public static void main(String[] args) {
-        // TODO: test with 4x4 and 5x5
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 4);
+        int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
+        ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
+        tempList = table.fillTable(pieceDatabase); 
+
     }
     /******************************************************************
      * GENETIC ALGORITHM SIDE NOTE FOR MY OWN UNDERSTANDING:

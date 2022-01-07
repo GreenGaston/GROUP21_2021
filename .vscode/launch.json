@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TeamX",
+            "request": "launch",
+            "mainClass": "src.TeamX",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
             "name": "Launch PentominoSolver3D",
             "request": "launch",
             "mainClass": "PentominoSolver3D",

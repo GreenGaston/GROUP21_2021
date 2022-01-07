@@ -46,7 +46,7 @@ public class GA {
 		//elitest selection (choosing the top 40%)
 		AIJudgeParcels.scoring(Max_value);
 		//TODO: tournament
-
+		//some psuedo code i found to apply tournament
 		// while (nextPopulation too small) {
 		// 	Members tournament = randomly choose x members from currentPopulation
 		

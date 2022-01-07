@@ -6,6 +6,11 @@ public class AIJudgeParcels {
     public static void main(String[] args){
 
     }
+    public static void scoring(Boxes i[]){	
+        for (int j = 0; j < i.length; j++) {
+            i[j].setScore(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
+        }
+        }
     
     //judges based on the volume it will fill
     public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations){

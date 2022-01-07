@@ -50,7 +50,10 @@ public class Boxes {
 
 	public void setScore(int score) {
 		this.score = score;
+		
 	}
+	//fori in populatie
+	//pop i.setscore (AIjudgeParcels(pop i GetBoxes, popi getRotationsrotations, pop i Getorientations))
 	
 	public String Description() {
 		StringBuilder builder = new StringBuilder();
@@ -63,7 +66,7 @@ public class Boxes {
 		for(int i = 0; i < BoxClone.length; i++) {
 			BoxClone[i] = All_Boxes[i];
 		}
-		return new Boxes(BoxClone);
+		return new Boxes(BoxClone, orientations, rotations);
 	}
 	
 	public  void  calculateScore() {

@@ -11,6 +11,16 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     static ColNode root = null; // starting root
     private static ArrayList partialSolution = new ArrayList();
 
+    class Coord {
+        public int x;
+        public int y;
+    
+        Coord(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     /*********************************************************************
      * * DOCUMENTATION: KNUTH'S ALGORITHM X, EXACT COVER PROBLEM
      * -------------------------------------------------------------------------------------------------
@@ -46,15 +56,15 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     // TODO: dataNode
     // TODO: rowNode
 
-    public ColNode Lists(int height, int width) {
+    public ColNode createLists(int height, int width, LinkedList<Coord> list, ArrayList<ArrayList<Integer>> list2 ) {
         this.width = width;
         this.height = height;
 
+        // creating column headers
         root = new ColNode(); // the root is used as an entry-way to the linked list i.e. we access the list
                               // through the root
-        // create the column heads
         ColNode curColumn = root;
-        for (int col = 0; col < matrix[0].length; col++) // getting the column heads from the sparse matrix and filling
+        for (int col = 0; col < list2.size(); col++) // getting the column heads from the sparse matrix and filling
                                                          // in the information about the
         // constraints. We iterate for all the column heads, thus going through all the
         // items in the first row of the sparse matrix
@@ -93,13 +103,13 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
         // Once all the ColumnHeads are set, we iterate over the entire matrix
         // Iterate over all the rows
-        for (int row = 0; row < matrix.length; row++) {
+        for (int row = 0; row < list2.size(); row++) {
             // iterator over all the columns
             curColumn = (ColNode) root.right;
             MemberNode lastCreatedElement = null;
             MemberNode firstElement = null;
-            for (int col = 0; col < matrix[row].length; col++) {
-                if (matrix[row][col] == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here i.e.
+            for (int col = 0; col < list2.get(row).size(); col++) {
+                if (list2.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here i.e.
                                            // we were given this value in the Grid
                 {
                     // create a new data element and link it
@@ -130,18 +140,16 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         }
         curColumn = (ColNode) root.right;
         // link the last column elements with the corresponding columnHeads
-        for (int i = 0; i < matrix[0].length; i++) {
+        for (int i = 0; i < list2.get(0).size(); i++) {
             MemberNode colElement = curColumn;
             while (colElement.below != null) {
-                colElement = colElement.down;
+                colElement = colElement.below;
             }
             colElement.below = curColumn;
             curColumn.above = colElement;
             curColumn = (ColNode) curColumn.right;
         }
         return root; // We've made the doubly-linked list; we return the root of the list
-    }
-
     }
 
     public void search(int k) {
@@ -278,8 +286,6 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             }
         column.right.left = column;
         column.left.right = column; // relink to row
-    }
-
     }
 
     public static void main(String[] args) {

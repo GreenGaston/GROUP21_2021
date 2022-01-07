@@ -254,11 +254,11 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             temp=new ArrayList<Integer>();
             }
 
-        createLists(lijst);
+        System.out.println(createLists(lijst));
         search(k);
-        chooseColRow();
-        exactCover(columns);
-        uncover(columns);
+        System.out.println(chooseColRow());
+        exactCover(start);
+        uncover(start);
          }
 
     /******************************************************************

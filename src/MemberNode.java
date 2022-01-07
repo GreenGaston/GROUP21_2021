@@ -10,9 +10,7 @@ public class MemberNode { // class that implements DANCING LINKS
     MemberNode right; // Pointer to node right of it
     MemberNode above; // Pointer to node above it
     MemberNode below; // Pointer to node below it
-    MemberNode header; // Pointer to list header node to which it belongs
-
-    int size = 0;
+    ColNode header; // Pointer to list header node to which it belongs
 
     int data;
     MemberNode next;

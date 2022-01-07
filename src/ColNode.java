@@ -12,4 +12,6 @@ public class ColNode extends MemberNode { // subclass of Node, for every column 
     int num = -1;
     int position = -1;
 
+    int size = 0;
+
 }

@@ -54,7 +54,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
     static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
     // TODO: dataNode
-    // TODO: rowNode
+    // TODO: N (the size)
 
     public ColNode createLists(int height, int width, LinkedList<Coord> list, ArrayList<ArrayList<Integer>> list2 ) {
         this.width = width;
@@ -264,7 +264,8 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     public void exactCover(MemberNode column) { // remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
-        MemberNode column = MemberNode.column;
+        //MemberNode column = MemberNode.column;
+        MemberNode curRow = column.below;
 
         column.right.left = column.left;
         column.left.right = column.right; // unlink from row

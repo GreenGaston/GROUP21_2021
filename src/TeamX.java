@@ -1,13 +1,12 @@
 package src;
 
 import java.util.*;
-import java.io.*;
 
 public class TeamX { // class that implements knuth's algorithm X: with dancing links
     // Compare this to the hungergames: TeamX is team Katniss.
 
     static int i, k, c, rows, columns;
-    int size;
+    static int size;
     static ColNode root = null; // starting root
     private static ArrayList partialSolution = new ArrayList();
 
@@ -44,14 +43,14 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
     static MemberNode start; // start DANCING LINKS, and may the odds be ever in your favour.
 
-    public ColNode createLists(ArrayList<ArrayList<Integer>> tempList) {
+    public static ColNode createLists(ArrayList<ArrayList<Integer>> lijst) {
 
         // creating column headers
         root = new ColNode(); // the root is used as an entry-way to the linked list i.e. we access the list
                               // through the root
         ColNode curColumn = root;
 
-        for (int col = 0; col < tempList.size(); col++) // getting the column heads from the sparse matrix and filling
+        for (int col = 0; col < lijst.size(); col++) // getting the column heads from the sparse matrix and filling
                                                      // in the information about the
         // constraints. We iterate for all the column heads, thus going through all the
         // items in the first row of the sparse matrix
@@ -83,19 +82,20 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             // curColumn.info = id; // the information about the column is set to the new column
             curColumn.header = curColumn;
         }
-        curColumn.right = root; // making the list circular i.e. the right-most ColumnHead is linked to the root
+        curColumn.right = root; // make the list circular i.e. the right-most ColumnHead is linked to the root
         root.left = curColumn;
 
-        // Once all the ColumnHeads are set, we iterate over the entire matrix
+        // iterate over the entire matrix
+
         // Iterate over all the rows
-        for (int row = 0; row < tempList.size(); row++) {
+        for (int row = 0; row < lijst.size(); row++) {
             // iterator over all the columns
             curColumn = (ColNode) root.right;
             MemberNode lastCreatedElement = null;
             MemberNode firstElement = null;
 
-            for (int col = 0; col < tempList.get(row).size(); col++) {
-                if (tempList.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here
+            for (int col = 0; col < lijst.get(row).size(); col++) {
+                if (lijst.get(row).get(col) == 1) // i.e. if the sparse matrix element has a 1 i.e. there is a clue here
                                                   // i.e.
                 // we were given this value in the Grid
                 {
@@ -130,7 +130,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         curColumn = (ColNode) root.right;
 
         // link the last column elements with the corresponding columnHeads
-        for (int i = 0; i < tempList.get(0).size(); i++) {
+        for (int i = 0; i < lijst.get(0).size(); i++) {
             MemberNode colElement = curColumn;
             while (colElement.below != null) {
                 colElement = colElement.below;
@@ -139,10 +139,10 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             curColumn.above = colElement;
             curColumn = (ColNode) curColumn.right;
         }
-        return root; // return the root of the list
+        return root; 
     }
 
-    public void search(int k) {
+    public static void search(int k) {
         if (root.right == root) { // If the matrix A has no columns, the current partial solution is a valid
             System.out.println(partialSolution);
             return; // terminate successfully
@@ -195,17 +195,17 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         return smallest;
     }
 
-    public void exactCover(MemberNode column) { // remove the columns head by remapping the node to its left to the node
+    public static void exactCover(MemberNode columns) { // remove the columns head by remapping the node to its left to the node
         // to its right so that the linked list no longer contains a way to access the
         // column head.
         // MemberNode column = MemberNode.column;
        
-        column.right.left = column.left;
-        column.left.right = column.right; // unlink from row
+        columns.right.left = columns.left;
+        columns.left.right = columns.right; // unlink from row
 
-        MemberNode rightRow = column.below;
+        MemberNode rightRow = columns.below;
        
-        while(rightRow != column) // because it's circular!
+        while(rightRow != columns) // because it's circular!
         {
          MemberNode rightNode = rightRow.right;
          while(rightNode != rightRow) 
@@ -219,26 +219,48 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         }
     }
 
-    public void uncover(MemberNode column) { // add back all values of the column of the list
-        MemberNode curRow = column.above;
+    public static void uncover(MemberNode columns) { // add back all values of the column of the list
+        MemberNode curRow = columns.above;
         // MemberNode column = dataNode.column;
 
-        for (MemberNode row = column.above; row != column; row = row.above)
+        for (MemberNode row = columns.above; row != columns; row = row.above)
             for (MemberNode curNode = curRow.left; curNode != row; curNode = curNode.right) {
                 curNode.above.below = curNode; // reinsert node into linked list
                 curNode.below.above = curNode;
             }
-        column.right.left = column; // reinsert column head
-        column.left.right = column;
+        columns.right.left = columns; // reinsert column head
+        columns.left.right = columns;
     }
 
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 4);
-        int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
-        ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
-        tempList = table.fillTable(pieceDatabase); 
 
-    }
+        ArrayList<Integer> temp=new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> lijst=new ArrayList<ArrayList<Integer>>();
+
+        int[][] matrix={
+            {1,0,0,1,0,0,1},
+            {1,0,0,1,0,0,0},
+            {0,0,0,1,1,0,1},
+            {0,0,1,0,1,1,0},
+            {0,1,1,0,0,1,1},
+            {0,1,0,0,0,0,1}};
+
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+
+                temp.add(matrix[i][j]);
+                }
+            lijst.add(temp);
+            temp=new ArrayList<Integer>();
+            }
+
+        createLists(lijst);
+        search(k);
+        chooseColRow();
+        exactCover(columns);
+        uncover(columns);
+         }
+
     /******************************************************************
      * GENETIC ALGORITHM SIDE NOTE FOR MY OWN UNDERSTANDING:
      * random character strings maken en aan een hele hoop data containers toevoegen

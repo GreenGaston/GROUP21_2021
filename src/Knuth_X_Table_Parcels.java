@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,8 @@ public class Knuth_X_Table_Parcels {
         System.out.println("Total pieces placed: "+tempList.size());
     }
     
-    public Knuth_X_Table_Parcels(int rows, int columns, int layers){
+    public Knuth_X_Table_Parcels(int rows, int columns, int layers) {
+        
         this.columnLength = rows;
         this.rowLength = columns;
         this.layersAmount = layers;

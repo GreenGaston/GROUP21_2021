@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 public class AIJudgeParcels {
     public static int[][][] grid = new int[2][5][5];

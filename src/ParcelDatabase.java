@@ -1,7 +1,7 @@
-// package src;
+package src;
 
 public class ParcelDatabase {
-    public int[][][][] parcels=
+    public static int[][][][] parcels=
     {  
         //parcelA rotation 1
         {

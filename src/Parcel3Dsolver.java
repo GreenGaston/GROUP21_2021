@@ -1,3 +1,5 @@
+package src;
+
 public class Parcel3Dsolver {
 
     public static int gridscore=0;

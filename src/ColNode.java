@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 public class ColNode extends MemberNode { // subclass of Node, for every column of the linked list, there is a
     // columnNode that contains identifying info about that specific column as well

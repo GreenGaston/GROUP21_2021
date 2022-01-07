@@ -1,7 +1,4 @@
-package src;
-
-
-
+//package src;
 
 public class PentominoSolver3D {
     public static int counter=0;

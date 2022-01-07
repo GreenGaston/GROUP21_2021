@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 public class MemberNode { // class that implements DANCING LINKS
     // a mesh of 4 way connected nodes

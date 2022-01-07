@@ -1,7 +1,4 @@
-// package src;
-
-
-
+//package src;
 
 public class PentominoSolver3D {
     public static int counter=0;
@@ -615,16 +612,13 @@ public class PentominoSolver3D {
         }
         return optimisedmatrix;
     }
-
-    
+      
     // this function evaluated if a piece can be placed on a give grid at a certain
     // x and y location
     public static boolean PieceFit(int[][] grid, int PieceID, int Piecemutation, int x, int y) {
         // if the x is negative then the starting point is of the grid and therefor
         // invalid
-        if (x < 0) {
-
-            return false;
+        if (x < 0) { return false;
         }
 
         // shorthand for readability
@@ -647,7 +641,6 @@ public class PentominoSolver3D {
                 //int[][] gridclone = clone2Dint(grid);
                 //Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
 
-                
                 return true;
             } else {
                 return false;
@@ -656,8 +649,6 @@ public class PentominoSolver3D {
             return false;
         }
     }
-
-
 
     //TODO; make this 3D
     // Function which checks whether a -1 in the grid is surrounded by zeros, if so,
@@ -692,8 +683,7 @@ public class PentominoSolver3D {
                     }
                 }
             }
-        }
-        return result;
+        } return result;
     }
     public static int[][][][] parcels=
     {  

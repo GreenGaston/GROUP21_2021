@@ -151,28 +151,35 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
     }
 
     public void search(int k) {
-        if (root.right == root) {
-            System.out.println(partialSolution);
-            return;
+        if (root.right == root) { // If the matrix A has no columns, the current partial solution is a valid
+            System.out.println(partialSolution); 
+            return; // terminate successfully
+
         } else {
-            ColNode column = chooseColRow(); // choose a column to cover
-            exactCover(column);
+            ColNode col = chooseColRow(); // choose a column to cover (deterministically)
+            exactCover(col);
+            MemberNode row = col.below;
 
-            for (MemberNode row = column.below; k != column; k = k.down) {
-                partialSolution.add(k);
+            while(row != col) {
+                if(k < partialSolution.size()) {
+                    partialSolution.remove(k); 
+                } partialSolution.add(k,row); //add the solution
+                MemberNode j = row.right;
 
-                for (MemberNode rightNode = row.right; rightNode != row; rightNode = rightNode.right)
-                    exactCover(rightNode);
-
+                while (j != row) {
+                    exactCover(j.header);
+                    j = j.right;
+                } 
                 search(k+1); // recursion 
-
-                partialSolution.remove(k);
-                column = k.column;
-
-                for (MemberNode leftNode = k.left; leftNode != row; leftNode = leftNode.left)
-                    uncover(leftNode);
-            }
-            uncover(column);
+                
+                MemberNode r2 = (MemberNode)partialSolution.get(k);
+                MemberNode j2 = r2.left;
+                
+                while (j2 != r2) {
+                    uncover(j2.header);
+                    j2 = j2.left;
+                } row = row.below;
+            } uncover(col);
         }
     }
 

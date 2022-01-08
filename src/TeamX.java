@@ -148,16 +148,16 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
             return; // terminate successfully
 
         } else {
-            ColNode col = chooseColRow(); // choose a column to cover (deterministically)
+            ColNode col = chooseCol(); // choose a column to cover (deterministically)
             exactCover(col);
-            MemberNode row = col.below;
+            MemberNode row = col.below; //Choose a row r such that Ar,c = 1 (nondeterministically)
 
             while (row != col) {
                 if (k < partialSolution.size()) {
                     partialSolution.remove(k);
                 }
                 partialSolution.add(k, row); // add the solution
-                MemberNode j = row.right;
+                MemberNode j = row.right; // dancing links
 
                 while (j != row) {
                     exactCover(j.header);
@@ -178,7 +178,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         }
     }
 
-    public static ColNode chooseColRow() { // Otherwise choose a column c (deterministically)
+    public static ColNode chooseCol() { // Otherwise choose a column c (deterministically)
         // choose the column with the smallest possible size
         // According to Donald Knuth's paper, it is most efficient to choose the column
         // with the smallest possible size.
@@ -256,90 +256,8 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
         System.out.println(createLists(lijst));
         search(k);
-        System.out.println(chooseColRow());
+        System.out.println(chooseCol());
         exactCover(start);
         uncover(start);
          }
-
-    /******************************************************************
-     * GENETIC ALGORITHM SIDE NOTE FOR MY OWN UNDERSTANDING:
-     * random character strings maken en aan een hele hoop data containers toevoegen
-     * strings staan voor pentominoe peices die we willen gebruiken
-     * voor iedere char string evaluate hoe goed die de ruimte vult en wat score is
-     * met selectiemodel genen mixen en nieuwe generaties maken
-     * 5% kans voor character om te veranderen in ander character
-     * Als heel vaak doen --> gemiddelde score voor elke generatie wordt beter
-     * (survival of fittest)
-     * Heel dichtbij de oplossing
-     */
-
-     /***********************************************************
- * IF WE WOULDN'T USE DANCING LINKS: THIS BULLSHIT IS THE ALTERNATIVE:
- * // static void insertEnd(int value) {
-    //     // If the list is empty, create a single node
-    //     // circular and doubly list
-    //     if (start == null) {
-    //         MemberNode new_node = new MemberNode();
-    //         new_node.data = value;
-    //         new_node.next = new_node.prev = new_node;
-    //         start = new_node;
-    //         return;
-    //         // If list is not empty
-    //         /* Find last node */
-    //         MemberNode last = (start).prev;
-
-    //         // Create Node dynamically
-    //         MemberNode new_node = new MemberNode();
-    //         new_node.data = value;
-    //         // Start is going to be next of new_node
-    //         new_node.next = start;
-    //         // Make new node previous of start
-    //         (start).prev = new_node;
-    //         // Make last previous of new node
-    //         new_node.prev = last;
-    //         // Make new node next of old last
-    //         last.next = new_node;
-    //     }
-    // }
-
-    // // Function to insert Node at the beginning
-    // // of the List,
-    // static void insertBegin(int value) {
-    //     // Pointer points to last Node
-    //     MemberNode last = (start).prev;
-    //     MemberNode new_node = new MemberNode();
-    //     new_node.data = value; // Inserting the data
-
-    //     // setting up previous and next of new node
-    //     new_node.next = start;
-    //     new_node.prev = last;
-
-    //     // Update next and previous pointers of start
-    //     // and last.
-    //     last.next = (start).prev = new_node;
-
-    //     // Update start pointer
-    //     start = new_node;
-    // }
-
-    // // Function to insert node with value as value1.
-    // // The new node is inserted after the node with
-    // // with value2
-    // static void insertAfter(int value1,
-    //         int value2) {
-    //     MemberNode new_node = new MemberNode();
-    //     new_node.data = value1; // Inserting the data
-
-    //     // Find node having value2 and next node of it
-    //     MemberNode temp = start;
-    //     while (temp.data != value2)
-    //         temp = temp.next;
-    //     MemberNode next = temp.next;
-
-    //     // insert new_node between temp and next.
-    //     temp.next = new_node;
-    //     new_node.prev = temp;
-    //     new_node.next = next;
-    //     next.prev = new_node;
-    // }
 }

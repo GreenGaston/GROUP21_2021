@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GA",
+            "request": "launch",
+            "mainClass": "GA",
+            "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
             "name": "Launch PentominoSolver3D",
             "request": "launch",
             "mainClass": "PentominoSolver3D",

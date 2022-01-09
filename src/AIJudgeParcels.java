@@ -9,6 +9,7 @@ public class AIJudgeParcels {
     public static void scoring(Boxes i[]){	
         for (int j = 0; j < i.length; j++) {
             i[j].setScore(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
+            System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
         }
     

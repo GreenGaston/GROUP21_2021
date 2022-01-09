@@ -1,111 +1,222 @@
 import java.util.Random;
 
+import javax.swing.Box;
+
 
 public class GA {
-    public static int generation = 0;
+    public static int generation = 100;
 	static final int TARGET = 165;
+	public static int pieceAmount = 24;
 	static int mutationRate = 5;
-	static private int[] Weight = {16,24,27};
+	// static private int[] Weight;
 	// static private int[] scores = {6,8,10};
 	// static private int unchanged_box = 1;
-	static private int[] orientations = {1,2,3};
-	static private int[] rotations = {1,2,3};
+	// static private int[] orientations;
+	// static private int[] rotations;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
-	public static void main(double[] args) {
+	public static void main(String[] args) {
 	 
 
-		int Max_Value = 165;
-		for (int i = 16; i <= 27; i++) {
-			Weight[i-16] = i;			
-		}
-		Weight[4] = ' ';
-		orientations[4] = ' ';
-		rotations[4] = ' ';
-
+		int Max_Value = 160;
+				
 		Random generator = new Random(System.currentTimeMillis());
 		Boxes[] boxPopulation = new Boxes[Max_Value];
-
-		//initialize random boxes
+		int[] boxOrientation = new int[pieceAmount];
+		int[] boxRotation = new int[pieceAmount];
+		int[] TemporaryBox = new int[pieceAmount];
+		
+		//initialize random boxes, rotation and orientation
+		
 		for (int i = 0; i < Max_Value; i++) {
-			int[] TemporaryBox = new int[TARGET];
-			for (int k = 0; k < TARGET; k++) {
-				TemporaryBox[k] =Weight[generator.nextInt(Weight.length)];
+			for (int k = 0; k < pieceAmount; k++) {
+				TemporaryBox[k] = generator.nextInt(3);
+				boxRotation[k] = generator.nextInt(4);
+				boxOrientation[k] = generator.nextInt(3);
 			} 
-			boxPopulation[i] = new Boxes(TemporaryBox, orientations, rotations);
+			boxPopulation[i] = new Boxes(TemporaryBox, boxRotation, boxOrientation);
 		}
 		
-		GeneticAlgorithm(boxPopulation, Max_Value);
+		
 
+		GeneticAlgorithm(boxPopulation, generation);
 	}
+	
 
-		public static void GeneticAlgorithm(Boxes [] Max_value, int BoxSize){
+	//sorting based on score
+	public static void sortBoxes(Boxes[] population){
+        Boxes[] answer=new Boxes[population.length];
+        int[] scores=new int[population.length];
+        for(int i=0;i<population.length;i++){
+            scores[i]=population[i].getScore();
+        }
+
+        //bubble sort
+        int listlength = scores.length;
+        for (int i = 0; i < listlength-1; i++){
+            for (int j = 0; j < listlength-i-1; j++){
+                if (scores[j] > scores[j+1])
+                {
+
+                    int temp = scores[j];
+                    scores[j] = scores[j+1];
+                    scores[1+j] = temp;
+
+                    Boxes temp1= population[j];
+                    population[j] =population[j+1];
+                    population[j+1] =temp1;
+                }
+            }
+        }
+    }
+
+	public static void GeneticAlgorithm(Boxes [] Max_value, int generations){
 		//put the method here in setboxes
 
 		
-		//elitest selection (choosing the top 40%)
 		AIJudgeParcels.scoring(Max_value);
-		//TODO: tournament
-		//some psuedo code i found to apply tournament
-		// while (nextPopulation too small) {
-		// 	Members tournament = randomly choose x members from currentPopulation
+		Boxes[] newPopulation = new Boxes[Max_value.length];
 		
-		// 	if(crossover){
-		// 		Member parents = select best two members from tournament
-		// 		Member children = crossover(parents)
-		// 		nextPopulation.add(children);
-		// 	} else {
-		// 		Member parent = select best one member from tournament
-		// 		Member child = mutate(parent)
-		// 		nextPopulation.add(child);
-		// 	}
-		// }
+		//method 
+		Boxes[] tempBoxes = new Boxes[5];
+		Boxes parent1;
+		Boxes parent2;
 		
-		Boxes [] newBoxes = new Boxes [BoxSize +((BoxSize/100)*40)];
-		for (int i = 0; i < Max_value.length; i++) {	
-			newBoxes[i]=Max_value[i];
-		}
+		Random rand = new Random();
+		for (int j = 0; j < generations; j++) {
+			
 		
-		generation++;
+			for (int i = 0; i < Max_value.length/2; i++) {
+				tempBoxes[0] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[1] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[2] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[3] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[4] = Max_value[rand.nextInt(Max_value.length)];
 
-		//crossover the top25% of the boxes
-		
-		int crossing = BoxSize;
-		for (int i = 0; i < (Max_value.length/100)*25; i++) {
-			int cross = 0;
+				
+				sortBoxes(tempBoxes);
+				parent1 = tempBoxes[4];
+				tempBoxes = new Boxes[5];
 
-			Random random = new Random();
-			int crossoverLocation = random.nextInt(3);
+				tempBoxes[0] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[1] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[2] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[3] = Max_value[rand.nextInt(Max_value.length)];
+				tempBoxes[4] = Max_value[rand.nextInt(Max_value.length)];
 
-			while(cross <2){
-				newBoxes[crossing]= crossoverBoxes(newBoxes[i], newBoxes[i+1], crossoverLocation)[cross];
-				cross++;
-				crossing ++;
+				
+				sortBoxes(tempBoxes);
+				parent2 = tempBoxes[4];
+				tempBoxes = new Boxes[5];
+				
+				Boxes [] Boxchildren = crossoverBoxes(parent1, parent2, rand.nextInt(parent1.getAllBoxes().length));
+				newPopulation[i+Max_value.length/2] = Boxchildren[0];
+				newPopulation[i] = Boxchildren[1];
 			}
 
+			Max_value = newPopulation;
 		}
+
+
+
+				
+		// Boxes [] newBoxes = new Boxes [BoxSize];
+		// for (int i = 0; i < Max_value.length; i++) {	
+		// 	newBoxes[i]=Max_value[i];
+		// }
+		
+		generation++;
+		//crossover the top25% of the boxes
+		
+		// int crossoverBoxes = BoxSize;
+		// for (int i = 0; i < (Max_value.length/100)*25; i++) {
+		// 	int cross = 0;
+			
+		// 	Random random = new Random();
+		// 	int crossoverLocation = random.nextInt(3);
+			
+		// 	while(cross <2){
+		// 		newBoxes[crossoverBoxes]= crossoverBoxes(newBoxes[i], newBoxes[i+1], crossoverLocation)[cross];
+		// 		cross++;
+		// 		crossoverBoxes ++;
+		// 	}
+			
+		// }
+
+		//psuedocode of my idea:
+		//1. pick 5 random boxes from the boxpopulation(Max_value)
+		//2. cross over the 2 best scoring boxes from the 5 I just picked
+		//3. add the new chromosome  to the next population
+		//3. repeat this untill best score achieved
+
+		//for(random generation)
+		// pick 5
+		//crossover 2 best scoring --> child
+		// add child to population
+
+		//sorting method
+
+
+		//if(crossoverBoxes>0){
+			
+		// 	Boxes [] tournament = new Boxes [crossoverBoxes+((crossoverBoxes/100)*2)];
+		// 	for (int i = 0; i < Max_value.length; i++) {	
+		// 	tournament[i]=Max_value[i];
+		// 	}
+			
+		// 	Random random = new Random();
+		// 	int crossoverLocation = random.nextInt(3);
+			
+		// 	Boxes [] tournamentChildren = crossoverBoxes(tournament, tournament, crossoverLocation);
+		// 			Boxes newpopulation = Max_value.Boxes(tournamentChildren)
+		// }
+
+		// else{
+
+		// 	Boxes [] tournament = new Boxes [crossoverBoxes+((crossoverBoxes/100)*1)];
+		// 		for (int i = 0; i < Max_value.length; i++) {	
+		// 			tournament[i]=Max_value[i];
+		// 			}
+					
+		// 			Random random = new Random();
+		// 			int crossoverLocation = random.nextInt(3);
+					
+		// 			Boxes [] tournamentChild2 = crossoverBoxes(tournament, tournament, crossoverLocation);
+		// 			Boxes newpopulation = Max_value.Boxes(tournamentChild2)
+
+		// }
+		
+		// Boxes[] newPopulation = new Boxes[BoxSize ];
+		// for (int i = 0; i < Max_value.length; i++) {
+		// 	newPopulation[i]=Max_value[i];
+			
+		// }
+		
+
 		//TODO: mutating the boxes
 
 		//print out score and generations
 		System.out.println("Generation:" + generation + "\nScore:" + Max_value[0].getScore()+ "\n\n\n");
 	
 		//recursion
-		while (Max_value[0].score != TARGET){
-			GeneticAlgorithm(Max_value, BoxSize);
-		}
+		// while (Max_value[0].score != TARGET){
+		// 	GeneticAlgorithm(Max_value, generations);
+		// }
 
 		//Phenotype of the boxes
-		if(Max_value[0].score == TARGET){
-			for (int i = 0; i < Max_value.length; i++) {
-				System.out.println(Max_value[i].Description() + "Score: " + Max_value[i].score);
-			}
-		}
+		// if(Max_value[0].score == TARGET){
+		// 	for (int i = 0; i < Max_value.length; i++) {
+		// 		System.out.println(Max_value[i].Description() + "Score: " + Max_value[i].score);
+		// 	}
+		// }
 		
 		
 		
+	
 
 	}
 
+	
 	//something with the parcels and rotations
 	public static int getMaxRotation(int parcelID){
 		if(parcelID==0){
@@ -126,20 +237,24 @@ public class GA {
 		Boxes CrossoverBox1 = box1.clone();
 		Boxes CrossoverBox2 = box2.clone();
 
-		newBoxes[0]=CrossoverBox1;
-		newBoxes[1]=CrossoverBox2;
 		int crossoverLocation = crossoverLocations;
 
 		for (int i = 0; i < crossoverLocation; i++) {
-			box1.getAllBoxes()[i] = box2.getAllBoxes()[i];
+			CrossoverBox1.getAllBoxes()[i] = CrossoverBox2.getAllBoxes()[i];
+			CrossoverBox1.getOrientation()[i] = CrossoverBox2.getOrientation()[i];
+			CrossoverBox1.getRotation()[i] = CrossoverBox2.getRotation()[i];
 		}
+
+		
 
 		for (int i = 0; i < crossoverLocation; i++) {
-			box2.getAllBoxes()[i] = temporaryBox.getAllBoxes()[i];
+			CrossoverBox2.getAllBoxes()[i] = temporaryBox.getAllBoxes()[i];
+			CrossoverBox2.getOrientation()[i] = temporaryBox.getOrientation()[i];
+			CrossoverBox2.getRotation()[i] = temporaryBox.getRotation()[i];
 		}
 
-		newBoxes[2]= box1;
-		newBoxes[3]= box2;
+		newBoxes[0]= box1;
+		newBoxes[1]= box2;
 
 		return newBoxes;
 
@@ -180,14 +295,6 @@ public class GA {
 		for(int i=0;i<boxpopulation.length;i++){
 			//get its chromosomes
 			int[] chromosomes=boxpopulation[i].getAllBoxes();
-			//for every chromosome 
-			for(int j=0;j<chromosomes.length;j++){
-				//roll a 100 sided die and if its lower then five mutate that piece into another one
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(3);
-				}
-			}
 			int[] rotations=boxpopulation[i].getRotation();
 			for(int j=0;j<rotations.length;j++){
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
@@ -197,6 +304,16 @@ public class GA {
 				}
 			}
 			//!!!!!!! be careful !!!!!! wss een out of index error
+			
+			//for every chromosome 
+			for(int j=0;j<chromosomes.length;j++){
+				//roll a 100 sided die and if its lower then five mutate that piece into another one
+				roll=rand.nextInt(100);
+				if(roll<mutationRate){
+					chromosomes[j]=rand.nextInt(3);
+					chromosomes[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
+				}
+			}
 
 			int[] orientation=boxpopulation[i].getOrientation();
 			for(int j=0;j<orientation.length;j++){

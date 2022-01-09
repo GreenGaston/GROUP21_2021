@@ -13,7 +13,7 @@ public class Boxes {
 		this.rotations= rotations;
 		this.orientations= orientations;
 		this.score = 0;
-		calculateScore();
+		
 	}
 
 	public int[] getAllBoxes() {
@@ -52,9 +52,7 @@ public class Boxes {
 		this.score = score;
 		
 	}
-	//fori in populatie
-	//pop i.setscore (AIjudgeParcels(pop i GetBoxes, popi getRotationsrotations, pop i Getorientations))
-	
+		
 	public String Description() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(All_Boxes);
@@ -63,25 +61,30 @@ public class Boxes {
 	
 	public Boxes clone() {
 		int[] BoxClone = new int[All_Boxes.length];
+		int [] orientations = new int[All_Boxes.length];
+		int [] rotations = new int[All_Boxes.length];
+
 		for(int i = 0; i < BoxClone.length; i++) {
 			BoxClone[i] = All_Boxes[i];
+			orientations[i] = this.orientations[i];
+			rotations[i] = this.rotations[i];
 		}
-		return new Boxes(BoxClone, orientations, rotations);
+		return new Boxes(BoxClone, rotations,orientations);
 	}
 	
-	public  void  calculateScore() {
-		int current_score = 0;
+	// public  void  calculateScore() {
+	// 	int current_score = 0;
 
-		int [] Highest_score = {1,0,1};
+	// 	int  Highest_score = 165;
 		
-		for(int i = 0; i<Highest_score.length; i++){
-			if(Highest_score[i] == All_Boxes[i]){
-				current_score++;
-			}
-		}
-
-		score = current_score;	
-	}
+	// 	for(int i = 0; i<Highest_score; i++){
+	// 		if(Highest_score == All_Boxes[i]){
+	// 			current_score++;
+	// 		}
+	// 	}
+		
+	// 	score = current_score;	
+	// }
 
     
 

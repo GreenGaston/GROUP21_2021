@@ -9,10 +9,10 @@ public class GA {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 100;
-	public static int generation = 100;
+	public static int generation = 10000;
 	static int mutationRate = 5;
-	public static int populationSize = 100;
-	public static int tournamentSize=3;
+	public static int populationSize = 1000;
+	public static int tournamentSize=5;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -232,14 +232,9 @@ public class GA {
 			//get its chromosomes
 			int[] chromosomes=boxpopulation[i].getAllBoxes();
 			int[] rotations=boxpopulation[i].getRotation();
-			for(int j=0;j<rotations.length;j++){
-				//roll a 100 sided die and if its lower then five mutate that rotation into another one
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
-				}
-			}
-			//!!!!!!! be careful !!!!!! wss een out of index error
+			int[] orientation=boxpopulation[i].getOrientation();
+
+			
 			
 			//for every chromosome 
 			for(int j=0;j<chromosomes.length;j++){
@@ -247,16 +242,20 @@ public class GA {
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
 					chromosomes[j]=rand.nextInt(3);
-					chromosomes[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
+					rotations[j]=rand.nextInt(getMaxRotation(chromosomes[j]));
 				}
-			}
-
-			int[] orientation=boxpopulation[i].getOrientation();
-			for(int j=0;j<orientation.length;j++){
+			
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(3);
+					rotations[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
+				}
+			//!!!!!!! be careful !!!!!! wss een out of index error
+
+				//roll a 100 sided die and if its lower then five mutate that rotation into another one
+				roll=rand.nextInt(100);
+				if(roll<mutationRate){
+					orientation[j]=rand.nextInt(3);
 				}
 			}
 

@@ -1,46 +1,64 @@
-// package src;
+//package src;
 
-public class AIJudgeParcels {
+public class AIJudgeParcelsV2 {
     public static int[][][] grid = new int[5][8][33];
     public static int score=0;
     public static void main(String[] args){
 
     }
-    public static void scoring(Boxes i[]){	
+    public static void scoring(BoxesV2 i[]){	
         for (int j = 0; j < i.length; j++) {
-            i[j].setScore(AIJudgeParcels.judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
+            i[j].setScore(AIJudgeParcelsV2.judgeVolumes(i[j]));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
         }
     
     //judges based on the volume it will fill
-    public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations){
-        
+    public static int judgeVolumes(BoxesV2 individual){
+        int[]PieceIDs=individual.Pieces;
+        int[]rotations=individual.rotations;
+        int[]orientations=individual.orientations;
+        int[] x=individual.x;
+        int[] y=individual.y;
+        int[] z=individual.z;
         emptyGrid();
         score=0;
         
         
         for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePieceVolume(PieceIDs[i], rotations[i], orientations[i]);
+            tryPlacePieceVolume(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
         }
         score=gradeGrid(grid);
         emptyGrid();
         return score;
     }
 
-    //judges based on the values of the pieces that fit
-    public static int judgeValues(int[] PieceIDs,int[] rotations, int[] orientations){
-        
-        emptyGrid();
-        score=0;
-        
-        
-        for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePieceValues(PieceIDs[i], rotations[i], orientations[i]);
+    
+
+    
+
+
+    public static int[][][] clone3Dint(int[][][] list) {
+        int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                for(int k=0; k< list[0][0].length;k++){
+                    clone[i][j][k] = list[i][j][k];
+                }
+            }
         }
-        
-        emptyGrid();
-        return score;
+        return clone;
+    }
+    public static int getValue(int PieceID){
+        if(PieceID==0){
+            return 3;
+        }
+        if(PieceID==1){
+            return 4;
+        }
+        else{
+            return 5;
+        }
     }
 
 
@@ -50,20 +68,14 @@ public class AIJudgeParcels {
     }
 
     //
-    public static void tryPlacePieceVolume(int pieceID,int rotation,int orientation){
-        int[] cords=findNextEmpty3D(grid);
-        if(piecefit3d(grid, getParcel(pieceID, rotation), cords[0], cords[1], cords[2])){
-            placePiece3D(grid, getParcel(pieceID, rotation),pieceID, cords[0], cords[1], cords[2]);
+    public static void tryPlacePieceVolume(int pieceID,int rotation,int orientation,int x,int y, int z){
+        
+        if(piecefit3d(grid, getParcel(pieceID, rotation), x, y, z)){
+            placePiece3D(grid, getParcel(pieceID, rotation),pieceID, x,y,z);
         }
     }
 
-    public static void tryPlacePieceValues(int pieceID,int rotation,int orientation){
-        int[] cords=findNextEmpty3D(grid);
-        if(piecefit3d(grid, getParcel(pieceID, rotation), cords[0], cords[1], cords[2])){
-            placePiece3D(grid, getParcel(pieceID, rotation),pieceID, cords[0], cords[1], cords[2]);
-
-        }
-    }
+    
 
     public static void addScore(int parcel){
         if(parcel==0){

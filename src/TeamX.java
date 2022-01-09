@@ -149,7 +149,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
 
         } else {
             ColNode col = chooseCol(); // choose a column to cover (deterministically)
-            exactCover(col);
+            exactCover(col); //remove column
             MemberNode row = col.below; //Choose a row r such that Ar,c = 1 (nondeterministically)
 
             while (row != col) {
@@ -160,7 +160,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
                 MemberNode j = row.right; // dancing links
 
                 while (j != row) {
-                    exactCover(j.header);
+                    exactCover(j.header); // remove row
                     j = j.right;
                 }
                 search(k + 1); // recursion
@@ -169,12 +169,12 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
                 MemberNode j2 = r2.left;
 
                 while (j2 != r2) {
-                    uncover(j2.header);
+                    uncover(j2.header); // add row
                     j2 = j2.left;
                 }
                 row = row.below;
             }
-            uncover(col);
+            uncover(col); // add colummn
         }
     }
 

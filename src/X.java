@@ -9,6 +9,10 @@ public class X {
     private static ArrayList solution = new ArrayList();
     private static int k;
     private static int row;
+    static ArrayList<Integer> rows = new ArrayList<Integer>();
+    static int j;
+    private static int column;
+    private static ArrayList<ArrayList<Integer>> list;
     
 
     public static void main(String[] args) {
@@ -21,6 +25,7 @@ public class X {
             return;
         } else {
             int columns = chooseCol(tabel); // Otherwise choose a column c (deterministically)
+            removeColumn(list,column); // remove column 
             int row = chooseRow(tabel, columns); // Choose a row r such that Ar,c = 1 (nondeterministically)
             
             while(row != columns) {
@@ -29,17 +34,18 @@ public class X {
                 } solution.add(k,row); 
                      // Include row in the partial solution
 
-                while(j != row) {
+                // For each column j such that Ar,j = 1
+                // for each row k such that Ak,j = 1
+                removeRow(list, row); //  delete row k from matrix A
+                removeColumn(list, column); //  delete column j from matrix A
+                
+                search(tabel, k+1); // repeat this algorithm recursively on the reduced matrix A
+                    }  
+                }  
+            }
+        
+    
 
-                }
-            } // For each column j such that Ar,j = 1
-        }
-    //     for each row k such that Ak,j = 1
-    //  * delete row k from matrix A
-    //  * delete column j from matrix A
-
-        search(tabel, k+1); // repeat this algorithm recursively on the reduced matrix A
-    }
 
     public static int chooseRow(ArrayList<ArrayList<Integer>> tabel, int column) {
         int a = 0;
@@ -54,7 +60,6 @@ public class X {
                 }
             }
         }
-        ArrayList<Integer> rows = new ArrayList<Integer>();
         rows.add(a);
         rows.add(b);
         for(int r=0 ; r < rows.size() ; r++) {
@@ -70,8 +75,7 @@ public class X {
         int tempscore = 0;
 
         for (int i = 0; i < tabel.get(0).size(); i++) {
-
-            for (int j = 0; j < tabel.size(); j++) {
+            for (j = 0; j < tabel.size(); j++) {
                 if (tabel.get(j).get(i) == 1) {
                     tempscore += 1;
                     if (tempscore > score) {
@@ -84,57 +88,50 @@ public class X {
                 score = tempscore;
             }
             tempscore = 0;
-        }
-        return colom;
+        } return colom;
     }
 
     public static ArrayList<ArrayList<Integer>> removeColumn(ArrayList<ArrayList<Integer>> list, int column) {
         ArrayList<ArrayList<Integer>> newlist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> templist = new ArrayList<Integer>();
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).size(); j++) {
-                if (j != column) {
-                    templist.add(list.get(i).get(j));
+            for (int a = 0; a < list.get(i).size(); a++) {
+                if (a != column) {
+                    templist.add(list.get(i).get(a));
                 }
-
             }
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        }
-        return newlist;
+        } return newlist;
     }
 
     public static ArrayList<ArrayList<Integer>> removeRow(ArrayList<ArrayList<Integer>> list, int row) {
         ArrayList<ArrayList<Integer>> newlist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> templist = new ArrayList<Integer>();
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).size(); j++) {
+            for (int b = 0; b < list.get(i).size(); b++) {
                 if (i != row) {
-                    templist.add(list.get(i).get(j));
+                    templist.add(list.get(i).get(b));
                 }
-
             }
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        }
-        return newlist;
+        } return newlist;
     }
 
     public static ArrayList<ArrayList<Integer>> copy2DArrayList(ArrayList<ArrayList<Integer>> list) {
         ArrayList<ArrayList<Integer>> newlist = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> templist = new ArrayList<Integer>();
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).size(); j++) {
-                templist.add(list.get(i).get(j));
-
+            for (int c = 0; c < list.get(i).size(); c++) {
+                templist.add(list.get(i).get(c));
             }
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        }
-        return newlist;
+        } return newlist;
     }
 
 }

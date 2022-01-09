@@ -6,38 +6,35 @@ import javax.swing.Box;
 
 
 public class GA {
-    public static int generation = 1000;
+    
 	static final int TARGET = 165;
 	public static int pieceAmount = 100;
+	public static int generation = 1000;
 	static int mutationRate = 5;
-	public static int Max_Value = 0;
-	// static private int[] Weight;
-	// static private int[] scores = {6,8,10};
-	// static private int unchanged_box = 1;
-	// static private int[] orientations;
-	// static private int[] rotations;
+	public static int populationSize = 1000;
+	public static int tournamentSize=3;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
 	 
 
-		Max_Value = 1000;
+		
 				
 		Random generator = new Random(System.currentTimeMillis());
-		Boxes[] boxPopulation = new Boxes[Max_Value];
+		Boxes[] boxPopulation = new Boxes[populationSize];
 		int[] boxOrientation = new int[pieceAmount];
 		int[] boxRotation = new int[pieceAmount];
-		int[] TemporaryBox = new int[pieceAmount];
+		int[] BoxPieces = new int[pieceAmount];
 		
 		//initialize random boxes, rotation and orientation
 		
-		for (int i = 0; i < Max_Value; i++) {
+		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				TemporaryBox[k] = generator.nextInt(3);
+				BoxPieces[k] = generator.nextInt(3);
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
 			} 
-			boxPopulation[i] = new Boxes(TemporaryBox, boxRotation, boxOrientation);
+			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
 		
@@ -84,15 +81,15 @@ public class GA {
         }
     }
 
-	public static void GeneticAlgorithm(Boxes [] Max_value, int generations){
+	public static void GeneticAlgorithm(Boxes [] Population, int generations){
 		//put the method here in setboxes
 
 		
-		AIJudgeParcels.scoring(Max_value);
-		Boxes[] newPopulation = new Boxes[Max_value.length];
+		AIJudgeParcels.scoring(Population);
+		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
-		Boxes[] tempBoxes = new Boxes[5];
+		Boxes[] tempBoxes = new Boxes[tournamentSize];
 		Boxes parent1;
 		Boxes parent2;
 		
@@ -100,35 +97,30 @@ public class GA {
 		for (int j = 0; j < generations; j++) {
 			
 		
-			for (int i = 0; i < Max_value.length/2; i++) {
-				tempBoxes[0] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[1] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[2] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[3] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[4] = Max_value[rand.nextInt(Max_value.length)];
+			for (int i = 0; i < Population.length/2; i++) {
+				for(int k=0;k<tournamentSize;k++){
+					tempBoxes[k] = Population[rand.nextInt(Population.length)];
 
+				}
 				
 				sortBoxes(tempBoxes);
-				parent1 = tempBoxes[4];
-				tempBoxes = new Boxes[5];
+				parent1 = tempBoxes[tournamentSize-1];
+				tempBoxes = new Boxes[tournamentSize];
 
-				tempBoxes[0] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[1] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[2] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[3] = Max_value[rand.nextInt(Max_value.length)];
-				tempBoxes[4] = Max_value[rand.nextInt(Max_value.length)];
-
+				for(int k=0;k<tournamentSize;k++){
+					tempBoxes[k] = Population[rand.nextInt(Population.length)];
+				}
 				
 				sortBoxes(tempBoxes);
-				parent2 = tempBoxes[4];
-				tempBoxes = new Boxes[5];
+				parent2 = tempBoxes[tournamentSize-1];
+				tempBoxes = new Boxes[tournamentSize];
 				
 				Boxes [] Boxchildren = crossoverBoxes(parent1, parent2, rand.nextInt(parent1.getAllBoxes().length));
-				newPopulation[i+Max_value.length/2] = Boxchildren[0];
+				newPopulation[i+Population.length/2] = Boxchildren[0];
 				newPopulation[i] = Boxchildren[1];
 			}
 			mutation(newPopulation);
-			Max_value = newPopulation;
+			Population = newPopulation;
 		}
 
 
@@ -210,8 +202,8 @@ public class GA {
 		//TODO: mutating the boxes
 
 		//print out score and generations
-		sortBoxes(Max_value);
-		System.out.println("Generation:" + generation + "\nScore:" + Max_value[Max_Value-1].getScore()+ "\n\n\n");
+		sortBoxes(Population);
+		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
 
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	

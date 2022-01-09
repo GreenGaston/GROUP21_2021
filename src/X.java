@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class X {
 
     public static ArrayList<ArrayList<Integer>> answer;
     private static ArrayList<ArrayList<Integer>> tabel;
+    private static ArrayList solution = new ArrayList();
     private static int k;
+    
 
     public static void main(String[] args) {
         search(tabel,k);
@@ -16,16 +20,13 @@ public class X {
             return;
         } else {
             int columns = chooseCol(tabel); // Otherwise choose a column c (deterministically)
-            int[] rows = chooseRow(tabel, columns); 
-            for(int r=0 ; r < rows.length ; r++) {
-                
-            }
-            // Choose a row r such that Ar,c = 1 (nondeterministically)
-
+            int row = chooseRow(tabel, columns); // Choose a row r such that Ar,c = 1 (nondeterministically)
+            
             while(row != columns) {
-                if (k < answer.size()) {
-                    answer.remove(k);
-                } answer.add(k, row); // Include row r in the partial solution
+                if (k < solution.size()) {
+                    solution.remove(k);
+                } solution.add(k,row); 
+                     // Include row in the partial solution
 
                 while(j != row) {
 
@@ -39,7 +40,7 @@ public class X {
         search(tabel, k+1); // repeat this algorithm recursively on the reduced matrix A
     }
 
-    public static int[] chooseRow(ArrayList<ArrayList<Integer>> tabel, int column) {
+    public static int chooseRow(ArrayList<ArrayList<Integer>> tabel, int column) {
         int a = 0;
         int b = 0;
         for (int i = 0; i < tabel.size(); i++) {
@@ -52,8 +53,14 @@ public class X {
                 }
             }
         }
-        int[] rows = { a, b };
-        return rows;
+        ArrayList<Integer> rows = new ArrayList<Integer>();
+        rows.add(a);
+        rows.add(b);
+        for(int r=0 ; r < rows.size() ; r++) {
+            int row = rows.get(r); 
+            rows.remove(r);
+         }
+        return row;
     }
 
     public static int chooseCol(ArrayList<ArrayList<Integer>> tabel) {

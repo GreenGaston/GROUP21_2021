@@ -8,6 +8,7 @@ public class X {
     private static ArrayList<ArrayList<Integer>> tabel;
     private static ArrayList solution = new ArrayList();
     private static int k;
+    private static int row;
     
 
     public static void main(String[] args) {
@@ -57,7 +58,7 @@ public class X {
         rows.add(a);
         rows.add(b);
         for(int r=0 ; r < rows.size() ; r++) {
-            int row = rows.get(r); 
+            row = rows.get(r); 
             rows.remove(r);
          }
         return row;

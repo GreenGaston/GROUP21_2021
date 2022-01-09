@@ -69,7 +69,9 @@ public class Boxes {
 			orientations[i] = this.orientations[i];
 			rotations[i] = this.rotations[i];
 		}
-		return new Boxes(BoxClone, rotations,orientations);
+		Boxes temp =new Boxes(BoxClone, rotations,orientations);
+		temp.setScore(score);
+		return temp;
 	}
 	
 	// public  void  calculateScore() {

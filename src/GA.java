@@ -9,9 +9,9 @@ public class GA {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 100;
-	public static int generation = 1000;
+	public static int generation = 100;
 	static int mutationRate = 5;
-	public static int populationSize = 1000;
+	public static int populationSize = 100;
 	public static int tournamentSize=3;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
@@ -92,14 +92,17 @@ public class GA {
 		Boxes[] tempBoxes = new Boxes[tournamentSize];
 		Boxes parent1;
 		Boxes parent2;
+		//System.out.println(AIJudgeParcels.judgeVolumes(tempBoxes[k].getAllBoxes(), tempBoxes[k].getRotation(), tempBoxes[k].getOrientation()));
+		
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
+			GenerationSelector.setPopulation(Population);
 			
 		
 			for (int i = 0; i < Population.length/2; i++) {
 				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = Population[rand.nextInt(Population.length)];
+					tempBoxes[k] = GenerationSelector.nextBox();
 
 				}
 				
@@ -108,7 +111,7 @@ public class GA {
 				tempBoxes = new Boxes[tournamentSize];
 
 				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = Population[rand.nextInt(Population.length)];
+					tempBoxes[k] = GenerationSelector.nextBox();
 				}
 				
 				sortBoxes(tempBoxes);
@@ -123,85 +126,7 @@ public class GA {
 			Population = newPopulation;
 		}
 
-
-
-				
-		// Boxes [] newBoxes = new Boxes [BoxSize];
-		// for (int i = 0; i < Max_value.length; i++) {	
-		// 	newBoxes[i]=Max_value[i];
-		// }
 		
-		generation++;
-		//crossover the top25% of the boxes
-		
-		// int crossoverBoxes = BoxSize;
-		// for (int i = 0; i < (Max_value.length/100)*25; i++) {
-		// 	int cross = 0;
-			
-		// 	Random random = new Random();
-		// 	int crossoverLocation = random.nextInt(3);
-			
-		// 	while(cross <2){
-		// 		newBoxes[crossoverBoxes]= crossoverBoxes(newBoxes[i], newBoxes[i+1], crossoverLocation)[cross];
-		// 		cross++;
-		// 		crossoverBoxes ++;
-		// 	}
-			
-		// }
-
-		//psuedocode of my idea:
-		//1. pick 5 random boxes from the boxpopulation(Max_value)
-		//2. cross over the 2 best scoring boxes from the 5 I just picked
-		//3. add the new chromosome  to the next population
-		//3. repeat this untill best score achieved
-
-		//for(random generation)
-		// pick 5
-		//crossover 2 best scoring --> child
-		// add child to population
-
-		//sorting method
-
-
-		//if(crossoverBoxes>0){
-			
-		// 	Boxes [] tournament = new Boxes [crossoverBoxes+((crossoverBoxes/100)*2)];
-		// 	for (int i = 0; i < Max_value.length; i++) {	
-		// 	tournament[i]=Max_value[i];
-		// 	}
-			
-		// 	Random random = new Random();
-		// 	int crossoverLocation = random.nextInt(3);
-			
-		// 	Boxes [] tournamentChildren = crossoverBoxes(tournament, tournament, crossoverLocation);
-		// 			Boxes newpopulation = Max_value.Boxes(tournamentChildren)
-		// }
-
-		// else{
-
-		// 	Boxes [] tournament = new Boxes [crossoverBoxes+((crossoverBoxes/100)*1)];
-		// 		for (int i = 0; i < Max_value.length; i++) {	
-		// 			tournament[i]=Max_value[i];
-		// 			}
-					
-		// 			Random random = new Random();
-		// 			int crossoverLocation = random.nextInt(3);
-					
-		// 			Boxes [] tournamentChild2 = crossoverBoxes(tournament, tournament, crossoverLocation);
-		// 			Boxes newpopulation = Max_value.Boxes(tournamentChild2)
-
-		// }
-		
-		// Boxes[] newPopulation = new Boxes[BoxSize ];
-		// for (int i = 0; i < Max_value.length; i++) {
-		// 	newPopulation[i]=Max_value[i];
-			
-		// }
-		
-
-		//TODO: mutating the boxes
-
-		//print out score and generations
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
 
@@ -224,6 +149,8 @@ public class GA {
 	
 
 	}
+
+
 
 	
 	//something with the parcels and rotations

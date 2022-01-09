@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class X {
 
@@ -13,39 +11,36 @@ public class X {
     static int j;
     private static int column;
     private static ArrayList<ArrayList<Integer>> list;
-    
 
     public static void main(String[] args) {
-        search(tabel,k);
+        search(tabel, k);
     }
 
     public static void search(ArrayList<ArrayList<Integer>> tabel, int k) {
-        if (tabel.isEmpty()) { //If the matrix A has no columns, the current partial solution is a valid
+        if (tabel.isEmpty()) { // If the matrix A has no columns, the current partial solution is a valid
             // solution; terminate successfully
             return;
         } else {
             int columns = chooseCol(tabel); // Otherwise choose a column c (deterministically)
-            removeColumn(list,column); // remove column 
+            removeColumn(list, column); // remove column
             int row = chooseRow(tabel, columns); // Choose a row r such that Ar,c = 1 (nondeterministically)
-            
-            while(row != columns) {
+
+            while (row != columns) {
                 if (k < solution.size()) {
                     solution.remove(k);
-                } solution.add(k,row); 
-                     // Include row in the partial solution
+                }
+                solution.add(k, row);
+                // Include row in the partial solution
 
                 // For each column j such that Ar,j = 1
                 // for each row k such that Ak,j = 1
-                removeRow(list, row); //  delete row k from matrix A
-                removeColumn(list, column); //  delete column j from matrix A
-                
-                search(tabel, k+1); // repeat this algorithm recursively on the reduced matrix A
-                    }  
-                }  
-            }
-        
-    
+                removeRow(list, row); // delete row k from matrix A
+                removeColumn(list, column); // delete column j from matrix A
 
+                search(tabel, k + 1); // repeat this algorithm recursively on the reduced matrix A
+            }
+        }
+    }
 
     public static int chooseRow(ArrayList<ArrayList<Integer>> tabel, int column) {
         int a = 0;
@@ -62,10 +57,10 @@ public class X {
         }
         rows.add(a);
         rows.add(b);
-        for(int r=0 ; r < rows.size() ; r++) {
-            row = rows.get(r); 
+        for (int r = 0; r < rows.size(); r++) {
+            row = rows.get(r);
             rows.remove(r);
-         }
+        }
         return row;
     }
 
@@ -88,7 +83,8 @@ public class X {
                 score = tempscore;
             }
             tempscore = 0;
-        } return colom;
+        }
+        return colom;
     }
 
     public static ArrayList<ArrayList<Integer>> removeColumn(ArrayList<ArrayList<Integer>> list, int column) {
@@ -103,7 +99,8 @@ public class X {
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        } return newlist;
+        }
+        return newlist;
     }
 
     public static ArrayList<ArrayList<Integer>> removeRow(ArrayList<ArrayList<Integer>> list, int row) {
@@ -118,7 +115,8 @@ public class X {
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        } return newlist;
+        }
+        return newlist;
     }
 
     public static ArrayList<ArrayList<Integer>> copy2DArrayList(ArrayList<ArrayList<Integer>> list) {
@@ -131,7 +129,7 @@ public class X {
             newlist.add(templist);
             templist = new ArrayList<Integer>();
 
-        } return newlist;
+        }
+        return newlist;
     }
-
 }

@@ -20,29 +20,27 @@ public class PentominoSolver3D {
          }
 
 
-        int[][][] grid=new int[5][5][5];
+        int[][][] grid=new int[5][3][2];
         fillNegative(grid);
 
-       
-        // print3dint(grid);
-        //wakker tom: de place en addpiece werken goed de logica fout zit zich waarschijnlijk
-        //in de solve3Dpentominoes
-        //probeer handmatig 5*3*2 op te lossen
-       
+    
 
-
-        char[] list={'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'};
-        int[] beterlist=ChartoPieceID(list);
-        if(SolvePentomino3D(grid, beterlist, beterlist.length)){
-            System.out.println("het werkt");
-        }
-
-        print3dint(answerGrid);
-        // System.out.println(counter);
-        // System.out.println(findNextEmpty3D(answerGrid)[0]+"  "+findNextEmpty3D(answerGrid)[1]+"  "+findNextEmpty3D(answerGrid)[0]+"  ");
+        char[] list={'P','P','P','P','Z','Z'};
+        
+        print3dint(Solve(list, grid));
         
        
     }
+    public static int[][][] Solve(char[] pieces,int[][][] grid){
+        fillNegative(grid);
+        int[] beterlist=ChartoPieceID(pieces);
+        SolvePentomino3D(grid, beterlist, beterlist.length);
+        return answerGrid;
+    }
+
+
+
+
     public static void print3dint(int[][][] answerGrid){
         for(int i=0;i<answerGrid.length;i++){
             for(int j=0;j<answerGrid[0].length;j++){

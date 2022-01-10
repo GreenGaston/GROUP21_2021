@@ -1,25 +1,27 @@
 //package src;
 
-public class AIJudgepentominoes {
+public class AIJudgepentominoesV2 {
     public static int[][][] grid = new int[5][8][33];
     public static int score=0;
     public static void main(String[] args){
 
     }
-    public static void scoring(Boxes i[]){	
+    public static void scoring(BoxesV2 i[]){	
         for (int j = 0; j < i.length; j++) {
-            i[j].setScore(judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
+            i[j].setScore(judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation(),i[j].x,i[j].y,i[j].z));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
     }
-    public static int[][][] getMatrix(Boxes box){
+    public static int[][][] getMatrix(BoxesV2 box){
         emptyGrid();
         int[] PieceIDs=box.getAllBoxes();
         int[] rotations=box.getRotation();
-
         int[] orientations=box.getOrientation();
+        int[] x=box.x;
+        int[] y=box.y;
+        int[] z=box.z;
         for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i]);
+            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
         }
         int[][][]temp=clone3Dint(grid);
         emptyGrid();
@@ -37,15 +39,16 @@ public class AIJudgepentominoes {
         return clone;
     }
     
+    
 
-    public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations){
+    public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations,int[] x,int[] y, int[] z){
         
         emptyGrid();
         score=0;
         
         
         for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i]);
+            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
         }
         score=gradeGrid(grid);
         emptyGrid();
@@ -56,13 +59,13 @@ public class AIJudgepentominoes {
     }
 
     //
-    public static void tryPlacePiece(int pieceID,int rotation,int orientation){
-        int[] cords=findNextEmpty3D(grid);
-        int[][]slice=get2DSlice(grid, orientation, cords[0], cords[1], cords[2]);
-        int[] tempcords=getcoords(orientation, cords[0], cords[1], cords[2]);
+    public static void tryPlacePiece(int pieceID,int rotation,int orientation,int x, int y, int z){
+        
+        int[][]slice=get2DSlice(grid, orientation, x,y,z);
+        int[] tempcords=getcoords(orientation, x,y,z);
 
         if(PieceFit(slice, pieceID, rotation, adjustX(tempcords[1],pieceID,rotation), tempcords[0])){
-            addPiece(slice, PentominoDatabase.data[pieceID][rotation], pieceID, tempcords[0],adjustX(tempcords[1],pieceID,rotation));
+            addPiece(slice, PentominoDatabase.data[pieceID][rotation], pieceID, tempcords[0], adjustX(tempcords[1],pieceID,rotation));
             add2Dslice(grid, slice, orientation, tempcords[2]);
 
         }

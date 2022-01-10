@@ -5,15 +5,16 @@ import java.util.Random;
 import javax.swing.Box;
 
 
-public class GA {
+public class PentominoGA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 1000;
+	public static int pieceAmount = 264;
 	public static int generation = 1000;
-	static int mutationRate = 5;
-	public static int populationSize = 1000;
-	public static int tournamentSize=5;
+	static int mutationRate = 12;
+	public static int populationSize = 500;
+	public static int tournamentSize=20;
 	public static int[][][] answerGrid;
+	public static int[] pieces={3,8,9};
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -31,18 +32,22 @@ public class GA {
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(3);
+				BoxPieces[k] = generator.nextInt(12);
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
 			} 
 			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
+
+		
 		
 
 		GeneticAlgorithm(boxPopulation, generation);
 	}
 
+
+	
 	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
 		pieceAmount = _pieceamount;
 		generation = _generations;
@@ -57,16 +62,13 @@ public class GA {
 		int[] boxRotation = new int[pieceAmount];
 		int[] BoxPieces = new int[pieceAmount];
 		
-		
 		//initialize random boxes, rotation and orientation
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(3);
+				BoxPieces[k] = generator.nextInt(12);
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
-				
-
 			} 
 			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
@@ -79,7 +81,6 @@ public class GA {
 		return answerGrid;
 			
 	}
-	
 	
 
 	//sorting based on score
@@ -136,8 +137,8 @@ public class GA {
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
-			AIJudgeParcels.scoring(Population);
 			GenerationSelector.setPopulation(Population);
+			AIJudgepentominoes.scoring(Population);
 			
 		
 			for (int i = 0; i < Population.length/2; i++) {
@@ -169,7 +170,9 @@ public class GA {
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
+		answerGrid=AIJudgepentominoes.getMatrix(Population[populationSize-1]);
+		
+
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
 		//recursion
@@ -193,18 +196,7 @@ public class GA {
 
 
 	
-	//something with the parcels and rotations
-	public static int getMaxRotation(int parcelID){
-		if(parcelID==0){
-			return 4;
-		}
-		if(parcelID==1){
-			return 6;
-		}
-		else{
-			return 1;
-		}
-	}
+	
 
     //this is my crossover method. If you see any optimalisations possible, lmk. I'd be interested in learning other ways.
 	public static Boxes[] crossoverBoxes(Boxes box1, Boxes box2, int crossoverLocations){
@@ -281,14 +273,14 @@ public class GA {
 				//roll a 100 sided die and if its lower then five mutate that piece into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(3);
-					rotations[j]=rand.nextInt(getMaxRotation(chromosomes[j]));
+					chromosomes[j]=rand.nextInt(12);
+					
 				}
 			
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					rotations[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
+					rotations[j]=rand.nextInt(4);
 				}
 			//!!!!!!! be careful !!!!!! wss een out of index error
 

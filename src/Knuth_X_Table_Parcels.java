@@ -17,7 +17,8 @@ public class Knuth_X_Table_Parcels {
         System.out.println("Total pieces placed: "+tempList.size());
     }
     
-    public Knuth_X_Table_Parcels(int rows, int columns, int layers){
+    public Knuth_X_Table_Parcels(int rows, int columns, int layers) {
+        
         this.columnLength = rows;
         this.rowLength = columns;
         this.layersAmount = layers;
@@ -50,20 +51,20 @@ public class Knuth_X_Table_Parcels {
 
         // Fill the table with parcels in all orientations
         // For every piece and it's orientations
-        for (int i = 0; i < database.length; i++){
+        for (int j = 0; j < database.length; j++){
                 // For every placement position
             for (int k = 1; k <= volume; k++){
 
                 // // Used for test purposes
                 // // Using the next 3 lines to be able to stop on a certain step in the programm
-                // if (k == 137 && i == 1 && j == 1){
+                // if (k == 56 && j == 0){
                 //     System.out.println("Start here");
                 // }
 
-                // System.out.println("Start K: "+k+" current I: "+i+" current J: "+j);
-                // System.out.println("Horizontal: "+pieceFitHorizontal(k, database[i][j]));
-                if (parcelFit(k, database[i])){
-                    optionsTable.add(placeParcel(k, database[i]));
+                // System.out.println("Start K: "+k+" current J: "+j);
+                // System.out.println("Piecefit: "+parcelFit(k, database[j]));
+                if (parcelFit(k, database[j])){
+                    optionsTable.add(placeParcel(k, database[j]));
                 }
             }
         }
@@ -79,7 +80,17 @@ public class Knuth_X_Table_Parcels {
         // These are the positions where no parcel is located.
         fillWithZero(placeOption);
 
-        //TODO place the code for placing the parcel here
+        for (int a = 0; a < parcel.length; a++){
+            for (int b = 0; b < parcel[0].length; b++){
+                for (int c = 0; c < parcel[0][0].length; c++){
+                    placeOption.set(k-1, parcel[a][b][c]);
+                    // System.out.println("Position: "+k+" becomes: "+parcel[a][b][c]);
+                    k++;
+                }
+                k+=rowLength-parcel[0][0].length;
+            }
+            k+=rowLength*(columnLength-parcel[0].length);
+        }
 
         return placeOption;
     }

@@ -6,10 +6,24 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GAV2",
+            "request": "launch",
+            "mainClass": "GAV2",
+            "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
             "name": "Launch GA",
             "request": "launch",
             "mainClass": "GA",
             "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
+            "name": "Launch TeamX",
+            "request": "launch",
+            "mainClass": "src.TeamX",
+            "projectName": "GROUP21_2021_2c7a220"
         },
         {
             "type": "java",

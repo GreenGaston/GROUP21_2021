@@ -1,31 +1,39 @@
 //package src;
 
-public class Boxes {
-    int[] All_Boxes;
-	int score;
-	int[] rotations;
-	int[] orientations;
+public class BoxesV2 {
+    public int[] Pieces;
+	public int score;
+	public int[] rotations;
+	public int[] orientations;
+	public int[] x;
+	public int[] y;	
+	public int[] z;
+
+
 	
 	/*I think the names of these methods are pretty self-explanatory.
 	They come in handy in my GA file. */
-	public Boxes(int[] All_Boxes, int[] rotations, int[] orientations) {
-		this.All_Boxes = All_Boxes;
+	public BoxesV2(int[] All_Boxes, int[] rotations, int[] orientations,int[] x, int[] y, int[] z) {
+		this.Pieces = All_Boxes;
 		this.rotations= rotations;
 		this.orientations= orientations;
+		this.x=x;
+		this.y=y;
+		this.z=z;
 		this.score = 0;
 		
 	}
 
 	public int[] getAllBoxes() {
-		return All_Boxes;
+		return Pieces;
 	}
 
 	public int[] getBoxes(Boxes box) {
-		return All_Boxes;
+		return Pieces;
 	}
 
 	public void setBoxes(int[] All_Boxes) {
-		this.All_Boxes = All_Boxes;
+		this.Pieces = All_Boxes;
 	}
 
 	public int[] getRotation(){
@@ -55,21 +63,27 @@ public class Boxes {
 		
 	public String Description() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(All_Boxes);
+		builder.append(Pieces);
 		return builder.toString();
 	}
 	
-	public Boxes clone() {
-		int[] BoxClone = new int[All_Boxes.length];
-		int [] orientations = new int[All_Boxes.length];
-		int [] rotations = new int[All_Boxes.length];
+	public BoxesV2 clone() {
+		int[] BoxClone = new int[Pieces.length];
+		int [] orientations = new int[Pieces.length];
+		int [] rotations = new int[Pieces.length];
+		int[] x= new int[Pieces.length];
+		int[] y= new int[Pieces.length];
+		int[] z= new int[Pieces.length];
 
 		for(int i = 0; i < BoxClone.length; i++) {
-			BoxClone[i] = All_Boxes[i];
+			BoxClone[i] = Pieces[i];
 			orientations[i] = this.orientations[i];
 			rotations[i] = this.rotations[i];
+			x[i]=this.x[i];
+			y[i]=this.y[i];
+			z[i]=this.z[i];
 		}
-		Boxes temp =new Boxes(BoxClone, rotations,orientations);
+		BoxesV2 temp =new BoxesV2(BoxClone, rotations,orientations,x,y,z);
 		temp.setScore(score);
 		return temp;
 	}

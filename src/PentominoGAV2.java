@@ -9,7 +9,7 @@ public class PentominoGAV2 {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 8*33;
-	public static int generation = 1000;
+	public static int generation = 100;
 	static int mutationRate = 5;
 	public static int populationSize = 200;
 	public static int tournamentSize=5;
@@ -180,10 +180,10 @@ public class PentominoGAV2 {
 			Population = newPopulation;
 		}
 
-		
+		AIJudgeParcelsV2.scoring(Population);
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-		answerGrid=AIJudgeParcelsV2.getMatrix(Population[populationSize-1]);
+		answerGrid=AIJudgepentominoesV2.getMatrix(Population[populationSize-1]);
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
 		//recursion
@@ -298,13 +298,13 @@ public class PentominoGAV2 {
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
 					Pieces[j]=rand.nextInt(3);
-					rotations[j]=rand.nextInt(getMaxRotation(Pieces[j]));
+					rotations[j]=rand.nextInt(4);
 				}
 			
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					rotations[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
+					rotations[j]=rand.nextInt(4);
 				}
 			
 				//!!!!!!! be careful !!!!!! wss een out of index error

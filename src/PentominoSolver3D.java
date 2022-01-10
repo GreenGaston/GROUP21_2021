@@ -11,7 +11,7 @@ public class PentominoSolver3D {
 
     public static void main(String[] args) {
         
-        //TODO fatsoendelijke input method maken:
+       
         int totalVolume=5*5*5;
 
         if(totalVolume%5!=0){
@@ -221,7 +221,7 @@ public class PentominoSolver3D {
         // permutations on the next available tile 5*3*4*
         else {
 
-            //TODO: account for 3d dimensional rotations
+            
 
             for (int i = 0; i < pieceIDs.length; i++) {// for every piece
                 for(int k=0;k<3;k++){
@@ -385,25 +385,7 @@ public class PentominoSolver3D {
         return updated_x;
     }
 
-    // function for testing purposes which prints grids
-    // public static void printGrid(int[][]grid){
-    // for(int i=0;i<grid.length;i++){
-    // for(int j=0;j<grid.length;j++){
-    // System.out.print(grid[i][j]+",");
-    // }
-    // System.out.println("");
-    // }
-    // }
 
-    // //function for testing purposes which print pieces
-
-    // public static void printPiece(int[][] piece){
-    // for(int i=0;i<piece.length;i++){
-    // for(int j=0;j<piece[i].length;j++){
-    // System.out.print(piece[i][j]);}
-    // System.out.println("");
-    // }
-    // }
     public static int[][] get2DSlice(int[][][] grid , int orientation, int x,int y, int z){
         //System.out.println("x:"+x+" y:"+y+" z:"+z);
         if(orientation==0){
@@ -648,7 +630,7 @@ public class PentominoSolver3D {
         }
     }
 
-    //TODO; make this 3D
+
     // Function which checks whether a -1 in the grid is surrounded by zeros, if so,
     // return true.
     public static boolean checkMinus(int[][] arrays) {

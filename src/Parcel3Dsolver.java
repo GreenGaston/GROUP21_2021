@@ -8,7 +8,7 @@ public class Parcel3Dsolver {
     
     public static void main(String[] args){
 
-        //TODO een fatsoendelijk input method maken
+        
         char[] Parcels={'C','C','C','C','B','B','B','B','B','B'};
         int[][][]grid=new int[6][6][7];
         fillNegative(grid);

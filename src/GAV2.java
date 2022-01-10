@@ -55,7 +55,7 @@ public class GAV2 {
 	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
 		pieceAmount = _pieceamount;
 		generation = _generations;
-			mutationRate = _mutationrate;
+		mutationRate = _mutationrate;
 		populationSize = _populationsSize;
 		tournamentSize=_TournamentSize;
 
@@ -96,7 +96,7 @@ public class GAV2 {
 
 	//sorting based on score
 	public static void sortBoxes(BoxesV2[] population){
-        BoxesV2[] answer=new BoxesV2[population.length];
+       
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();
@@ -178,27 +178,11 @@ public class GAV2 {
 			Population = newPopulation;
 		}
 
-		
+		AIJudgeParcelsV2.scoring(Population);
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
 		answerGrid=AIJudgeParcelsV2.getMatrix(Population[populationSize-1]);
-		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
-	
-		//recursion
-		// while (Max_value[0].score != TARGET){
-		// 	GeneticAlgorithm(Max_value, generations);
-		// }
-
-		//Phenotype of the boxes
-		// if(Max_value[0].score == TARGET){
-		// 	for (int i = 0; i < Max_value.length; i++) {
-		// 		System.out.println(Max_value[i].Description() + "Score: " + Max_value[i].score);
-		// 	}
-		// }
 		
-		
-		
-	
 
 	}
 
@@ -256,24 +240,7 @@ public class GAV2 {
 
 	}
 
-	// //this is a mutation method for integers representing the pentomino pieces
-	// public static void mutation(Boxes[] boxpopulation){
-	// 	int roll;
-	// 	Random rand=new Random();
-	// 	//for every individual in the population
-	// 	for(int i=0;i<boxpopulation.length;i++){
-	// 		//get its chromosomes
-	// 		int[] chromosomes=boxpopulation[i].getAllBoxes();
-	// 		//for every chromosome 
-	// 		for(int j=0;j<chromosomes.length;j++){
-	// 			//roll a 100 sided die and if its lower then five mutate that piece into another one
-	// 			roll=rand.nextInt(100);
-	// 			if(roll<mutationRate){
-	// 				chromosomes[j]=rand.nextInt(12);
-	// 			}
-	// 		}
-	// 	}
-	// }
+
 
 	//this is a method i think we are going to have to use
 	public static void mutation(BoxesV2[] boxpopulation){

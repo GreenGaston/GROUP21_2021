@@ -1,21 +1,22 @@
-//package src;
+
+    //package src;
 
 import java.util.Random;
 
 
 
 
-public class PentominoGA {
+public class Given_Case_GA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 264;
-	public static int generation = 100;
-	static int mutationRate = 12;
-	public static int populationSize = 200;
-	public static int tournamentSize=20;
+	public static int pieceAmount = 400;
+	public static int generation = 300;
+	static int mutationRate = 5;
+	public static int populationSize = 500;
+	public static int tournamentSize=5;
 	public static int[][][] answerGrid;
-	public static int[] pieces={3,8,9};
 	public static int selectionType=1;
+    public static Boolean ParcelUse=true;
 	//selection type can be:
 	//1 for tournament
 	//2 for roulette
@@ -37,66 +38,68 @@ public class PentominoGA {
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(12);
+				BoxPieces[k] = generator.nextInt(3);
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
 			} 
 			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
-
-		
 		
 
-		GeneticAlgorithm(boxPopulation, generation);
+		GeneticAlgorithm(boxPopulation, generation,selectionType);
 	}
 
-
-	
-	public static int[][][] GAmethod(int _pieceamount,
-									 int _generations, 
-									 int _mutationrate,
-									 int _populationsSize,
-									 int _TournamentSize,
-									 int selectionmethod){
-		pieceAmount = _pieceamount;
+	public static int[][][] GAmethod(int[] Pieces,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize,int selectionMethod,Boolean parcel){
+		pieceAmount = Pieces.length;
 		generation = _generations;
-			mutationRate = _mutationrate;
+		mutationRate = _mutationrate;
 		populationSize = _populationsSize;
 		tournamentSize=_TournamentSize;
-		selectionType=selectionmethod;
+        selectionType=selectionMethod;
+        ParcelUse=parcel;
 
 
 		Random generator = new Random(System.currentTimeMillis());
 		Boxes[] boxPopulation = new Boxes[populationSize];
 		int[] boxOrientation = new int[pieceAmount];
 		int[] boxRotation = new int[pieceAmount];
-		int[] BoxPieces = new int[pieceAmount];
+		int[] BoxPieces = Pieces;
+		
 		
 		//initialize random boxes, rotation and orientation
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(12);
+				
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
+				
+
 			} 
 			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
 
 		
-		
+		if(ParcelUse){
 
-		GeneticAlgorithm(boxPopulation, generation);
-		return answerGrid;
+            GeneticAlgorithm(boxPopulation, generation,selectionMethod);
+            return answerGrid;
+        }
+        else{
+            GeneticAlgorithmPentominoes(boxPopulation, generation, selectionMethod);
+            return answerGrid;
+        }
+        
 			
 	}
+	
 	
 
 	//sorting based on score
 	public static void sortBoxes(Boxes[] population){
-      
+        
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();
@@ -132,27 +135,56 @@ public class PentominoGA {
         }
     }
 
-	public static void GeneticAlgorithm(Boxes [] Population, int generations){
+	public static void GeneticAlgorithm(Boxes [] Population, int generations,int selectionMethod){
 		//put the method here in setboxes
-		Boxes[] newPopulation = new Boxes[Population.length];
-		Selection.setTournamentSize(tournamentSize);
-		for (int j = 0; j < generations; j++) {
-			GenerationSelector.setPopulation(Population);
-			AIJudgepentominoes.scoring(Population);
-			
+
 		
-			newPopulation=Selection.selectionMethod(Population, selectionType);
+		
+		Boxes[] newPopulation = new Boxes[Population.length];
+	
+		Selection.setTournamentSize(tournamentSize);
+		
+		for (int j = 0; j < generations; j++) {
+			AIJudgeParcels.scoring(Population);
+			GenerationSelector.setPopulation(Population);
+			
+			newPopulation=Selection.selectionMethod(Population,selectionMethod);
+
+
 			mutation(newPopulation);
 			Population = newPopulation;
 		}
-		AIJudgepentominoes.scoring(Population);
 
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-		answerGrid=AIJudgepentominoes.getMatrix(Population[populationSize-1]);
+		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
+
+	
+
+	}
+    public static void GeneticAlgorithmPentominoes(Boxes [] Population, int generations,int selectionMethod){
+
+		Boxes[] newPopulation = new Boxes[Population.length];
+	
+		Selection.setTournamentSize(tournamentSize);
 		
+		for (int j = 0; j < generations; j++) {
+			AIJudgepentominoes.scoring(Population);
+			GenerationSelector.setPopulation(Population);
+			
+			newPopulation=Selection.selectionMethod(Population,selectionMethod);
+
+
+			mutation(newPopulation);
+			Population = newPopulation;
+		}
+
 		
+		sortBoxes(Population);
+		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
+
 	
 
 	}
@@ -160,7 +192,18 @@ public class PentominoGA {
 
 
 	
-	
+	//something with the parcels and rotations
+	public static int getMaxRotation(int parcelID){
+		if(parcelID==0){
+			return 4;
+		}
+		if(parcelID==1){
+			return 6;
+		}
+		else{
+			return 1;
+		}
+	}
 
     //this is my crossover method. If you see any optimalisations possible, lmk. I'd be interested in learning other ways.
 	public static Boxes[] crossoverBoxes(Boxes box1, Boxes box2, int crossoverLocations){
@@ -190,16 +233,7 @@ public class PentominoGA {
 
 		return newBoxes;
 
-        /*
-        How this method works: I take 2 chromosomes. I pick a crossover location.
-        the location is the point where the chromosomes will be broken. 
-        Then I move one part of parent 1 to the new part of parent 2. Then I move 
-        the part of parent 2 back to parent 1. I have made a copy(temporary box) of parent 1(box 1) so 
-        the code will remember what is was before the switch.
-        */
-
-	}
-
+    }
 
 	//this is a method i think we are going to have to use
 	public static void mutation(Boxes[] boxpopulation){
@@ -216,19 +250,14 @@ public class PentominoGA {
 			
 			//for every chromosome 
 			for(int j=0;j<chromosomes.length;j++){
-				//roll a 100 sided die and if its lower then five mutate that piece into another one
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(12);
-					
-				}
+				
 			
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					rotations[j]=rand.nextInt(4);
+					rotations[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
 				}
-			//!!!!!!! be careful !!!!!! wss een out of index error
+			    //!!!!!!! be careful !!!!!! wss een out of index error
 
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
@@ -236,6 +265,16 @@ public class PentominoGA {
 					orientation[j]=rand.nextInt(3);
 				}
 			}
+            roll=rand.nextInt(100);
+            if(roll<mutationRate){
+                int Index=rand.nextInt(chromosomes.length);
+                int Index2=rand.nextInt(chromosomes.length);
+                int temp=chromosomes[Index];
+                chromosomes[Index]=chromosomes[Index2];
+                chromosomes[Index2]=temp;
+            }
+
+
 
 		}
 
@@ -243,3 +282,6 @@ public class PentominoGA {
 
 	
 }
+
+    
+

@@ -2,18 +2,23 @@
 
 import java.util.Random;
 
-import javax.swing.Box;
+
 
 
 public class GA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 1000;
-	public static int generation = 1000;
+	public static int pieceAmount = 400;
+	public static int generation = 300;
 	static int mutationRate = 5;
-	public static int populationSize = 1000;
+	public static int populationSize = 500;
 	public static int tournamentSize=5;
 	public static int[][][] answerGrid;
+	public static int selectionType=1;
+	//selection type can be:
+	//1 for tournament
+	//2 for roulette
+	//3 for elitism
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -43,12 +48,19 @@ public class GA {
 		GeneticAlgorithm(boxPopulation, generation);
 	}
 
-	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
+	public static int[][][] GAmethod(int _pieceamount,
+									 int _generations, 
+									 int _mutationrate,
+									 int _populationsSize,
+									 int _TournamentSize,
+									 int selection_method){
+
 		pieceAmount = _pieceamount;
 		generation = _generations;
-			mutationRate = _mutationrate;
+		mutationRate = _mutationrate;
 		populationSize = _populationsSize;
 		tournamentSize=_TournamentSize;
+		selectionType=selection_method;
 
 
 		Random generator = new Random(System.currentTimeMillis());
@@ -84,7 +96,7 @@ public class GA {
 
 	//sorting based on score
 	public static void sortBoxes(Boxes[] population){
-        Boxes[] answer=new Boxes[population.length];
+        
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();
@@ -128,65 +140,25 @@ public class GA {
 		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
-		Boxes[] tempBoxes = new Boxes[tournamentSize];
-		Boxes parent1;
-		Boxes parent2;
 		//System.out.println(AIJudgeParcels.judgeVolumes(tempBoxes[k].getAllBoxes(), tempBoxes[k].getRotation(), tempBoxes[k].getOrientation()));
 		
+		Selection.setTournamentSize(tournamentSize);
 		
-		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
 			AIJudgeParcels.scoring(Population);
 			GenerationSelector.setPopulation(Population);
 			
-		
-			for (int i = 0; i < Population.length/2; i++) {
-				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = GenerationSelector.nextBox();
+			newPopulation=Selection.selectionMethod(Population,selectionType);
 
-				}
-				
-				sortBoxes(tempBoxes);
-				parent1 = tempBoxes[tournamentSize-1];
-				tempBoxes = new Boxes[tournamentSize];
 
-				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = GenerationSelector.nextBox();
-				}
-				
-				sortBoxes(tempBoxes);
-				parent2 = tempBoxes[tournamentSize-1];
-				tempBoxes = new Boxes[tournamentSize];
-				
-				Boxes [] Boxchildren = crossoverBoxes(parent1, parent2, rand.nextInt(parent1.getAllBoxes().length));
-				newPopulation[i+Population.length/2] = Boxchildren[0];
-				newPopulation[i] = Boxchildren[1];
-			}
 			mutation(newPopulation);
 			Population = newPopulation;
 		}
-
+		AIJudgeParcels.scoring(Population);
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
 		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
-		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
-	
-		//recursion
-		// while (Max_value[0].score != TARGET){
-		// 	GeneticAlgorithm(Max_value, generations);
-		// }
-
-		//Phenotype of the boxes
-		// if(Max_value[0].score == TARGET){
-		// 	for (int i = 0; i < Max_value.length; i++) {
-		// 		System.out.println(Max_value[i].Description() + "Score: " + Max_value[i].score);
-		// 	}
-		// }
-		
-		
-		
-	
 
 	}
 
@@ -244,24 +216,7 @@ public class GA {
 
 	}
 
-	// //this is a mutation method for integers representing the pentomino pieces
-	// public static void mutation(Boxes[] boxpopulation){
-	// 	int roll;
-	// 	Random rand=new Random();
-	// 	//for every individual in the population
-	// 	for(int i=0;i<boxpopulation.length;i++){
-	// 		//get its chromosomes
-	// 		int[] chromosomes=boxpopulation[i].getAllBoxes();
-	// 		//for every chromosome 
-	// 		for(int j=0;j<chromosomes.length;j++){
-	// 			//roll a 100 sided die and if its lower then five mutate that piece into another one
-	// 			roll=rand.nextInt(100);
-	// 			if(roll<mutationRate){
-	// 				chromosomes[j]=rand.nextInt(12);
-	// 			}
-	// 		}
-	// 	}
-	// }
+	
 
 	//this is a method i think we are going to have to use
 	public static void mutation(Boxes[] boxpopulation){

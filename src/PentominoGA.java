@@ -37,7 +37,7 @@ public class PentominoGA {
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(12);
+				BoxPieces[k] = pieces[generator.nextInt(3)];
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
 			} 
@@ -219,7 +219,7 @@ public class PentominoGA {
 				//roll a 100 sided die and if its lower then five mutate that piece into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					chromosomes[j]=rand.nextInt(12);
+					chromosomes[j]=pieces[rand.nextInt(3)];
 					
 				}
 			

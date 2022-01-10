@@ -17,6 +17,7 @@ public class PentominoGAV2 {
 	public static int height=8;
 	public static int width=5;
 	public static int[][][] answerGrid;
+	public static int[] pieces={3,8,9};
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -37,7 +38,7 @@ public class PentominoGAV2 {
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(12);
+				BoxPieces[k] = pieces[generator.nextInt(3)];
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
 				boxX[k]=generator.nextInt(width);
@@ -297,7 +298,7 @@ public class PentominoGAV2 {
 				//roll a 100 sided die and if its lower then five mutate that piece into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
-					Pieces[j]=rand.nextInt(3);
+					Pieces[j]=pieces[rand.nextInt(3)];
 					rotations[j]=rand.nextInt(4);
 				}
 			

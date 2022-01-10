@@ -1,147 +1,49 @@
-// package src;
+//package src;
 
-public class AIJudgeParcels {
+public class AIJudgepentominoesV2 {
     public static int[][][] grid = new int[5][8][33];
     public static int score=0;
     public static void main(String[] args){
 
     }
-    public static void scoring(Boxes i[]){	
+    public static void scoring(BoxesV2 i[]){	
         for (int j = 0; j < i.length; j++) {
-            i[j].setScore(AIJudgeParcels.judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
+            i[j].setScore(judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation(),i[j].x,i[j].y,i[j].z));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
     }
     
-    //judges based on the volume it will fill
-    public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations){
+
+    public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations,int[] x,int[] y, int[] z){
         
         emptyGrid();
         score=0;
         
         
         for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePieceVolume(PieceIDs[i], rotations[i], orientations[i]);
+            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
         }
         score=gradeGrid(grid);
         emptyGrid();
         return score;
     }
-
-    //judges based on the values of the pieces that fit
-    public static int judgeValues(int[] PieceIDs,int[] rotations, int[] orientations){
-        
-        emptyGrid();
-        score=0;
-        
-        
-        for(int i=0;i<PieceIDs.length;i++){
-            tryPlacePieceValues(PieceIDs[i], rotations[i], orientations[i]);
-        }
-        
-        emptyGrid();
-        return score;
-    }
-
-
-
     public static void emptyGrid(){
         fillNegative(grid);
     }
 
     //
-    public static void tryPlacePieceVolume(int pieceID,int rotation,int orientation){
-        int[] cords=findNextEmpty3D(grid);
-        if(piecefit3d(grid, getParcel(pieceID, rotation), cords[0], cords[1], cords[2])){
-            placePiece3D(grid, getParcel(pieceID, rotation),pieceID, cords[0], cords[1], cords[2]);
-        }
-    }
+    public static void tryPlacePiece(int pieceID,int rotation,int orientation,int x, int y, int z){
+        
+        int[][]slice=get2DSlice(grid, orientation, x,y,z);
+        int[] tempcords=getcoords(orientation, x,y,z);
 
-    public static void tryPlacePieceValues(int pieceID,int rotation,int orientation){
-        int[] cords=findNextEmpty3D(grid);
-        if(piecefit3d(grid, getParcel(pieceID, rotation), cords[0], cords[1], cords[2])){
-            placePiece3D(grid, getParcel(pieceID, rotation),pieceID, cords[0], cords[1], cords[2]);
+        if(PieceFit(slice, pieceID, rotation, adjustX(tempcords[1],pieceID,rotation), tempcords[0])){
+            addPiece(slice, PentominoDatabase.data[pieceID][rotation], pieceID, tempcords[0], adjustX(tempcords[1],pieceID,rotation));
+            add2Dslice(grid, slice, orientation, tempcords[2]);
 
         }
-    }
-
-    public static void addScore(int parcel){
-        if(parcel==0){
-            score+=3;
-        }
-        if(parcel==1){
-            score+=4;
-        }
-        if(parcel==2){
-            score+=5;
-        }
-    }
-
-
-
-    public static void placePiece3D(int[][][] grid, int[][][] piece, int pieceID, int x, int y, int z ){
-
-        for(int i=0;i<piece.length;i++){
-            for(int j=0;j<piece[0].length;j++){
-                for(int k=0;k<piece[0][0].length;k++){
-                    grid[i+x][j+y][k+z]=pieceID;
-
-                }
-            }
-        }
-    }
-
-
-    public static int[][][] getParcel(int ParcelID,int rotation){
-        if(ParcelID==0){
-            return parcels[rotation];
-        }
-        if(ParcelID==1){
-            return parcels[3+rotation];
-        }
-        else{
-            return parcels[9];
-        }
-
-    }
-    public static boolean piecefit3d(int[][][] grid, int[][][] piece, int x ,int y,int z){
-
-        try{
-            for(int i=0;i<piece.length;i++){
-                for(int j=0;j<piece[0].length;j++){
-                    for(int k=0;k<piece[0][0].length;k++){
-                        if(grid[i+x][j+y][k+z]>=0){
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }catch(IndexOutOfBoundsException e){
-            return false;
-        }
-    }
-
-
-    public static int[] charsToPieceIDs(char[] parcels){
-        int[] parcelIDs=new int[parcels.length];
-        for(int i=0;i<parcels.length;i++){
-            parcelIDs[i]=chartoID(parcels[i]);
-        }
-        return parcelIDs;
-    }
-
-    public static int chartoID(char parcel){
-        if(parcel=='A'){
-            return 0;
-        }
-        if(parcel=='B'){
-            return 1;
-        }
-        if(parcel=='C'){
-            return 2;
-        }
-        return 999;
+        
+        
     }
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
 		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
@@ -220,8 +122,63 @@ public class AIJudgeParcels {
         return;
 
     }
-    
-    
+    public static int adjustX(int x, int pieceID, int mutation) {
+        int updated_x = 0;
+        updated_x = x;
+        int zerocount = 0;
+        int[][] piece = PentominoDatabase.data[pieceID][mutation];
+        for (int i = 0; i < piece[0].length; i++) {
+            if (piece[0][i] == 0) {
+                zerocount++;
+            } else {
+                break;
+            }
+        }
+        updated_x = updated_x - zerocount;
+        return updated_x;
+    }
+    public static int[] ChartoPieceID(char[] list) {
+        int[] CharToPiece = new int[list.length];
+        for (int i = 0; i < list.length; i++) {
+            CharToPiece[i] = characterToID(list[i]);
+        }
+        return CharToPiece;
+    }
+    public static int characterToID(char character) {
+		int pentID = -1;
+		if (character == 'X') {
+			pentID = 0;
+		} else if (character == 'I') {
+			pentID = 1;
+		} else if (character == 'Z') {
+			pentID = 2;
+		} else if (character == 'T') {
+			pentID = 3;
+		} else if (character == 'U') {
+			pentID = 4;
+		} else if (character == 'V') {
+			pentID = 5;
+		} else if (character == 'W') {
+			pentID = 6;
+		} else if (character == 'Y') {
+			pentID = 7;
+		} else if (character == 'L') {
+			pentID = 8;
+		} else if (character == 'P') {
+			pentID = 9;
+		} else if (character == 'N') {
+			pentID = 10;
+		} else if (character == 'F') {
+			pentID = 11;
+		} else if (character == 'A') {
+			pentID = 12;
+		} else if (character == 'B') {
+			pentID = 13;
+		} else if (character == 'C') {
+			pentID = 14;
+		}
+		return pentID;
+	}
     public static int[][] get2DSlice(int[][][] grid , int orientation, int x,int y, int z){
         //System.out.println("x:"+x+" y:"+y+" z:"+z);
         if(orientation==0){
@@ -332,80 +289,5 @@ public class AIJudgeParcels {
             return false;
         }
     }
-    public static int[][][][] parcels=
-    {  
-        //parcelA rotation 1
-        {
-            {{1,1},
-            {1,1}},
-            {{1,1},
-            {1,1}},
-            {{1,1},
-            {1,1}},
-            {{1,1},
-            {1,1}}
-        },
-        //parcelA rotation 2
-        {
-            {{1,1,1,1},
-            {1,1,1,1}},
-            {{1,1,1,1},
-            {1,1,1,1}}
-        },
-        //parcelA rotation 3
-        {
-            {{1,1},{1,1},{1,1},{1,1}},
-            {{1,1},{1,1},{1,1},{1,1}}
-        },
-        //parcelB rotation 1 4-3-2
-        {
-            {{1,1},{1,1},{1,1}},
-            {{1,1},{1,1},{1,1}},
-            {{1,1},{1,1},{1,1}},
-            {{1,1},{1,1},{1,1}}
-        },
-        //parcelB rotation 2 2-3-4
-        {
-            {{1,1,1,1},
-            {1,1,1,1},
-            {1,1,1,1}},
-            {{1,1,1,1},
-            {1,1,1,1},
-            {1,1,1,1}}
-        },
-        //parcelB rotation 3 3-2-4
-        {
-            {{1,1,1,1},
-            {1,1,1,1}},
-            {{1,1,1,1},
-            {1,1,1,1}},
-            {{1,1,1,1},
-            {1,1,1,1}}
-        },
-        //parcelB rotation 4 4-2-3
-        {{{1,1,1},{1,1,1}},
-        {{1,1,1},{1,1,1}},
-        {{1,1,1},{1,1,1}},
-        {{1,1,1},{1,1,1}}},
-        //parcelB rotation 5 2-4-3
-        {{{1,1,1},{1,1,1},{1,1,1},{1,1,1}},
-        {{1,1,1},{1,1,1},{1,1,1},{1,1,1}}},
-
-        //parcelB rotation 6 3-2-4
-        {{{1,1,1,1},{1,1,1,1}},
-        {{1,1,1,1},{1,1,1,1}},
-        {{1,1,1,1},{1,1,1,1}}}
-        ,
-        //parcelC only rotation
-        {{{1,1,1},{1,1,1},{1,1,1}},
-         {{1,1,1},{1,1,1},{1,1,1}},
-         {{1,1,1},{1,1,1},{1,1,1}}}
-
-
-
-
-
-    };
+    
 }
-
-

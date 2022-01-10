@@ -9,7 +9,7 @@ public class GAV2 {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 100;
-	public static int generation = 10000;
+	public static int generation = 1000;
 	static int mutationRate = 5;
 	public static int populationSize = 5000;
 	public static int tournamentSize=5;

@@ -1,6 +1,5 @@
 import java.util.Random;
 
-import javax.swing.Box;
 
 
 public class GA {

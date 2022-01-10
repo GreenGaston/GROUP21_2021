@@ -16,6 +16,7 @@ public class PentominoGAV2 {
 	public static int length=33;
 	public static int height=8;
 	public static int width=5;
+	public static int[][][] answerGrid;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -50,6 +51,48 @@ public class PentominoGAV2 {
 
 		GeneticAlgorithm(boxPopulation, generation);
 	}
+
+	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
+		pieceAmount = _pieceamount;
+		generation = _generations;
+			mutationRate = _mutationrate;
+		populationSize = _populationsSize;
+		tournamentSize=_TournamentSize;
+
+
+		Random generator = new Random(System.currentTimeMillis());
+		BoxesV2[] boxPopulation = new BoxesV2[populationSize];
+		int[] boxOrientation = new int[pieceAmount];
+		int[] boxRotation = new int[pieceAmount];
+		int[] BoxPieces = new int[pieceAmount];
+		int[] boxX = new int[pieceAmount];
+		int[] boxY = new int[pieceAmount];
+		int[] boxZ = new int[pieceAmount];
+		
+		//initialize random boxes, rotation and orientation
+		
+		for (int i = 0; i < populationSize; i++) {
+			for (int k = 0; k < pieceAmount; k++) {
+				BoxPieces[k] = generator.nextInt(12);
+				boxRotation[k] = generator.nextInt(4);
+				boxOrientation[k] = generator.nextInt(3);
+				boxX[k]=generator.nextInt(width);
+				boxY[k]=generator.nextInt(height);
+				boxZ[k]=generator.nextInt(length);
+
+			} 
+			boxPopulation[i] = new BoxesV2(BoxPieces, boxRotation, boxOrientation,boxX,boxY,boxZ);
+		}
+		
+
+		
+		
+
+		GeneticAlgorithm(boxPopulation, generation);
+		return answerGrid;
+			
+	}
+	
 	
 
 	//sorting based on score
@@ -107,6 +150,8 @@ public class PentominoGAV2 {
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
 			GenerationSelectorV2.setPopulation(Population);
+			AIJudgeParcelsV2.scoring(Population);
+			
 			
 		
 			for (int i = 0; i < Population.length/2; i++) {
@@ -138,7 +183,7 @@ public class PentominoGAV2 {
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-
+		answerGrid=AIJudgeParcelsV2.getMatrix(Population[populationSize-1]);
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
 		//recursion

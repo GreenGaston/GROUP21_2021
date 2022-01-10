@@ -13,6 +13,7 @@ public class GA {
 	static int mutationRate = 5;
 	public static int populationSize = 1000;
 	public static int tournamentSize=5;
+	public static int[][][] answerGrid;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -41,6 +42,44 @@ public class GA {
 
 		GeneticAlgorithm(boxPopulation, generation);
 	}
+
+	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
+		pieceAmount = _pieceamount;
+		generation = _generations;
+			mutationRate = _mutationrate;
+		populationSize = _populationsSize;
+		tournamentSize=_TournamentSize;
+
+
+		Random generator = new Random(System.currentTimeMillis());
+		Boxes[] boxPopulation = new Boxes[populationSize];
+		int[] boxOrientation = new int[pieceAmount];
+		int[] boxRotation = new int[pieceAmount];
+		int[] BoxPieces = new int[pieceAmount];
+		
+		
+		//initialize random boxes, rotation and orientation
+		
+		for (int i = 0; i < populationSize; i++) {
+			for (int k = 0; k < pieceAmount; k++) {
+				BoxPieces[k] = generator.nextInt(3);
+				boxRotation[k] = generator.nextInt(4);
+				boxOrientation[k] = generator.nextInt(3);
+				
+
+			} 
+			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
+		}
+		
+
+		
+		
+
+		GeneticAlgorithm(boxPopulation, generation);
+		return answerGrid;
+			
+	}
+	
 	
 
 	//sorting based on score
@@ -85,7 +124,7 @@ public class GA {
 		//put the method here in setboxes
 
 		
-		AIJudgeParcels.scoring(Population);
+		
 		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
@@ -97,6 +136,7 @@ public class GA {
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
+			AIJudgeParcels.scoring(Population);
 			GenerationSelector.setPopulation(Population);
 			
 		
@@ -129,7 +169,7 @@ public class GA {
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-
+		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
 		//recursion

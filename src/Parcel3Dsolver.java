@@ -22,6 +22,11 @@ public class Parcel3Dsolver {
             System.out.println("fuck");
         }
     }
+    public static int[][][] Solve(int[][][] grid,char[] parcels){
+        fillNegative(grid);
+        solve3DParcel(grid, charsToPieceIDs(parcels));
+        return answergrid;
+    }
 
 
     public static void fillNegative(int[][][] grid){

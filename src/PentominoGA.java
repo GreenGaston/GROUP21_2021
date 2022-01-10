@@ -13,6 +13,8 @@ public class PentominoGA {
 	static int mutationRate = 12;
 	public static int populationSize = 500;
 	public static int tournamentSize=20;
+	public static int[][][] answerGrid;
+	public static int[] pieces={3,8,9};
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -37,9 +39,47 @@ public class PentominoGA {
 			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
+
+		
 		
 
 		GeneticAlgorithm(boxPopulation, generation);
+	}
+
+
+	
+	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
+		pieceAmount = _pieceamount;
+		generation = _generations;
+			mutationRate = _mutationrate;
+		populationSize = _populationsSize;
+		tournamentSize=_TournamentSize;
+
+
+		Random generator = new Random(System.currentTimeMillis());
+		Boxes[] boxPopulation = new Boxes[populationSize];
+		int[] boxOrientation = new int[pieceAmount];
+		int[] boxRotation = new int[pieceAmount];
+		int[] BoxPieces = new int[pieceAmount];
+		
+		//initialize random boxes, rotation and orientation
+		
+		for (int i = 0; i < populationSize; i++) {
+			for (int k = 0; k < pieceAmount; k++) {
+				BoxPieces[k] = generator.nextInt(12);
+				boxRotation[k] = generator.nextInt(4);
+				boxOrientation[k] = generator.nextInt(3);
+			} 
+			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
+		}
+		
+
+		
+		
+
+		GeneticAlgorithm(boxPopulation, generation);
+		return answerGrid;
+			
 	}
 	
 
@@ -85,7 +125,7 @@ public class PentominoGA {
 		//put the method here in setboxes
 
 		
-		AIJudgepentominoes.scoring(Population);
+		
 		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
@@ -98,6 +138,7 @@ public class PentominoGA {
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
 			GenerationSelector.setPopulation(Population);
+			AIJudgepentominoes.scoring(Population);
 			
 		
 			for (int i = 0; i < Population.length/2; i++) {
@@ -129,6 +170,7 @@ public class PentominoGA {
 		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		answerGrid=AIJudgepentominoes.getMatrix(Population[populationSize-1]);
 		
 
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));

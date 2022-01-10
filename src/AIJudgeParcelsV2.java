@@ -11,8 +11,24 @@ public class AIJudgeParcelsV2 {
             i[j].setScore(AIJudgeParcelsV2.judgeVolumes(i[j]));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
+    }
+    public static int[][][] getMatrix(BoxesV2 box){
+        emptyGrid();
+        int[] PieceIDs=box.getAllBoxes();
+        int[] rotations=box.getRotation();
+        int[] orientations=box.getOrientation();
+        int[] x=box.x;
+        int[] y=box.y;
+        int[] z=box.z;
+        for(int i=0;i<PieceIDs.length;i++){
+            tryPlacePieceVolume(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
         }
+        int[][][]temp=clone3Dint(grid);
+        emptyGrid();
+        return temp;
+    }
     
+        
     //judges based on the volume it will fill
     public static int judgeVolumes(BoxesV2 individual){
         int[]PieceIDs=individual.Pieces;

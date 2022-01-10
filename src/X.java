@@ -13,7 +13,34 @@ public class X {
     private static ArrayList<ArrayList<Integer>> list;
 
     public static void main(String[] args) {
-        search(tabel, k);
+        //search(tabel, k);
+
+        ArrayList<Integer> temp=new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> lijst=new ArrayList<ArrayList<Integer>>();
+
+        int[][] matrix={
+            {1,0,0,1,0,0,1},
+            {1,0,0,1,0,0,0},
+            {0,0,0,1,1,0,1},
+            {0,0,1,0,1,1,0},
+            {0,1,1,0,0,1,1},
+            {0,1,0,0,0,0,1}};
+
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+
+                temp.add(matrix[i][j]);
+                }
+            lijst.add(temp);
+            temp=new ArrayList<Integer>();
+            }
+
+        System.out.println(createLists(lijst));
+        search(k);
+        System.out.println(chooseCol());
+        exactCover(start);
+        uncover(start);
+         }
     }
 
     public static void search(ArrayList<ArrayList<Integer>> tabel, int k) {
@@ -114,7 +141,6 @@ public class X {
             }
             newlist.add(templist);
             templist = new ArrayList<Integer>();
-
         }
         return newlist;
     }

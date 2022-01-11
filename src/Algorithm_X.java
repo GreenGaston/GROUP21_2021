@@ -57,9 +57,9 @@ public class Algorithm_X {
         ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(testList);
         algorithmX(testList, new ArrayList<ArrayList<Integer>>(), copyList);
 
-        for (int i = 0; i < allSolves.size(); i++){
-            print2DList(allSolves.get(i), "Solution "+i);
-        }
+        // for (int i = 0; i < allSolves.size(); i++){
+        //     print2DList(allSolves.get(i), "Solution "+i);
+        // }
         System.out.println("Amount of solves: "+allSolves.size());
         SaveSolutions();
     }
@@ -70,11 +70,12 @@ public class Algorithm_X {
         ArrayList<ArrayList<Integer>> cloneList = copy2DArrayList(listToSolve);
         ArrayList<ArrayList<Integer>> cloneSolution = copy2DArrayList(solution);
         ArrayList<ArrayList<Integer>> cloneParts = copy2DArrayList(solutionParts);
+        //print2DList(listToSolve, "hier is de huidige grid");
 
         if (listToSolve.size() == 0){
-            if (!allSolves.contains(solution) && validSolution(solution)){
+            if (!allSolves.contains(solution) /*&& validSolution(solution)*/){
                 allSolves.add(solution);
-                // print2DList(solution, "solution");
+                print2DList(solution, "solution");
             }
             return;
         }
@@ -85,7 +86,7 @@ public class Algorithm_X {
 
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
-        // print2DList(listToSolve, "StartList");
+        //print2DList(listToSolve, "StartList");
         for (int tryCount = 0; tryCount <= listToSolve.size(); tryCount++){
             /* 
             * Step 1:
@@ -93,7 +94,7 @@ public class Algorithm_X {
             */
             allValidColumnsStored.clear();
             allValidColumnsStored = findColumnOnes(allValidColumnsStored, tryCount, listToSolve);
-            // print1DList(allValidColumnsStored, "valid cols");
+            //print1DList(allValidColumnsStored, "valid cols");
             
             if (allValidColumnsStored.size() != 0 && tryCount != 0){
                 // Go through all the found columns
@@ -105,7 +106,7 @@ public class Algorithm_X {
                     */
                     allValidRowsStored.clear();
                     allValidRowsStored = findRowsOnes(allValidRowsStored, allValidColumnsStored.get(a), listToSolve);
-                    // print1DList(allValidRowsStored, "valid rows");
+                     //print1DList(allValidRowsStored, "valid rows");
                     /*
                     * Step 3:
                     * Select one of the found rows,
@@ -120,7 +121,7 @@ public class Algorithm_X {
                         // if (validSolution(copyList)){
 
                         // }
-                        if (nextStepPossibleCheck(cloneList)){
+                        if (hasEmptyColom(cloneList)){
                             algorithmX(cloneList, cloneSolution, cloneParts);
                         }
                         cloneList = copy2DArrayList(listToSolve);
@@ -128,8 +129,6 @@ public class Algorithm_X {
                         cloneParts = copy2DArrayList(solutionParts);
                     }
                 }
-            }else if(allValidColumnsStored.size() != 0 && tryCount == 0){
-                return;
             }
         }
     }
@@ -177,6 +176,35 @@ public class Algorithm_X {
         return oneCountList;
     }
 
+
+    public static Boolean hasEmptyColom(ArrayList<ArrayList<Integer>> grid){
+        
+        if(grid.size()==0){
+            //System.out.println("returned true");
+            return true;
+        }
+        boolean empty=true;
+        for (int i = 0; i < grid.get(0).size(); i++) {
+            for (int j = 0; j < grid.size(); j++) {
+                if(grid.get(j).get(i)==1){
+                    empty=false;
+                    break;
+                }
+
+                
+            }
+            if(empty){
+               // System.out.println("returned false");
+
+                return false;
+            }
+            empty=true;
+            
+        }
+        //System.out.println("returned true");
+        return true;
+
+    }
 // Step 2
     private static ArrayList<Integer> findRowsOnes(ArrayList<Integer> allRowsList, int currentColumn, ArrayList<ArrayList<Integer>> listToSolve) {
         /* 
@@ -231,13 +259,13 @@ public class Algorithm_X {
                         // System.out.println("check");
                     }
                     listToSolve.remove(i);
-                    // print2DList(listToSolve, "removed row");
+                     //print2DList(listToSolve, "removed row");
                 }
             }
         }
         listToSolve.remove(selectedRowIndex);
         deleteRows(partList, selectedRowIndex, removeCols);
-        // print2DList(listToSolve, "removed row");
+        //print2DList(listToSolve, "removed row");
 
 
         // Go through the removeCols backwards
@@ -245,7 +273,7 @@ public class Algorithm_X {
             for (int j = 0; j < listToSolve.size(); j++){
                 listToSolve.get(j).remove((int)removeCols.get(i));
             }
-            // print2DList(listToSolve, "removed column");
+           // print2DList(listToSolve, "removed column");
         }
 
 
@@ -259,6 +287,40 @@ public class Algorithm_X {
         // if (nextStepPossibleCheck(listToSolve)){
         //     algorithmX(listToSolve);
         // }
+    }
+    private static boolean fillable(ArrayList<ArrayList<Integer>> parts,ArrayList<ArrayList<Integer>>currentanser){
+        
+        boolean foundone=false;
+
+        boolean backup=false;
+        print2DList(parts, "parts");
+        print2DList(currentanser, "grid");
+        int tes=1;
+        
+        
+        for (int i = 0; i < currentanser.get(0).size(); i++) {
+            for(int j=0;j<currentanser.size();j++){
+                if(currentanser.get(j).get(i)==1){
+                    foundone=true;
+                    break;
+                }
+            }
+            if(!foundone){
+                for (int j = 0; j < parts.size(); j++) {
+                    if(parts.get(j).get(i)==1){
+                        backup=true;
+                        break;
+                    }
+                }
+                if(backup==false){
+                    return false;
+                }
+                
+            }
+            backup=false;
+            foundone=false;
+        }
+        return true;
     }
     
     private static boolean nextStepPossibleCheck(ArrayList<ArrayList<Integer>> listToSolve) {

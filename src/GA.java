@@ -5,6 +5,7 @@ import java.util.Random;
 
 
 
+
 public class GA {
     
 	static final int TARGET = 165;

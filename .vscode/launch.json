@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GAV2",
+            "request": "launch",
+            "mainClass": "GAV2",
+            "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
+            "name": "Launch GA",
+            "request": "launch",
+            "mainClass": "GA",
+            "projectName": "GROUP21_2021_84b72728"
+        },
+        {
+            "type": "java",
             "name": "Launch TeamX",
             "request": "launch",
             "mainClass": "src.TeamX",
@@ -17,6 +31,13 @@
             "request": "launch",
             "mainClass": "PentominoSolver3D",
             "projectName": "GROUP21_2021-4_98e3ad07"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pentris",
+            "request": "launch",
+            "mainClass": "Pentris",
+            "projectName": "GROUP21_2021_84b72728"
         },
         {
             "type": "java",

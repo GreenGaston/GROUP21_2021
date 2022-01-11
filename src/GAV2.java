@@ -93,8 +93,6 @@ public class GAV2 {
 	public static void GeneticAlgorithm(BoxesV2 [] Population, int generations){
 		//put the method here in setboxes
 
-		
-		AIJudgeParcelsV2.scoring(Population);
 		BoxesV2[] newPopulation = new BoxesV2[Population.length];
 		
 		//method 
@@ -106,6 +104,8 @@ public class GAV2 {
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
+			
+			AIJudgeParcelsV2.scoring(Population);
 			GenerationSelectorV2.setPopulation(Population);
 			
 		

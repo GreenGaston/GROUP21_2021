@@ -86,7 +86,6 @@ public class GA {
 		//put the method here in setboxes
 
 		
-		AIJudgeParcels.scoring(Population);
 		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
@@ -98,6 +97,7 @@ public class GA {
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
+			AIJudgeParcels.scoring(Population);
 			GenerationSelector.setPopulation(Population);
 			
 		

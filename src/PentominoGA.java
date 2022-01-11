@@ -85,7 +85,6 @@ public class PentominoGA {
 		//put the method here in setboxes
 
 		
-		AIJudgepentominoes.scoring(Population);
 		Boxes[] newPopulation = new Boxes[Population.length];
 		
 		//method 
@@ -97,6 +96,7 @@ public class PentominoGA {
 		
 		Random rand = new Random();
 		for (int j = 0; j < generations; j++) {
+			AIJudgepentominoes.scoring(Population);
 			GenerationSelector.setPopulation(Population);
 			
 		

@@ -141,12 +141,12 @@ public class GAV2 {
 
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
-		//recursion
+		// recursion
 		// while (Max_value[0].score != TARGET){
 		// 	GeneticAlgorithm(Max_value, generations);
 		// }
 
-		//Phenotype of the boxes
+		// Phenotype of the boxes
 		// if(Max_value[0].score == TARGET){
 		// 	for (int i = 0; i < Max_value.length; i++) {
 		// 		System.out.println(Max_value[i].Description() + "Score: " + Max_value[i].score);

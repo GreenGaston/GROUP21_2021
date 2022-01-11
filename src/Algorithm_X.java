@@ -1,4 +1,4 @@
-//package src;
+// package src;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class Algorithm_X {
         // ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(parcelList);
         
         // ArrayList<Integer> parcelSolution = new ArrayList<>();
-        //algorithmX(parcelList, new ArrayList<ArrayList<Integer>>(), copyList);
+        // algorithmX(parcelList, new ArrayList<ArrayList<Integer>>(), copyList);
         // parcelSolution = solution;
         
         
@@ -55,12 +55,13 @@ public class Algorithm_X {
         }
         
         ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(testList);
-        algorithmX(testList, new ArrayList<ArrayList<Integer>>(), copyList);
+        // algorithmX(testList, new ArrayList<ArrayList<Integer>>(), copyList);
 
         // for (int i = 0; i < allSolves.size(); i++){
         //     print2DList(allSolves.get(i), "Solution "+i);
         // }
         System.out.println("Amount of solves: "+allSolves.size());
+        // allSolves.add(PLTlist);
         SaveSolutions();
     }
         
@@ -70,19 +71,17 @@ public class Algorithm_X {
         ArrayList<ArrayList<Integer>> cloneList = copy2DArrayList(listToSolve);
         ArrayList<ArrayList<Integer>> cloneSolution = copy2DArrayList(solution);
         ArrayList<ArrayList<Integer>> cloneParts = copy2DArrayList(solutionParts);
+        ArrayList<Integer> usedIndices = new ArrayList<Integer>();
         //print2DList(listToSolve, "hier is de huidige grid");
 
         if (listToSolve.size() == 0){
-            if (!allSolves.contains(solution) && validSolution(solution)){
+            if (validSolution(solution)){
                 allSolves.add(solution);
                 print2DList(solution, "solution");
             }
             return;
         }
 
-        if (!nextStepPossibleCheck(cloneList)){
-            return;
-        }
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
         //print2DList(listToSolve, "StartList");
@@ -105,7 +104,7 @@ public class Algorithm_X {
                     */
                     allValidRowsStored.clear();
                     allValidRowsStored = findRowsOnes(allValidRowsStored, allValidColumnsStored.get(a), listToSolve);
-                     //print1DList(allValidRowsStored, "valid rows");
+                    //print1DList(allValidRowsStored, "valid rows");
                     /*
                     * Step 3:
                     * Select one of the found rows,
@@ -115,18 +114,19 @@ public class Algorithm_X {
                     */
                     for (int i = 0; i < allValidRowsStored.size(); i++){
                         // fillTrackKeeper(listToSolve);
-                        cloneSolution.add(cloneParts.get(allValidRowsStored.get(i)));
-                        selectAndDelete(allValidRowsStored.get(i), cloneList, cloneParts);
-                        // if (validSolution(copyList)){
+                        if (!usedIndices.contains(allValidRowsStored.get(i))){
+                            usedIndices.add(allValidRowsStored.get(i));
+                            cloneSolution.add(cloneParts.get(allValidRowsStored.get(i)));
+                            selectAndDelete(allValidRowsStored.get(i), cloneList, cloneParts);
 
-                        // }
-                        //print2DList(cloneSolution, "cloneSolution");
-                        if (hasEmptyColom(cloneList)){
-                            algorithmX(cloneList, cloneSolution, cloneParts);
+                            //print2DList(cloneSolution, "cloneSolution");
+                            if (hasEmptyColumn(cloneList)){
+                                algorithmX(cloneList, cloneSolution, cloneParts);
+                            }
+                            cloneList = copy2DArrayList(listToSolve);
+                            cloneSolution = copy2DArrayList(solution);
+                            cloneParts = copy2DArrayList(solutionParts);
                         }
-                        cloneList = copy2DArrayList(listToSolve);
-                        cloneSolution = copy2DArrayList(solution);
-                        cloneParts = copy2DArrayList(solutionParts);
                     }
                 }
             }
@@ -177,8 +177,8 @@ public class Algorithm_X {
     }
 
 
-    public static Boolean hasEmptyColom(ArrayList<ArrayList<Integer>> grid){
-        
+    public static Boolean hasEmptyColumn(ArrayList<ArrayList<Integer>> grid){
+        print2DList(grid, "grid");
         if(grid.size()==0){
             //System.out.println("returned true");
             return true;
@@ -240,8 +240,8 @@ public class Algorithm_X {
                 removeCols.add(i);
             }
         }
-        int[] deletedRows=new int[listToSolve.size()];
-        int counter=0;
+        // int[] deletedRows=new int[listToSolve.size()];
+        // int counter=0;
 
         // Go through the selected columns backwards
         for (int j = removeCols.size()-1; j > -1; j--){
@@ -261,20 +261,22 @@ public class Algorithm_X {
                         // System.out.println("check");
                     }
                     listToSolve.remove(i);
-                    deletedRows[counter]=i;
-                    counter++;
-                     //print2DList(listToSolve, "removed row");
+                    partList.remove(i);
+                    // deletedRows[counter]=i;
+                    // counter++;
+                    //print2DList(listToSolve, "removed row");
                 }
             }
         }
         
         listToSolve.remove(selectedRowIndex);
+        partList.remove(selectedRowIndex);
 
         // for (int i = 0; i < deletedRows.length; i++) {
         //     partList.remove(deletedRows[i]);
         // }
-        deleteRows(partList, selectedRowIndex, removeCols);
-       // print2DList(listToSolve, "removed row");
+        // deleteRows(partList, selectedRowIndex, removeCols);
+        // print2DList(listToSolve, "removed row");
 
 
         // Go through the removeCols backwards

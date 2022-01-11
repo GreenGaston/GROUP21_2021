@@ -73,7 +73,7 @@ public class Algorithm_X {
         //print2DList(listToSolve, "hier is de huidige grid");
 
         if (listToSolve.size() == 0){
-            if (!allSolves.contains(solution) /*&& validSolution(solution)*/){
+            if (!allSolves.contains(solution) && validSolution(solution)){
                 allSolves.add(solution);
                 print2DList(solution, "solution");
             }
@@ -83,7 +83,6 @@ public class Algorithm_X {
         if (!nextStepPossibleCheck(cloneList)){
             return;
         }
-
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
         //print2DList(listToSolve, "StartList");
@@ -121,6 +120,7 @@ public class Algorithm_X {
                         // if (validSolution(copyList)){
 
                         // }
+                        //print2DList(cloneSolution, "cloneSolution");
                         if (hasEmptyColom(cloneList)){
                             algorithmX(cloneList, cloneSolution, cloneParts);
                         }
@@ -240,6 +240,8 @@ public class Algorithm_X {
                 removeCols.add(i);
             }
         }
+        int[] deletedRows=new int[listToSolve.size()];
+        int counter=0;
 
         // Go through the selected columns backwards
         for (int j = removeCols.size()-1; j > -1; j--){
@@ -259,13 +261,20 @@ public class Algorithm_X {
                         // System.out.println("check");
                     }
                     listToSolve.remove(i);
+                    deletedRows[counter]=i;
+                    counter++;
                      //print2DList(listToSolve, "removed row");
                 }
             }
         }
+        
         listToSolve.remove(selectedRowIndex);
+
+        // for (int i = 0; i < deletedRows.length; i++) {
+        //     partList.remove(deletedRows[i]);
+        // }
         deleteRows(partList, selectedRowIndex, removeCols);
-        //print2DList(listToSolve, "removed row");
+       // print2DList(listToSolve, "removed row");
 
 
         // Go through the removeCols backwards

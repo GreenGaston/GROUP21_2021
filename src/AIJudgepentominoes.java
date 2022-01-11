@@ -7,10 +7,36 @@ public class AIJudgepentominoes {
 
     }
     public static void scoring(Boxes i[]){	
+        
         for (int j = 0; j < i.length; j++) {
             i[j].setScore(judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
+        //System.out.println(i[0].getScore());
+    }
+    public static int[][][] getMatrix(Boxes box){
+        emptyGrid();
+        int[] PieceIDs=box.getAllBoxes();
+        int[] rotations=box.getRotation();
+
+        int[] orientations=box.getOrientation();
+        for(int i=0;i<PieceIDs.length;i++){
+            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i]);
+        }
+        int[][][]temp=clone3Dint(grid);
+        emptyGrid();
+        return temp;
+    }
+    public static int[][][] clone3Dint(int[][][] list) {
+        int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                for(int k=0; k< list[0][0].length;k++){
+                    clone[i][j][k] = list[i][j][k];
+                }
+            }
+        }
+        return clone;
     }
     
 

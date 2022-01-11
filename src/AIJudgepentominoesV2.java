@@ -12,6 +12,33 @@ public class AIJudgepentominoesV2 {
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
     }
+    public static int[][][] getMatrix(BoxesV2 box){
+        emptyGrid();
+        int[] PieceIDs=box.getAllBoxes();
+        int[] rotations=box.getRotation();
+        int[] orientations=box.getOrientation();
+        int[] x=box.x;
+        int[] y=box.y;
+        int[] z=box.z;
+        for(int i=0;i<PieceIDs.length;i++){
+            tryPlacePiece(PieceIDs[i], rotations[i], orientations[i],x[i],y[i],z[i]);
+        }
+        int[][][]temp=clone3Dint(grid);
+        emptyGrid();
+        return temp;
+    }
+    public static int[][][] clone3Dint(int[][][] list) {
+        int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                for(int k=0; k< list[0][0].length;k++){
+                    clone[i][j][k] = list[i][j][k];
+                }
+            }
+        }
+        return clone;
+    }
+    
     
 
     public static int judgeVolumes(int[] PieceIDs,int[] rotations, int[] orientations,int[] x,int[] y, int[] z){

@@ -1,22 +1,26 @@
-//package src;
+
+    //package src;
 
 import java.util.Random;
 
 
 
 
-public class GAV2 {
+public class Given_Case_GA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 100;
-	public static int generation = 1000;
+	public static int pieceAmount = 400;
+	public static int generation = 300;
 	static int mutationRate = 5;
-	public static int populationSize = 5000;
+	public static int populationSize = 500;
 	public static int tournamentSize=5;
-	public static int length=33;
-	public static int height=8;
-	public static int width=5;
 	public static int[][][] answerGrid;
+	public static int selectionType=1;
+    public static Boolean ParcelUse=true;
+	//selection type can be:
+	//1 for tournament
+	//2 for roulette
+	//3 for elitism
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -25,13 +29,10 @@ public class GAV2 {
 		
 				
 		Random generator = new Random(System.currentTimeMillis());
-		BoxesV2[] boxPopulation = new BoxesV2[populationSize];
+		Boxes[] boxPopulation = new Boxes[populationSize];
 		int[] boxOrientation = new int[pieceAmount];
 		int[] boxRotation = new int[pieceAmount];
 		int[] BoxPieces = new int[pieceAmount];
-		int[] boxX = new int[pieceAmount];
-		int[] boxY = new int[pieceAmount];
-		int[] boxZ = new int[pieceAmount];
 		
 		//initialize random boxes, rotation and orientation
 		
@@ -40,63 +41,65 @@ public class GAV2 {
 				BoxPieces[k] = generator.nextInt(3);
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
-				boxX[k]=generator.nextInt(width);
-				boxY[k]=generator.nextInt(height);
-				boxZ[k]=generator.nextInt(length);
 			} 
-			boxPopulation[i] = new BoxesV2(BoxPieces, boxRotation, boxOrientation,boxX,boxY,boxZ);
+			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
 		
 
-		GeneticAlgorithm(boxPopulation, generation);
+		GeneticAlgorithm(boxPopulation, generation,selectionType);
 	}
 
-	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
-		pieceAmount = _pieceamount;
+	public static int[][][] GAmethod(int[] Pieces,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize,int selectionMethod,Boolean parcel){
+		pieceAmount = Pieces.length;
 		generation = _generations;
 		mutationRate = _mutationrate;
 		populationSize = _populationsSize;
 		tournamentSize=_TournamentSize;
+        selectionType=selectionMethod;
+        ParcelUse=parcel;
 
 
 		Random generator = new Random(System.currentTimeMillis());
-		BoxesV2[] boxPopulation = new BoxesV2[populationSize];
+		Boxes[] boxPopulation = new Boxes[populationSize];
 		int[] boxOrientation = new int[pieceAmount];
 		int[] boxRotation = new int[pieceAmount];
-		int[] BoxPieces = new int[pieceAmount];
-		int[] boxX = new int[pieceAmount];
-		int[] boxY = new int[pieceAmount];
-		int[] boxZ = new int[pieceAmount];
+		int[] BoxPieces = Pieces;
+		
 		
 		//initialize random boxes, rotation and orientation
 		
 		for (int i = 0; i < populationSize; i++) {
 			for (int k = 0; k < pieceAmount; k++) {
-				BoxPieces[k] = generator.nextInt(3);
+				
 				boxRotation[k] = generator.nextInt(4);
 				boxOrientation[k] = generator.nextInt(3);
-				boxX[k]=generator.nextInt(width);
-				boxY[k]=generator.nextInt(height);
-				boxZ[k]=generator.nextInt(length);
+				
 
 			} 
-			boxPopulation[i] = new BoxesV2(BoxPieces, boxRotation, boxOrientation,boxX,boxY,boxZ);
+			boxPopulation[i] = new Boxes(BoxPieces, boxRotation, boxOrientation);
 		}
 		
 
 		
-		
+		if(ParcelUse){
 
-		GeneticAlgorithm(boxPopulation, generation);
-		return answerGrid;
+            GeneticAlgorithm(boxPopulation, generation,selectionMethod);
+            return answerGrid;
+        }
+        else{
+            GeneticAlgorithmPentominoes(boxPopulation, generation, selectionMethod);
+            return answerGrid;
+        }
+        
 			
 	}
 	
+	
 
 	//sorting based on score
-	public static void sortBoxes(BoxesV2[] population){
-       
+	public static void sortBoxes(Boxes[] population){
+        
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();
@@ -113,7 +116,7 @@ public class GAV2 {
                     scores[j] = scores[j+1];
                     scores[1+j] = temp;
 
-                    BoxesV2 temp1= population[j];
+                    Boxes temp1= population[j];
                     population[j] =population[j+1];
                     population[j+1] =temp1;
                 }
@@ -132,55 +135,57 @@ public class GAV2 {
         }
     }
 
-	public static void GeneticAlgorithm(BoxesV2 [] Population, int generations){
+	public static void GeneticAlgorithm(Boxes [] Population, int generations,int selectionMethod){
 		//put the method here in setboxes
 
-		BoxesV2[] newPopulation = new BoxesV2[Population.length];
-		
-		//method 
-		BoxesV2[] tempBoxes = new BoxesV2[tournamentSize];
-		BoxesV2 parent1;
-		BoxesV2 parent2;
-		//System.out.println(AIJudgeParcels.judgeVolumes(tempBoxes[k].getAllBoxes(), tempBoxes[k].getRotation(), tempBoxes[k].getOrientation()));
 		
 		
-		Random rand = new Random();
+		Boxes[] newPopulation = new Boxes[Population.length];
+	
+		Selection.setTournamentSize(tournamentSize);
+		
 		for (int j = 0; j < generations; j++) {
-			AIJudgeParcelsV2.scoring(Population);
-			GenerationSelectorV2.setPopulation(Population);
+			AIJudgeParcels.scoring(Population);
+			GenerationSelector.setPopulation(Population);
 			
-		
-			for (int i = 0; i < Population.length/2; i++) {
-				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = GenerationSelectorV2.nextBox();
+			newPopulation=Selection.selectionMethod(Population,selectionMethod);
 
-				}
-				
-				sortBoxes(tempBoxes);
-				parent1 = tempBoxes[tournamentSize-1];
-				tempBoxes = new BoxesV2[tournamentSize];
 
-				for(int k=0;k<tournamentSize;k++){
-					tempBoxes[k] = GenerationSelectorV2.nextBox();
-				}
-				
-				sortBoxes(tempBoxes);
-				parent2 = tempBoxes[tournamentSize-1];
-				tempBoxes = new BoxesV2[tournamentSize];
-				
-				BoxesV2 [] Boxchildren = crossoverBoxes(parent1, parent2, rand.nextInt(parent1.getAllBoxes().length));
-				newPopulation[i+Population.length/2] = Boxchildren[0];
-				newPopulation[i] = Boxchildren[1];
-			}
 			mutation(newPopulation);
 			Population = newPopulation;
 		}
 
-		AIJudgeParcelsV2.scoring(Population);
+		
 		sortBoxes(Population);
 		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
-		answerGrid=AIJudgeParcelsV2.getMatrix(Population[populationSize-1]);
+		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
+
+	
+
+	}
+    public static void GeneticAlgorithmPentominoes(Boxes [] Population, int generations,int selectionMethod){
+
+		Boxes[] newPopulation = new Boxes[Population.length];
+	
+		Selection.setTournamentSize(tournamentSize);
 		
+		for (int j = 0; j < generations; j++) {
+			AIJudgepentominoes.scoring(Population);
+			GenerationSelector.setPopulation(Population);
+			
+			newPopulation=Selection.selectionMethod(Population,selectionMethod);
+
+
+			mutation(newPopulation);
+			Population = newPopulation;
+		}
+
+		
+		sortBoxes(Population);
+		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
+
+	
 
 	}
 
@@ -201,11 +206,11 @@ public class GAV2 {
 	}
 
     //this is my crossover method. If you see any optimalisations possible, lmk. I'd be interested in learning other ways.
-	public static BoxesV2[] crossoverBoxes(BoxesV2 box1, BoxesV2 box2, int crossoverLocations){
-		BoxesV2 [] newBoxes = new BoxesV2 [2];
-		BoxesV2 temporaryBox = box1.clone();
-		BoxesV2 CrossoverBox1 = box1.clone();
-		BoxesV2 CrossoverBox2 = box2.clone();
+	public static Boxes[] crossoverBoxes(Boxes box1, Boxes box2, int crossoverLocations){
+		Boxes [] newBoxes = new Boxes [4];
+		Boxes temporaryBox = box1.clone();
+		Boxes CrossoverBox1 = box1.clone();
+		Boxes CrossoverBox2 = box2.clone();
 
 		int crossoverLocation = crossoverLocations;
 
@@ -228,69 +233,48 @@ public class GAV2 {
 
 		return newBoxes;
 
-        /*
-        How this method works: I take 2 chromosomes. I pick a crossover location.
-        the location is the point where the chromosomes will be broken. 
-        Then I move one part of parent 1 to the new part of parent 2. Then I move 
-        the part of parent 2 back to parent 1. I have made a copy(temporary box) of parent 1(box 1) so 
-        the code will remember what is was before the switch.
-        */
-
-	}
-
-
+    }
 
 	//this is a method i think we are going to have to use
-	public static void mutation(BoxesV2[] boxpopulation){
+	public static void mutation(Boxes[] boxpopulation){
 		int roll;
 		Random rand=new Random();
 		//for every individual in the population
 		for(int i=0;i<boxpopulation.length;i++){
 			//get its chromosomes
-			int[] Pieces=boxpopulation[i].getAllBoxes();
+			int[] chromosomes=boxpopulation[i].getAllBoxes();
 			int[] rotations=boxpopulation[i].getRotation();
 			int[] orientation=boxpopulation[i].getOrientation();
-			int[] x=boxpopulation[i].x;
-			int[] y=boxpopulation[i].y;
-			int[] z=boxpopulation[i].z;
-		
+
+			
 			
 			//for every chromosome 
-			for(int j=0;j<Pieces.length;j++){
-				//roll a 100 sided die and if its lower then five mutate that piece into another one
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					Pieces[j]=rand.nextInt(3);
-					rotations[j]=rand.nextInt(getMaxRotation(Pieces[j]));
-				}
+			for(int j=0;j<chromosomes.length;j++){
+				
 			
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
 					rotations[j]=rand.nextInt(getMaxRotation(boxpopulation[i].getAllBoxes()[j]));
 				}
-			
-				//!!!!!!! be careful !!!!!! wss een out of index error
+			    //!!!!!!! be careful !!!!!! wss een out of index error
+
 				//roll a 100 sided die and if its lower then five mutate that rotation into another one
 				roll=rand.nextInt(100);
 				if(roll<mutationRate){
 					orientation[j]=rand.nextInt(3);
 				}
-			
-				//roll a 100 sided die and if its lower then five mutate that piece into another one
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					x[j]=rand.nextInt(width);
-				}
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					y[j]=rand.nextInt(height);
-				}
-				roll=rand.nextInt(100);
-				if(roll<mutationRate){
-					z[j]=rand.nextInt(length);
-				}
 			}
+            roll=rand.nextInt(100);
+            if(roll<mutationRate){
+                int Index=rand.nextInt(chromosomes.length);
+                int Index2=rand.nextInt(chromosomes.length);
+                int temp=chromosomes[Index];
+                chromosomes[Index]=chromosomes[Index2];
+                chromosomes[Index2]=temp;
+            }
+
+
 
 		}
 
@@ -298,3 +282,6 @@ public class GAV2 {
 
 	
 }
+
+    
+

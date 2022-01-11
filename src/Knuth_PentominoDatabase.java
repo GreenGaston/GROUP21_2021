@@ -1,4 +1,4 @@
-//package src;
+// package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -41,8 +41,8 @@ import java.util.Scanner;
  */
 public class Knuth_PentominoDatabase {
     // Stores and loads the data on program initialization
-    public static int[][][][] data = loadData("Knuth_pentominos_Test.csv");
-    // public static int[][][][] data = loadData("Knuth_pentominos.csv");
+    // public static int[][][][] data = loadData("Knuth_pentominos_Test.csv");
+    public static int[][][][] data = loadData("Knuth_pentominos.csv");
 
     /**
      * Loads and decodes the CSV file

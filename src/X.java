@@ -3,8 +3,7 @@ import java.util.ArrayList;
 public class X {
 
     public static ArrayList<ArrayList<Integer>> answer;
-    private static ArrayList<ArrayList<Integer>> tabel;
-    private static ArrayList solution = new ArrayList();
+    private static  ArrayList<ArrayList<Integer>> solution = new ArrayList<ArrayList<Integer>>();
     private static int k;
     private static int row;
     static ArrayList<Integer> rows = new ArrayList<Integer>();
@@ -16,7 +15,7 @@ public class X {
         //search(tabel, k);
 
         ArrayList<Integer> temp=new ArrayList<Integer>();
-        ArrayList<ArrayList<Integer>> lijst=new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> tabel=new ArrayList<ArrayList<Integer>>();
 
         int[][] matrix={
             {1,0,0,1,0,0,1},
@@ -31,17 +30,13 @@ public class X {
 
                 temp.add(matrix[i][j]);
                 }
-            lijst.add(temp);
+            tabel.add(temp);
             temp=new ArrayList<Integer>();
             }
 
-        System.out.println(createLists(lijst));
-        search(k);
-        System.out.println(chooseCol());
-        exactCover(start);
-        uncover(start);
+        search(tabel,k);
+        
          }
-    }
 
     public static void search(ArrayList<ArrayList<Integer>> tabel, int k) {
         if (tabel.isEmpty()) { // If the matrix A has no columns, the current partial solution is a valid
@@ -56,15 +51,15 @@ public class X {
                 if (k < solution.size()) {
                     solution.remove(k);
                 }
-                solution.add(k, row);
+                solution.add(k, row); 
                 // Include row in the partial solution
 
                 // For each column j such that Ar,j = 1
-                // for each row k such that Ak,j = 1
-                removeRow(list, row); // delete row k from matrix A
+                // for each row such that Arow,j = 1
+                removeRow(list, row); // delete row  from matrix A
                 removeColumn(list, column); // delete column j from matrix A
 
-                search(tabel, k + 1); // repeat this algorithm recursively on the reduced matrix A
+                search(tabel, k + 1); // move to level k+1 recursively
             }
         }
     }

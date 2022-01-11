@@ -188,7 +188,7 @@ public class TeamX { // class that implements knuth's algorithm X: with dancing 
         ColNode smallest = rightOfRoot;
         while (rightOfRoot.right != root) {
             rightOfRoot = (ColNode) rightOfRoot.right;
-            if (rightOfRoot.size < smallest.size) {// choosing which column has the lowest size
+            if (rightOfRoot.size < smallest.size) {// choosing which column has the smallest size
                 smallest = rightOfRoot;
             }
         }

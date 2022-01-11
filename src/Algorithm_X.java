@@ -1,5 +1,8 @@
-package src;
+//package src;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 public class Algorithm_X {
@@ -18,46 +21,47 @@ public class Algorithm_X {
         // solution.clear();
         // trackKeeper.clear();
         
-        Knuth_X_Table_Parcels parcelTable = new Knuth_X_Table_Parcels(5, 8, 33);
-        int[][][][] parcelDatabase = ParcelDatabase.parcels;
-        ArrayList<ArrayList<Integer>> parcelList = new ArrayList<>();
-        parcelList = parcelTable.fillTable(parcelDatabase);
+        // Knuth_X_Table_Parcels parcelTable = new Knuth_X_Table_Parcels(5, 8, 33);
+        // int[][][][] parcelDatabase = ParcelDatabase.parcels;
+        // ArrayList<ArrayList<Integer>> parcelList = new ArrayList<>();
+        // parcelList = parcelTable.fillTable(parcelDatabase);
         
-        ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(parcelList);
+        // ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(parcelList);
         
         // ArrayList<Integer> parcelSolution = new ArrayList<>();
-        algorithmX(parcelList, new ArrayList<ArrayList<Integer>>(), copyList);
+        //algorithmX(parcelList, new ArrayList<ArrayList<Integer>>(), copyList);
         // parcelSolution = solution;
         
         
-        // // Used for test purposes
-        // ArrayList<Integer> temp = new ArrayList<Integer>();
-        // ArrayList<ArrayList<Integer>> testList  =new ArrayList<ArrayList<Integer>>();
-        // int[][] matrix = {
-        //     {1,0,0,1,0,0,1},
-        //     {1,0,0,1,0,0,0},
-        //     {0,0,0,1,1,0,1},
-        //     {0,0,1,0,1,1,0},
-        //     {0,1,1,0,0,1,1},
-        //     {0,1,0,0,0,0,1}
-        // };
+        // Used for test purposes
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> testList  =new ArrayList<ArrayList<Integer>>();
+        int[][] matrix = {
+            {1,0,0,1,0,0,1},
+            {1,0,0,1,0,0,0},
+            {0,0,0,1,1,0,1},
+            {0,0,1,0,1,1,0},
+            {0,1,1,0,0,1,1},
+            {0,1,0,0,0,0,1}
+        };
         
-        // for (int i = 0; i < matrix.length; i++){
-        //     for (int j = 0; j < matrix[0].length; j++){
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < matrix[0].length; j++){
                 
-        //         temp.add(matrix[i][j]);
-        //     }
-        //     testList.add(temp);
-        //     temp = new ArrayList<Integer>();
-        // }
+                temp.add(matrix[i][j]);
+            }
+            testList.add(temp);
+            temp = new ArrayList<Integer>();
+        }
         
-        // ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(testList);
-        // algorithmX(testList, new ArrayList<ArrayList<Integer>>(), copyList);
+        ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(testList);
+        algorithmX(testList, new ArrayList<ArrayList<Integer>>(), copyList);
 
         for (int i = 0; i < allSolves.size(); i++){
             print2DList(allSolves.get(i), "Solution "+i);
         }
         System.out.println("Amount of solves: "+allSolves.size());
+        SaveSolutions();
     }
         
     private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, ArrayList<ArrayList<Integer>> solution, ArrayList<ArrayList<Integer>> solutionParts) {
@@ -397,5 +401,32 @@ public class Algorithm_X {
             }
             System.out.println();
         }
+    }
+    public static void SaveSolutions(){
+        try{
+            FileWriter myWriter = new FileWriter("Algorithm_X.txt");
+            //this writes all scores back into the file while putting the current score in the right place
+            for (int i = 0; i < allSolves.size(); i++) {
+                for (int j = 0; j < allSolves.get(i).size(); j++) {
+                    for (int j2 = 0; j2 < allSolves.get(i).get(j).size();j2++) {
+                        myWriter.write(allSolves.get(i).get(j).get(j2)+" ");
+                        
+                    }
+                    myWriter.write("\n");
+                    
+                }
+                myWriter.write("\n");
+                
+            }
+            
+            myWriter.close();
+            
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        
+
+
     }
 }

@@ -1,4 +1,4 @@
-//package src;
+// package src;
 
 import java.util.ArrayList;
 
@@ -9,11 +9,11 @@ public class Knuth_X_Table_LPT {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 5);
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 4);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(pieceDatabase);
-        // table.print2DInt(table.arrayListToArray(tempList));
+        table.print2DInt(table.arrayListToArray(tempList));
         System.out.println("Total pieces placed: "+tempList.size());
     }
     
@@ -65,17 +65,17 @@ public class Knuth_X_Table_LPT {
                     // System.out.println("Start K: "+k+" current I: "+i+" current J: "+j);
                     // System.out.println("Horizontal: "+pieceFitHorizontal(k, database[i][j]));
                     if (pieceFitHorizontal(k, database[i][j])){
-                        optionsTable.add(placePieceHorizontal(k, database[i][j]));
+                        optionsTable.add(placePieceHorizontal(k, database[i][j], i));
                     }    
                     // System.out.println("Vertical_LRO: "+pieceFitVertical_LRO(k, database[i][j]));
                     // The name of the method says LRO, this stands for left-right orientation
                     if (pieceFitVertical_LRO(k, database[i][j])){
-                        optionsTable.add(placePieceVertical_LRO(k, database[i][j]));
+                        optionsTable.add(placePieceVertical_LRO(k, database[i][j], i));
                     }                        
                     // System.out.println("Vertical_TBO: "+pieceFitVertical_TBO(k, database[i][j]));
                     // The name of the method says TBO, this stands for top-bottom orientation
                     if (pieceFitVertical_TBO(k, database[i][j])){
-                        optionsTable.add(placePieceVertical_TBO(k, database[i][j]));
+                        optionsTable.add(placePieceVertical_TBO(k, database[i][j], i));
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class Knuth_X_Table_LPT {
         return optionsTable;
     }
     
-    private ArrayList<Integer> placePieceVertical_TBO(int k, int[][] piece) {
+    private ArrayList<Integer> placePieceVertical_TBO(int k, int[][] piece, int pieceID) {
         ArrayList<Integer> placeOption = new ArrayList<>();
         // First fill all the positions with zero's
         // These are the positions where no piece or box is located.
@@ -92,7 +92,9 @@ public class Knuth_X_Table_LPT {
 
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece[0].length; j++){
-                placeOption.set(k-1, piece[i][j]);
+                if (piece[i][j] == 1){
+                    placeOption.set(k-1, pieceID+1);
+                }
                 // System.out.println("k: "+k+" j: "+j);
                 // System.out.println("k-1: "+(k-1));
                 // System.out.println("Position "+k+" becomes: "+piece[i][j]);
@@ -104,7 +106,7 @@ public class Knuth_X_Table_LPT {
         return placeOption;
     }
     
-    private ArrayList<Integer> placePieceVertical_LRO(int k, int[][] piece) {
+    private ArrayList<Integer> placePieceVertical_LRO(int k, int[][] piece, int pieceID) {
         ArrayList<Integer> placeOption = new ArrayList<>();
         // First fill all the positions with zero's
         // These are the positions where no piece or box is located.
@@ -112,7 +114,9 @@ public class Knuth_X_Table_LPT {
         
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece[0].length; j++){
-                placeOption.set(k-1, piece[i][j]);
+                if (piece[i][j] == 1){
+                    placeOption.set(k-1, pieceID+1);
+                }
                 // System.out.println("Position "+k+" becomes: "+piece[i][j]);
                 k++;
             }
@@ -122,7 +126,7 @@ public class Knuth_X_Table_LPT {
         return placeOption;
     }    
     
-    private ArrayList<Integer> placePieceHorizontal(int k, int[][] piece) {
+    private ArrayList<Integer> placePieceHorizontal(int k, int[][] piece, int pieceID) {
         ArrayList<Integer> placeOption = new ArrayList<>(); 
         // First fill all the positions with zero's
         // These are the positions where no piece or box is located.
@@ -130,7 +134,9 @@ public class Knuth_X_Table_LPT {
         
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece[0].length; j++){
-                placeOption.set(k-1, piece[i][j]);
+                if (piece[i][j] == 1){
+                    placeOption.set(k-1, pieceID+1);
+                }
                 // System.out.println("Position "+k+" becomes: "+piece[i][j]);
                 k++;
             }

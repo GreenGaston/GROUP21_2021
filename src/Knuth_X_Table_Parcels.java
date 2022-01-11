@@ -9,11 +9,11 @@ public class Knuth_X_Table_Parcels {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_Parcels table = new Knuth_X_Table_Parcels(5, 8, 33);
+        Knuth_X_Table_Parcels table = new Knuth_X_Table_Parcels(4, 4, 4);
         int[][][][] parcelDatabase = ParcelDatabase.parcels;
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(parcelDatabase);
-        // table.print2DInt(table.arrayListToArray(tempList));
+        table.print2DInt(table.arrayListToArray(tempList));
         System.out.println("Total pieces placed: "+tempList.size());
     }
     
@@ -52,7 +52,7 @@ public class Knuth_X_Table_Parcels {
         // Fill the table with parcels in all orientations
         // For every piece and it's orientations
         for (int j = 0; j < database.length; j++){
-                // For every placement position
+            // For every placement position
             for (int k = 1; k <= volume; k++){
 
                 // // Used for test purposes
@@ -64,7 +64,7 @@ public class Knuth_X_Table_Parcels {
                 // System.out.println("Start K: "+k+" current J: "+j);
                 // System.out.println("Piecefit: "+parcelFit(k, database[j]));
                 if (parcelFit(k, database[j])){
-                    optionsTable.add(placeParcel(k, database[j]));
+                    optionsTable.add(placeParcel(k, database[j], j));
                 }
             }
         }
@@ -74,16 +74,26 @@ public class Knuth_X_Table_Parcels {
     
         
     
-    private ArrayList<Integer> placeParcel(int k, int[][][] parcel) {
+    private ArrayList<Integer> placeParcel(int k, int[][][] parcel, int parcelID) {
         ArrayList<Integer> placeOption = new ArrayList<>();
         // First fill all the positions with zero's
         // These are the positions where no parcel is located.
         fillWithZero(placeOption);
 
+        if (parcelID >= 0 && parcelID <= 2){
+            parcelID = 1;
+        }else if(parcelID >= 3 && parcelID <= 8){
+            parcelID = 2;
+        }else{
+            parcelID = 3;
+        }
+
         for (int a = 0; a < parcel.length; a++){
             for (int b = 0; b < parcel[0].length; b++){
                 for (int c = 0; c < parcel[0][0].length; c++){
-                    placeOption.set(k-1, parcel[a][b][c]);
+                    if (parcel[a][b][c] == 1){
+                        placeOption.set(k-1, parcelID);
+                    }
                     // System.out.println("Position: "+k+" becomes: "+parcel[a][b][c]);
                     k++;
                 }

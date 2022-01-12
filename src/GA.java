@@ -7,11 +7,11 @@ import java.util.Random;
 
 public class GA {
     
-	static final int TARGET = 165;
-	public static int pieceAmount = 500;
-	public static int generation = 1000;
+	static final int TARGET = 176;
+	public static int pieceAmount = 300;
+	public static int generation = 300;
 	static int mutationRate = 5;
-	public static int populationSize = 500;
+	public static int populationSize = 300;
 	public static int tournamentSize=5;
 	public static int[][][] answerGrid;
 	public static int selectionType=1;

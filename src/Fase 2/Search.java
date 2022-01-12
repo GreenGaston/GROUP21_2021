@@ -17,7 +17,7 @@ public class Search {
 	public static final char[] input = { 'W', 'Y', 'I', 'T', 'Z', 'L' };
 
 	// Static class to display the board
-	public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50, true);
+	//public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50, true);
 
 	/**
 	 * Helper function which starts a basic search algorithm
@@ -153,7 +153,7 @@ public class Search {
 
 			if (solutionFound) {
 				// display the field
-				ui.setState(field);
+				//ui.setState(field);
 				System.out.println("Solution found");
 				break;
 			}

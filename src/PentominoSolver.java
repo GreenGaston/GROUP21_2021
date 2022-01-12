@@ -1,85 +1,145 @@
 // package src;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class PentominoSolver {
     public static int[][] answerGrid;
-    public static UI ui;
+    public static int[][] slice;
+    
 
     public static void main(String[] args) {
-        int UIsize = 25;
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("What characters do you want to fill the grid with?");
-        System.out.println("You can choose from the following letters:\nF, I, L, N, P, T, U, V, W, X, Y, Z.");
-        System.out.println("Type in all your characters in CAPITAL LETTERS and as a word.");
-        System.out.print("Your choice of characters is: ");
-        String stringOfChars = scanner.nextLine();
-        char[] input = stringOfChars.toCharArray();
-
-        // Input optimization
-        input = Optimise(input);
-
-        int[] tempListIDs = ChartoPieceID(input);
-        System.out.println("You have chosen for " + tempListIDs.length + " pieces.");
-        // // Print out pieceIDs of the player's choice. For testing purposes.
-        // for (int i = 0; i < tempListIDs.length; i++){
-        // if (i == tempListIDs.length-1){
-        // System.out.println(tempListIDs[i]+".");
-        // }else{
-        // System.out.print(tempListIDs[i]+",");
-        // }
+        // int[][] grid=new int[5][5];
+        // for (int i = 0; i < grid.length; i++) {
+        //     for (int j = 0; j < grid[i].length; j++) {
+        //         grid[i][j]=-1;
+                
+        //     }
         // }
 
-        System.out.println();
-        System.out.println("What sizes do you want the grid to be?");
-        System.out.print("Type in your choice for the length of the x-axes: ");
-        int Width = scanner.nextInt();
-        System.out.print("Type in your choice for the length of the y-axes: ");
-        int Height = scanner.nextInt();
-        System.out.println("You have chosen for a grid of " + Width + " by " + Height + ".");
-        System.out.println();
-        int tempHeightWidth;
-        if (Height > Width) {
-            tempHeightWidth = Height;
-            Height = Width;
-            Width = tempHeightWidth;
-        }
 
-        ui = new UI(Width, Height, UIsize, false);
+        // int[] Pieces={0,1,9,9,9,9};
+        // SolvePentomino3D(grid,Pieces);
+        // print2DInt(slice);
+        solve3dint(33, 8, 5);
+        System.out.println("test");
 
-        // make an empty grid
-        int[][] grid = new int[Width][Height];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = -1;
-            }
-        }
-
-        int[] pieceIDs = tempListIDs;
-
-        // Check if enough pieces are given to fill the grid
-        if (pieceIDs.length * 5 >= Width * Height) {
-            long Beginning = System.currentTimeMillis();
-            if (SolvePentomino(grid, pieceIDs, pieceIDs.length)) {
-                ui.setState(answerGrid);
-                System.out.println("Solution found");
-
-                long Ending = System.currentTimeMillis();
-                System.out.println(
-                        "It took " + (Ending - Beginning) + " milliseconds to find a solution for this puzzle.");
-            } else {
-                System.out.println("No solution possible with given pieces. Try other input!");
-            }
-        } else {
-            System.out.println("There were too few pieces given to fill the grid. Try again!");
-        }
-
-        scanner.close();
+        
 
     }
 
+
+    public static int[][][]solve3dint(int length,int width,int height){
+        int[][][] answer;
+
+        if(length*width%5==0){
+            int[][] grid=new int[length][width];
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    grid[i][j]=-1;
+                    
+                }
+            }
+            int pieceAmount=length*width;
+            pieceAmount=pieceAmount/5;
+            int[]IDlist=new int[pieceAmount*3];
+            int count=0;
+            for (int i = 0; i < pieceAmount; i++) {
+                IDlist[count]=3;
+                count++;
+                IDlist[count]=8;
+                count++;
+                IDlist[count]=9;
+                count++;
+            }
+            if(SolvePentomino3D(grid, IDlist)){
+                print2DInt(slice);
+                answer=new int[height][length][width];
+                for (int i = 0; i < answer.length; i++) {
+                    answer[i]=slice;
+                    }   
+                return answer;
+                }
+
+
+            }
+        if(length*height%5==0){
+            int[][] grid=new int[length][height];
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    grid[i][j]=-1;
+                    
+                }
+            }
+            int pieceAmount=length*width;
+            pieceAmount=pieceAmount/5;
+            int[]IDlist=new int[pieceAmount*3];
+            int count=0;
+            for (int i = 0; i < pieceAmount; i++) {
+                IDlist[count]=3;
+                count++;
+                IDlist[count]=8;
+                count++;
+                IDlist[count]=9;
+                count++;
+            }
+            if(SolvePentomino3D(grid, IDlist)){
+                print2DInt(slice);
+                answer=new int[width][length][height];
+                for (int i = 0; i < answer.length; i++) {
+                    answer[i]=slice;
+                    }   
+                return answer;
+                }
+
+
+            }
+        if(height*width%5==0){
+            int[][] grid=new int[height][width];
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[i].length; j++) {
+                    grid[i][j]=-1;
+                    
+                }
+            }
+            int pieceAmount=length*width;
+            pieceAmount=pieceAmount/5;
+            int[]IDlist=new int[pieceAmount*3];
+            int count=0;
+            for (int i = 0; i < pieceAmount; i++) {
+                IDlist[count]=3;
+                count++;
+                IDlist[count]=8;
+                count++;
+                IDlist[count]=9;
+                count++;
+            }
+            if(SolvePentomino3D(grid, IDlist)){
+                print2DInt(slice);
+                answer=new int[length][height][width];
+                for (int i = 0; i < answer.length; i++) {
+                    answer[i]=slice;
+                    }   
+                return answer;
+                }
+
+
+            }
+
+        return null;
+        }
+
+
+    private static void print2DInt(int[][] slice2) {
+        for (int i = 0; i < slice2.length; i++) {
+            for (int j = 0; j < slice2[i].length; j++) {
+                System.out.print(slice2[i][j]+" ");   
+            }
+            System.out.println();
+        }
+    }
+
+
+    // }
     // this is the main function of the program it takes any give pieceIDs and tries
     // to fit them on the grid recursively
     // trying to place a piece in a permutation
@@ -101,7 +161,7 @@ public class PentominoSolver {
         if (depth == 1) {
             for (int i = 0; i < PentominoDatabase.data[pieceIDs[0]].length; i++) {
                 if (PieceFit(gridClone, pieceIDs[0], i, adjustX(emptyCords[1], pieceIDs[0], i), emptyCords[0])) {
-                    Search.addPiece(gridClone, PentominoDatabase.data[pieceIDs[0]][i], pieceIDs[0], emptyCords[0],
+                    addPiece(gridClone, PentominoDatabase.data[pieceIDs[0]][i], pieceIDs[0], emptyCords[0],
                             adjustX(emptyCords[1], pieceIDs[0], i));
                     answerGrid = gridClone;
 
@@ -115,6 +175,7 @@ public class PentominoSolver {
 
         // if it isnt the final piece then it will try to fit all pieces in all posible
         // permutations on the next available tile
+        
         else {
 
             for (int i = 0; i < pieceIDs.length; i++) {// for every piece
@@ -127,7 +188,7 @@ public class PentominoSolver {
                                                                                                                      // piece
                                                                                                                      // fits
 
-                        Search.addPiece(gridClone, PentominoDatabase.data[pieceIDs[i]][j], pieceIDs[i], emptyCords[0],
+                        addPiece(gridClone, PentominoDatabase.data[pieceIDs[i]][j], pieceIDs[i], emptyCords[0],
                                 adjustX(emptyCords[1], pieceIDs[i], j));// add it to a clone of the grid
 
                         int[] temporaryPieces = removeID(pieceIDs, i);// make a copy of the idlist without the id of the
@@ -149,6 +210,100 @@ public class PentominoSolver {
 
         return false;
     }
+
+
+    public static boolean gridfull(int[][] grid){
+        boolean full=true;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if(grid[i][j]==-1){
+                    full=false;
+                    break;
+                }
+            }
+            if(!full){
+                break;
+            }
+        }
+        return full;
+        
+    }
+    public static boolean SolvePentomino3D(int[][] grid, int[] pieceIDs) {
+
+        // ui.setState(grid);
+
+        int[] emptyCords = findNextEmpty(grid);
+        int[][] gridClone = clone2Dint(grid);
+        int[][] secondaryClone = clone2Dint(grid);
+        ArrayList<Integer> usedIDs=new ArrayList<Integer>();
+
+        // this is the exit condition, once it has reached a depth of 1, meaning it only
+        // has one piece left, it will try and put it on the board.
+        // if it can then it will return true which will in turn make the one above
+        
+        // return true etc.
+        if(gridfull(grid)){
+            slice=grid;
+
+            return true;
+        }
+        
+
+        // if it isnt the final piece then it will try to fit all pieces in all posible
+        // permutations on the next available tile
+        
+        else {
+
+            for (int i = 0; i < pieceIDs.length; i++) {// for every piece
+                if(!usedIDs.contains(pieceIDs[i])){
+
+                    for (int j = 0; j < PentominoDatabase.data[pieceIDs[i]].length; j++) {// for every permutation that
+                                                                                        // piece has
+
+                        if (PieceFit(gridClone, pieceIDs[i], j, adjustX(emptyCords[1], pieceIDs[i], j), emptyCords[0])) {// if
+                                                                                                                        // the
+                                                                                                                        // piece
+                                                                                                                        // fits
+
+                            addPiece(gridClone, PentominoDatabase.data[pieceIDs[i]][j], pieceIDs[i], emptyCords[0],
+                                    adjustX(emptyCords[1], pieceIDs[i], j));// add it to a clone of the grid
+
+                            int[] temporaryPieces = removeID(pieceIDs, i);// make a copy of the idlist without the id of the
+                                                                        // piece that was just placed
+
+                            // call itself with the clone and the new pieceidlist
+                            if (SolvePentomino3D(gridClone, temporaryPieces)) {
+                                // this is part of the exit condition once it returns true all functions will
+                                // halt searching for solutions
+                                return true;
+                            }
+
+                            // clear the clone of pieces placed for the next loop
+                            gridClone = clone2Dint(secondaryClone);
+                        }
+                    }
+                    usedIDs.add(pieceIDs[i]);
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
+		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
+		{
+			for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
+			{
+				if (piece[i][j] == 1) {
+					// Add the ID of the pentomino to the board if the pentomino occupies this
+					// square
+					field[x + i][y + j] = pieceID;
+				}
+			}
+		}
+	}
 
     // this function finds the next empty square
 
@@ -237,10 +392,39 @@ public class PentominoSolver {
     public static int[] ChartoPieceID(char[] list) {
         int[] CharToPiece = new int[list.length];
         for (int i = 0; i < list.length; i++) {
-            CharToPiece[i] = Search.characterToID(list[i]);
+            CharToPiece[i] = characterToID(list[i]);
         }
         return CharToPiece;
     }
+    public static int characterToID(char character) {
+		int pentID = -1;
+		if (character == 'X') {
+			pentID = 0;
+		} else if (character == 'I') {
+			pentID = 1;
+		} else if (character == 'Z') {
+			pentID = 2;
+		} else if (character == 'T') {
+			pentID = 3;
+		} else if (character == 'U') {
+			pentID = 4;
+		} else if (character == 'V') {
+			pentID = 5;
+		} else if (character == 'W') {
+			pentID = 6;
+		} else if (character == 'Y') {
+			pentID = 7;
+		} else if (character == 'L') {
+			pentID = 8;
+		} else if (character == 'P') {
+			pentID = 9;
+		} else if (character == 'N') {
+			pentID = 10;
+		} else if (character == 'F') {
+			pentID = 11;
+		}
+		return pentID;
+	}
 
     public static char[] sortingAG(int[] Numberlist, char[] characters) {
         int p = 1;
@@ -352,7 +536,7 @@ public class PentominoSolver {
                     }
                 }
                 int[][] gridclone = clone2Dint(grid);
-                Search.addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
+                addPiece(gridclone, database[PieceID][Piecemutation], Piecemutation, y, x);
 
                 if (checkMinus(gridclone)) {
                     return false;

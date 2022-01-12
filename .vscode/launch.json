@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch PentominoSolver",
+            "request": "launch",
+            "mainClass": "PentominoSolver",
+            "projectName": "GROUP21_2021-4_98e3ad07"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoDatabase",
+            "request": "launch",
+            "mainClass": "PentominoDatabase",
+            "projectName": "GROUP21_2021-4_98e3ad07"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoBuilder",
+            "request": "launch",
+            "mainClass": "PentominoBuilder",
+            "projectName": "GROUP21_2021-4_98e3ad07"
+        },
+        {
+            "type": "java",
             "name": "Launch Algorithm_X",
             "request": "launch",
             "mainClass": "Algorithm_X",

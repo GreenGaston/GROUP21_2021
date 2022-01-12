@@ -9,7 +9,7 @@ public class Knuth_X_Table_LPT {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(3, 3, 3);
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(2, 3, 4);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(pieceDatabase);

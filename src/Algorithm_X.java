@@ -82,20 +82,8 @@ public class Algorithm_X {
             return;
         }
 
-        // if (listToSolve.size() == 0){
-        //     if (validSolution(solution)){
-        //         allSolves.add(solution);
-        //         print2DList(solution, "solution");
-        //     }
-        //     bestSolution.add(solution);
-        //     return;
-        // }else if(hasEmptyColumn(listToSolve)){
-        //     bestSolution.add(solution);
-        // }
-
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
-        //print2DList(listToSolve, "StartList");
         for (int tryCount = 0; tryCount <= listToSolve.size(); tryCount++){
             /* 
             * Step 1:
@@ -103,7 +91,6 @@ public class Algorithm_X {
             */
             allValidColumnsStored.clear();
             findColumnOnes(allValidColumnsStored, tryCount, listToSolve);
-            //print1DList(allValidColumnsStored, "valid cols");
             
             if (allValidColumnsStored.size() != 0 && tryCount != 0){
                 // Go through all the found columns
@@ -115,7 +102,6 @@ public class Algorithm_X {
                     */
                     allValidRowsStored.clear();
                     findRowsOnes(allValidRowsStored, allValidColumnsStored.get(a), listToSolve);
-                    //print1DList(allValidRowsStored, "valid rows");
                     /*
                     * Step 3:
                     * Select one of the found rows,
@@ -124,53 +110,22 @@ public class Algorithm_X {
                     * Delete all just-selected rows and columns.
                     */
                     for (int i = 0; i < allValidRowsStored.size(); i++){
-                        // fillTrackKeeper(listToSolve);
                         if (!usedIndices.contains(allValidRowsStored.get(i))){
                             usedIndices.add(allValidRowsStored.get(i));
-                            // cloneSolution.add(cloneParts.get(allValidRowsStored.get(i)));
-                            // selectAndDelete(allValidRowsStored.get(i), cloneList, cloneParts);
-                            // System.out.println("Before");
-                            // for (int z = 0; z < trackKeeperCopy.length; z++){
-                            //     System.out.print(trackKeeperCopy[z]+", ");
-                            // }
-                            // // System.out.println();
-                            // int tempCounter = globalCounter;
-                            // usedIndexesCopy[tempCounter] = trackKeeper[allValidRowsStored.get(i)]+1;
-                            // globalCounter++;
-                    
-                            // trackKeeperCopy = 
-                            
 
                             selectAndDelete(allValidRowsStored.get(i), listToSolve, removedRows, removedColumns);
-                            // System.out.println("After");
-                            // for (int z = 0; z < trackKeeperCopy.length; z++){
-                            //     System.out.print(trackKeeperCopy[z]+", ");
-                            // }
-                            // System.out.println();
-
-                            //print2DList(cloneSolution, "cloneSolution");
                             if (hasEmptyColumn(listToSolve)){
                                 algorithmX(listToSolve);
-                                // algorithmX(cloneList, cloneSolution, cloneParts);
                             }
 
                             undoRemoval(listToSolve, removedRows, removedColumns);
-                            // print2DList(listToSolve, "undo");
-                            // cloneSolution = copy2DArrayList(solution);
-                            // cloneParts = copy2DArrayList(solutionParts);
                         }
                     }
                 }
             }
         }
     }
-  
-    //returns a list with how many 1s are in each row
-
-   
-
-  
-   
+     
     private static void undoRemoval(ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removedColumns) {
         for (int i = 0; i < removedRows.size(); i++) {
             listToSolve.get(removedRows.get(i)).set(0, 0);
@@ -217,7 +172,6 @@ public class Algorithm_X {
         // Used to keep track of how many ones there are in the current column
         int oneCount = 0; 
 
-        // System.out.println("Trycount: "+tryCount);
         // Go through all columns
         for (int i = 0; i < listToSolve.get(0).size(); i++){
 
@@ -237,8 +191,6 @@ public class Algorithm_X {
             // add the index of the column to the list
             if (oneCount == tryCount){
                 oneCountList.add(i);
-                // listToSolve.get(0).set(i, 3);
-                // System.out.println(i);
             }
             
             // Reset the count for the next column
@@ -248,7 +200,6 @@ public class Algorithm_X {
 
 
     public static Boolean hasEmptyColumn(ArrayList<ArrayList<Integer>> grid){
-        // print2DList(grid, "grid");
         boolean empty=true;
         for (int i = 0; i < grid.get(0).size(); i++) {
             if (grid.get(0).get(i) == 0){
@@ -261,14 +212,12 @@ public class Algorithm_X {
                     }
                 }
                 if(empty){
-                // System.out.println("returned false");
 
                     return false;
                 }
                 empty=true;
             }
         }
-        //System.out.println("returned true");
         return true;
 
     }
@@ -301,22 +250,11 @@ public class Algorithm_X {
 // Step 3
     private static void selectAndDelete(int selectedRowIndex, ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removeCols/*ArrayList<ArrayList<Integer>> partList*/) {
         // Check in what columns in the selected row the ones are
-        // System.out.println("rowindex "+selectedRowIndex);
         for (int i = 0; i < listToSolve.get(0).size(); i++){
             if (listToSolve.get(selectedRowIndex).get(i) > 0){
                 removeCols.add(i);
             }
         }
-        // print1DList(removeCols, "removeCols");
-        // int[] deletedRows=new int[listToSolve.size()];
-        // int counter=0;
-
-        // System.out.println("Before");
-        // for (int i = 0; i < trackKeeper.length; i++){
-        //     System.out.print(trackKeeper[i]+", ");
-        // }
-        // System.out.println();
-
 
         // Go through the selected columns backwards
         for (int j = removeCols.size()-1; j > -1; j--){
@@ -331,53 +269,19 @@ public class Algorithm_X {
                 // If the current position contains a 1 in the same column as the selected row,
                 // delete the current row
                 if (listToSolve.get(i).get(removeCols.get(j)) > 0 && listToSolve.get(selectedRowIndex).get(removeCols.get(j)) > 0){
-                    // listToSolve.remove(i);
                     listToSolve.get(i).set(0, 1);
                     removedRows.add(i);
-                    // partList.remove(i);
-                    // deletedRows[counter]=i;
-                    // counter++;
-                    //print2DList(listToSolve, "removed row");
                 }
             }
         }
         
         listToSolve.get(selectedRowIndex).set(0, 2);
         removedRows.add(selectedRowIndex);
-        // partList.remove(selectedRowIndex);
-        // trackKeeper = removeID(trackKeeper, selectedRowIndex);
-
-        // System.out.println("After");
-        // for (int i = 0; i < trackKeeper.length; i++){
-        //     System.out.print(trackKeeper[i]+", ");
-        // }
-        // System.out.println();
-
-
-        // for (int i = 0; i < deletedRows.length; i++) {
-        //     partList.remove(deletedRows[i]);
-        // }
-        // deleteRows(partList, selectedRowIndex, removeCols);
-        // print2DList(listToSolve, "removed row");
-
 
         // Go through the removeCols backwards
         for (int i = removeCols.size()-1; i > -1; i--){
             listToSolve.get(0).set(removeCols.get(i), 1);
-           // print2DList(listToSolve, "removed column");
         }
-
-
-        /*
-        * Check the new list on columns without any ones.
-        * If there is at least 1 such column, no solution is possible.
-        * Then this mehtod comes to an end and the next row is checked
-        *
-        * If every column has at least 1 one, go back to the first step with the new list.
-        */
-        // if (nextStepPossibleCheck(listToSolve)){
-        //     algorithmX(listToSolve);
-        // }
     }
 
     public static int[] removeID(int[] pieceIDs, int index) {
@@ -393,41 +297,6 @@ public class Algorithm_X {
             }
         }
         return answerList;
-    }
-
-    private static boolean nextStepPossibleCheck(ArrayList<ArrayList<Integer>> listToSolve) {
-        if (listToSolve.size() != 0){
-            // Go through all the columns
-            // System.out.println(listToSolve.size());
-            for (int i = 0; i < listToSolve.get(0).size(); i++){
-                loop:
-                // Go through all the rows
-                for (int j = 0; j < listToSolve.size(); j++){
-                    // If a column contains a 1, break and check next column
-                    if (listToSolve.get(j).get(i) > 0){
-                        break loop;
-                    }
-                    // If a column contains no 1, return false
-                    if (j == listToSolve.size()-1){
-                        return false;
-                    }
-                }
-            }            
-            return true;
-        }else{
-            return true;
-        }
-    }
-
-    private static boolean noDuplicate(ArrayList<Integer> list, int j) {
-        // Go through the list with selected rows
-        // Check if index j is already in there
-        for (int i = 0; i < list.size(); i++){
-            if (list.get(i) == j){
-                return false;
-            }
-        }
-        return true;
     }
     
     private static boolean validSolution(ArrayList<ArrayList<Integer>> listToSolve) {
@@ -456,7 +325,7 @@ public class Algorithm_X {
         return templist;
     }
 
-    public static ArrayList<ArrayList<Integer>> copy2DArrayList(ArrayList<ArrayList<Integer>> list){
+    private static ArrayList<ArrayList<Integer>> copy2DArrayList(ArrayList<ArrayList<Integer>> list){
         ArrayList<ArrayList<Integer>> newlist=new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> templist=new ArrayList<Integer>();
         for (int i = 0; i < list.size(); i++) {
@@ -471,7 +340,7 @@ public class Algorithm_X {
         return newlist;
     }
 
-    public static int[] clone1Dint(int[] trackKeeper) {
+    private static int[] clone1Dint(int[] trackKeeper) {
         int[] clone = new int[trackKeeper.length];
         for (int i = 0; i < trackKeeper.length; i++) {
             clone[i] = trackKeeper[i];
@@ -499,7 +368,7 @@ public class Algorithm_X {
         }
     }
 
-    public static void SaveSolutions(int[][] solution){
+    private static void SaveSolutions(int[][] solution){
         try{
             FileWriter myWriter = new FileWriter("Algorithm_X.txt");
             //this writes all scores back into the file while putting the current score in the right place
@@ -518,9 +387,5 @@ public class Algorithm_X {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        
-
-
     }
-
 }

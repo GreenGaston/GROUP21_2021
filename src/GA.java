@@ -8,7 +8,7 @@ import java.util.Random;
 public class GA {
     
 	static final int TARGET = 176;
-	public static int pieceAmount = 300;
+	public static int pieceAmount = 405;
 	public static int generation = 300;
 	static int mutationRate = 5;
 	public static int populationSize = 300;

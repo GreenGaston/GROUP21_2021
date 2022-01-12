@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +10,8 @@ public class Algorithm_X {
     static int[] allSolves;
     static ArrayList<ArrayList<Integer>> originalGrid = new ArrayList<>();
     static int globalCounter = 0;
+    static int rows;
+    static int columns;
     public static void main(String[] args) {
         
         Knuth_X_Table_LPT lptTable = new Knuth_X_Table_LPT(5, 8, 33);
@@ -78,7 +80,66 @@ public class Algorithm_X {
         // allSolves.add(PLTlist);
         // SaveSolutions();
     }
-        
+
+    public static ArrayList<ArrayList<Integer>> Convert(ArrayList<ArrayList<Integer>> grid){
+        ArrayList<ArrayList<Integer>> newGrid=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer>temp=new ArrayList<Integer>();
+       
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid.get(i).size(); j++) {
+                if(grid.get(i).get(j)==1){                    
+                    temp.add(j);
+                }   
+            }
+            newGrid.add(temp);
+            temp.clear();
+        }
+        return newGrid;
+    }
+    
+    //removes column from list and moves all integers higher then said column down 1
+    public static void removeColumn(ArrayList<ArrayList<Integer>> grid,int column){
+        int temp;
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid.get(i).size(); j++) {
+                if(grid.get(i).get(j)==column){
+                    for (int k = 0; k < grid.get(i).size(); k++) {
+                        if(grid.get(i).get(k)>column){
+                            temp=grid.get(i).get(k)-1;
+                            grid.get(i).set(k,temp); 
+                        }
+                        
+                    }
+                    grid.get(i).remove(j);
+                }
+            }
+        }
+    }
+   
+
+    
+
+    public static void betterAlgorithmX(ArrayList<ArrayList<Integer>> grid,int[]trackKeeper,int[] usedIndexes){
+        ArrayList<Integer> allValidColumnsStored = new ArrayList<>();
+        ArrayList<Integer> allValidRowsStored = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> cloneList = copy2DArrayList(grid);
+        int[] trackKeeperCopy = clone1Dint(trackKeeper);
+        int[] usedIndexesCopy = clone1Dint(usedIndexes);
+
+        if(grid.size()==0){
+            if(validSolution(usedIndexes)){
+                allSolves=usedIndexes;
+                for (int i = 0; i < allSolves.length; i++){
+                    if (allSolves[i] != 0){
+                        System.out.print(allSolves[i]-1+" ");
+                    }
+                }
+                // System.out.println("Amount of solves: "+allSolves.length);
+                System.exit(0);
+            }
+        }
+
+    }
     private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, int[] trackKeeper, int[] usedIndexes /*ArrayList<ArrayList<Integer>> solution, ArrayList<ArrayList<Integer>> solutionParts*/) {
         ArrayList<Integer> allValidColumnsStored = new ArrayList<>();
         ArrayList<Integer> allValidRowsStored = new ArrayList<>();
@@ -189,6 +250,12 @@ public class Algorithm_X {
         }
     }
   
+    //returns a list with how many 1s are in each row
+
+   
+
+  
+   
     // Step 1
     private static ArrayList<Integer> findColumnOnes(ArrayList<Integer> oneCountList, int tryCount, ArrayList<ArrayList<Integer>> listToSolve){
         /*

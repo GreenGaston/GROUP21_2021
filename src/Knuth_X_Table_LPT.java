@@ -18,8 +18,8 @@ public class Knuth_X_Table_LPT {
     }
     
     public Knuth_X_Table_LPT(int rows, int columns, int layers){
-        this.columnLength = rows;
-        this.rowLength = columns;
+        this.columnLength = columns;
+        this.rowLength = rows;
         this.layersAmount = layers;
         this.layerSize = columnLength*rowLength;
         this.volume = layerSize*layersAmount;

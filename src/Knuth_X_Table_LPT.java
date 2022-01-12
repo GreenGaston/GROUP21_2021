@@ -9,7 +9,7 @@ public class Knuth_X_Table_LPT {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 4);
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(3, 3, 3);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(pieceDatabase);
@@ -48,7 +48,7 @@ public class Knuth_X_Table_LPT {
         ArrayList<ArrayList<Integer>> optionsTable = new ArrayList<>();
         ArrayList<Integer> emptyRow = new ArrayList<>();
         optionsTable.add(fillWithZero(emptyRow));
-
+        optionsTable.get(0).set(0, 1);
         // Fill the table with pieces in horizontal orientation
         // For every piece
         for (int i = 0; i < database.length; i++){

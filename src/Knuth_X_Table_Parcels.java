@@ -49,6 +49,7 @@ public class Knuth_X_Table_Parcels {
         ArrayList<ArrayList<Integer>> optionsTable = new ArrayList<>();
         ArrayList<Integer> emptyRow = new ArrayList<>();
         optionsTable.add(fillWithZero(emptyRow));
+        optionsTable.get(0).set(0, 1);
 
         // Fill the table with parcels in all orientations
         // For every piece and it's orientations

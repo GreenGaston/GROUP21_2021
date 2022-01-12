@@ -8,9 +8,13 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Algorithm_X {
     static int[][] solution;
+    static int[][] bestPartialSolution;
+    static long startTime;
+    static int highestCounter = 0;
+
     public static void main(String[] args) {
         
-        Knuth_X_Table_LPT lptTable = new Knuth_X_Table_LPT(5, 8, 33);
+        Knuth_X_Table_LPT lptTable = new Knuth_X_Table_LPT(5, 8, 1);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> PLTlist = new ArrayList<>();
         PLTlist = lptTable.fillTable(pieceDatabase);
@@ -52,18 +56,45 @@ public class Algorithm_X {
             testList.add(temp);
             temp = new ArrayList<Integer>();
         }
+
+        temp = new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> testFalseList  =new ArrayList<ArrayList<Integer>>();
+        int[][] falseMatrix = {
+            {1,0,0,0,0,0,0,0},
+            {0,2,0,0,2,0,0,2},
+            {0,2,2,0,2,0,0,0},
+            {0,0,0,0,2,2,0,2},
+            {0,0,0,2,0,2,2,0},
+            {0,0,2,2,0,0,2,2},
+            {0,0,2,0,0,0,0,2}
+        };
         
-        algorithmX(PLTlist);
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < matrix[0].length; j++){
+                
+                temp.add(matrix[i][j]);
+            }
+            testFalseList.add(temp);
+            temp = new ArrayList<Integer>();
+        }
+        startTime = System.currentTimeMillis();
+        // print2DList(PLTlist, "Startlist");
+        int depth = 0;
+        algorithmX(PLTlist, depth);
     }
 
    
-    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve) {
+    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, int depth) {
+        if (depth == 2){
+            print2DList(listToSolve, "hopsakee");
+        }
         ArrayList<Integer> allValidColumnsStored = new ArrayList<>();
         ArrayList<Integer> allValidRowsStored = new ArrayList<>();
         ArrayList<Integer> usedIndices = new ArrayList<Integer>();
         ArrayList<Integer> removedRows = new ArrayList<>();
         ArrayList<Integer> removedColumns = new ArrayList<>();
 
+        // print1DList(listToSolve.get(0), "columns");
 
         boolean empty = true;
         for (int i = 1; i < listToSolve.get(0).size(); i++) {
@@ -74,12 +105,28 @@ public class Algorithm_X {
         }
 
         if (empty){
+            // System.out.println("get here");
             if (validSolution(listToSolve)){
+                print2DList(listToSolve, "List");
+                // System.out.println("check");
                 solution = getSolution(listToSolve);
                 SaveSolutions(solution);
+                long endTime = System.currentTimeMillis();
+                System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
                 System.exit(0);
             }
             return;
+        }else{
+            int counter = 0;
+            for (int i = 1; i < listToSolve.get(0).size(); i++) {
+                if (listToSolve.get(0).get(i) == 1){
+                    counter++;
+                }
+            }
+            if (counter > highestCounter){
+                highestCounter = counter;
+                bestPartialSolution = getSolution(listToSolve);
+            }
         }
 
         // Start with a lowest amount of ones of 1
@@ -89,7 +136,7 @@ public class Algorithm_X {
             * Step 1:
             * Finding the column(s) with the lowest amount of ones in it.
             */
-            allValidColumnsStored.clear();
+            allValidColumnsStored = new ArrayList<>();
             findColumnOnes(allValidColumnsStored, tryCount, listToSolve);
             
             if (allValidColumnsStored.size() != 0 && tryCount != 0){
@@ -100,7 +147,7 @@ public class Algorithm_X {
                     * Finding the corresponding row(s) to the columns of step 1.
                     * To find it, make sure the 1 in the row is the same 1 as in the column.
                     */
-                    allValidRowsStored.clear();
+                    allValidRowsStored = new ArrayList<>();
                     findRowsOnes(allValidRowsStored, allValidColumnsStored.get(a), listToSolve);
                     /*
                     * Step 3:
@@ -114,28 +161,44 @@ public class Algorithm_X {
                             usedIndices.add(allValidRowsStored.get(i));
 
                             selectAndDelete(allValidRowsStored.get(i), listToSolve, removedRows, removedColumns);
-                            if (hasEmptyColumn(listToSolve)){
-                                algorithmX(listToSolve);
+                            // print2DList(listToSolve, "Delete");
+                            if (depth == 15){
+                                print2DList(listToSolve, "hopsakee");
+                            }
+                    
+                            if (!hasEmptyColumn(listToSolve)){
+                                algorithmX(listToSolve, depth+1);
                             }
 
                             undoRemoval(listToSolve, removedRows, removedColumns);
+                            removedRows = new ArrayList<>();
+                            removedColumns = new ArrayList<>();
+                            // print2DList(listToSolve, "Undo");
                         }
                     }
                 }
+            }else if (allValidColumnsStored.size() != 0 && tryCount == 0){
+                System.out.println(depth);
+                return;
             }
         }
+        System.out.println("NO SOLUTION!");
     }
      
     private static void undoRemoval(ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removedColumns) {
+        int counter = 0;
         for (int i = 0; i < removedRows.size(); i++) {
             listToSolve.get(removedRows.get(i)).set(0, 0);
         }
-        removedRows.clear();
 
         for (int i = 0; i < removedColumns.size(); i++) {
             listToSolve.get(0).set(removedColumns.get(i), 0);
+            counter++;
         }
-        removedColumns.clear();
+        if (counter != 5){
+            System.out.println("gratje");
+        }
+        // listToSolve.get(0).set(0, 1);
     }
 
 
@@ -173,7 +236,7 @@ public class Algorithm_X {
         int oneCount = 0; 
 
         // Go through all columns
-        for (int i = 0; i < listToSolve.get(0).size(); i++){
+        for (int i = 1; i < listToSolve.get(0).size(); i++){
 
             // Go through all rows
             for (int j = 0; j < listToSolve.size(); j++){
@@ -201,6 +264,7 @@ public class Algorithm_X {
 
     public static Boolean hasEmptyColumn(ArrayList<ArrayList<Integer>> grid){
         boolean empty=true;
+        // Go through all columns
         for (int i = 0; i < grid.get(0).size(); i++) {
             if (grid.get(0).get(i) == 0){
                 for (int j = 0; j < grid.size(); j++) {
@@ -212,13 +276,12 @@ public class Algorithm_X {
                     }
                 }
                 if(empty){
-
-                    return false;
+                    return true;
                 }
                 empty=true;
             }
         }
-        return true;
+        return false;
 
     }
 // Step 2
@@ -248,20 +311,25 @@ public class Algorithm_X {
     }
 
 // Step 3
-    private static void selectAndDelete(int selectedRowIndex, ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removeCols/*ArrayList<ArrayList<Integer>> partList*/) {
+    private static void selectAndDelete(int selectedRowIndex, ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removeCols) {
         // Check in what columns in the selected row the ones are
-        for (int i = 0; i < listToSolve.get(0).size(); i++){
+        if (selectedRowIndex == 56){
+        }
+        for (int i = 1; i < listToSolve.get(0).size(); i++){
             if (listToSolve.get(selectedRowIndex).get(i) > 0){
                 removeCols.add(i);
             }
+        }
+        if (removeCols.size() != 5){
+            print1DList(removeCols, "shit");
         }
 
         // Go through the selected columns backwards
         for (int j = removeCols.size()-1; j > -1; j--){
             // Go through the rows backwards
             deleteLoop:
-            for (int i = listToSolve.size()-1; i > -1; i--){
-                if (i == selectedRowIndex && i != 0){
+            for (int i = listToSolve.size()-1; i > 0; i--){
+                if (i == selectedRowIndex && i != 1){
                     i--;
                 }else if (i == selectedRowIndex){
                     break deleteLoop;

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GA",
+            "request": "launch",
+            "mainClass": "GA",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
             "name": "Launch Algorithm_X",
             "request": "launch",
             "mainClass": "Algorithm_X",

@@ -1,20 +1,20 @@
-//package src;
+// //package src;
 
-public class Node { // class that implements DANCING LINKS
-    // a mesh of 4 way connected nodes
+// public class Node { // class that implements DANCING LINKS
+//     // a mesh of 4 way connected nodes
 
-    // each node contains:
-    Node left; // Pointer to node left to it
-    Node right; // Pointer to node right of it
-    Node above; // Pointer to node above it
-    Node below; // Pointer to node below it
-    ColNode header; // Pointer to list header node to which it belongs
+//     // each node contains:
+//     Node left; // Pointer to node left to it
+//     Node right; // Pointer to node right of it
+//     Node above; // Pointer to node above it
+//     Node below; // Pointer to node below it
+//     ColNode header; // Pointer to list header node to which it belongs
 
-    int data;
-    Node next;
-    Node prev; // variables for a Node in a Circular Doubly Linked list
+//     int data;
+//     Node next;
+//     Node prev; // variables for a Node in a Circular Doubly Linked list
 
-}
+// }
 
 /*******************************************************************************************
  * DOCUMENTATION #2: DANING LINKS TECHNIQUE

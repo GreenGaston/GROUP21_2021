@@ -8,20 +8,78 @@ public class PentominoSolver {
     
 
     public static void main(String[] args) {
-        // int[][] grid=new int[5][5];
-        // for (int i = 0; i < grid.length; i++) {
-        //     for (int j = 0; j < grid[i].length; j++) {
-        //         grid[i][j]=-1;
-                
-        //     }
-        // }
-
-
-        // int[] Pieces={0,1,9,9,9,9};
-        // SolvePentomino3D(grid,Pieces);
-        // print2DInt(slice);
-        solve3dint(33, 8, 5);
-        System.out.println("test");
+            
+            int UIsize = 25;
+    
+            Scanner scanner = new Scanner(System.in);
+    
+            System.out.println("What characters do you want to fill the grid with?");
+            System.out.println("You can choose from the following letters:\nF, I, L, N, P, T, U, V, W, X, Y, Z.");
+            System.out.println("Type in all your characters in CAPITAL LETTERS and as a word.");
+            System.out.print("Your choice of characters is: ");
+            String stringOfChars = scanner.nextLine();
+            char[] input = stringOfChars.toCharArray();
+    
+            // Input optimization
+            input = Optimise(input);
+    
+            int[] tempListIDs = ChartoPieceID(input);
+            System.out.println("You have chosen for " + tempListIDs.length + " pieces.");
+            // // Print out pieceIDs of the player's choice. For testing purposes.
+            // for (int i = 0; i < tempListIDs.length; i++){
+            // if (i == tempListIDs.length-1){
+            // System.out.println(tempListIDs[i]+".");
+            // }else{
+            // System.out.print(tempListIDs[i]+",");
+            // }
+            // }
+    
+            System.out.println();
+            System.out.println("What sizes do you want the grid to be?");
+            System.out.print("Type in your choice for the length of the x-axes: ");
+            int Width = scanner.nextInt();
+            System.out.print("Type in your choice for the length of the y-axes: ");
+            int Height = scanner.nextInt();
+            System.out.println("You have chosen for a grid of " + Width + " by " + Height + ".");
+            System.out.println();
+            int tempHeightWidth;
+            if (Height > Width) {
+                tempHeightWidth = Height;
+                Height = Width;
+                Width = tempHeightWidth;
+            }
+    
+            UI ui = new UI(Width, Height, UIsize, false);
+    
+            // make an empty grid
+            int[][] grid = new int[Width][Height];
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[0].length; j++) {
+                    grid[i][j] = -1;
+                }
+            }
+    
+            int[] pieceIDs = tempListIDs;
+    
+            // Check if enough pieces are given to fill the grid
+            if (pieceIDs.length * 5 >= Width * Height) {
+                long Beginning = System.currentTimeMillis();
+                if (SolvePentomino(grid, pieceIDs, pieceIDs.length)) {
+                    ui.setState(answerGrid);
+                    System.out.println("Solution found");
+    
+                    long Ending = System.currentTimeMillis();
+                    System.out.println(
+                            "It took " + (Ending - Beginning) + " milliseconds to find a solution for this puzzle.");
+                } else {
+                    System.out.println("No solution possible with given pieces. Try other input!");
+                }
+            } else {
+                System.out.println("There were too few pieces given to fill the grid. Try again!");
+            }
+    
+            scanner.close();
+    
 
         
 

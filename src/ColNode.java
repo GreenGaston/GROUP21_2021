@@ -1,6 +1,6 @@
 //package src;
 
-public class ColNode extends MemberNode { // subclass of Node, for every column of the linked list, there is a
+public class ColNode extends Node { // subclass of Node, for every column of the linked list, there is a
     // columnNode that contains identifying info about that specific column as well
     // as the size of the column ( number of Nodes in it)
 

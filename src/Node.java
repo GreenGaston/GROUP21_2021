@@ -1,20 +1,18 @@
 //package src;
 
-public class MemberNode { // class that implements DANCING LINKS
+public class Node { // class that implements DANCING LINKS
     // a mesh of 4 way connected nodes
 
-    // compare this to the hungergames: this is Finnick
-
     // each node contains:
-    MemberNode left; // Pointer to node left to it
-    MemberNode right; // Pointer to node right of it
-    MemberNode above; // Pointer to node above it
-    MemberNode below; // Pointer to node below it
+    Node left; // Pointer to node left to it
+    Node right; // Pointer to node right of it
+    Node above; // Pointer to node above it
+    Node below; // Pointer to node below it
     ColNode header; // Pointer to list header node to which it belongs
 
     int data;
-    MemberNode next;
-    MemberNode prev; // variables for a Node in a Circular Doubly Linked list
+    Node next;
+    Node prev; // variables for a Node in a Circular Doubly Linked list
 
 }
 

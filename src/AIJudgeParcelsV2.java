@@ -6,6 +6,20 @@ public class AIJudgeParcelsV2 {
     public static void main(String[] args){
 
     }
+
+     ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+    // for comments on how these methods work please look at AIjudgeParcels
+    // the difference between this file is that it uses BoxesV2 which also contains coordinates
+    // so instead of trying to place pieces at the first empty coordinate we do it at the give coordinate
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //this method is used for judging a population
     public static void scoring(BoxesV2 i[]){	
         for (int j = 0; j < i.length; j++) {
             i[j].setScore(AIJudgeParcelsV2.judgeVolumes(i[j]));

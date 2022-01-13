@@ -5,9 +5,13 @@ public class Boxes {
 	int score;
 	int[] rotations;
 	int[] orientations;
+
+	//this file represents an instance of an individual in the population we use in the genetic algorithm
 	
 	/*I think the names of these methods are pretty self-explanatory.
 	They come in handy in my GA file. */
+
+
 	public Boxes(int[] All_Boxes, int[] rotations, int[] orientations) {
 		this.All_Boxes = All_Boxes;
 		this.rotations= rotations;

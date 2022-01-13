@@ -14,6 +14,8 @@ public class Selection {
         tournamentSize=size;
 
     }
+    //this file is used to make the selection a variable you can change based on an index
+    //as seen below it will use a different selection on the population based on what int you gave it
     public static Boxes[] selectionMethod(Boxes[] population,int selectionmethod){
         if(selectionmethod==1){
             return Tournament(population);
@@ -32,6 +34,9 @@ public class Selection {
     public static Boxes[] elitism(Boxes[] Population){
         return Population;
     }
+
+
+    //tournament selection
 
     public static Boxes[] Tournament(Boxes[] Population){
         Boxes[]newPopulation = new Boxes[Population.length];
@@ -60,6 +65,8 @@ public class Selection {
         return newPopulation;
     }
 
+
+    //roulette selection
 
     public static Boxes[] Roulette(Boxes[] population){
         Boxes[] newPopulation=new Boxes[population.length];

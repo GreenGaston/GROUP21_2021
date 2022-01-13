@@ -9,6 +9,10 @@ public class PentominoSolver3D {
     public static String[] pentCombinations= new String[136];
     public static int answerscore;
 
+
+    //this file is essentialy the same as Parcel3Dsolver
+    //the difference being that this file is used for pentominoes
+    //because pentominoes are 2d we can place them differently
     public static void main(String[] args) {
         
        

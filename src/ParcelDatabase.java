@@ -1,5 +1,5 @@
 //package src;
-
+//this file stores all parcels in their rotations
 public class ParcelDatabase {
     public static int[][][][] parcels=
     {  

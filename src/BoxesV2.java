@@ -10,6 +10,8 @@ public class BoxesV2 {
 	public int[] z;
 
 
+	//this file represents an instance of an individual in the population we use in the genetic algorithm
+	//differnce with Boxes is this file contains coordinates for every piece
 	
 	/*I think the names of these methods are pretty self-explanatory.
 	They come in handy in my GA file. */

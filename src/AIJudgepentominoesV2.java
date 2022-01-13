@@ -6,6 +6,17 @@ public class AIJudgepentominoesV2 {
     public static void main(String[] args){
 
     }
+     ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+    // for comments on how these methods work please look at AIjudgeParcels
+    //  difference in this file is it uses BoxesV2 which contain coordinates to place the Boxes
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     public static void scoring(BoxesV2 i[]){	
         for (int j = 0; j < i.length; j++) {
             i[j].setScore(judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation(),i[j].x,i[j].y,i[j].z));

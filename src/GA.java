@@ -25,6 +25,8 @@ public class GA {
 	 
 
 		
+		for (int fuck = 0; fuck < 11; fuck++) {
+			
 				
 		Random generator = new Random(System.currentTimeMillis());
 		Boxes[] boxPopulation = new Boxes[populationSize];
@@ -46,6 +48,7 @@ public class GA {
 		
 
 		GeneticAlgorithm(boxPopulation, generation);
+	}
 	}
 
 	public static int[][][] GAmethod(int _pieceamount,
@@ -157,7 +160,8 @@ public class GA {
 		AIJudgeParcels.scoring(Population);
 		
 		sortBoxes(Population);
-		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		System.out.println(Population[populationSize-1].getScore());
+		// "Generation:" + generation + 
 		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
 
 	}

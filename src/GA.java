@@ -8,11 +8,11 @@ import java.util.Random;
 public class GA {
     
 	static final int TARGET = 176;
-	public static int pieceAmount = 405;
-	public static int generation = 300;
+	public static int pieceAmount = 1000;
+	public static int generation = 1000;
 	static int mutationRate = 5;
-	public static int populationSize = 300;
-	public static int tournamentSize=5;
+	public static int populationSize = 2500;
+	public static int tournamentSize=10;
 	public static int[][][] answerGrid;
 	public static int selectionType=1;
 	//selection type can be:
@@ -25,7 +25,7 @@ public class GA {
 	 
 
 		
-		for (int fuck = 0; fuck < 11; fuck++) {
+		for (int fuck = 0; fuck < 10; fuck++) {
 			
 				
 		Random generator = new Random(System.currentTimeMillis());

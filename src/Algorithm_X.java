@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -68,15 +68,18 @@ public class Algorithm_X {
             temp = new ArrayList<Integer>();
         }
         startTime = System.currentTimeMillis();
-
-        algorithmX(parcelList);
+        // print2DList(PLTlist, "Startlist");
+        // Depth is used for testpurposes
+        int depth = 0;
+        algorithmX(parcelList, depth);
         System.out.println("NO SOLUTION!");
         System.out.println(highestCounter+" out of "+(parcelList.get(0).size()-1)+" spaces filled");
         long endTime = System.currentTimeMillis();
         System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
+        
     }
 
-    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve) {
+    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, int depth) {
         /*
         * For algorithm X we don't actually delete the lines and columns as supposed
         * Instead we mark each column and row with a 0, 1 or 2.
@@ -101,6 +104,35 @@ public class Algorithm_X {
         ArrayList<Integer> removedRows = new ArrayList<>();
         ArrayList<Integer> removedColumns = new ArrayList<>();
 
+        // if (depth == 7){
+        //     print2DList(listToSolve, "list");
+        // }
+
+        // This loop is used for checking if all the columns are marked deleted (1)
+        boolean empty = true;
+        for (int i = 1; i < listToSolve.get(0).size(); i++) {
+            if (listToSolve.get(0).get(i) == 0){
+                empty = false;
+                break;
+            }
+        }
+
+        // // If the previous loop gives back that the list is empty,
+        // // go inside this if-statement
+        // if (empty){
+        //     // Check if the empty list is a valid solution
+        //     if (validSolution(listToSolve)){
+        //         // Get only the lines out of the list which combine to a solution
+        //         solution = getSolution(listToSolve);
+        //         // Print the solution in an extern .txt file
+        //         SaveSolutions(solution);
+        //         // Stop the time, and print the time used for finding the solve
+        //         long endTime = System.currentTimeMillis();
+        //         System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
+        //         System.exit(0);
+        //     }
+        //     return;
+        // }
 
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
@@ -137,7 +169,7 @@ public class Algorithm_X {
                             selectAndDelete(allValidRowsStored.get(i), listToSolve, removedRows, removedColumns);
                     
                             if (!hasEmptyColumn(listToSolve)){
-                                algorithmX(listToSolve);
+                                algorithmX(listToSolve, depth+1);
                             }
 
                             int counter = 0;
@@ -151,12 +183,12 @@ public class Algorithm_X {
                                 highestCounter = counter;
                                 System.out.println(highestCounter+" out of "+(listToSolve.get(0).size()-1)+" spaces filled");
                                 bestPartialSolution = getSolution(listToSolve);
-                                SaveSolutions(bestPartialSolution);
+                                SaveSolutions(bestPartialSolution);   
                                 if (highestCounter == listToSolve.get(0).size()-1){
                                     long endTime = System.currentTimeMillis();
                                     System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
                                     System.exit(0);
-                                }
+                                }                     
                             }
 
                             undoRemoval(listToSolve, removedRows, removedColumns);
@@ -166,6 +198,7 @@ public class Algorithm_X {
                     }
                 }
             }else if (allValidColumnsStored.size() != 0 && tryCount == 0){
+                System.out.println(depth);
                 return;
             }
         }

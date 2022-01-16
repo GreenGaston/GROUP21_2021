@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch GAV2",
+            "request": "launch",
+            "mainClass": "GAV2",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
+            "name": "Launch PentominoGAV2",
+            "request": "launch",
+            "mainClass": "PentominoGAV2",
+            "projectName": "GROUP21_2021_2c7a220"
+        },
+        {
+            "type": "java",
             "name": "Launch PentominoGA",
             "request": "launch",
             "mainClass": "PentominoGA",

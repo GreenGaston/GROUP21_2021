@@ -9,10 +9,10 @@ public class PentominoGAV2 {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 8*33;
-	public static int generation = 2500;
-	static int mutationRate = 1;
+	public static int generation = 500;
+	static int mutationRate = 4;
 	public static int populationSize = 2500;
-	public static int tournamentSize=4;
+	public static int tournamentSize=5;
 	public static int length=33;
 	public static int height=8;
 	public static int width=5;

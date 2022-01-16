@@ -8,11 +8,11 @@ import java.util.Random;
 public class PentominoGA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 264;
+	public static int pieceAmount = 3000;
 	public static int generation = 100;
-	static int mutationRate = 12;
-	public static int populationSize = 200;
-	public static int tournamentSize=20;
+	static int mutationRate = 2;
+	public static int populationSize = 100;
+	public static int tournamentSize=50;
 	public static int[][][] answerGrid;
 	public static int[] pieces={3,8,9};
 	public static int selectionType=1;
@@ -25,7 +25,7 @@ public class PentominoGA {
 	public static void main(String[] args) {
 	 
 
-		
+		for (int fuck = 0; fuck < 10; fuck++) {
 				
 		Random generator = new Random(System.currentTimeMillis());
 		Boxes[] boxPopulation = new Boxes[populationSize];
@@ -50,7 +50,7 @@ public class PentominoGA {
 
 		GeneticAlgorithm(boxPopulation, generation);
 	}
-
+	}
 
 	
 	public static int[][][] GAmethod(int _pieceamount,
@@ -147,9 +147,9 @@ public class PentominoGA {
 		}
 		AIJudgepentominoes.scoring(Population);
 
-		
+		//"Generation:" + generation +
 		sortBoxes(Population);
-		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		System.out.println("\nScore:" + Population[populationSize-1].getScore());
 		answerGrid=AIJudgepentominoes.getMatrix(Population[populationSize-1]);
 		
 		

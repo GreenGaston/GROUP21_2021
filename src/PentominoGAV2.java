@@ -23,7 +23,7 @@ public class PentominoGAV2 {
 	public static void main(String[] args) {
 	 
 
-		
+	for (int fuck = 0; fuck < 10; fuck++) {
 				
 		Random generator = new Random(System.currentTimeMillis());
 		BoxesV2[] boxPopulation = new BoxesV2[populationSize];
@@ -52,6 +52,7 @@ public class PentominoGAV2 {
 
 		GeneticAlgorithm(boxPopulation, generation);
 	}
+}
 
 	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
 		pieceAmount = _pieceamount;
@@ -183,7 +184,8 @@ public class PentominoGAV2 {
 
 		AIJudgeParcelsV2.scoring(Population);
 		sortBoxes(Population);
-		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		//"Generation:" + generation + "\nScore:" + 
+		System.out.println(Population[populationSize-1].getScore());
 		answerGrid=AIJudgepentominoesV2.getMatrix(Population[populationSize-1]);
 		//print3dint(AIJudgeParcels.getGrid(Max_value[Max_Value-1].getAllBoxes(), Max_value[Max_Value-1].getRotation(), Max_value[Max_Value-1].getOrientation()));
 	
@@ -333,6 +335,4 @@ public class PentominoGAV2 {
 		}
 
 	 }
-
-	
 }

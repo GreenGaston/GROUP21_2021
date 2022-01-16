@@ -8,10 +8,10 @@ import java.util.Random;
 public class GA {
     
 	static final int TARGET = 176;
-	public static int pieceAmount = 1000;
-	public static int generation = 1000;
-	static int mutationRate = 5;
-	public static int populationSize = 2500;
+	public static int pieceAmount = 200;
+	public static int generation = 100;
+	static int mutationRate = 1;
+	public static int populationSize = 100;
 	public static int tournamentSize=10;
 	public static int[][][] answerGrid;
 	public static int selectionType=1;

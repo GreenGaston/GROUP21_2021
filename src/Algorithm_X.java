@@ -68,17 +68,15 @@ public class Algorithm_X {
             temp = new ArrayList<Integer>();
         }
         startTime = System.currentTimeMillis();
-        // print2DList(PLTlist, "Startlist");
-        // Depth is used for testpurposes
-        int depth = 0;
-        algorithmX(parcelList, depth);
+
+        algorithmX(parcelList);
         System.out.println("NO SOLUTION!");
         System.out.println(highestCounter+" out of "+(parcelList.get(0).size()-1)+" spaces filled");
         long endTime = System.currentTimeMillis();
         System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
     }
 
-    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, int depth) {
+    private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve) {
         /*
         * For algorithm X we don't actually delete the lines and columns as supposed
         * Instead we mark each column and row with a 0, 1 or 2.
@@ -139,7 +137,7 @@ public class Algorithm_X {
                             selectAndDelete(allValidRowsStored.get(i), listToSolve, removedRows, removedColumns);
                     
                             if (!hasEmptyColumn(listToSolve)){
-                                algorithmX(listToSolve, depth+1);
+                                algorithmX(listToSolve);
                             }
 
                             int counter = 0;
@@ -168,7 +166,6 @@ public class Algorithm_X {
                     }
                 }
             }else if (allValidColumnsStored.size() != 0 && tryCount == 0){
-                System.out.println(depth);
                 return;
             }
         }

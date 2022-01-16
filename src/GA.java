@@ -9,10 +9,10 @@ public class GA {
     
 	static final int TARGET = 176;
 	public static int pieceAmount = 200;
-	public static int generation = 100;
+	public static int generation = 500;
 	static int mutationRate = 1;
-	public static int populationSize = 100;
-	public static int tournamentSize=10;
+	public static int populationSize = 2500;
+	public static int tournamentSize=3;
 	public static int[][][] answerGrid;
 	public static int selectionType=1;
 	//selection type can be:

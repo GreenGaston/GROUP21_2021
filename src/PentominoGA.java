@@ -8,11 +8,11 @@ import java.util.Random;
 public class PentominoGA {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 3000;
-	public static int generation = 100;
+	public static int pieceAmount = 200;
+	public static int generation = 1000;
 	static int mutationRate = 2;
-	public static int populationSize = 100;
-	public static int tournamentSize=50;
+	public static int populationSize = 20;
+	public static int tournamentSize=20;
 	public static int[][][] answerGrid;
 	public static int[] pieces={3,8,9};
 	public static int selectionType=1;

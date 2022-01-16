@@ -9,9 +9,9 @@ public class GAV2 {
     
 	static final int TARGET = 165;
 	public static int pieceAmount = 100;
-	public static int generation = 1000;
+	public static int generation = 100;
 	static int mutationRate = 5;
-	public static int populationSize = 5000;
+	public static int populationSize = 100;
 	public static int tournamentSize=5;
 	public static int length=33;
 	public static int height=8;
@@ -22,7 +22,7 @@ public class GAV2 {
 	public static void main(String[] args) {
 	 
 
-		
+		for (int fuck = 0; fuck < 10; fuck++) {
 				
 		Random generator = new Random(System.currentTimeMillis());
 		BoxesV2[] boxPopulation = new BoxesV2[populationSize];
@@ -50,6 +50,7 @@ public class GAV2 {
 		
 
 		GeneticAlgorithm(boxPopulation, generation);
+	}
 	}
 
 	public static int[][][] GAmethod(int _pieceamount,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize){
@@ -180,7 +181,7 @@ public class GAV2 {
 
 		AIJudgeParcelsV2.scoring(Population);
 		sortBoxes(Population);
-		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		System.out.println("\nScore:" + Population[populationSize-1].getScore());
 		answerGrid=AIJudgeParcelsV2.getMatrix(Population[populationSize-1]);
 		
 

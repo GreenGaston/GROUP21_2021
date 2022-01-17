@@ -1,4 +1,4 @@
-package src;
+// package src;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -108,14 +108,14 @@ public class Algorithm_X {
         //     print2DList(listToSolve, "list");
         // }
 
-        // This loop is used for checking if all the columns are marked deleted (1)
-        boolean empty = true;
-        for (int i = 1; i < listToSolve.get(0).size(); i++) {
-            if (listToSolve.get(0).get(i) == 0){
-                empty = false;
-                break;
-            }
-        }
+        // // This loop is used for checking if all the columns are marked deleted (1)
+        // boolean empty = true;
+        // for (int i = 1; i < listToSolve.get(0).size(); i++) {
+        //     if (listToSolve.get(0).get(i) == 0){
+        //         empty = false;
+        //         break;
+        //     }
+        // }
 
         // // If the previous loop gives back that the list is empty,
         // // go inside this if-statement
@@ -194,6 +194,11 @@ public class Algorithm_X {
                             undoRemoval(listToSolve, removedRows, removedColumns);
                             removedRows = new ArrayList<>();
                             removedColumns = new ArrayList<>();
+                        }
+                        // If from a chosen column no row is inside the solution, there is no solution
+                        // This only holds on depth 0
+                        if(depth == 0 && i == allValidRowsStored.size()-1){
+                            System.out.println("No solution possible");
                         }
                     }
                 }
@@ -448,7 +453,7 @@ public class Algorithm_X {
 
     private static void SaveSolutions(int[][] solution){
         try{
-            FileWriter myWriter = new FileWriter("Algorithm_X_Parcel_5833.txt");
+            FileWriter myWriter = new FileWriter("Algorithm_X.txt");
             //this writes all scores back into the file while putting the current score in the right place
             for (int i = 0; i < solution.length; i++) {
                 for (int j = 0; j < solution[i].length; j++) {

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Algorithm_X",
+            "request": "launch",
+            "mainClass": "Algorithm_X",
+            "projectName": "GROUP21_2021_1f0d57cf"
+        },
+        {
+            "type": "java",
+            "name": "Launch GA",
+            "request": "launch",
+            "mainClass": "GA",
+            "projectName": "GROUP21_2021_1f0d57cf"
+        },
+        {
+            "type": "java",
             "name": "Launch PentominoSolver",
             "request": "launch",
             "mainClass": "PentominoSolver",

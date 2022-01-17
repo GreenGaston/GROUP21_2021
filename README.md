@@ -15,6 +15,17 @@
 to play the tetris/pentris game please open pentris.java
 
 # Phase 3
+    To run our application, copy the KnapSack folder to your preferred IDE, where you need to 
+    configure your run configuration if not automatically done so already. You need to select SDK 
+    version 16 and set the main class to: com.example.Application.CameraRotationApp. After you 
+    have done that you can run the application and it should pop up. 
+
+    Interface explanation:
+    To use our GUI, start by selecting an Algorithm, after that check the PLT box depending on what 
+    parcel you want to use. Keep in mind that the PLT checkbox only works for the genetic algorithms. 
+    After you have filled in the values press submit and press Set 3d field. Once the grid is 
+    displayed you can use the mouse to rotate the grid and the up and down keys to zoom in and out.
+
     for phase 3 we made a lot of methods to solve the packing problem of filling a grid
 
     Parcel3Dsolver and Pentomino3Dsolver

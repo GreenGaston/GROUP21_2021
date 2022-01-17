@@ -1,4 +1,4 @@
-// package src;
+package src;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,25 +13,16 @@ public class Algorithm_X {
 
     public static void main(String[] args) {
         
-        Knuth_X_Table_LPT lptTable = new Knuth_X_Table_LPT(5, 8, 3);
+        Knuth_X_Table_LPT lptTable = new Knuth_X_Table_LPT(5, 8, 1);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> PLTlist = new ArrayList<>();
         PLTlist = lptTable.fillTable(pieceDatabase);
-        
-        // ArrayList<Integer> PLTsolution = new ArrayList<>();
-        // PLTsolution = solution;
+
+        Knuth_X_Table_Parcels parcelTable = new Knuth_X_Table_Parcels(5, 8, 33);
+        int[][][][] parcelDatabase = ParcelDatabase.parcels;
+        ArrayList<ArrayList<Integer>> parcelList = new ArrayList<>();
+        parcelList = parcelTable.fillTable(parcelDatabase);
                 
-        // Knuth_X_Table_Parcels parcelTable = new Knuth_X_Table_Parcels(5, 8, 33);
-        // int[][][][] parcelDatabase = ParcelDatabase.parcels;
-        // ArrayList<ArrayList<Integer>> parcelList = new ArrayList<>();
-        // parcelList = parcelTable.fillTable(parcelDatabase);
-        
-        // ArrayList<ArrayList<Integer>> copyList = copy2DArrayList(parcelList);
-        
-        // ArrayList<Integer> parcelSolution = new ArrayList<>();
-        // algorithmX(parcelList, new ArrayList<ArrayList<Integer>>(), copyList);
-        // parcelSolution = solution;
-        
         
         
         // Used for test purposes
@@ -80,7 +71,12 @@ public class Algorithm_X {
         // print2DList(PLTlist, "Startlist");
         // Depth is used for testpurposes
         int depth = 0;
-        algorithmX(testList, depth);
+        algorithmX(parcelList, depth);
+        System.out.println("NO SOLUTION!");
+        System.out.println(highestCounter+" out of "+(parcelList.get(0).size()-1)+" spaces filled");
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
+        
     }
 
     private static void algorithmX(ArrayList<ArrayList<Integer>> listToSolve, int depth) {
@@ -121,22 +117,22 @@ public class Algorithm_X {
             }
         }
 
-        // If the previous loop gives back that the list is empty,
-        // go inside this if-statement
-        if (empty){
-            // Check if the empty list is a valid solution
-            if (validSolution(listToSolve)){
-                // Get only the lines out of the list which combine to a solution
-                solution = getSolution(listToSolve);
-                // Print the solution in an extern .txt file
-                SaveSolutions(solution);
-                // Stop the time, and print the time used for finding the solve
-                long endTime = System.currentTimeMillis();
-                System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
-                System.exit(0);
-            }
-            return;
-        }
+        // // If the previous loop gives back that the list is empty,
+        // // go inside this if-statement
+        // if (empty){
+        //     // Check if the empty list is a valid solution
+        //     if (validSolution(listToSolve)){
+        //         // Get only the lines out of the list which combine to a solution
+        //         solution = getSolution(listToSolve);
+        //         // Print the solution in an extern .txt file
+        //         SaveSolutions(solution);
+        //         // Stop the time, and print the time used for finding the solve
+        //         long endTime = System.currentTimeMillis();
+        //         System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
+        //         System.exit(0);
+        //     }
+        //     return;
+        // }
 
         // Start with a lowest amount of ones of 1
         // Go through every possible amount of ones
@@ -171,20 +167,33 @@ public class Algorithm_X {
                             usedIndices.add(allValidRowsStored.get(i));
 
                             selectAndDelete(allValidRowsStored.get(i), listToSolve, removedRows, removedColumns);
-                            // print2DList(listToSolve, "Delete");
-                            // if (depth == 15){
-                            //     print2DList(listToSolve, "hopsakee");
-                            // }
                     
                             if (!hasEmptyColumn(listToSolve)){
                                 algorithmX(listToSolve, depth+1);
                             }
 
+                            int counter = 0;
+                            for (int z = 1; z < listToSolve.get(0).size(); z++) {
+                                if (listToSolve.get(0).get(z) == 1){
+                                    counter++;
+                                }
+                            }
+
+                            if (counter > highestCounter){
+                                highestCounter = counter;
+                                System.out.println(highestCounter+" out of "+(listToSolve.get(0).size()-1)+" spaces filled");
+                                bestPartialSolution = getSolution(listToSolve);
+                                SaveSolutions(bestPartialSolution);   
+                                if (highestCounter == listToSolve.get(0).size()-1){
+                                    long endTime = System.currentTimeMillis();
+                                    System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
+                                    System.exit(0);
+                                }                     
+                            }
+
                             undoRemoval(listToSolve, removedRows, removedColumns);
                             removedRows = new ArrayList<>();
                             removedColumns = new ArrayList<>();
-                            // print2DList(listToSolve, "Undo");
-                            // boolean wappie = true;
                         }
                     }
                 }
@@ -193,33 +202,15 @@ public class Algorithm_X {
                 return;
             }
         }
-        
-        // int counter = 0;
-        // for (int i = 1; i < listToSolve.get(0).size(); i++) {
-        //     if (listToSolve.get(0).get(i) == 1){
-        //         counter++;
-        //     }
-        // }
-        // if (counter > highestCounter){
-        //     highestCounter = counter;
-        //     bestPartialSolution = getSolution(listToSolve);
-        // }
-        // SaveSolutions(bestPartialSolution);
-        // System.out.println("NO SOLUTION!");
-        // long endTime = System.currentTimeMillis();
-        // System.out.println("Time used: "+(endTime-startTime)+" milliseconds");
-
     }
      
     private static void undoRemoval(ArrayList<ArrayList<Integer>> listToSolve, ArrayList<Integer> removedRows, ArrayList<Integer> removedColumns) {
-        int counter = 0;
         for (int i = 0; i < removedRows.size(); i++) {
             listToSolve.get(removedRows.get(i)).set(0, 0);
         }
 
         for (int i = 0; i < removedColumns.size(); i++) {
             listToSolve.get(0).set(removedColumns.get(i), 0);
-            counter++;
         }
     }
 
@@ -457,7 +448,7 @@ public class Algorithm_X {
 
     private static void SaveSolutions(int[][] solution){
         try{
-            FileWriter myWriter = new FileWriter("Algorithm_X.txt");
+            FileWriter myWriter = new FileWriter("Algorithm_X_Parcel_5833.txt");
             //this writes all scores back into the file while putting the current score in the right place
             for (int i = 0; i < solution.length; i++) {
                 for (int j = 0; j < solution[i].length; j++) {

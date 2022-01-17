@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#onStart" prefHeight="450.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Application.AGXController">
+   <children>
+      <ChoiceBox fx:id="Score" layoutX="14.0" layoutY="31.0" prefWidth="150.0" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tile dimension:" />
+      <Button layoutX="14.0" layoutY="57.0" mnemonicParsing="false" onAction="#onClick" text="Submit" />
+   </children>
+</AnchorPane>

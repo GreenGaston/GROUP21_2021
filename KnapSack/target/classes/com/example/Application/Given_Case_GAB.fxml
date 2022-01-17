@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="300.0" style="-fx-background-color: darkgray;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Application.GivenCaseGAController">
+    <children>
+        <VBox layoutX="10.0" layoutY="59.0" prefHeight="319.0" prefWidth="152.0" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="138.0" AnchorPane.topAnchor="59.0">
+            <children>
+                <Label prefHeight="17.0" prefWidth="167.0" text="Generations" />
+                <TextField fx:id="generationField" prefHeight="25.0" prefWidth="157.0" />
+                <Label prefHeight="17.0" prefWidth="167.0" text="Mutation rate" />
+                <TextField fx:id="mutationRateField" prefHeight="25.0" prefWidth="157.0" />
+                <Label prefHeight="17.0" prefWidth="167.0" text="Population size" />
+                <TextField fx:id="populationSizeField" prefHeight="25.0" prefWidth="157.0" />
+                <Label prefHeight="17.0" prefWidth="167.0" text="Tournament size" />
+                <TextField fx:id="tournamentSizeField" prefHeight="25.0" prefWidth="157.0" />
+                <Label prefHeight="17.0" prefWidth="167.0" text="Selection method" />
+                <TextField fx:id="selectionMethodField" prefHeight="25.0" prefWidth="157.0" />
+                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: green;" text="Submit" />
+            </children>
+        </VBox>
+        <HBox layoutX="13.0" layoutY="25.0" prefHeight="26.0" prefWidth="277.0">
+            <children>
+                <Label prefHeight="26.0" prefWidth="41.0" text="Box1: " />
+                <TextField fx:id="pieceL" prefHeight="26.0" prefWidth="50.0" />
+                <Label prefHeight="26.0" prefWidth="43.0" text="Box2:" />
+                <TextField fx:id="pieceP" prefHeight="26.0" prefWidth="50.0" />
+                <Label prefHeight="26.0" prefWidth="42.0" text="Box3:" />
+                <TextField fx:id="pieceT" prefHeight="25.0" prefWidth="50.0" />
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

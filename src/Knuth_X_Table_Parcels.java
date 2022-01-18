@@ -14,17 +14,15 @@ public class Knuth_X_Table_Parcels {
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(parcelDatabase);
         table.print2DInt(table.arrayListToArray(tempList));
-        System.out.println("Total pieces placed: "+tempList.size());
+        System.out.println("Total pieces placed: "+(tempList.size()-1));
     }
     
     public Knuth_X_Table_Parcels(int rows, int columns, int layers) {
-        
-        this.columnLength = rows;
-        this.rowLength = columns;
+        this.columnLength = columns;
+        this.rowLength = rows;
         this.layersAmount = layers;
         this.layerSize = columnLength*rowLength;
         this.volume = layerSize*layersAmount;
-
     }
     
     public ArrayList<ArrayList<Integer>> fillTable(int[][][][] database){
@@ -47,7 +45,9 @@ public class Knuth_X_Table_Parcels {
 
 
         ArrayList<ArrayList<Integer>> optionsTable = new ArrayList<>();
-        
+        ArrayList<Integer> emptyRow = new ArrayList<>();
+        optionsTable.add(fillWithZero(emptyRow));
+        optionsTable.get(0).set(0, 1);
 
         // Fill the table with parcels in all orientations
         // For every piece and it's orientations
@@ -64,7 +64,7 @@ public class Knuth_X_Table_Parcels {
                 // System.out.println("Start K: "+k+" current J: "+j);
                 // System.out.println("Piecefit: "+parcelFit(k, database[j]));
                 if (parcelFit(k, database[j])){
-                    optionsTable.add(placeParcel(k, database[j], j));
+                    optionsTable.add(placeParcel(k+1, database[j], j));
                 }
             }
         }
@@ -132,7 +132,7 @@ public class Knuth_X_Table_Parcels {
     }
 
     private ArrayList<Integer> fillWithZero(ArrayList<Integer> list) {
-        for (int i = 0; i < volume; i++){
+        for (int i = 0; i < volume+1; i++){
             list.add(0);
         }
         return list;

@@ -1,4 +1,4 @@
-package src;
+package com.example.Application;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -21,6 +21,9 @@ public class Given_Case_GA {
 	//1 for tournament
 	//2 for roulette
 	//3 for elitism
+
+	//this file is essentialy the same as the genetic algorithm name GA.java but
+	//the difference being you can select the pieces yourself and they wont mutate
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -50,6 +53,7 @@ public class Given_Case_GA {
 		GeneticAlgorithm(boxPopulation, generation,selectionType);
 	}
 
+	//
 	public static int[][][] GAmethod(int[] Pieces,int _generations, int _mutationrate,int _populationsSize,int _TournamentSize,int selectionMethod,Boolean parcel){
 		pieceAmount = Pieces.length;
 		generation = _generations;

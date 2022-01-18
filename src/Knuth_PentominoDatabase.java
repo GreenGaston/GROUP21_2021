@@ -41,8 +41,16 @@ import java.util.Scanner;
  */
 public class Knuth_PentominoDatabase {
     // Stores and loads the data on program initialization
-    // public static int[][][][] data = loadData("Knuth_pentominos_Test.csv");
-    public static int[][][][] data = loadData("Knuth_pentominos.csv");
+    // public static int[][][][] data = loadData("Knuth_pentominos_Test_T.csv");
+    // public static int[][][][] data = loadData("Knuth_pentominos_Test_P.csv");
+    // public static int[][][][] data = loadData("Knuth_pentominos_Test_L.csv");
+
+    // PLT
+    public static int[][][][] data = loadData("Knuth_pentominos_Fastest.csv");
+    // TPL
+    // public static int[][][][] data = loadData("Knuth_pentominos_Highest_Score.csv");
+    // TLP
+    // public static int[][][][] data = loadData("Knuth_pentominos.csv");
 
     /**
      * Loads and decodes the CSV file

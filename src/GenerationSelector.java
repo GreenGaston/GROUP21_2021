@@ -1,5 +1,7 @@
 import java.util.Random;
 
+
+//this method is used to ensure that all individuals participate in a tournament
 public class GenerationSelector {
     public static Boxes[] population;
     public static int[] notUsedIndexes;
@@ -24,7 +26,7 @@ public class GenerationSelector {
         return clonePop;
     }
 
-    
+    //this method only pick non used indexes if they exist 
     public static Boxes nextBox(){
         //System.out.println(notUsedIndexes.length);
         

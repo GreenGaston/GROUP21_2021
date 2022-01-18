@@ -9,17 +9,17 @@ public class Knuth_X_Table_LPT {
     int layerSize;
     int volume;
     public static void main(String[] args) {
-        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(4, 4, 4);
+        Knuth_X_Table_LPT table = new Knuth_X_Table_LPT(2, 3, 4);
         int[][][][] pieceDatabase = Knuth_PentominoDatabase.data;
         ArrayList<ArrayList<Integer>> tempList = new ArrayList<>();
         tempList = table.fillTable(pieceDatabase);
         table.print2DInt(table.arrayListToArray(tempList));
-        System.out.println("Total pieces placed: "+tempList.size());
+        System.out.println("Total pieces placed: "+(tempList.size()-1));
     }
     
     public Knuth_X_Table_LPT(int rows, int columns, int layers){
-        this.columnLength = rows;
-        this.rowLength = columns;
+        this.columnLength = columns;
+        this.rowLength = rows;
         this.layersAmount = layers;
         this.layerSize = columnLength*rowLength;
         this.volume = layerSize*layersAmount;
@@ -46,8 +46,9 @@ public class Knuth_X_Table_LPT {
 
 
         ArrayList<ArrayList<Integer>> optionsTable = new ArrayList<>();
-        
-
+        ArrayList<Integer> emptyRow = new ArrayList<>();
+        optionsTable.add(fillWithZero(emptyRow));
+        optionsTable.get(0).set(0, 1);
         // Fill the table with pieces in horizontal orientation
         // For every piece
         for (int i = 0; i < database.length; i++){
@@ -65,17 +66,17 @@ public class Knuth_X_Table_LPT {
                     // System.out.println("Start K: "+k+" current I: "+i+" current J: "+j);
                     // System.out.println("Horizontal: "+pieceFitHorizontal(k, database[i][j]));
                     if (pieceFitHorizontal(k, database[i][j])){
-                        optionsTable.add(placePieceHorizontal(k, database[i][j], i));
+                        optionsTable.add(placePieceHorizontal(k+1, database[i][j], i));
                     }    
                     // System.out.println("Vertical_LRO: "+pieceFitVertical_LRO(k, database[i][j]));
                     // The name of the method says LRO, this stands for left-right orientation
                     if (pieceFitVertical_LRO(k, database[i][j])){
-                        optionsTable.add(placePieceVertical_LRO(k, database[i][j], i));
+                        optionsTable.add(placePieceVertical_LRO(k+1, database[i][j], i));
                     }                        
                     // System.out.println("Vertical_TBO: "+pieceFitVertical_TBO(k, database[i][j]));
                     // The name of the method says TBO, this stands for top-bottom orientation
                     if (pieceFitVertical_TBO(k, database[i][j])){
-                        optionsTable.add(placePieceVertical_TBO(k, database[i][j], i));
+                        optionsTable.add(placePieceVertical_TBO(k+1, database[i][j], i));
                     }
                 }
             }
@@ -230,7 +231,7 @@ public class Knuth_X_Table_LPT {
     }
         
     private ArrayList<Integer> fillWithZero(ArrayList<Integer> list) {
-        for (int i = 0; i < volume; i++){
+        for (int i = 0; i < volume+1; i++){
             list.add(0);
         }
         return list;

@@ -6,12 +6,24 @@ public class AIJudgeParcels {
     public static void main(String[] args){
 
     }
+
+    //this file is meant for judging populations, 
+    //we judge by trying to place the pieces at the first empty coordinates
+    //and then looking at how many empty spaces are left
+
+
+    //this method is used for judging a population
     public static void scoring(Boxes i[]){	
+        //for every individual
         for (int j = 0; j < i.length; j++) {
+            //sets its score to whatever it deems it to be worth
             i[j].setScore(AIJudgeParcels.judgeVolumes(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
             //System.out.println(AIJudgeParcels.judgeValues(i[j].getAllBoxes(), i[j].getRotation(), i[j].getOrientation()));
         }
     }
+
+
+    //this method tries to place the pieces of a given individual and returns the result grid
     public static int[][][] getMatrix(Boxes box){
         emptyGrid();
         int[] PieceIDs=box.getAllBoxes();
@@ -25,6 +37,8 @@ public class AIJudgeParcels {
         emptyGrid();
         return temp;
     }
+
+    //this method makes a hard copy of a int[][][]
     public static int[][][] clone3Dint(int[][][] list) {
         int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
         for (int i = 0; i < list.length; i++) {
@@ -46,8 +60,10 @@ public class AIJudgeParcels {
         
         
         for(int i=0;i<PieceIDs.length;i++){
+            //it will try to place every piece 
             tryPlacePieceVolume(PieceIDs[i], rotations[i], orientations[i]);
         }
+        //check for empty spaces in the grid
         score=gradeGrid(grid);
         emptyGrid();
         return score;
@@ -74,7 +90,8 @@ public class AIJudgeParcels {
         fillNegative(grid);
     }
 
-    //
+    //both tryplace piece methods do the same, as we didnt finish the piecevalue 
+    //if the piece fits place it otherwise do not
     public static void tryPlacePieceVolume(int pieceID,int rotation,int orientation){
         int[] cords=findNextEmpty3D(grid);
         if(piecefit3d(grid, getParcel(pieceID, rotation), cords[0], cords[1], cords[2])){
@@ -90,6 +107,8 @@ public class AIJudgeParcels {
         }
     }
 
+
+    //method for scoring in tryplacevalue (not implemented)
     public static void addScore(int parcel){
         if(parcel==0){
             score+=3;
@@ -103,7 +122,7 @@ public class AIJudgeParcels {
     }
 
 
-
+    //places a piece on a grid at a give location
     public static void placePiece3D(int[][][] grid, int[][][] piece, int pieceID, int x, int y, int z ){
 
         for(int i=0;i<piece.length;i++){
@@ -117,6 +136,7 @@ public class AIJudgeParcels {
     }
 
 
+    //returns parcel matrix based on id and rotation
     public static int[][][] getParcel(int ParcelID,int rotation){
         if(ParcelID==0){
             return parcels[rotation];
@@ -129,6 +149,9 @@ public class AIJudgeParcels {
         }
 
     }
+
+    //try and fit a piece by checking if it collides with any value greater or equal to zero
+    //or wheter it goes out of bounds
     public static boolean piecefit3d(int[][][] grid, int[][][] piece, int x ,int y,int z){
 
         try{
@@ -148,6 +171,7 @@ public class AIJudgeParcels {
     }
 
 
+    //method for changing characters to piece ids
     public static int[] charsToPieceIDs(char[] parcels){
         int[] parcelIDs=new int[parcels.length];
         for(int i=0;i<parcels.length;i++){
@@ -156,6 +180,7 @@ public class AIJudgeParcels {
         return parcelIDs;
     }
 
+    //same as above but for an individual id
     public static int chartoID(char parcel){
         if(parcel=='A'){
             return 0;
@@ -168,6 +193,8 @@ public class AIJudgeParcels {
         }
         return 999;
     }
+
+    //places a piece on a 2d grid
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
 		for (int i = 0; i < piece.length; i++) // loop over x position of pentomino
 		{
@@ -181,6 +208,8 @@ public class AIJudgeParcels {
 			}
 		}
 	}
+
+    //method for determining in what order the coordinates should be processed based on orientation
     public static int[] getcoords(int orientation,int x,int y,int z){
         if(orientation==0){
             int[] answer={y,z,x};
@@ -198,6 +227,8 @@ public class AIJudgeParcels {
             throw new OutOfMemoryError();
         }
     }
+
+    //grade the grid based on how many empty spots there are
     public static int gradeGrid(int[][][] grid){
         int score=grid.length*grid[0].length*grid[0][0].length;
         for(int i=0;i<grid.length;i++){
@@ -216,6 +247,7 @@ public class AIJudgeParcels {
 
     
 
+    //finds the next empty square on a grid
     public static int[] findNextEmpty3D(int[][][] Grid) {
         int[] emptyCords = new int[3];
 
@@ -234,6 +266,8 @@ public class AIJudgeParcels {
         }
         return emptyCords;
     }
+
+    //fills a grid with empty spaces
     public static void fillNegative(int[][][] grid){
         for(int i=0;i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
@@ -246,7 +280,7 @@ public class AIJudgeParcels {
 
     }
     
-    
+    //gets a 2d slice from a 3d grid at a certain coord in a certain orientation
     public static int[][] get2DSlice(int[][][] grid , int orientation, int x,int y, int z){
         //System.out.println("x:"+x+" y:"+y+" z:"+z);
         if(orientation==0){
@@ -282,6 +316,8 @@ public class AIJudgeParcels {
         }
     }
 
+
+    //makes a hard copy of a 2d intiger
     public static int[][] clone2Dint(int[][] list) {
         int[][] clone = new int[list.length][list[0].length];
         for (int i = 0; i < list.length; i++) {
@@ -292,6 +328,8 @@ public class AIJudgeParcels {
         return clone;
     }
 
+
+    //adds a 2d matrix to a grid at a certain depth and orientation
     public static void add2Dslice(int[][][] grid, int[][]slice,int orientation,int depth){
         if(orientation==0){
             grid[depth]=slice;
@@ -320,6 +358,8 @@ public class AIJudgeParcels {
         }
     }
 
+
+    //checks if a piece fits
     public static boolean PieceFit(int[][] grid, int PieceID, int Piecemutation, int x, int y) {
         // if the x is negative then the starting point is of the grid and therefor
         // invalid
@@ -357,6 +397,9 @@ public class AIJudgeParcels {
             return false;
         }
     }
+
+
+    //this is a database containing the parcels and their rotations
     public static int[][][][] parcels=
     {  
         //parcelA rotation 1

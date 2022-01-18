@@ -5,6 +5,11 @@ public class Parcel3Dsolver {
     public static int gridscore=0;
     public static int[][][] answergrid;
 
+
+    //this document solves a grid by:
+    //1.searching for the first empty space
+    //2 trying to put every piece there
+    //3 if it fits repeat steps 1 2 and 3 until you find a solution or there are no solutions to be found
     
     public static void main(String[] args){
 
@@ -22,6 +27,9 @@ public class Parcel3Dsolver {
             System.out.println("fuck");
         }
     }
+
+
+    //method to make algorithm run on a given gridsize with given parcels
     public static int[][][] Solve(int[][][] grid,char[] parcels){
         fillNegative(grid);
         solve3DParcel(grid, charsToPieceIDs(parcels));
@@ -29,6 +37,7 @@ public class Parcel3Dsolver {
     }
 
 
+    //fills a grid with empty spaces
     public static void fillNegative(int[][][] grid){
         for(int i=0;i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
@@ -40,6 +49,7 @@ public class Parcel3Dsolver {
         return;
 
     }
+    //prints 3d grid
     public static void print3dint(int[][][] answerGrid){
         for(int i=0;i<answerGrid.length;i++){
             for(int j=0;j<answerGrid[0].length;j++){
@@ -51,6 +61,7 @@ public class Parcel3Dsolver {
             System.out.println("");
         }
     }
+    //prints int list
     public static void print1dint(int[] grid){
         for(int i=0;i<grid.length;i++){
             
@@ -62,10 +73,12 @@ public class Parcel3Dsolver {
 
 
 
-
+     // main method explained at the top
     public static boolean solve3DParcel(int[][][] grid, int[]pieces){
 
+        //score grid
         int score=gradeGrid(grid);
+        //store highest current scoring grid
         if(score>gridscore){
             gridscore=score;
             answergrid=clone3Dint(grid);
@@ -74,7 +87,8 @@ public class Parcel3Dsolver {
 
         int[] emptyCords=findNextEmpty3D(grid);
 
-
+        //if there is only 1 piece left try to place it 
+        //if it fits store the grid and return true
         if(pieces.length==1){
             for(int j=0;j<getMaxRotation(pieces[0]);j++){
                 if(piecefit3d(grid, getParcel(pieces[0], j), emptyCords[0], emptyCords[1], emptyCords[2])){
@@ -82,24 +96,33 @@ public class Parcel3Dsolver {
                     answergrid=grid;
                     return true;
                 }
+            //if not return false
             }
             return false;
 
         }
 
 
+        //if there are multiple pieces left
         else{
+            //for every piece
             for(int i=0;i<pieces.length;i++){
+                //for every one of its rotations
                 for(int j=0;j<getMaxRotation(pieces[i]);j++){
+                    //if the piece fits
                     if(piecefit3d(grid, getParcel(pieces[i], j), emptyCords[0], emptyCords[1], emptyCords[2])){
-                        
+                        //place it
                         placePiece3D(gridclone, getParcel(pieces[i],j), pieces[i], emptyCords[0], emptyCords[1], emptyCords[2]);
-
+                        //remove it from the list
                         int[] temporaryPieces = removeID(pieces, i);
 
+
+                        //recursive call 
                         if(solve3DParcel(gridclone, temporaryPieces)){
                             return true;
                         }
+
+                        //undo placing of piece on grid
                         gridclone=clone3Dint(grid);
 
 
@@ -111,6 +134,7 @@ public class Parcel3Dsolver {
 
                 }
             }
+            //if nothing fits there is no solution
             return false;
 
         }
@@ -120,6 +144,7 @@ public class Parcel3Dsolver {
     }
 
 
+    //method for changing characters to pieceIDs
     public static int[] charsToPieceIDs(char[] parcels){
         int[] parcelIDs=new int[parcels.length];
         for(int i=0;i<parcels.length;i++){
@@ -140,6 +165,9 @@ public class Parcel3Dsolver {
         }
         return 999;
     }
+
+
+    //this methods finds the first empty space on a grid
     public static int[] findNextEmpty3D(int[][][] Grid) {
         int[] emptyCords = new int[3];
 
@@ -160,9 +188,13 @@ public class Parcel3Dsolver {
                 }
             }
         }
+        //this should never happen as we dont call this method on a full grid
         System.out.println("AHHHHHHHHHHHHH");
         return emptyCords;
     }
+
+
+    //clones grid
     public static int[][][] clone3Dint(int[][][] list) {
         int[][][] clone = new int[list.length][list[0].length][list[0][0].length];
         for (int i = 0; i < list.length; i++) {
@@ -174,6 +206,8 @@ public class Parcel3Dsolver {
         }
         return clone;
     }
+
+    //grades grid based on how many empty spaces there are
     public static int gradeGrid(int[][][] grid){
         int score=grid.length*grid[0].length*grid[0][0].length;
         for(int i=0;i<grid.length;i++){
@@ -191,6 +225,7 @@ public class Parcel3Dsolver {
     }
 
 
+    //checks if a piece fits
     public static boolean piecefit3d(int[][][] grid, int[][][] piece, int x ,int y,int z){
 
         try{
@@ -209,7 +244,7 @@ public class Parcel3Dsolver {
         }
     }
 
-
+    //places a piece on a grid
     public static void placePiece3D(int[][][] grid, int[][][] piece, int pieceID, int x, int y, int z ){
 
         for(int i=0;i<piece.length;i++){
@@ -222,7 +257,7 @@ public class Parcel3Dsolver {
         }
     }
 
-
+    //get max mutations a piece has
     public static int getMaxRotation(int parcelID){
         if(parcelID==0){
             return 4;
@@ -234,6 +269,7 @@ public class Parcel3Dsolver {
             return 1;
         }
     }
+    //gets parcel matrix based on id and rotation
     public static int[][][] getParcel(int ParcelID,int rotation){
         if(ParcelID==0){
             return parcels[rotation];
@@ -246,6 +282,8 @@ public class Parcel3Dsolver {
         }
 
     }
+
+    //removes index from a list
     public static int[] removeID(int[] pieceIDs, int index) {
 
         int[] answerList = new int[pieceIDs.length - 1];
@@ -261,6 +299,7 @@ public class Parcel3Dsolver {
         return answerList;
     }
 
+    //list containing all parcels
     public static int[][][][] parcels=
     {  
         //parcelA rotation 1

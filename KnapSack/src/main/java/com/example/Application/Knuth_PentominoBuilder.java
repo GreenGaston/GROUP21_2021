@@ -1,4 +1,4 @@
-// package src;
+package com.example.Application;//package src;
 
 /**
  * @author Department of Data Science and Knowledge Engineering (DKE)
@@ -15,61 +15,61 @@ import java.util.ArrayList;
  * This class contains all the methods that you may need to start developing
  * your project together with the representation of the pentomino's pieces
  */
-public class PentominoBuilder {
+public class Knuth_PentominoBuilder {
 
     // All basic pentominoes that will be rotated and flipped
     public static int[][][] basicDatabase = {
-            {
-                    // pentomino representation X
-                    { 0, 1, 0 },
-                    { 1, 1, 1 },
-                    { 0, 1, 0 }
-            },
-            {
-                    // pentomino representation I
-                    { 1 },
-                    { 1 },
-                    { 1 },
-                    { 1 },
-                    { 1 }
-            },
-            {
-                    // pentomino representation Z
-                    { 0, 1, 1 },
-                    { 0, 1, 0 },
-                    { 1, 1, 0 }
-            },
+            // {
+            //         // pentomino representation X
+            //         { 0, 1, 0 },
+            //         { 1, 1, 1 },
+            //         { 0, 1, 0 }
+            // },
+            // {
+            //         // pentomino representation I
+            //         { 1 },
+            //         { 1 },
+            //         { 1 },
+            //         { 1 },
+            //         { 1 }
+            // },
+            // {
+            //         // pentomino representation Z
+            //         { 0, 1, 1 },
+            //         { 0, 1, 0 },
+            //         { 1, 1, 0 }
+            // },
             {
                     // pentomino representation T
                     { 1, 1, 1 },
                     { 0, 1, 0 },
                     { 0, 1, 0 }
             },
-            {
-                    // pentomino representation U
-                    { 1, 1 },
-                    { 1, 0 },
-                    { 1, 1 }
-            },
-            {
-                    // pentomino representation V
-                    { 1, 1, 1 },
-                    { 1, 0, 0 },
-                    { 1, 0, 0 }
-            },
-            {
-                    // pentomino representation W
-                    { 0, 0, 1 },
-                    { 0, 1, 1 },
-                    { 1, 1, 0 }
-            },
-            {
-                    // pentomino representation Y
-                    { 1, 0 },
-                    { 1, 1 },
-                    { 1, 0 },
-                    { 1, 0 }
-            },
+            // {
+            //         // pentomino representation U
+            //         { 1, 1 },
+            //         { 1, 0 },
+            //         { 1, 1 }
+            // },
+            // {
+            //         // pentomino representation V
+            //         { 1, 1, 1 },
+            //         { 1, 0, 0 },
+            //         { 1, 0, 0 }
+            // },
+            // {
+            //         // pentomino representation W
+            //         { 0, 0, 1 },
+            //         { 0, 1, 1 },
+            //         { 1, 1, 0 }
+            // },
+            // {
+            //         // pentomino representation Y
+            //         { 1, 0 },
+            //         { 1, 1 },
+            //         { 1, 0 },
+            //         { 1, 0 }
+            // },
             {
                     // pentomino representation L
                     { 1, 0 },
@@ -82,25 +82,25 @@ public class PentominoBuilder {
                     { 1, 1 },
                     { 1, 1 },
                     { 1, 0 }
-            },
-            {
-                    //
-                    //
-                    // Implement pentomino representation N
-                    { 1, 1, 0, 0, },
-                    { 0, 1, 1, 1, }
-            //
-            //
-            },
-            {
-                    //
-                    //
-                    // Implement pentomino representation F
-                    { 0, 1, 1 },
-                    { 1, 1, 0 },
-                    { 0, 1, 0 }
-            //
-            //
+            // },
+            // {
+            //         //
+            //         //
+            //         // Implement pentomino representation N
+            //         { 1, 1, 0, 0, },
+            //         { 0, 1, 1, 1, }
+            // //
+            // //
+            // },
+            // {
+            //         //
+            //         //
+            //         // Implement pentomino representation F
+            //         { 0, 1, 1 },
+            //         { 1, 1, 0 },
+            //         { 0, 1, 0 }
+            // //
+            // //
             }
     };
 
@@ -115,7 +115,7 @@ public class PentominoBuilder {
         // do it for every piece of the basic database
         for (int i = 0; i < basicDatabase.length; i++) {
             // make a piece with maximal number of mutations an space
-            int[][][] tempDatabase = new int[4][5][5];
+            int[][][] tempDatabase = new int[8][5][5];
 
             // take a piece of basic database, make it bigger so it fits in the 5*5,
             // rotate it j times, move it to the left upper corner so duplicates will be the
@@ -124,14 +124,14 @@ public class PentominoBuilder {
                 tempDatabase[j] = moveToAbove(rotate(makeBigger(basicDatabase[i], 5), j));
             }
 
-            // //same as above, but flipping it
-            // for (int j = 0; j < 4; j++) {
-            // tempDatabase[4 + j] =
-            // moveToAbove(rotate(verticalFlip(makeBigger(basicDatabase[i], 5)), j));
-            // }
+            //same as above, but flipping it
+            for (int j = 0; j < 4; j++) {
+            tempDatabase[4 + j] =
+            moveToAbove(rotate(verticalFlip(makeBigger(basicDatabase[i], 5)), j));
+            }
 
-            // //erase duplicates
-            // tempDatabase=eraseDuplicates(tempDatabase);
+            //erase duplicates
+            tempDatabase=eraseDuplicates(tempDatabase);
 
             // erase empty spaces in every piece
             for (int j = 0; j < tempDatabase.length; j++) {
@@ -431,7 +431,7 @@ public class PentominoBuilder {
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         makeDatabase();
 
-        PrintWriter writer = new PrintWriter("pentominos.csv", "UTF-8");
+        PrintWriter writer = new PrintWriter("Knuth_pentominos.csv", "UTF-8");
 
         for (int i = 0; i < database.size(); i++) {
             for (int j = 0; j < database.get(i).length; j++) {

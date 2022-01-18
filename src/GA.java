@@ -51,6 +51,8 @@ public class GA {
 	}
 	}
 
+
+	//this method takes in variables for the Genetic algorithm and runs it
 	public static int[][][] GAmethod(int _pieceamount,
 									 int _generations, 
 									 int _mutationrate,
@@ -58,6 +60,8 @@ public class GA {
 									 int _TournamentSize,
 									 int selection_method){
 
+
+		//changing variable names for convienience
 		pieceAmount = _pieceamount;
 		generation = _generations;
 		mutationRate = _mutationrate;
@@ -65,7 +69,7 @@ public class GA {
 		tournamentSize=_TournamentSize;
 		selectionType=selection_method;
 
-
+		//setting up variables
 		Random generator = new Random(System.currentTimeMillis());
 		Boxes[] boxPopulation = new Boxes[populationSize];
 		int[] boxOrientation = new int[pieceAmount];
@@ -89,7 +93,7 @@ public class GA {
 
 		
 		
-
+		// run algorithm with generated population
 		GeneticAlgorithm(boxPopulation, generation);
 		return answerGrid;
 			
@@ -123,6 +127,8 @@ public class GA {
             }
         }
     }
+
+	//print 3d grid
 	public static void print3dint(int[][][] answerGrid){
         for(int i=0;i<answerGrid.length;i++){
             for(int j=0;j<answerGrid[0].length;j++){
@@ -135,6 +141,7 @@ public class GA {
         }
     }
 
+	//method which tries to find a highest scoring idividual
 	public static void GeneticAlgorithm(Boxes [] Population, int generations){
 		//put the method here in setboxes
 
@@ -147,8 +154,10 @@ public class GA {
 		
 		Selection.setTournamentSize(tournamentSize);
 		
+		//for every generation do crossover and mutate and score the indiduals
 		for (int j = 0; j < generations; j++) {
 			AIJudgeParcels.scoring(Population);
+			//file for ensuring each individual get into a tournament
 			GenerationSelector.setPopulation(Population);
 			
 			newPopulation=Selection.selectionMethod(Population,selectionType);
@@ -159,9 +168,16 @@ public class GA {
 		}
 		AIJudgeParcels.scoring(Population);
 		
+		//sort last generation on score
 		sortBoxes(Population);
+<<<<<<< HEAD
 		System.out.println(Population[populationSize-1].getScore());
 		// "Generation:" + generation + 
+=======
+		//choose the highest scoring individual to print the score of
+		System.out.println("Generation:" + generation + "\nScore:" + Population[populationSize-1].getScore()+ "\n\n\n");
+		//make a grid with the highest scoring individual's pieces
+>>>>>>> main
 		answerGrid=AIJudgeParcels.getMatrix(Population[populationSize-1]);
 
 	}
@@ -185,12 +201,14 @@ public class GA {
     //this is my crossover method. If you see any optimalisations possible, lmk. I'd be interested in learning other ways.
 	public static Boxes[] crossoverBoxes(Boxes box1, Boxes box2, int crossoverLocations){
 		Boxes [] newBoxes = new Boxes [4];
+		//clone box 1 values for second parent
 		Boxes temporaryBox = box1.clone();
 		Boxes CrossoverBox1 = box1.clone();
 		Boxes CrossoverBox2 = box2.clone();
 
 		int crossoverLocation = crossoverLocations;
 
+		//cross over individual one
 		for (int i = 0; i < crossoverLocation; i++) {
 			CrossoverBox1.getAllBoxes()[i] = CrossoverBox2.getAllBoxes()[i];
 			CrossoverBox1.getOrientation()[i] = CrossoverBox2.getOrientation()[i];
@@ -198,7 +216,7 @@ public class GA {
 		}
 
 		
-
+		//crossover individual 2 using clones
 		for (int i = 0; i < crossoverLocation; i++) {
 			CrossoverBox2.getAllBoxes()[i] = temporaryBox.getAllBoxes()[i];
 			CrossoverBox2.getOrientation()[i] = temporaryBox.getOrientation()[i];
@@ -207,7 +225,7 @@ public class GA {
 
 		newBoxes[0]= box1;
 		newBoxes[1]= box2;
-
+		//return the boxes in a list
 		return newBoxes;
 
         /*
@@ -222,7 +240,7 @@ public class GA {
 
 	
 
-	//this is a method i think we are going to have to use
+	//this is a mutation method which gives a chance of having a box rotation and or orientation to change
 	public static void mutation(Boxes[] boxpopulation){
 		int roll;
 		Random rand=new Random();

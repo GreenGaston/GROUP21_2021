@@ -6,6 +6,20 @@ public class AIJudgepentominoes {
     public static void main(String[] args){
 
     }
+
+
+
+    ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
+    // for comments on how these methods work please look at AIjudgeParcels
+    // difference in this file is that it is meant for pentominoes not parcels
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     public static void scoring(Boxes i[]){	
         
         for (int j = 0; j < i.length; j++) {

@@ -8,11 +8,11 @@ import java.util.Random;
 public class GAV2 {
     
 	static final int TARGET = 165;
-	public static int pieceAmount = 100;
+	public static int pieceAmount = 1000;
 	public static int generation = 1000;
-	static int mutationRate = 5;
-	public static int populationSize = 5000;
-	public static int tournamentSize=5;
+	static int mutationRate = 1;
+	public static int populationSize = 1000;
+	public static int tournamentSize=10;
 	public static int length=33;
 	public static int height=8;
 	public static int width=5;

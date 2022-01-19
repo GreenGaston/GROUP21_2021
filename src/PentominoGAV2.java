@@ -10,9 +10,9 @@ public class PentominoGAV2 {
 	static final int TARGET = 165;
 	public static int pieceAmount = 8*33;
 	public static int generation = 100;
-	static int mutationRate = 5;
-	public static int populationSize = 200;
-	public static int tournamentSize=5;
+	static int mutationRate = 1;
+	public static int populationSize = 1000;
+	public static int tournamentSize=2;
 	public static int length=33;
 	public static int height=8;
 	public static int width=5;
@@ -98,7 +98,7 @@ public class PentominoGAV2 {
 
 	//sorting based on score
 	public static void sortBoxes(BoxesV2[] population){
-        BoxesV2[] answer=new BoxesV2[population.length];
+        //BoxesV2[] answer=new BoxesV2[population.length];
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();

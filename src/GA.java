@@ -2,7 +2,7 @@
 
 import java.util.Random;
 
-import javax.swing.Box;
+//import javax.swing.Box;
 
 
 
@@ -11,9 +11,9 @@ public class GA {
 	static final int TARGET = 165;
 	public static int pieceAmount = 1000;
 	public static int generation = 1000;
-	static int mutationRate = 5;
-	public static int populationSize = 1000;
-	public static int tournamentSize=5;
+	static int mutationRate = 1;
+	public static int populationSize = 1500;
+	public static int tournamentSize=3;
 	
     //beginning of the main methat that will have to work with my calculations(see comments at that section)
 	public static void main(String[] args) {
@@ -46,7 +46,7 @@ public class GA {
 
 	//sorting based on score
 	public static void sortBoxes(Boxes[] population){
-        Boxes[] answer=new Boxes[population.length];
+       // Boxes[] answer=new Boxes[population.length];
         int[] scores=new int[population.length];
         for(int i=0;i<population.length;i++){
             scores[i]=population[i].getScore();
